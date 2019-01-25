@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>兼职者页面</title>
+
+    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}">
+
+</head>
+
+<body style=" background-color: #F2F2F2;">
+<ul class="layui-nav" lay-filter="">
+    <
+    <li class="layui-nav-item"><a href="">最新活动</a></li>
+    <li class="layui-nav-item layui-this"><a href="">产品</a></li>
+    <li class="layui-nav-item"><a href="">大数据</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">解决方案</a>
+        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+            <dd><a href="">移动模块</a></dd>
+            <dd><a href="">后台模版</a></dd>
+            <dd><a href="">电商平台</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item" style="right: auto">
+
+        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+               class="layui-input">
+        <button class="layui-btn">搜索职位</button>
+    </li>
+    <li class="layui-nav-item" style="right: auto">用户名:[[${session.worker}]]</li>
+
+</ul>
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-container">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">欢迎您</div>
+                    <div class="layui-card-body">
+
+
+                        [[${session.worker}]]
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <a class="layui-btn layui-btn-normal" th:href="@{/worker/resume}">
+                            <i class="layui-icon layui-icon-edit"></i>填写简历
+                        </a>
+                    </div>
+                    <div class="layui-card-body">
+                        <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
+                            <i class="layui-icon layui-icon-edit"></i>编辑个人资料
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md9">
+                <div class="layui-card">
+                    <div class="layui-card-header">请编辑您的个人资料</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form" id="workerForm">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">名字</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="name" required lay-verify="required" placeholder="请输入标题"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">电话号码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="phoneNumber" required lay-verify="required"
+                                           placeholder="请输入标题" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">邮箱</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="email" required lay-verify="required" placeholder="请输入标题"
+                                           autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">生日</label>
+                                <div class="layui-input-block">
+                                    <input type="date" name="birth" lay-skin="switch">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">性别</label>
+                                <div class="layui-input-block">
+                                    <input type="radio" name="sex" value="1" title="男">
+                                    <input type="radio" name="sex" value="0" title="女" checked>
+                                </div>
+                            </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">个人简介</label>
+                                <div class="layui-input-inline">
+                                    <textarea name="introduce" placeholder="请输入内容" class="layui-textarea"></textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo" type="button" in="worker">保存
+                                    </button>
+                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        $("#worker").click(function () {
+            $.ajax({
+                url: 'editor/save',
+                method: "post",
+                data: $('#workerForm').serialize(),
+                dataType: "text",
+                success: function (msg) {
+                    var success = "登录成功";
+                    layer.msg(msg);
+                    if (success == msg) {
+                        $('#workerForm')[0].reset();
+                        // setTimeout(function () {
+                        //     location.href = "worker/index";
+                        // }, 2000);
+                    }
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>

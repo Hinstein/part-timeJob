@@ -1,0 +1,24 @@
+.header{ height: 35px; background-color: #f5f5f5; border-bottom: 1px solid #e3e3e3;}
+.navigation_box,.navigation_box a{ color: #6c6c6c; font-size: 13px;}
+.city_wrap{ line-height: 35px; float: left; margin-left: 20px;}
+.city_wrap .city{ color: #f3573f; font-size: 15px;}
+.channel_box{ line-height: 35px; float: right; margin-right: 15px;}
+.channel_box a{ margin: 0 10px; position: relative;}
+.channel_box .user_name{ color: #f32e00;}
+.channel_box .new:after{ content: ''; position: absolute; right: -5px; top: 0; width: 4px; height: 4px; background-color: #f00; border-radius: 2px;}
+
+.cooperation_box_alt{ display: none;}
+.cooperation_box_overlay{ position: fixed; width: 100%; height: 100%; top: 0; left: 0; background-color: #000; opacity: 0.5; z-index: 100;}
+.cooperation_box{ position: fixed; top: 25%; margin-left: -256px; left: 50%; width: 500px; background-color: rgba(0,0,0,0.3); padding: 6px; z-index: 100;}
+
+.cooperation_box .title{ background:#f39800; color:#FFFFFF; padding:5px 10px;}
+.cooperation_box .close_btn{ float: right; color: #fff;}
+.cooperation_box .cont{ background-color: #fff; padding: 15px 10px 30px 10px; color: #4c4c4c; font-size: 13px; height: 200px;}
+.cooperation_box .p_left{ width: 120px; margin-top: 40px; margin-left: 50px; float: left;}
+.cooperation_box .p_left img{ width: 110px;}
+.cooperation_box .p_right{ text-align: center; float: right; width: 220px; padding-top: 35px;}
+.cooperation_box .p_right .btn{ padding: 5px 0; width: 140px; margin-bottom: 15px; font-size: 16px; color: #fff; border-radius: 5px; display: block;}
+.cooperation_box .p_right .btn:hover{ opacity: 0.7; filter: alpha(opacity=70);}
+.cooperation_box .p_right .company{ background-color: #dd572a;}
+.cooperation_box .p_right .websize{ background-color: #d7a512;}
+.cooperation_box .p_right .school{ background-color: #92c116;}

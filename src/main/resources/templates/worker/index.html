@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>兼职者页面</title>
+
+    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}">
+
+</head>
+
+<body style=" background-color: #F2F2F2;">
+<ul class="layui-nav" lay-filter="" >
+    <
+    <li class="layui-nav-item"><a href="">最新活动</a></li>
+    <li class="layui-nav-item layui-this"><a href="">产品</a></li>
+    <li class="layui-nav-item"><a href="">大数据</a></li>
+    <li class="layui-nav-item">
+        <a href="javascript:;">解决方案</a>
+        <dl class="layui-nav-child"> <!-- 二级菜单 -->
+            <dd><a href="">移动模块</a></dd>
+            <dd><a href="">后台模版</a></dd>
+            <dd><a href="">电商平台</a></dd>
+        </dl>
+    </li>
+    <li class="layui-nav-item" style="right: auto">
+
+        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
+               class="layui-input">
+        <button class="layui-btn">搜索职位</button>
+    </li>
+    <li class="layui-nav-item" style="right: auto">用户名:[[${session.userName}]]</li>
+
+</ul>
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-container">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">欢迎您</div>
+                    <div class="layui-card-body">
+                        [[${session.userName}]]
+                    </div>
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-header">
+                        <a class="layui-btn layui-btn-normal" th:href="@{/worker/resume}">
+                            <i class="layui-icon layui-icon-edit"></i>填写简历
+                        </a>
+                    </div>
+                    <div class="layui-card-body">
+                        <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
+                            <i class="layui-icon layui-icon-edit" ></i>编辑个人资料
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        <div class="layui-col-md9">
+            <div class="layui-card">
+                <div class="layui-card-header">卡片面板</div>
+                <div class="layui-card-body">
+                    结合 layui 的栅格系统阿斯顿撒打算
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+</body>
+</html>

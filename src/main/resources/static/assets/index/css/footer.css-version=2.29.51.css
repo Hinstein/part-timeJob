@@ -1,0 +1,23 @@
+/*  footer  */
+.footer{ text-align:left; padding:0 0 40px 0; color:#727272; font-size: 12px;}
+.channel a{ color:#727272; padding:0 24px; line-height:40px;}
+.channel a.qq{ position:relative; display:inline-block; width:10px; padding:0 65px 0 15px;}
+.channel a.qq img{ position:absolute; top:-15px;}
+
+/*  �������� */
+.red{ color: #f00;}
+.m-setpass{ padding: 15px; padding-left: 120px; font-family: "微软雅黑"; line-height: 34px;}
+.m-setpass .tit{ font-size: 18px;  color:#333333; margin-bottom: 25px;}
+.m-setpass .tit .ye{ padding-left:30px; color:#ff3600;}
+.m-setpass  label{ font-size: 14px; font-family: "微软雅黑"; color: #666666; margin-bottom: 15px;}
+.m-setpass  input{ font-size: 14px; font-family: "微软雅黑"; color: #333; margin-bottom: 15px; padding:0 10px; width: 180px; line-height:16px;}
+.m-setpass .btn{ display: block;  width: 120px; height: 36px; border-radius: 3px; background: #f39800;  line-height: 36px;  text-align: center; color: #fff; font-size: 18px;  }
+.m-setpass .btn:hover{  background: #db8900;  text-decoration: none; }
+/* ֧����ʾ */
+.m-zhifuts{ width: 600px; margin: 100px auto; text-align: center; font-family: "微软雅黑";}
+.m-zhifuts .tit{ font-size: 25px; line-height: 50px;  color: #666; }
+.m-zhifuts .ms{ font-size: 16px; line-height: 32px;  color: #666; }
+.m-zhifuts span.u-fcf04c1c{ color: #f04c1c;}
+.m-zhifuts .btn{ display: block; margin: 30px auto;  width: 195px; height: 40px; line-height: 40px; background: #f39800; color: #fff; font-size: 18px; }
+.m-zhifuts .btn:hover{ background: #cd8102; text-underline: none; }
+.m-zhifuts .btn2{display: block; margin: 30px auto;  width: 195px; height: 40px; line-height: 40px; background: #fff; border:1px solid #f39800; color: #f39800; font-size: 18px; box-sizing: border-box;}

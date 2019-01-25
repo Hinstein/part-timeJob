@@ -1,0 +1,26 @@
+.content_ad_box{ width: 288px;background-color: #fff;}
+.content_ad_box .p1{ color: #ff923a; font-size: 16px; background-color: #fff7ec; padding: 0 15px; line-height: 50px;}
+.content_ad_box .p2{ color: #909090; background-color: #fff9d8; padding: 0 15px; line-height: 50px; font-size: 16px;}
+.content_ad_box .p2 a{ color: #ff6600; text-decoration: underline;}
+.content_ad_box .p2 a{
+	transition: color 0.2s;
+	-moz-transition: color 0.2s;	/* Firefox 4 */
+	-webkit-transition: color 0.2s;	/* Safari 和 Chrome */
+	-o-transition: color 0.2s;	/* Opera */
+}
+.content_ad_box .p2 a:hover{ color: #2674d1;}
+.content_ad_box .p3{ padding: 0 10px;}
+.content_ad_box .p3 .hot{display:inline-block;margin-left:6px; padding: 2px 8px;line-height:12px;font-size:12px;color:#fff;background:#f05e25;border-radius: 2px;}
+.content_ad_box .p3 li{ border-bottom: 1px solid #dddddd; padding: 0 10px;}
+.content_ad_box .p3 .ttl{ font-size: 16px; color:#619ce6;padding: 10px 0; line-height: 28px;}
+.content_ad_box .p3 .ttl a{ color: #3a89e2;}
+.content_ad_box .p3 .cnt{ padding-bottom: 10px; color: #909090; line-height: 20px;}
+.content_ad_box .p3 .cnt .link_text{ color: #3a89e2;}
+.content_ad_box .rcm_text>li{margin:0 8px;padding:18px 10px; border-bottom: 1px solid #dddddd; }
+.content_ad_box .rcm_text>li:last-child{border:none;}
+.content_ad_box .rcm_text h2{font-size:16px;font-weight:normal; color: #646464; line-height:2;}
+.content_ad_box .rcm_text p{font-size:14px; line-height:2;color: #b7b7b7;}
+
+
+.theme_color{color:#fea767}
+.more_job{display:block;text-align:center;color:#646464;font-size:16px;line-height:50px;cursor: pointer;}

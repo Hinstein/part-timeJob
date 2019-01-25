@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}">
+    <link th:href="@{/assets/worker/login/css/common.3fee6d59.css}" rel="stylesheet">
+    <link th:href="@{/assets/worker/login/css/login.2a11019c.css}" rel="stylesheet">
+</head>
+<body>
+<div class="header">
+    <div class="nag">
+        <div class="in">
+            <span class="tl">欢迎注册</span>
+            <p class="nlink n2">
+                <a href="">首页</a>
+                <a href="" target="_blank">帮助中心</a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="lrcon l2 Fm">
+    <div class="lrbox clearfix">
+        <div class="lr_lf">
+            <div class="lr_c">
+                <label class="l1"></label>
+                <div class="lr_cn">
+                    <p>1亿+</p>
+                    <div class="c_999 f12">全国注册用户数</div>
+                </div>
+            </div>
+            <div class="lr_c">
+                <label class="l2"></label>
+                <div class="lr_cn">
+                    <p>1亿+</p>
+                    <div class="c_999 f12">简历库总数</div>
+                </div>
+            </div>
+            <div class="lr_c">
+                <label class="l3"></label>
+                <div class="lr_cn">
+                    <p>500万+</p>
+                    <div class="c_999 f12">每日发布职位数</div>
+                </div>
+            </div>
+            <div class="lr_c">
+                <label class="l4"></label>
+                <div class="lr_cn">
+                    <p>4,200万+</p>
+                    <div class="c_999 f12">每周发往企业简历数</div>
+                </div>
+            </div>
+        </div>
+        <!-- 邮箱注册-->
+        <div class="lr_rt">
+            <div class="lr_h1" id="SmsLoginBtn">
+                <span class="loginway on">兼职者注册</span>
+                <span class="gp"></span>
+                <span class="loginway "><a th:href="@{managerRegister}">招聘者注册</a></span>
+            </div>
+            <form  id="workerForm">
+
+                <div class="lr_e">
+                    <label><span class="err" style="display:none" id="username_err"></span>账号</label>
+                    <div class="txt" style="z-index:9999;position:relative;">
+                        <input class="ef" name="userName" type="text" placeholder="请输入手机号码/邮箱/用户名">
+                    </div>
+                </div>
+                </br>
+                <div class="lr_e">
+                    <label><span class="err" style="display:none" id="pwd_err"></span>密码</label>
+                    <div class="txt">
+                        <input class="ef" name="password" type="password"
+                               placeholder="请输入密码" >
+                    </div>
+                </div>
+                </br>
+                <div class="btnbox">
+                    <button type='button' class="p_but" id="worker">注册</button>
+                </div>
+            </form>
+            <div class="lr_p">
+                已有51Job帐号，
+                <a class="a2" th:href="@{workerLogin}">直接登录</a>
+            </div>
+        </div>
+    </div>
+    <div class="lr_bm"></div>
+</div>
+
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        $("#worker").click(function () {
+            $.ajax({
+                url: 'worker/register',
+                method: "post",
+                data: $('#workerForm').serialize(),
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    // //清除表单内容
+                    var success = "注册成功";
+                    if (success == msg) {
+                        $('#workerForm')[0].reset();
+                        setTimeout(function () {
+                            location.href = "workerLogin";
+                        }, 2000);
+                    }
+                },
+                error: function () {
+                    layer.msg("网络错误，注册失败");
+                }
+            })
+        })
+    })
+</script>
+</body>
+</html>
