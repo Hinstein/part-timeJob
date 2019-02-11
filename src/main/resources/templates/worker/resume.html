@@ -15,203 +15,242 @@
 
 </head>
 
-<body style=" background-color: #F2F2F2;">
-<ul class="layui-nav" lay-filter="">
-    <
-    <li class="layui-nav-item"><a href="">最新活动</a></li>
-    <li class="layui-nav-item layui-this"><a href="">产品</a></li>
-    <li class="layui-nav-item"><a href="">大数据</a></li>
-    <li class="layui-nav-item">
-        <a href="javascript:;">解决方案</a>
-        <dl class="layui-nav-child"> <!-- 二级菜单 -->
-            <dd><a href="">移动模块</a></dd>
-            <dd><a href="">后台模版</a></dd>
-            <dd><a href="">电商平台</a></dd>
-        </dl>
-    </li>
-    <li class="layui-nav-item" style="right: auto">
+<body class="layui-layout-body" style="background-color: #F2F2F2;">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="">欢迎兼职者</a></li>
+            <li class="layui-nav-item">
 
-        <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off"
-               class="layui-input">
-        <button class="layui-btn">搜索职位</button>
-    </li>
-    <li class="layui-nav-item" style="right: auto">用户名:[[${session.userName}]]</li>
+                <a href="javascript:;">
 
-</ul>
-<div style="padding: 20px; background-color: #F2F2F2;">
-    <div class="layui-container">
-        <div class="layui-row layui-col-space15">
-            <div class="layui-col-md3">
-                <div class="layui-card">
-                    <div class="layui-card-header">欢迎您</div>
-                    <div class="layui-card-body">
+                    [[${session.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-container">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">欢迎您</div>
+                        <div class="layui-card-body">
 
 
-                        [[${session.userName}]]
+                            [[${session.userName}]]
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-header">
+                            <a class="layui-btn layui-btn-normal" th:href="@{/worker/resume}">
+                                <i class="layui-icon layui-icon-edit"></i>填写简历
+                            </a>
+                        </div>
+                        <div class="layui-card-body">
+                            <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
+                                <i class="layui-icon layui-icon-set"></i>安全中心
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-card">
-                    <div class="layui-card-header">
-                        <a class="layui-btn layui-btn-normal" th:href="@{/worker/resume}">
-                            <i class="layui-icon layui-icon-edit"></i>填写简历
-                        </a>
-                    </div>
-                    <div class="layui-card-body">
-                        <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
-                            <i class="layui-icon layui-icon-set"></i>安全中心
-                        </a>
-                    </div>
-                </div>
-            </div>
 
-            <div class="layui-col-md9">
-                <div class="layui-card">
-                    <div class="layui-card-header">请编辑您的个人简历</div>
-                    <div class="layui-card-body">
+                <div class="layui-col-md9">
+                    <div class="layui-card">
+                        <div class="layui-card-header">请编辑您的个人简历</div>
+                        <div class="layui-card-body">
 
-                        <form class="layui-form" id="workerForm">
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">姓名</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="name" required lay-verify="required"
-                                               placeholder="请输入你的姓名"
-                                               autocomplete="off" class="layui-input"  th:value="${worker.name}">
+                            <form class="layui-form">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">姓名</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="name" required lay-verify="required|name"
+                                                   placeholder="请输入你的姓名"
+                                                   autocomplete="off" class="layui-input" th:value="${worker.name}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">性别</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="sex" value="1" title="男"
+                                                   th:checked="${worker.sex==1}">
+                                            <input type="radio" name="sex" value="0" title="女"
+                                                   th:checked="${worker.sex==0}">
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">性别</label>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">年龄</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="age" required lay-verify="required|number"
+                                                   placeholder="请输入年龄"
+                                                   autocomplete="off" class="layui-input" th:value="${worker.age}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">电话号码</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="phoneNumber" required lay-verify="required|phone"
+                                                   placeholder="请输入电话号码" autocomplete="off" class="layui-input"
+                                                   th:value="${worker.phoneNumber}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">邮箱</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="email" required lay-verify="required|email"
+                                                   placeholder="请输入邮箱"
+                                                   autocomplete="off" class="layui-input" th:value="${worker.email}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">求职意向</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="jobIntension" required lay-verify="required"
+                                                   placeholder="请填写求职意向"
+                                                   autocomplete="off" class="layui-input"
+                                                   th:value="${worker.jobIntension}">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">学历</label>
+                                        <div class="layui-input-inline">
+                                            <select name="educationBackground" lay-verify="required" lay-search="">
+                                                <option value="0" th:selected="${worker.educationBackground==0}">
+                                                    请选择你的学历
+                                                </option>
+                                                <option value="1" th:selected="${worker.educationBackground==1}">小学
+                                                </option>
+                                                <option value="2" th:selected="${worker.educationBackground==2}">初中
+                                                </option>
+                                                <option value="3" th:selected="${worker.educationBackground==3}">高中
+                                                </option>
+                                                <option value="4" th:selected="${worker.educationBackground==4}">中专
+                                                </option>
+                                                <option value="5" th:selected="${worker.educationBackground==5}">大专
+                                                </option>
+                                                <option value="6" th:selected="${worker.educationBackground==6}">本科
+                                                </option>
+                                                <option value="7" th:selected="${worker.educationBackground==7}">研究生
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">工作时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="workerTime" required lay-verify="required"
+                                                   placeholder="请选择工作时间"
+                                                   autocomplete="off" class="layui-input"
+                                                   th:value="${worker.workerTime}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">工作经历</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="workerExperience" required lay-verify="required"
+                                                   placeholder="请输入你的工作经历"
+                                                   autocomplete="off" class="layui-input"
+                                                   th:value="${worker.workerExperience}">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">期望薪资</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="expectation" required lay-verify="required"
+                                                   placeholder="你的期望薪资是"
+                                                   autocomplete="off" class="layui-input"
+                                                   th:value="${worker.expectation}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-form-inline">
+                                        <label class="layui-form-label">自我评价</label>
+                                        <div class="layui-input-inline">
+                                            <textarea placeholder="自我评价" class="layui-textarea" name="introduce"
+                                                      lay-verify="required|contact">[[${worker.introduce}]]</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <input type="radio" name="sex" value="1" title="男" th:checked="${worker.sex==1}">
-                                        <input type="radio" name="sex" value="0" title="女" th:checked="${worker.sex==0}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">年龄</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="age" required lay-verify="required"
-                                               placeholder="请输入年龄"
-                                               autocomplete="off" class="layui-input" th:value="${worker.age}">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">电话号码</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="phoneNumber" required lay-verify="required"
-                                               placeholder="请输入电话号码" autocomplete="off" class="layui-input" th:value="${worker.phoneNumber}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
+                                        <button class="layui-btn" lay-submit="" lay-filter="go"
+                                                >保存
+                                        </button>
 
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">邮箱</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="email" required lay-verify="required"
-                                               placeholder="请输入邮箱"
-                                               autocomplete="off" class="layui-input" th:value="${worker.email}">
                                     </div>
                                 </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">求职意向</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="jobIntension" required lay-verify="required"
-                                               placeholder="请填写求职意向"
-                                               autocomplete="off" class="layui-input" th:value="${worker.jobIntension}">
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">学历</label>
-                                    <div class="layui-input-inline">
-                                        <select name="educationBackground" lay-verify="required" lay-search="">
-                                            <option value="0" th:selected="${worker.educationBackground==0}">请选择你的学历</option>
-                                            <option value="1" th:selected="${worker.educationBackground==1}">小学</option>
-                                            <option value="2" th:selected="${worker.educationBackground==2}">初中</option>
-                                            <option value="3" th:selected="${worker.educationBackground==3}">高中</option>
-                                            <option value="4" th:selected="${worker.educationBackground==4}">中专</option>
-                                            <option value="5" th:selected="${worker.educationBackground==5}">大专</option>
-                                            <option value="6" th:selected="${worker.educationBackground==6}">本科</option>
-                                            <option value="7" th:selected="${worker.educationBackground==7}">研究生</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">工作时间</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="workerTime" required lay-verify="required"
-                                               placeholder="请选择工作时间"
-                                               autocomplete="off" class="layui-input" th:value="${worker.workerTime}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">工作经历</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="workerExperience" required lay-verify="required"
-                                               placeholder="请输入你的工作经历"
-                                               autocomplete="off" class="layui-input" th:value="${worker.workerExperience}">
-                                    </div>
-                                </div>
-
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">期望薪资</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="expectation" required lay-verify="required"
-                                               placeholder="你的期望薪资是"
-                                               autocomplete="off" class="layui-input" th:value="${worker.expectation}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-form-inline">
-                                    <label class="layui-form-label">自我评价</label>
-                                    <div class="layui-input-inline">
-                                        <textarea placeholder="自我评价" class="layui-textarea" name="introduce">[[${worker.introduce}]]</textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <button class="layui-btn" lay-submit lay-filter="formDemo"
-                                            type="button"
-                                            id="worker">保存
-                                    </button>
-
-                                </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<script th:src="@{/assets/js/jquery.js}"></script>
-<script th:src="@{/assets/layui/layui.all.js}"></script>
-<script>
-    $(function () {
-        $("#worker").click(function () {
-            $.ajax({
-                url: 'resume/save',
-                method: "post",
-                data: $('#workerForm').serialize(),
-                dataType: "text",
-                success: function (msg) {
-                    layer.msg(msg);
-                },
-                error: function () {
-                    layer.msg("网络错误，登录失败");
-                }
-            })
-        })
-    })
-</script>
+    <script th:src="@{/assets/js/jquery.js}"></script>
+    <script th:src="@{/assets/layui/layui.all.js}"></script>
+    <script>
+            layui.use('form', function () {
+                var form = layui.form;
+                form.verify({
+                    name: [
+                        /^([\u4e00-\u9fa5]){2,7}$/
+                        ,'姓名只能是中文，长度为2-7位'
+                    ]
+                });
+                form.on('submit(go)', function(data){
+                    console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+                    console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+                    console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+                    $.ajax({
+                        url: 'resume/save',
+                        method: "post",
+                        data: data.field,
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                        },
+                        error: function () {
+                            layer.msg("网络错误，登录失败");
+                        }
+                    });
+                    return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+                });
+            });
+    </script>
 </body>
 </html>

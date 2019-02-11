@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>兼职者页面</title>
+    <title>招聘者页面</title>
 
     <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
           th:href="@{/assets/layui/css/layui.css}">
@@ -34,12 +34,9 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">欢迎招聘者</a></li>
             <li class="layui-nav-item">
-                <a href="">欢迎兼职者</a></li>
-            <li class="layui-nav-item">
-
                 <a href="javascript:;">
-
                     [[${session.userName}]]
                 </a>
                 <dl class="layui-nav-child">
@@ -50,7 +47,6 @@
             <li class="layui-nav-item"><a href="">退了</a></li>
         </ul>
     </div>
-
     <div style="padding: 20px; background-color: #F2F2F2;">
         <div class="layui-container">
             <div class="layui-row layui-col-space15">
@@ -60,7 +56,6 @@
                         <div class="layui-card-body">
                             [[${session.userName}]]
                         </div>
-
                     </div>
                     <div class="layui-card">
                         <div class="layui-card-header">
@@ -70,7 +65,7 @@
                         </div>
                         <div class="layui-card-body">
                             <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
-                                <i class="layui-icon layui-icon-set"></i>安全中心
+                                <i class="layui-icon layui-icon-set"></i>安全设置
                             </a>
                         </div>
                     </div>
@@ -78,65 +73,24 @@
 
                 <div class="layui-col-md9">
                     <div class="layui-card">
-                        <div class="layui-card-header">修改密码</div>
+                        <div class="layui-card-header">卡片面板</div>
                         <div class="layui-card-body">
-                            <form class="layui-form layui-form-pane" id="workerForm">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">旧密码</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="title" autocomplete="off" placeholder="请输入旧密码"
-                                               class="layui-input" id="oldPassword">
-                                    </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">新密码</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="username" lay-verify="required" placeholder="请输入新密码"
-                                               autocomplete="off" class="layui-input" id="newPassword">
-                                    </div>
-                                </div>
-
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit lay-filter="formDemo" type="button"
-                                                id="worker">修改
-                                        </button>
-
-                                    </div>
-                                </div>
-                            </form>
+                            结合 layui 的栅格系统阿斯顿撒打算
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                            <br>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-<script th:src="@{/assets/js/jquery.js}"></script>
-<script th:src="@{/assets/layui/layui.all.js}"></script>
-<script>
-    $(function () {
-        $("#worker").click(function () {
-            $.ajax({
-                url: 'editor/save',
-                method: "post",
-                data: {
-                    "oldPassword": $('#oldPassword').val(),
-                    "newPassword": $('#newPassword').val()
-                },
-                dataType: "text",
-                success: function (msg) {
-                    layer.msg(msg);
-                    // layer.msg("更改密码成功！");
-                    //清除表单内容
-                    $('#workerForm')[0].reset();
-                },
-                error: function () {
-                    layer.msg("网络错误，登录失败");
-                }
-            })
-        })
-    })
-</script>
+
+        <script th:src="@{/assets/js/jquery.js}"></script>
+        <script th:src="@{/assets/layui/layui.all.js}"></script>
 </body>
 </html>

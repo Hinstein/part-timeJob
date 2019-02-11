@@ -76,7 +76,6 @@ public class WorkerController {
     }
 
 
-
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
         String username = session.getAttribute("userName").toString();
