@@ -35,7 +35,7 @@
                class="layui-input">
         <button class="layui-btn">搜索职位</button>
     </li>
-    <li class="layui-nav-item" style="right: auto">用户名:[[${session.username}]]</li>
+    <li class="layui-nav-item" style="right: auto">用户名:[[${session.userName}]]</li>
 
 </ul>
 <div style="padding: 20px; background-color: #F2F2F2;">
@@ -45,7 +45,7 @@
                 <div class="layui-card">
                     <div class="layui-card-header">欢迎您</div>
                     <div class="layui-card-body">
-                        [[${session.username}]]
+                        [[${session.userName}]]
                     </div>
 
                 </div>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="layui-card-body">
                         <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
-                            <i class="layui-icon layui-icon-edit"></i>编辑个人资料
+                            <i class="layui-icon layui-icon-set"></i>安全中心
                         </a>
                     </div>
                 </div>
@@ -65,57 +65,30 @@
 
             <div class="layui-col-md9">
                 <div class="layui-card">
-                    <div class="layui-card-header">请编辑您的个人资料</div>
+                    <div class="layui-card-header">修改密码</div>
                     <div class="layui-card-body">
-                        <form class="layui-form" id="workerForm">
+                        <form class="layui-form layui-form-pane" id="workerForm">
                             <div class="layui-form-item">
-                                <label class="layui-form-label">名字</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="name" required lay-verify="required" placeholder="请输入标题"
-                                           autocomplete="off" class="layui-input" th:value="${worker.name}">
-                                </div>
-                            </div>
-                            <input type="hidden" name="userName" th:value="${session.username}">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">电话号码</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="phoneNumber" required lay-verify="required"
-                                           placeholder="请输入标题" autocomplete="off" class="layui-input"
-                                           th:value="${worker.phoneNumber}">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">邮箱</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="email" required lay-verify="required" placeholder="请输入标题"
-                                           autocomplete="off" class="layui-input" th:value="${worker.email}">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">生日</label>
+                                <label class="layui-form-label">旧密码</label>
                                 <div class="layui-input-block">
-                                    <input type="date" name="birth" lay-skin="switch" th:value="${worker.birth}">
+                                    <input type="text" name="title" autocomplete="off" placeholder="请输入旧密码"
+                                           class="layui-input" id="oldPassword">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <label class="layui-form-label">性别</label>
+                                <label class="layui-form-label">新密码</label>
                                 <div class="layui-input-block">
-                                    <input type="radio" name="sex" value="1" title="男" th:checked="${worker.sex==1}">
-                                    <input type="radio" name="sex" value="0" title="女" th:checked="${worker.sex==0}">
+                                    <input type="text" name="username" lay-verify="required" placeholder="请输入新密码"
+                                           autocomplete="off" class="layui-input" id="newPassword">
                                 </div>
                             </div>
-                            <div class="layui-form-item layui-form-text">
-                                <label class="layui-form-label">个人简介</label>
-                                <div class="layui-input-inline">
-                                    <textarea name="introduce" placeholder="请输入内容" class="layui-textarea">[[${worker.introduce}]]</textarea>
-                                </div>
-                            </div>
+
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
                                     <button class="layui-btn" lay-submit lay-filter="formDemo" type="button"
-                                            id="worker">保存
+                                            id="worker">修改
                                     </button>
-                                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+
                                 </div>
                             </div>
                         </form>
@@ -133,17 +106,16 @@
             $.ajax({
                 url: 'editor/save',
                 method: "post",
-                data: $('#workerForm').serialize(),
+                data: {
+                    "oldPassword": $('#oldPassword').val(),
+                    "newPassword": $('#newPassword').val()
+                },
                 dataType: "text",
                 success: function (msg) {
-                    var success = "登录成功";
                     layer.msg(msg);
-                    if (success == msg) {
-                        $('#workerForm')[0].reset();
-                        // setTimeout(function () {
-                        //     location.href = "worker/index";
-                        // }, 2000);
-                    }
+                    // layer.msg("更改密码成功！");
+                    //清除表单内容
+                    $('#workerForm')[0].reset();
                 },
                 error: function () {
                     layer.msg("网络错误，登录失败");

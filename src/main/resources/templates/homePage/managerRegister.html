@@ -67,14 +67,28 @@
                 <div class="lr_e">
                     <label><span class="err" style="display:none" id="username_err"></span>账号</label>
                     <div class="txt" style="z-index:9999;position:relative;">
-                        <input class="ef" name="userName" type="text" placeholder="请输入手机号码/邮箱/用户名">
+                        <input class="ef" name="userName" type="text" placeholder="请输入登录账号">
                     </div>
                 </div>
                 </br>
                 <div class="lr_e">
-                    <label><span class="err" style="display:none" id="pwd_err"></span>密码</label>
+                    <label><span class="err" style="display:none" ></span>密码</label>
                     <div class="txt">
                         <input class="ef" name="password" type="password"
+                               placeholder="请输入密码" >
+                    </div>
+                </div>
+                <div class="lr_e">
+                    <label><span class="err" style="display:none" ></span>电话号码</label>
+                    <div class="txt">
+                        <input class="ef" name="phoneNumber" type="text"
+                               placeholder="请输入密码" >
+                    </div>
+                </div>
+                <div class="lr_e">
+                    <label><span class="err" style="display:none" ></span>邮箱</label>
+                    <div class="txt">
+                        <input class="ef" name="email" type="text"
                                placeholder="请输入密码" >
                     </div>
                 </div>
@@ -105,7 +119,7 @@
                 success: function (msg) {
                     layer.msg(msg);
                     // //清除表单内容
-                    var success = "注册成功";
+                    var success = "注册成功,等待管理员审核";
                     if (success == msg) {
                         $('#managerForm')[0].reset();
                         setTimeout(function () {

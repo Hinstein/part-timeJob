@@ -2,8 +2,6 @@ package com.parttimejob.entity;
 
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
-import java.util.Date;
 
 /**
  * @BelongsProject: part-timeJob
@@ -28,38 +26,16 @@ public class Worker {
     @Column//省略默认列名就是属性名
     private String password;
 
-    @Column
-    private String name;
+    @JoinColumn
+    @OneToOne(cascade = {CascadeType.ALL})
+    private WorkerDate workerData;
 
-    @Column
-    private String birth;
-
-    @Column
-    private Integer phoneNumber;
-
-    @Column
-    private String email;
-
-    @Column
-    private Integer sex;
-
-    @Column
-    private String introduce;
-
-    public int getSex() {
-        return sex;
+    public WorkerDate getWorkerData() {
+        return workerData;
     }
 
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-    public String getIntroduce() {
-        return introduce;
-    }
-
-    public void setIntroduce(String introduce) {
-        this.introduce = introduce;
+    public void setWorkerData(WorkerDate workerData) {
+        this.workerData = workerData;
     }
 
     public Integer getId() {
@@ -84,37 +60,5 @@ public class Worker {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getBirth() {
-        return birth;
-    }
-
-    public void setBirth(String birth) {
-        this.birth = birth;
-    }
-
-    public Integer getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Integer phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

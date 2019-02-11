@@ -24,6 +24,42 @@ public class Manager {
     @Column
     private String password;
 
+    @Column
+    private int audit;
+
+    @Column
+    private String date;
+
+    @Column
+    private String email;
+
+    @Column
+    private String phoneNumber;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -46,5 +82,13 @@ public class Manager {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getAudit() {
+        return audit;
+    }
+
+    public void setAudit(int audit) {
+        this.audit = audit;
     }
 }

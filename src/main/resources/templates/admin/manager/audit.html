@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}">
+
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">欢迎管理员</li>
+            <li class="layui-nav-item">
+
+                <a href="javascript:;">
+
+                    [[${session.adminUserName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item ">
+                    <a class="" href="javascript:;">兼职者管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;"></a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="javascript:;">列表三</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:;">招聘者管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="layui-this">招聘者审核</a></dd>
+                        <dd><a href="javascript:;">列表二</a></dd>
+                        <dd><a href="">超链接</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">云市场</a></li>
+                <li class="layui-nav-item"><a href="">发布商品</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body" style="background-color: #F2F2F2;">
+
+        <div class="layui-fluid" style=" padding: 15px;">
+            <div class="layui-col-md12">
+                <div class="layui-card">
+                    <div class="layui-card-header">&nbsp;新建招聘者审核</div>
+                    <div class="layui-card-body">
+                        <div class="layui-form">
+                            <table class="layui-table">
+                                <colgroup>
+                                    <col width="150">
+                                    <col width="150">
+                                    <col width="200">
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>用户名</th>
+                                    <th>手机号</th>
+                                    <th>邮箱</th>
+                                    <th>注册时间</th>
+                                    <th>审核状态</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="manager:${managers}">
+                                    <td th:text="${manager.id}"></td>
+                                    <td th:text="${manager.userName}"></td>
+                                    <!--<td th:text="${article.content}"></td>-->
+                                    <td th:text="${manager.phoneNumber}"></td>
+                                    <td th:text="${manager.email}"></td>
+                                    <td th:text="${manager.date}"></td>
+
+                                    <td>
+                                        <button class="layui-btn layui-btn-primary layui-btn-sm">未审核</button>
+                                    </td>
+                                    <td>
+                                        <button class="layui-btn layui-btn-normal layui-btn-sm pass" lay-event="edit"
+                                                type="button"
+                                                th:attr="url=@{audit/pass/}+${manager.id}">通过
+                                        </button>
+                                        <button class="layui-btn layui-btn-danger layui-btn-sm delete" type="button"
+                                                th:attr="url=@{audit/delete/}+${manager.id}">删除
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                            <div class="layui-table-page">
+                                <p>
+                                    <a class="layui-btn layui-btn-sm"
+                                       th:classappend="${managers.isFirst()} ? 'layui-btn-disabled' : 'layui-btn-primary'"
+                                       th:href="@{?pageNumber=}+${managers.number + 1-1}">
+                                        <!--<i class="layui-icon layui-icon-left"></i>-->
+                                        上一页
+                                    </a>
+
+                                    <a class="layui-btn layui-btn-sm"
+                                       th:each="i:${#numbers.sequence(1, managers.totalPages)}"
+                                       th:classappend="${(managers.number + 1) eq i} ? '' : 'layui-btn-primary'"
+                                       th:href="@{?pageNumber=}+${i}">
+                                        [[${i}]]
+                                    </a>
+
+                                    <a class="layui-btn layui-btn-sm"
+                                       th:classappend="${managers.isLast()} ? ' layui-btn-disabled' : 'layui-btn-primary'"
+                                       th:href="@{?pageNumber=}+${managers.number + 1+1}">
+                                        下一页
+                                    </a>
+                                    共[[${managers.totalElements}]]条记录
+                                    共[[${managers.totalPages}]]页
+                                    当前第[[${managers.number + 1}]]页
+
+                                </p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="layui-footer">
+                招聘者审核界面
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+
+<script>
+    $(function () {
+        $('.delete').click(function () {
+            var url = $(this).attr("url");
+            layer.confirm('确定要删除该管理员么？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                // layer.alert(url);
+                location.href = url;
+            });
+        })
+    })
+</script>
+<script>
+    $(function () {
+        $('.pass').click(function () {
+            var url = $(this).attr("url");
+            layer.confirm('确定该管理员通过审核么？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                // layer.alert(url);
+                location.href = url;
+            });
+        })
+    })
+</script>
+</body>
+</html>

@@ -20,20 +20,8 @@ import java.util.List;
 public interface WorkerRepository extends JpaRepository<Worker,Integer> {
     /**
      * @Description: 在数据库查找用户
-     * @param username
+     * @param userName
      * @return Worker
      */
-    Worker findByUserName(String username);
-
-    @Modifying
-    @Transactional
-    @Query(value="UPDATE Worker worker  SET worker.name= :#{#worker.name}," +
-            "worker.phoneNumber= :#{#worker.phoneNumber}," +
-            "worker.email= :#{#worker.email}," +
-            "worker.birth= :#{#worker.birth}," +
-            "worker.introduce= :#{#worker.introduce}, "+
-            "worker.sex= :#{#worker.sex} " +
-            "WHERE worker.userName = :#{#worker.userName}")
-    int updateEditor(Worker worker);
-
+    Worker findByUserName(String userName);
 }

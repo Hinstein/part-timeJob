@@ -11,6 +11,7 @@ spring:
       #控制台显示SQL
     show-sql: true
     open-in-view: false
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
   thymeleaf:
     #thymeleaf关闭缓存
     cache: false
