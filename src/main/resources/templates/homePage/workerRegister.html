@@ -2,94 +2,80 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>兼职者注册页面</title>
     <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
           th:href="@{/assets/layui/css/layui.css}">
-    <link th:href="@{/assets/worker/login/css/common.3fee6d59.css}" rel="stylesheet">
-    <link th:href="@{/assets/worker/login/css/login.2a11019c.css}" rel="stylesheet">
+    <link rel="stylesheet" href="../frame/static/css/style.css"
+          th:href="@{/assets/css/adminLogin/admin.css}">
+    <link rel="stylesheet" href="../frame/static/css/style.css"
+          th:href="@{/assets/css/adminLogin/login.css}">
 </head>
 <body>
-<div class="header">
-    <div class="nag">
-        <div class="in">
-            <span class="tl">欢迎注册</span>
-            <p class="nlink n2">
-                <a href="">首页</a>
-                <a href="" target="_blank">帮助中心</a>
-            </p>
-        </div>
-    </div>
-</div>
+<div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;padding:60px 0">
+    <div class="layadmin-user-login-main">
+        <div class="layadmin-user-login-box layadmin-user-login-header">
+            <h2>注册</h2>
 
-<div class="lrcon l2 Fm">
-    <div class="lrbox clearfix">
-        <div class="lr_lf">
-            <div class="lr_c">
-                <label class="l1"></label>
-                <div class="lr_cn">
-                    <p>1亿+</p>
-                    <div class="c_999 f12">全国注册用户数</div>
-                </div>
-            </div>
-            <div class="lr_c">
-                <label class="l2"></label>
-                <div class="lr_cn">
-                    <p>1亿+</p>
-                    <div class="c_999 f12">简历库总数</div>
-                </div>
-            </div>
-            <div class="lr_c">
-                <label class="l3"></label>
-                <div class="lr_cn">
-                    <p>500万+</p>
-                    <div class="c_999 f12">每日发布职位数</div>
-                </div>
-            </div>
-            <div class="lr_c">
-                <label class="l4"></label>
-                <div class="lr_cn">
-                    <p>4,200万+</p>
-                    <div class="c_999 f12">每周发往企业简历数</div>
-                </div>
-            </div>
         </div>
-        <!-- 邮箱注册-->
-        <div class="lr_rt">
-            <div class="lr_h1" id="SmsLoginBtn">
-                <span class="loginway on">兼职者注册</span>
-                <span class="gp"></span>
-                <span class="loginway "><a th:href="@{managerRegister}">招聘者注册</a></span>
-            </div>
-            <form  id="workerForm">
+        <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title layui-row">
+                    <li class="layui-this layui-col-md6">我是兼职者</li>
+                    <li class="layui-col-md6">
+                        <a th:href="@{managerRegister}">我是招聘者</a></li>
+                </ul>
+                <div class="layui-tab-content">
 
-                <div class="lr_e">
-                    <label><span class="err" style="display:none" id="username_err"></span>账号</label>
-                    <div class="txt" style="z-index:9999;position:relative;">
-                        <input class="ef" name="userName" type="text" placeholder="请输入手机号码/邮箱/用户名">
+                    <br>
+                    <div class="layui-tab-item layui-show">
+                        <form class="layui-form">
+                            <div class="layui-form-item">
+                                <label class="layadmin-user-login-icon layui-icon layui-icon-username"
+                                       for="LAY-user-login-nickname"></label>
+                                <input type="text" name="userName" id="LAY-user-login-nickname" lay-verify="required|userName"
+                                       placeholder="用户名" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layadmin-user-login-icon layui-icon layui-icon-password"
+                                       for="LAY-user-login-password"></label>
+                                <input type="password" name="password" id="LAY-user-login-password" lay-verify="required|password"
+                                       placeholder="密码" class="layui-input">
+                            </div>
+
+                            <div class="layui-form-item">
+                                <input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议" checked>
+                            </div>
+                            <div class="layui-form-item">
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="worker">注
+                                    册
+                                </button>
+                            </div>
+                            <div class="layui-trans layui-form-item layadmin-user-login-other">
+                                <label>社交账号注册</label>
+                                <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
+                                <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
+                                <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
+
+                                <a th:href="@{workerLogin}" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
+
+                            </div>
+                        </form>
                     </div>
                 </div>
-                </br>
-                <div class="lr_e">
-                    <label><span class="err" style="display:none" id="pwd_err"></span>密码</label>
-                    <div class="txt">
-                        <input class="ef" name="password" type="password"
-                               placeholder="请输入密码" >
-                    </div>
-                </div>
-                </br>
-                <div class="btnbox">
-                    <button type='button' class="p_but" id="manager" lay-submit="" lay-filter="go">注册</button>
-                </div>
-            </form>
-            <div class="lr_p">
-                已有51Job帐号，
-                <a class="a2" th:href="@{workerLogin}">直接登录</a>
             </div>
         </div>
     </div>
-    <div class="lr_bm"></div>
-</div>
+    <div class="layui-trans layadmin-user-login-footer">
 
+        <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
+        <p>
+            <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>
+            <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
+            <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
+        </p>
+    </div>
+
+</div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
@@ -107,12 +93,12 @@
                     return '用户名不能全为数字';
                 }
             }
-            , pass: [
+            , password: [
                 /^[\S]{6,12}$/
                 , '密码必须6到12位，且不能出现空格'
             ]
         });
-        form.on('submit(go)', function (data) {
+        form.on('submit(worker)', function (data) {
             console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
             console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
@@ -126,7 +112,6 @@
                     // //清除表单内容
                     var success = "注册成功";
                     if (success == msg) {
-                        $('#workerForm')[0].reset();
                         setTimeout(function () {
                             location.href = "workerLogin";
                         }, 2000);
