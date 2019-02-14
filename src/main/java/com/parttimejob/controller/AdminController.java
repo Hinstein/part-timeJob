@@ -7,6 +7,7 @@ import com.parttimejob.repository.AdminRepository;
 import com.parttimejob.repository.ManagerRepository;
 import com.parttimejob.service.AdminService;
 import com.parttimejob.service.ManagerService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,8 +16,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Column;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @BelongsProject: part-timeJob
@@ -59,44 +65,37 @@ public class AdminController {
     }
 
     @GetMapping("admin/manager/audit")
-    public String managerAudit(Model model, @RequestParam(name = "pageNumber", required = false, defaultValue = "1") String startPage) {
-
-        int pageNumber = 1;
-        try {
-            //对pageNumber的校验
-            pageNumber = Integer.parseInt(startPage);
-            if (pageNumber < 1) {
-                pageNumber = 1;
-            }
-
-        } catch (Exception e) {
-        }
-
-        Page<Manager> managers = managerService.getManagers(pageNumber, 10);
-
-        if (pageNumber > managers.getTotalPages()) {
-            pageNumber = managers.getTotalPages();
-            managers = managerService.getManagers(pageNumber, 10);
-        }
-        model.addAttribute("managers", managers);
-
+    public String managerAudit() {
         return "admin/manager/audit";
     }
 
-    @GetMapping("admin/manager/audit/delete/{id}")
+    @ResponseBody
+    @PostMapping("admin/manager/audit/delete/{id}")
     public String deleteManager(@PathVariable("id") Integer id) {
         managerService.deleteManagerById(id);
 
-        return "redirect:/admin/manager/audit";
+        return "删除成功";
     }
 
-    @GetMapping("admin/manager/audit/pass/{id}")
+    @ResponseBody
+    @PostMapping("admin/manager/audit/pass/{id}")
     public String passManager(@PathVariable("id") Integer id) {
-
         managerService.passManager(id);
-
-        return "redirect:/admin/manager/audit";
+        return "通过成功";
     }
 
-
+    @ResponseBody
+    @GetMapping("admin/manager/audit/data")
+    public Map<String, Object> managerAudit(Model model, HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Manager> managers = managerService.getManagers(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", managers.getTotalElements());
+        JSONArray json = JSONArray.fromObject(managers.getContent());
+        result.put("data", json);
+        return result;
+    }
 }

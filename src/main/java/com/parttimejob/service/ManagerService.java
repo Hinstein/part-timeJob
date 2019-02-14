@@ -25,7 +25,11 @@ public class ManagerService {
     @Autowired
     ManagerRepository managerRepository;
 
+    @Transactional
     public Page<Manager> getManagers(int pageNo, int pageSize) {
+        if(pageNo==0){
+            pageNo=1;
+        }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
         return managerRepository.findByAudit(0, pageable);
     }
@@ -45,4 +49,5 @@ public class ManagerService {
     public void save(Manager manager){
         managerRepository.save(manager);
     }
+
 }

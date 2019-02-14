@@ -73,92 +73,24 @@
     </div>
 
     <div class="layui-body" style="background-color: #F2F2F2;">
-
         <div class="layui-fluid" style=" padding: 15px;">
             <div class="layui-col-md12">
                 <div class="layui-card">
                     <div class="layui-card-header">&nbsp;新建招聘者审核</div>
                     <div class="layui-card-body">
-                        <div class="layui-form">
-                            <table class="layui-table">
-                                <colgroup>
-                                    <col width="150">
-                                    <col width="150">
-                                    <col width="200">
-                                    <col>
-                                </colgroup>
-                                <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>用户名</th>
-                                    <th>手机号</th>
-                                    <th>邮箱</th>
-                                    <th>注册时间</th>
-                                    <th>审核状态</th>
-                                    <th>操作</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr th:each="manager:${managers}">
-                                    <td th:text="${manager.id}"></td>
-                                    <td th:text="${manager.userName}"></td>
-                                    <!--<td th:text="${article.content}"></td>-->
-                                    <td th:text="${manager.phoneNumber}"></td>
-                                    <td th:text="${manager.email}"></td>
-                                    <td th:text="${manager.date}"></td>
 
-                                    <td>
-                                        <button class="layui-btn layui-btn-primary layui-btn-sm">未审核</button>
-                                    </td>
-                                    <td>
-                                        <button class="layui-btn layui-btn-normal layui-btn-sm pass" lay-event="edit"
-                                                type="button"
-                                                th:attr="url=@{audit/pass/}+${manager.id}">通过
-                                        </button>
-                                        <button class="layui-btn layui-btn-danger layui-btn-sm delete" type="button"
-                                                th:attr="url=@{audit/delete/}+${manager.id}">删除
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                            <div class="layui-table-page">
-                                <p>
-                                    <a class="layui-btn layui-btn-sm"
-                                       th:classappend="${managers.isFirst()} ? 'layui-btn-disabled' : 'layui-btn-primary'"
-                                       th:href="@{?pageNumber=}+${managers.number + 1-1}">
-                                        <!--<i class="layui-icon layui-icon-left"></i>-->
-                                        上一页
-                                    </a>
-
-                                    <a class="layui-btn layui-btn-sm"
-                                       th:each="i:${#numbers.sequence(1, managers.totalPages)}"
-                                       th:classappend="${(managers.number + 1) eq i} ? '' : 'layui-btn-primary'"
-                                       th:href="@{?pageNumber=}+${i}">
-                                        [[${i}]]
-                                    </a>
-
-                                    <a class="layui-btn layui-btn-sm"
-                                       th:classappend="${managers.isLast()} ? ' layui-btn-disabled' : 'layui-btn-primary'"
-                                       th:href="@{?pageNumber=}+${managers.number + 1+1}">
-                                        下一页
-                                    </a>
-                                    共[[${managers.totalElements}]]条记录
-                                    共[[${managers.totalPages}]]页
-                                    当前第[[${managers.number + 1}]]页
-
-                                </p>
-
-                            </div>
-
+                        <table id="demo" lay-filter="test"></table>
+                        <div hidden="hidden">
+                            <script type="text/html" id="toolbarDemo">
+                                <div class="layui-btn-container">
+                                    <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
+                                    <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
+                                </div>
+                            </script>
                         </div>
                     </div>
                 </div>
-
-
             </div>
-
             <div class="layui-footer">
                 招聘者审核界面
             </div>
@@ -168,31 +100,79 @@
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 
-<script>
-    $(function () {
-        $('.delete').click(function () {
-            var url = $(this).attr("url");
-            layer.confirm('确定要删除该管理员么？', {
-                btn: ['确定', '取消'] //按钮
-            }, function () {
-                // layer.alert(url);
-                location.href = url;
-            });
-        })
-    })
-</script>
-<script>
-    $(function () {
-        $('.pass').click(function () {
-            var url = $(this).attr("url");
-            layer.confirm('确定该管理员通过审核么？', {
-                btn: ['确定', '取消'] //按钮
-            }, function () {
-                // layer.alert(url);
-                location.href = url;
-            });
-        })
-    })
+<script th:inline="none">
+    layui.use(['laypage', 'layer', 'table'], function () {
+
+        var table = layui.table;
+        var laypage = layui.laypage;
+        var layer = layui.layer;
+        //第一个实例
+        table.render({
+            elem: '#demo'
+            , url: '/admin/manager/audit/data' //数据接口
+            , toolbar: '#toolbarDemo'
+            , page: true //开启分页
+            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                {field: 'id', title: 'ID', sort: true, fixed: 'left'}
+                , {field: 'userName', title: '用户名'}
+                , {field: 'phoneNumber', title: '手机号'}
+                , {field: 'email', title: '邮箱'}
+                , {field: 'date', title: '注册时间', sort: true}
+                , {
+                    field: 'audit', title: '审核状态', templet: function (d) {
+                        return d.audit == '0' ? "未审核" : "<span class='layui-red'>未审核</span>";
+                    }
+                }
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolbarDemo'}
+            ]]
+        });
+        //监听事件
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+
+            if (layEvent === 'pass') { //通过
+                layer.msg(data.id);
+                layer.confirm('通过用户名为' + data.userName + '账号么', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    $.ajax({
+                        url: 'audit/pass/' + data.id,
+                        method: "post",
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                            // //清除表单内容
+                        },
+                        error: function () {
+                            layer.msg("网络错误，通过失败");
+                        }
+                    });
+                });
+            } else if (layEvent === 'delete') { //删除
+                layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    $.ajax({
+                        url: 'audit/delete/' + data.id,
+                        method: "post",
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                            // //清除表单内容
+                        },
+                        error: function () {
+                            layer.msg("网络错误，通过失败");
+                        }
+                    });
+                });
+            }
+        });
+    });
 </script>
 </body>
 </html>
