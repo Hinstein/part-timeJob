@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
           th:href="@{/assets/layui/css/layui.css}">
 
+
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -79,15 +80,20 @@
                     <div class="layui-card-header">&nbsp;新建招聘者审核</div>
                     <div class="layui-card-body">
 
-                        <table id="demo" lay-filter="test"></table>
-                        <div hidden="hidden">
-                            <script type="text/html" id="toolbarDemo">
-                                <div class="layui-btn-container">
-                                    <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
-                                    <button class="layui-btn layui-btn-sm" lay-event="delete">删除</button>
-                                </div>
-                            </script>
-                        </div>
+                        <table class="layui-hide" id="demo" lay-filter="test"></table>
+                        <script type="text/html" id="toolbarDemo">
+                            <div class="layui-btn-container">
+                                <button class="layui-btn layui-btn-sm" lay-event="batchPass">批量通过</button>
+                                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除
+                                </button>
+                            </div>
+                        </script>
+                        <script type="text/html" id="action">
+                            <div class="layui-btn-container">
+                                <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
+                                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
+                            </div>
+                        </script>
                     </div>
                 </div>
             </div>
@@ -101,13 +107,11 @@
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 
 <script th:inline="none">
-    layui.use(['laypage', 'layer', 'table'], function () {
-
+    layui.use(['table'], function () {
         var table = layui.table;
-        var laypage = layui.laypage;
-        var layer = layui.layer;
+
         //第一个实例
-        table.render({
+        var tableIns = table.render({
             elem: '#demo'
             , url: '/admin/manager/audit/data' //数据接口
             , toolbar: '#toolbarDemo'
@@ -115,6 +119,7 @@
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
+                {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: 'ID', sort: true, fixed: 'left'}
                 , {field: 'userName', title: '用户名'}
                 , {field: 'phoneNumber', title: '手机号'}
@@ -122,10 +127,10 @@
                 , {field: 'date', title: '注册时间', sort: true}
                 , {
                     field: 'audit', title: '审核状态', templet: function (d) {
-                        return d.audit == '0' ? "未审核" : "<span class='layui-red'>未审核</span>";
+                        return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
                     }
                 }
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#toolbarDemo'}
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}
             ]]
         });
         //监听事件
@@ -137,8 +142,6 @@
             if (layEvent === 'pass') { //通过
                 layer.msg(data.id);
                 layer.confirm('通过用户名为' + data.userName + '账号么', function (index) {
-                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                    layer.close(index);
                     //向服务端发送删除指令
                     $.ajax({
                         url: 'audit/pass/' + data.id,
@@ -152,11 +155,10 @@
                             layer.msg("网络错误，通过失败");
                         }
                     });
+                    tableIns.reload();
                 });
             } else if (layEvent === 'delete') { //删除
                 layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
-                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                    layer.close(index);
                     $.ajax({
                         url: 'audit/delete/' + data.id,
                         method: "post",
@@ -169,7 +171,71 @@
                             layer.msg("网络错误，通过失败");
                         }
                     });
+                    tableIns.reload();
                 });
+            }
+        });
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'batchDelete':
+                    var data = checkStatus.data;
+                    // layer.alert(JSON.stringify(data));
+                    var ids = '';
+                    for (var i = 0; i < data.length; i++) {
+                        if (i != (data.length - 1)) {
+                            ids += data[i].id + ",";
+                        } else {
+                            ids += data[i].id;
+                        }
+                    }
+                    layer.confirm('删除id为' + ids + '账号么', function (index) {
+                        for (var i = 0; i < data.length; i++) {
+                            $.ajax({
+                                url: 'audit/delete/' + data[i].id,
+                                method: "post",
+                                dataType: "text",
+                                success: function (msg) {
+                                    layer.msg(msg);
+                                    // //清除表单内容
+                                },
+                                error: function () {
+                                    layer.msg("网络错误，通过失败");
+                                }
+                            });
+                        }
+                        tableIns.reload();
+                    });
+                    break;
+                case 'batchPass':
+                    var data = checkStatus.data;
+                    // layer.alert(JSON.stringify(data));
+                    var ids = '';
+                    for (var i = 0; i < data.length; i++) {
+                        if (i != (data.length - 1)) {
+                            ids += data[i].id + ",";
+                        } else {
+                            ids += data[i].id;
+                        }
+                    }
+                    layer.confirm('通过id为' + ids + '账号么', function (index) {
+                        for (var i = 0; i < data.length; i++) {
+                            $.ajax({
+                                url: 'audit/pass/' + data[i].id,
+                                method: "post",
+                                dataType: "text",
+                                success: function (msg) {
+                                    layer.msg(msg);
+                                },
+                                error: function () {
+                                    layer.msg("网络错误，通过失败");
+                                }
+                            });
+                        }
+                        tableIns.reload();
+                    });
+                    break;
             }
         });
     });

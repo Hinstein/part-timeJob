@@ -135,7 +135,11 @@ public class WorkerController {
         } else {
             return "旧密码错误";
         }
+    }
 
+    @GetMapping("/worker/search")
+    public String workerSearch(){
+        return "worker/search";
     }
 }
 
