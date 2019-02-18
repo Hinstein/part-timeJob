@@ -50,4 +50,10 @@ public class ManagerService {
         managerRepository.save(manager);
     }
 
+    public Manager findById(int id){
+        return managerRepository.findById(id);
+    }
+
+
+
 }

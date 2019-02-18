@@ -28,13 +28,13 @@ public class Worker {
 
     @JoinColumn
     @OneToOne(cascade = {CascadeType.ALL})
-    private WorkerDate workerData;
+    private WorkerData workerData;
 
-    public WorkerDate getWorkerData() {
+    public WorkerData getWorkerData() {
         return workerData;
     }
 
-    public void setWorkerData(WorkerDate workerData) {
+    public void setWorkerData(WorkerData workerData) {
         this.workerData = workerData;
     }
 

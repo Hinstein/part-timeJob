@@ -22,6 +22,8 @@ import java.util.Map;
 public interface ManagerRepository extends JpaRepository<Manager,Integer> {
     Manager findByUserName(String userName);
 
+    Manager findById(int id);
+
     List<Manager> findByAudit(int i);
 
     @Transactional

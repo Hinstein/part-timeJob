@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>招聘者页面</title>
+
+    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}">
+
+    <link rel="stylesheet" href="../frame/static/css/style.css"
+          th:href="@{/assets/css/adminLogin/template.css}">
+</head>
+
+<body style="background-color: #F2F2F2;">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">欢迎招聘者</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    [[${session.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-container">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">欢迎您</div>
+                        <div class="layui-card-body">
+                            [[${session.userName}]]
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <a class="layui-btn  " th:href="@{/manager/publish}">
+                                <i class="layui-icon layui-icon-edit"></i>发布兼职
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/manager/editor}">
+                                <i class="layui-icon layui-icon-set"></i>安全设置
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/mangaer/search}">
+                                <i class="layui-icon layui-icon-search"></i>搜索职位
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md9">
+                    <div class="layui-card">
+                        <div class="layui-card-header">发布兼职</div>
+                        <div class="layui-card-body">
+                            <form class="layui-form layui-form-pane">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">标题</label>
+                                    <div class="layui-input-block">
+                                        <input type="text" name="title" autocomplete="off" placeholder="请输入标题"
+                                               class="layui-input" lay-verify="required">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">薪资范围</label>
+                                        <div class="layui-input-inline" style="width: 100px;">
+                                            <input type="text" name="lowPay" placeholder="￥" autocomplete="off"
+                                                   class="layui-input" lay-verify="required|number">
+                                        </div>
+                                        <div class="layui-form-mid">-</div>
+                                        <div class="layui-input-inline" style="width: 100px;">
+                                            <input type="text" name="hightPay" placeholder="￥" autocomplete="off"
+                                                   class="layui-input" lay-verify="required|number">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item layui-form-text">
+                                    <label class="layui-form-label">兼职介绍</label>
+                                    <div class="layui-input-block">
+                                        <textarea id="demo" style="display: none;" name="content"
+                                                  lay-verify="content"></textarea>
+                                    </div>
+                                </div>
+
+
+                                <div class="layui-form-item">
+                                    <button class="layui-btn" lay-submit="" lay-filter="go" type="button">发布</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    layui.use(['form', 'layedit'], function () {
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var index = layedit.build('demo'); //建立编辑器
+        // form.verify({
+        //     content: [
+        //         /^([\u4e00-\u9fa5]){2,7}$/
+        //         , '姓名只能是中文，长度为2-7位'
+        //     ]
+        // });
+        form.verify({
+            content: function (value) {
+                layedit.sync(index);
+            }
+        });
+        form.on('submit(go)', function (data) {
+            console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+
+            $.ajax({
+                url: '/manager/publish/save',
+                method: "post",
+                data: data.field,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
+</script>
+</body>
+</html>

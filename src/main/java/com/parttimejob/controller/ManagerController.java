@@ -1,5 +1,6 @@
 package com.parttimejob.controller;
 
+import com.parttimejob.entity.Job;
 import com.parttimejob.entity.Manager;
 import com.parttimejob.repository.ManagerRepository;
 import com.parttimejob.service.ManagerService;
@@ -27,6 +28,7 @@ public class ManagerController {
 
     @Autowired
     ManagerService managerService;
+
 
     @ResponseBody
     @PostMapping("/manager/register")
@@ -68,6 +70,13 @@ public class ManagerController {
 
     @GetMapping("/manager/index")
     public String managerIndex() {
-        return "worker/index";
+        return "manager/index";
     }
+
+    @GetMapping("/manager/publish")
+    public String managerPublish(){
+        return "manager/publish";
+    }
+
+
 }

@@ -1,7 +1,7 @@
 package com.parttimejob.controller;
 
 import com.parttimejob.entity.Worker;
-import com.parttimejob.entity.WorkerDate;
+import com.parttimejob.entity.WorkerData;
 import com.parttimejob.service.WorkerDateService;
 import com.parttimejob.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,7 @@ public class WorkerController {
         if (worker1 != null) {
             return "注册失败，存在该用户";
         }
-        WorkerDate workerDate =new WorkerDate();
+        WorkerData workerDate =new WorkerData();
         worker.setWorkerData(workerDate);
         workerService.save(worker);
         return "注册成功";
@@ -80,14 +80,14 @@ public class WorkerController {
     public String workerResume(HttpSession session, Model model) {
         String username = session.getAttribute("userName").toString();
         Worker worker =workerService.findByUserName(username);
-        WorkerDate workerData=worker.getWorkerData();
+        WorkerData workerData=worker.getWorkerData();
         model.addAttribute("worker", workerData);
         return "worker/resume";
     }
 
     @ResponseBody
     @PostMapping("/worker/resume/save")
-    public String workerDateSave(WorkerDate workerDate, HttpSession session) {
+    public String workerDateSave(WorkerData workerDate, HttpSession session) {
         String username = session.getAttribute("userName").toString();
         Worker worker =workerService.findByUserName(username);
         workerDate.setId(worker.getWorkerData().getId());

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>招聘者页面</title>
+
+    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
+          th:href="@{/assets/layui/css/layui.css}">
+
+    <link rel="stylesheet" href="../frame/static/css/style.css"
+          th:href="@{/assets/css/adminLogin/template.css}">
+</head>
+
+<body style="background-color: #F2F2F2;">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">layui 后台布局</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item"><a href="">欢迎招聘者</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    [[${session.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+    <div style="padding: 20px; background-color: #F2F2F2;">
+        <div class="layui-container">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-card">
+                        <div class="layui-card-header">欢迎您</div>
+                        <div class="layui-card-body">
+                            [[${session.userName}]]
+                        </div>
+                    </div>
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <a class="layui-btn  " th:href="@{/manager/publish}">
+                                <i class="layui-icon layui-icon-edit"></i>发布兼职
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/manager/editor}">
+                                <i class="layui-icon layui-icon-set"></i>安全设置
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/manager/search}">
+                                <i class="layui-icon layui-icon-search"></i>搜索职位
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/manager/allJob}">
+                                <i class="layui-icon layui-icon-search"></i>我发布的职位
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-col-md9">
+                    <div class="layui-fluid" style="padding:0">
+                        <div class="layadmin-caller">
+
+
+                            <div class="caller-contar">
+                                <div class="caller-item" th:each="job:${jobs}">
+
+                                    <div class="caller-main caller-fl">
+                                        <p><strong th:text="${job.title}">标题</strong></p>
+                                        <p>发布时间：<em th:text="${job.date}"></em></p>
+                                    </div>
+                                    <div class="layui-btn layui-btn-sm caller-fr">
+                                        <em th:text="${job.lowPay}"></em>-
+                                        <em th:text="${job.hightPay}"></em>
+                                    </div>
+                                </div>
+                                <div class="caller-item">
+                                    <img src="../../layuiadmin/style/res/template/portrait.png" alt=""
+                                         class="caller-img caller-fl">
+                                    <div class="caller-main caller-fl">
+                                        <p><strong>胡歌</strong> <em>最近联系：1 小时前</em></p>
+                                        <p class="caller-adds"><i class="layui-icon layui-icon-location"></i>浙江省广州市越秀区中山六路109
+                                        </p>
+                                        <div class="caller-iconset">
+                                            <i class="layui-icon layui-icon-login-wechat"></i>
+                                            <i class="layui-icon layui-icon-login-qq"></i>
+                                            <i class="layui-icon layui-icon-login-weibo"></i>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn layui-btn-sm layui-btn layui-btn-primary caller-fr">
+                                        已收藏
+                                    </button>
+                                </div>
+                                <div class="caller-item">
+                                    <img src="../../layuiadmin/style/res/template/portrait.png" alt=""
+                                         class="caller-img caller-fl">
+                                    <div class="caller-main caller-fl">
+                                        <p><strong>胡歌</strong> <em>最近联系：1 小时前</em></p>
+                                        <p class="caller-adds"><i class="layui-icon layui-icon-location"></i>浙江省广州市越秀区中山六路109
+                                        </p>
+                                        <div class="caller-iconset">
+                                            <i class="layui-icon layui-icon-login-wechat"></i>
+                                            <i class="layui-icon layui-icon-login-qq"></i>
+                                            <i class="layui-icon layui-icon-login-weibo"></i>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn layui-btn-sm caller-fr">
+                                        <i class="layui-icon layui-icon-ok"></i>
+                                        已收藏
+                                    </button>
+                                </div>
+                                <div class="caller-item">
+                                    <img src="../../layuiadmin/style/res/template/portrait.png" alt=""
+                                         class="caller-img caller-fl">
+                                    <div class="caller-main caller-fl">
+                                        <p><strong>胡歌</strong> <em>最近联系：1 小时前</em></p>
+                                        <p class="caller-adds"><i class="layui-icon layui-icon-location"></i>浙江省广州市越秀区中山六路109
+                                        </p>
+                                        <div class="caller-iconset">
+                                            <i class="layui-icon layui-icon-login-wechat"></i>
+                                            <i class="layui-icon layui-icon-login-qq"></i>
+                                            <i class="layui-icon layui-icon-login-weibo"></i>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn layui-btn-sm layui-btn layui-btn-primary caller-fr">
+                                        已收藏
+                                    </button>
+                                </div>
+                                <div class="caller-item">
+                                    <img src="../../layuiadmin/style/res/template/portrait.png" alt=""
+                                         class="caller-img caller-fl">
+                                    <div class="caller-main caller-fl">
+                                        <p><strong>胡歌</strong> <em>最近联系：1 小时前</em></p>
+                                        <p class="caller-adds"><i class="layui-icon layui-icon-location"></i>浙江省广州市越秀区中山六路109
+                                        </p>
+                                        <div class="caller-iconset">
+                                            <i class="layui-icon layui-icon-login-wechat"></i>
+                                            <i class="layui-icon layui-icon-login-qq"></i>
+                                            <i class="layui-icon layui-icon-login-weibo"></i>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn layui-btn-sm caller-fr">
+                                        <i class="layui-icon layui-icon-ok"></i>
+                                        已收藏
+                                    </button>
+                                </div>
+                                <div class="caller-item">
+                                    <img src="../../layuiadmin/style/res/template/portrait.png" alt=""
+                                         class="caller-img caller-fl">
+                                    <div class="caller-main caller-fl">
+                                        <p><strong>胡歌</strong> <em>最近联系：1 小时前</em></p>
+                                        <p class="caller-adds"><i class="layui-icon layui-icon-location"></i>浙江省广州市越秀区中山六路109
+                                        </p>
+                                        <div class="caller-iconset">
+                                            <i class="layui-icon layui-icon-login-wechat"></i>
+                                            <i class="layui-icon layui-icon-login-qq"></i>
+                                            <i class="layui-icon layui-icon-login-weibo"></i>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn layui-btn-sm layui-btn layui-btn-primary caller-fr">
+                                        已收藏
+                                    </button>
+                                </div>
+                                <div class="caller-item">
+                                    <img src="../../layuiadmin/style/res/template/portrait.png" alt=""
+                                         class="caller-img caller-fl">
+                                    <div class="caller-main caller-fl">
+                                        <p><strong>胡歌</strong> <em>最近联系：1 小时前</em></p>
+                                        <p class="caller-adds"><i class="layui-icon layui-icon-location"></i>浙江省广州市越秀区中山六路109
+                                        </p>
+                                        <div class="caller-iconset">
+                                            <i class="layui-icon layui-icon-login-wechat"></i>
+                                            <i class="layui-icon layui-icon-login-qq"></i>
+                                            <i class="layui-icon layui-icon-login-weibo"></i>
+                                        </div>
+                                    </div>
+                                    <button class="layui-btn layui-btn-sm caller-fr">
+                                        <i class="layui-icon layui-icon-ok"></i>
+                                        已收藏
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script th:src="@{/assets/js/jquery.js}"></script>
+        <script th:src="@{/assets/layui/layui.all.js}"></script>
+</body>
+</html>

@@ -9,9 +9,9 @@ import javax.persistence.*;
  * @CreateTime: 2019-02-01 19:34
  * @Description:
  */
-@Table(name="workerDate")
+@Table(name="workerData")
 @Entity
-public class WorkerDate {
+public class WorkerData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

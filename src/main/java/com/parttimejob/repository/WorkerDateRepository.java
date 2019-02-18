@@ -1,11 +1,7 @@
 package com.parttimejob.repository;
 
-import com.parttimejob.entity.WorkerDate;
+import com.parttimejob.entity.WorkerData;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
-
-import javax.transaction.Transactional;
 
 /**
  * @BelongsProject: part-timeJob
@@ -14,7 +10,7 @@ import javax.transaction.Transactional;
  * @CreateTime: 2019-02-01 19:57
  * @Description:
  */
-public interface WorkerDateRepository extends JpaRepository<WorkerDate,Integer> {
+public interface WorkerDateRepository extends JpaRepository<WorkerData,Integer> {
 
 //    @Modifying
 //    @Transactional
