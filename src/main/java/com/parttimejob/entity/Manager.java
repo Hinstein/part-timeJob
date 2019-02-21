@@ -38,17 +38,6 @@ public class Manager {
     @Column
     private String phoneNumber;
 
-    @OneToMany(mappedBy = "manager",cascade=CascadeType.ALL,fetch = FetchType.EAGER)
-    private List<Job> jobs;
-
-
-    public List<Job> getJobs() {
-        return jobs;
-    }
-
-    public void setJobs(List<Job> jobs) {
-        this.jobs = jobs;
-    }
 
     public String getDate() {
         return date;

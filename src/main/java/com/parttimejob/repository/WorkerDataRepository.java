@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @CreateTime: 2019-02-01 19:57
  * @Description:
  */
-public interface WorkerDateRepository extends JpaRepository<WorkerData,Integer> {
+public interface WorkerDataRepository extends JpaRepository<WorkerData,Integer> {
 
 //    @Modifying
 //    @Transactional
@@ -22,4 +22,6 @@ public interface WorkerDateRepository extends JpaRepository<WorkerData,Integer> 
 //            "worker.sex= :#{#worker.sex} " +
 //            "WHERE worker.userName = :#{#worker.userName}")
 //    int updateEditor(WorkerDate worker);
+
+    WorkerData findByWorkerId(int id);
 }

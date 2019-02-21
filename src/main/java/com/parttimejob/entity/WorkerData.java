@@ -57,6 +57,17 @@ public class WorkerData {
     @Column
     private String introduce;
 
+    @Column
+    private int workerId;
+
+    public int getWorkerId() {
+        return workerId;
+    }
+
+    public void setWorkerId(int workerId) {
+        this.workerId = workerId;
+    }
+
     public Integer getAge() {
         return age;
     }

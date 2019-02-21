@@ -1,8 +1,6 @@
 package com.parttimejob.controller;
 
-import com.parttimejob.entity.Job;
 import com.parttimejob.entity.Manager;
-import com.parttimejob.repository.ManagerRepository;
 import com.parttimejob.service.ManagerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -73,10 +71,7 @@ public class ManagerController {
         return "manager/index";
     }
 
-    @GetMapping("/manager/publish")
-    public String managerPublish(){
-        return "manager/publish";
-    }
+
 
 
 }

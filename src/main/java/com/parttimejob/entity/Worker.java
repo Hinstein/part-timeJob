@@ -26,18 +26,6 @@ public class Worker {
     @Column//省略默认列名就是属性名
     private String password;
 
-    @JoinColumn
-    @OneToOne(cascade = {CascadeType.ALL})
-    private WorkerData workerData;
-
-    public WorkerData getWorkerData() {
-        return workerData;
-    }
-
-    public void setWorkerData(WorkerData workerData) {
-        this.workerData = workerData;
-    }
-
     public Integer getId() {
         return id;
     }

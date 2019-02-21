@@ -32,6 +32,17 @@ public class Job {
     @Column
     private String date;
 
+    @Column
+    private Integer managerId;
+
+    public Integer getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(Integer managerId) {
+        this.managerId = managerId;
+    }
+
     public String getDate() {
         return date;
     }
@@ -39,10 +50,6 @@ public class Job {
     public void setDate(String date) {
         this.date = date;
     }
-
-    @ManyToOne(cascade = {CascadeType.ALL}, optional = false)//可选属性optional=false,表示author不能为空。删除文章，不影响用户
-    @JoinColumn(name = "manager_id")
-    private Manager manager;
 
     public String getContent() {
         return content;
@@ -52,13 +59,6 @@ public class Job {
         this.content = content;
     }
 
-    public Manager getManager() {
-        return manager;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
-    }
 
     public Integer getId() {
         return id;

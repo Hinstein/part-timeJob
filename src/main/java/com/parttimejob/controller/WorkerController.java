@@ -2,7 +2,7 @@ package com.parttimejob.controller;
 
 import com.parttimejob.entity.Worker;
 import com.parttimejob.entity.WorkerData;
-import com.parttimejob.service.WorkerDateService;
+import com.parttimejob.service.WorkerDataService;
 import com.parttimejob.service.WorkerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,7 +28,7 @@ public class WorkerController {
     WorkerService workerService;
 
     @Autowired
-    WorkerDateService workerDateService;
+    WorkerDataService workerDateService;
 
 
     @ResponseBody
@@ -38,8 +38,6 @@ public class WorkerController {
         if (worker1 != null) {
             return "注册失败，存在该用户";
         }
-        WorkerData workerDate =new WorkerData();
-        worker.setWorkerData(workerDate);
         workerService.save(worker);
         return "注册成功";
     }
@@ -78,9 +76,8 @@ public class WorkerController {
 
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
-        String username = session.getAttribute("userName").toString();
-        Worker worker =workerService.findByUserName(username);
-        WorkerData workerData=worker.getWorkerData();
+       int id = Integer.parseInt(session.getAttribute("id").toString());
+        WorkerData workerData=workerDateService.findByManagerId(id);
         model.addAttribute("worker", workerData);
         return "worker/resume";
     }
@@ -88,11 +85,9 @@ public class WorkerController {
     @ResponseBody
     @PostMapping("/worker/resume/save")
     public String workerDateSave(WorkerData workerDate, HttpSession session) {
-        String username = session.getAttribute("userName").toString();
-        Worker worker =workerService.findByUserName(username);
-        workerDate.setId(worker.getWorkerData().getId());
-        worker.setWorkerData(workerDate);
-        workerService.save(worker);
+        int id = Integer.parseInt(session.getAttribute("id").toString());
+        workerDate.setWorkerId(id);
+        workerDateService.save(workerDate);
         return "保存成功";
     }
 
@@ -141,6 +136,8 @@ public class WorkerController {
     public String workerSearch(){
         return "worker/search";
     }
+
+
 }
 
 

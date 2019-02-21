@@ -37,5 +37,5 @@ public interface ManagerRepository extends JpaRepository<Manager,Integer> {
     void passManager(int id);
 
 
-    Page<Manager> findByAudit(int id , Pageable pageable);
+    Page<Manager> findByAudit(int audit , Pageable pageable);
 }
