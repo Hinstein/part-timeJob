@@ -28,7 +28,7 @@ public class WorkerController {
     WorkerService workerService;
 
     @Autowired
-    WorkerDataService workerDateService;
+    WorkerDataService workerDataService;
 
 
     @ResponseBody
@@ -39,6 +39,9 @@ public class WorkerController {
             return "注册失败，存在该用户";
         }
         workerService.save(worker);
+        WorkerData workerData =new WorkerData();
+        workerData.setWorkerId(worker.getId());
+        workerDataService.save(workerData);
         return "注册成功";
     }
 
@@ -77,17 +80,17 @@ public class WorkerController {
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
        int id = Integer.parseInt(session.getAttribute("id").toString());
-        WorkerData workerData=workerDateService.findByManagerId(id);
+        WorkerData workerData=workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
         return "worker/resume";
     }
 
     @ResponseBody
     @PostMapping("/worker/resume/save")
-    public String workerDateSave(WorkerData workerDate, HttpSession session) {
+    public String workerDateSave(WorkerData workerData, HttpSession session) {
         int id = Integer.parseInt(session.getAttribute("id").toString());
-        workerDate.setWorkerId(id);
-        workerDateService.save(workerDate);
+        workerData.setWorkerId(id);
+        workerDataService.updata(workerData);
         return "保存成功";
     }
 
@@ -118,7 +121,6 @@ public class WorkerController {
                                               @RequestParam("oldPassword") String oldPassword,
                                               HttpSession session) {
         Map<String, String> map = new HashMap<>(50);
-        System.out.println("sss");
         String username = (String) session.getAttribute("userName");
         Worker worker =workerService.findByUserName(username);
         if (worker.getPassword().equals(oldPassword)) {

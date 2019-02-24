@@ -99,7 +99,7 @@
                                         style="margin-top: 0">删除
                                         </button>
                                         <form id="deleteForm" method="post">
-                                            <input type="hidden" name="_method" value="delete"/>
+                                            <input type="hidden">
                                         </form>
                                     </div>
                                 </div>
@@ -115,10 +115,27 @@
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
     $(".delete").click(function () {
-        $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
-        // layer.confirm('删除该招聘信息么', function (index) {
-        //
-        // });
+        var url =$(this).attr("del_uri");
+        layer.confirm('删除该招聘信息么', function (index) {
+            // $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
+
+            console.log(url);
+            $.ajax({
+                url: url,
+                method: "post",
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    // //清除表单内容
+                    setTimeout(function () {
+                        location.href = "/manager/allJob";
+                    }, 2000);
+                },
+                error: function () {
+                    layer.msg("网络错误，通过失败");
+                }
+            });
+        });
         return false;
     })
 </script>

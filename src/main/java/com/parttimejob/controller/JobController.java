@@ -5,16 +5,17 @@ import com.parttimejob.entity.Manager;
 import com.parttimejob.repository.JobRepository;
 import com.parttimejob.service.JobService;
 import com.parttimejob.service.ManagerService;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -37,7 +38,6 @@ public class JobController {
     @ResponseBody
     @PostMapping("/manager/publish/save")
     public String managerPublishSave(Job job, HttpSession session) {
-        System.out.println(job.getContent());
         int id = Integer.parseInt(session.getAttribute("id").toString());
         job.setManagerId(id);
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -49,7 +49,6 @@ public class JobController {
     @GetMapping("/manager/allJob")
     public String findAllJob(HttpSession session, Model model) {
         int id = Integer.parseInt(session.getAttribute("id").toString());
-
         List<Job> jobs = jobService.findByManagerId(id);
         model.addAttribute("jobs", jobs);
         return "manager/job/allJob";
@@ -74,11 +73,12 @@ public class JobController {
         return "保存成功";
     }
 
-    @DeleteMapping("/manager/job/delete/{id}")
+    @ResponseBody
+    @PostMapping("/manager/job/delete/{id}")
     public String jobDelete(@PathVariable("id") Integer id, HttpSession session) {
 
         jobService.delete(id);
-        return "redirect:/manager/allJob";
+        return "删除成功";
     }
 
     @ResponseBody
@@ -88,6 +88,26 @@ public class JobController {
         return jobs ;
     }
 
+    @ResponseBody
+    @GetMapping("/worker/search/allJobs")
+    public Map<String, Object> managerAudit(Model model, HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Job> jobs = jobService.getJobs(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", jobs.getTotalElements());
+        JSONArray json = JSONArray.fromObject(jobs.getContent());
+        result.put("data", json);
+        return result;
+    }
 
+    @GetMapping("/worker/job/{id}")
+    public String job(@PathVariable("id") int id,Model model){
+        Job job =jobService.findById(id);
+        model.addAttribute("job",job);
+        return "worker/job";
+    }
 
 }

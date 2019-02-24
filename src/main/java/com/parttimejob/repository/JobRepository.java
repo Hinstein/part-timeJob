@@ -1,6 +1,8 @@
 package com.parttimejob.repository;
 
 import com.parttimejob.entity.Job;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -32,4 +34,6 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     @Query(value = "select job from Job job where job.content like  CONCAT('%',?1,'%')")
     List<Job> findByContentLike(String content);
+
+    Page<Job> findAll(Pageable pageable);
 }

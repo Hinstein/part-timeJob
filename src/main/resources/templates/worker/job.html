@@ -78,24 +78,13 @@
                     </div>
                 </div>
             </div>
-
             <div class="layui-col-md9">
                 <div class="layui-card">
-                    <div class="layui-card-header">搜索职位</div>
+                    <div class="layui-card-header"><h1>[[${job.title}]]</h1></div>
                     <div class="layui-card-body">
-                        <div class="demoTable">
-                            搜索你想要的职位：
-                            <div class="layui-inline">
-                                <input class="layui-input"  id="demoReload"  autocomplete="off">
-                            </div>
-                            <button class="layui-btn "  data-type="reload">搜索</button>
-                        </div>
-                        <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
-                        <script type="text/html" id="action">
-                            <div class="layui-btn-container">
-                                <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
-                            </div>
-                        </script>
+                        <h2>职位信息：</h2>
+                        <hr>
+                        <text th:utext="${job.content}"></text>
                     </div>
                 </div>
             </div>
@@ -104,44 +93,5 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script th:inline="none">
-    layui.use(['table'], function () {
-        var table = layui.table;
-        //第一个实例
-        var tableIns = table.render({
-            elem: '#demo'
-            , url: '/worker/search/allJobs' //数据接口
-            , page: true //开启分页
-            , skin: 'line'
-            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-            , limit: 10 //每页默认显示的数量
-            , cols: [[ //表头
-                {field: 'title', title: '信息'}
-                , {field: 'lowPay', title: '最低工资'}
-                , {field: 'hightPay', title: '最高工资'}
-                , {field: 'date', title: '发布时间', sort: true}
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}
-                // , {
-                //     field: 'audit', title: '是否收藏', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
-                // , {
-                //     field: 'audit', title: '是否投递', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
-            ]]
-        });
-        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'pass') { //通过
-                location.href = "/worker/job/" + data.id;
-            }
-        });
-    })
-</script>
 </body>
 </html>
