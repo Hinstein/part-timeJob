@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>兼职者页面</title>
+    <title>搜索职位</title>
 
     <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
           th:href="@{/assets/layui/css/layui.css}">
@@ -64,16 +64,20 @@
                 </div>
                 <div class="layui-card">
                     <div class="layui-card-body">
-                        <a class="layui-btn  " th:href="@{/worker/resume}">
-                            <i class="layui-icon layui-icon-edit"></i>填写简历
+                        <a class="layui-btn  " th:href="@{/manager/publish}">
+                            <i class="layui-icon layui-icon-edit"></i>发布兼职
                         </a>
                         <hr>
-                        <a class="layui-btn " th:href="@{/worker/editor}">
+                        <a class="layui-btn " th:href="@{/manager/editor}">
                             <i class="layui-icon layui-icon-set"></i>安全设置
                         </a>
                         <hr>
-                        <a class="layui-btn " th:href="@{/worker/search}">
+                        <a class="layui-btn " th:href="@{/manager/search}">
                             <i class="layui-icon layui-icon-search"></i>搜索职位
+                        </a>
+                        <hr>
+                        <a class="layui-btn " th:href="@{/manager/allJob}">
+                            <i class="layui-icon layui-icon-search"></i>我发布的职位
                         </a>
                     </div>
                 </div>

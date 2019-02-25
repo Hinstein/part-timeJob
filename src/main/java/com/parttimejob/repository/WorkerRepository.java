@@ -24,4 +24,6 @@ public interface WorkerRepository extends JpaRepository<Worker,Integer> {
      * @return Worker
      */
     Worker findByUserName(String userName);
+
+    Worker findById(int id);
 }

@@ -25,4 +25,8 @@ public class WorkerService {
     public void save(Worker worker){
         workerRepository.save(worker);
     }
+
+    public Worker findById(int id){
+        return workerRepository.findById(id);
+    }
 }

@@ -93,10 +93,12 @@
                                         薪资:
                                         <em th:text="${job.lowPay}"></em>-
                                         <em th:text="${job.hightPay}"></em>
-                                        <a class="layui-btn" th:href="@{/manager/job/editor/}+${job.id}">编辑</a>
+                                        <a class="layui-btn layui-btn-warm" th:href="@{/manager/job/deliver/}+${job.id}">查看投递信息</a>
+                                        <a class="layui-btn" th:href="@{/manager/job/editor/}+${job.id}"
+                                           style="margin-left: 0;">编辑</a>
                                         <button class="delete layui-btn layui-btn-danger delete"
                                                 th:attr="del_uri=@{/manager/job/delete/}+${job.id}" type="button"
-                                        style="margin-top: 0">删除
+                                        style="margin-top: 0;margin-left: 0;">删除
                                         </button>
                                         <form id="deleteForm" method="post">
                                             <input type="hidden">
@@ -118,15 +120,13 @@
         var url =$(this).attr("del_uri");
         layer.confirm('删除该招聘信息么', function (index) {
             // $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
-
-            console.log(url);
+            // console.log(url);
             $.ajax({
                 url: url,
                 method: "post",
                 dataType: "text",
                 success: function (msg) {
                     layer.msg(msg);
-                    // //清除表单内容
                     setTimeout(function () {
                         location.href = "/manager/allJob";
                     }, 2000);

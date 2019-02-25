@@ -7,10 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @BelongsProject: part-timeJob
@@ -28,14 +26,13 @@ public interface ManagerRepository extends JpaRepository<Manager,Integer> {
 
     @Transactional
     @Modifying
-    @Query(value = "delete from Manager where id =?1",nativeQuery = true)
+    @Query(value = "delete from Manager a where a.id =?1")
     void deleteManagerById(int id);
 
     @Transactional
     @Modifying
-    @Query(value = "update Manager SET audit = 1 where id =?1",nativeQuery = true)
+    @Query(value = "update Manager a SET a.audit = 1 where id =?1")
     void passManager(int id);
-
 
     Page<Manager> findByAudit(int audit , Pageable pageable);
 }

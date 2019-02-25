@@ -1,16 +1,16 @@
 package com.parttimejob.controller;
 
-import com.parttimejob.entity.Worker;
-import com.parttimejob.entity.WorkerData;
-import com.parttimejob.service.WorkerDataService;
-import com.parttimejob.service.WorkerService;
+import com.parttimejob.entity.*;
+import com.parttimejob.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,6 +30,14 @@ public class WorkerController {
     @Autowired
     WorkerDataService workerDataService;
 
+    @Autowired
+    WorkerAndJobService workerAndJobService;
+
+    @Autowired
+    JobService jobService;
+
+    @Autowired
+    DeliverService deliverService;
 
     @ResponseBody
     @PostMapping("/worker/register")
@@ -39,7 +47,7 @@ public class WorkerController {
             return "注册失败，存在该用户";
         }
         workerService.save(worker);
-        WorkerData workerData =new WorkerData();
+        WorkerData workerData = new WorkerData();
         workerData.setWorkerId(worker.getId());
         workerDataService.save(workerData);
         return "注册成功";
@@ -79,8 +87,8 @@ public class WorkerController {
 
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
-       int id = Integer.parseInt(session.getAttribute("id").toString());
-        WorkerData workerData=workerDataService.findByWorkerId(id);
+        int id = Integer.parseInt(session.getAttribute("id").toString());
+        WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
         return "worker/resume";
     }
@@ -118,11 +126,11 @@ public class WorkerController {
     @ResponseBody
     @PostMapping("/worker/editor/save")
     public String changePassword(@RequestParam("newPassword") String newPassword,
-                                              @RequestParam("oldPassword") String oldPassword,
-                                              HttpSession session) {
+                                 @RequestParam("oldPassword") String oldPassword,
+                                 HttpSession session) {
         Map<String, String> map = new HashMap<>(50);
         String username = (String) session.getAttribute("userName");
-        Worker worker =workerService.findByUserName(username);
+        Worker worker = workerService.findByUserName(username);
         if (worker.getPassword().equals(oldPassword)) {
             worker.setPassword(newPassword);
             workerService.save(worker);
@@ -135,10 +143,35 @@ public class WorkerController {
     }
 
     @GetMapping("/worker/search")
-    public String workerSearch(){
+    public String workerSearch() {
         return "worker/search";
     }
 
+    @GetMapping("/worker/collect")
+    public String workerCollect(Model model, HttpSession session) {
+        int workerId = Integer.parseInt(session.getAttribute("id").toString());
+        List<WorkerAndJob> workerAndJobs=workerAndJobService.findbyWorkerId(workerId);
+        List<Job> jobs =new ArrayList<>();
+        for(WorkerAndJob w:workerAndJobs){
+            Job job =jobService.findById(w.getJobId());
+            jobs.add(job);
+        }
+        model.addAttribute("jobs",jobs);
+        return "worker/collect";
+    }
+
+    @GetMapping("/worker/deliver")
+    public String workerDeliver(Model model,HttpSession session){
+        int workerId = Integer.parseInt(session.getAttribute("id").toString());
+        List<Deliver> delivers= deliverService.findByWorkerId(workerId);
+        List<Job> jobs =new ArrayList<>();
+        for(Deliver w:delivers){
+            Job job =jobService.findById(w.getJobId());
+            jobs.add(job);
+        }
+        model.addAttribute("jobs",jobs);
+        return "worker/deliver";
+    }
 
 }
 

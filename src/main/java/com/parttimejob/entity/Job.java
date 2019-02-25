@@ -35,6 +35,28 @@ public class Job {
     @Column
     private Integer managerId;
 
+    @Column
+    private int collection;
+
+    @Column
+    private int deliver;
+
+    public int getCollection() {
+        return collection;
+    }
+
+    public void setCollection(int collection) {
+        this.collection = collection;
+    }
+
+    public int getDeliver() {
+        return deliver;
+    }
+
+    public void setDeliver(int deliver) {
+        this.deliver = deliver;
+    }
+
     public Integer getManagerId() {
         return managerId;
     }

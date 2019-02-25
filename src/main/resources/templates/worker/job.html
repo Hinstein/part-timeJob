@@ -85,6 +85,17 @@
                         <h2>职位信息：</h2>
                         <hr>
                         <text th:utext="${job.content}"></text>
+                        <hr>
+                        <button th:if="${job.collection}==0" class="layui-btn  layui-btn-radius" id="save">收藏</button>
+                        <button th:if="${job.collection}==1" class="layui-btn layui-btn-warm layui-btn-radius"
+                                id="cancelSave">已收藏
+                        </button>
+                        <button th:if="${job.deliver}==0" class="layui-btn  layui-btn-radius" id="deliver">投递简历
+                        </button>
+                        <button th:if="${job.deliver}==1" class="layui-btn layui-btn-warm layui-btn-radius"
+                                id="cancelDeliver">已投递
+                        </button>
+                        <input hidden="hidden" th:value="${job.id}" id="jobId" name="id">
                     </div>
                 </div>
             </div>
@@ -93,5 +104,88 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        var id = $("#jobId").val();
+        $("#save").click(function () {
+            var params = {};
+            params.id = id;
+            $.ajax({
+                url: 'save',
+                method: "post",
+                data: params,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href = "/worker/job/"+id;
+                    }, 1000);
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+        });
+        $("#cancelSave").click(function () {
+            var params = {};
+            params.id = id;
+            $.ajax({
+                url: 'cancelSave',
+                method: "post",
+                data: params,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href = "/worker/job/"+id;
+                    }, 1000);
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+        });
+        $("#deliver").click(function () {
+            var id = $("#jobId").val();
+            var params = {};
+            params.id = id;
+            $.ajax({
+                url: 'deliver',
+                method: "post",
+                data: params,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href = "/worker/job/"+id;
+                    }, 1000);
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+        });
+        $("#cancelDeliver").click(function () {
+            var id = $("#jobId").val();
+            var params = {};
+            params.id = id;
+            $.ajax({
+                url: 'cancelDeliver',
+                method: "post",
+                data: params,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href = "/worker/job/"+id;
+                    }, 1000);
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+        })
+    })
+</script>
 </body>
 </html>
