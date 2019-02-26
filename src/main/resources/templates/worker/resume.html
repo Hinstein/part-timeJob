@@ -63,14 +63,25 @@
                         </div>
                     </div>
                     <div class="layui-card">
-                        <div class="layui-card-header">
-                            <a class="layui-btn layui-btn-normal" th:href="@{/worker/resume}">
+                        <div class="layui-card-body">
+                            <a class="layui-btn  " th:href="@{/worker/resume}">
                                 <i class="layui-icon layui-icon-edit"></i>填写简历
                             </a>
-                        </div>
-                        <div class="layui-card-body">
-                            <a class="layui-btn layui-btn-normal" th:href="@{/worker/editor}">
-                                <i class="layui-icon layui-icon-set"></i>安全中心
+                            <hr>
+                            <a class="layui-btn " th:href="@{/worker/editor}">
+                                <i class="layui-icon layui-icon-set"></i>安全设置
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/worker/search}">
+                                <i class="layui-icon layui-icon-search"></i>搜索职位
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/worker/collect}">
+                                <i class="layui-icon layui-icon-search"></i>我收藏的职位
+                            </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/worker/deliver}">
+                                <i class="layui-icon layui-icon-search"></i>我投递的职位
                             </a>
                         </div>
                     </div>

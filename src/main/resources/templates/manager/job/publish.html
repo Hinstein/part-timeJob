@@ -76,6 +76,10 @@
                             <a class="layui-btn " th:href="@{/manager/allJob}">
                                 <i class="layui-icon layui-icon-search"></i>我发布的职位
                             </a>
+                            <hr>
+                            <a class="layui-btn " th:href="@{/manager/employ}">
+                                <i class="layui-icon layui-icon-search"></i>我录用的员工
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +96,6 @@
                                                class="layui-input" lay-verify="required">
                                     </div>
                                 </div>
-
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">薪资范围</label>
@@ -107,7 +110,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="layui-form-item layui-form-text">
                                     <label class="layui-form-label">兼职介绍</label>
                                     <div class="layui-input-block">
@@ -115,8 +117,6 @@
                                                   lay-verify="content"></textarea>
                                     </div>
                                 </div>
-
-
                                 <div class="layui-form-item">
                                     <button class="layui-btn" lay-submit="" lay-filter="go" type="button">发布</button>
                                 </div>

@@ -1,8 +1,7 @@
 package com.parttimejob.service;
 
-import com.parttimejob.entity.WorkerAndJob;
-import com.parttimejob.repository.WorkerAndJobRepository;
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
+import com.parttimejob.entity.Collect;
+import com.parttimejob.repository.CollectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +15,16 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class WorkerAndJobService {
+public class CollectService {
 
     @Autowired
-    WorkerAndJobRepository workerAndJobRepository;
+    CollectRepository workerAndJobRepository;
 
-    public void save(WorkerAndJob workerAndJob) {
-        workerAndJobRepository.save(workerAndJob);
+    public void save(Collect collect) {
+        workerAndJobRepository.save(collect);
     }
 
-    public WorkerAndJob findByWorkerIdAndJobId(int workerId, int jobId){
+    public Collect findByWorkerIdAndJobId(int workerId, int jobId){
         return workerAndJobRepository.findByWorkerIdAndJobId(workerId,jobId);
     }
 
@@ -33,7 +32,7 @@ public class WorkerAndJobService {
         workerAndJobRepository.deleteByWorkerIdAndJobId(workerId,jobId);
     }
 
-    public List<WorkerAndJob> findbyWorkerId(int workerId){
+    public List<Collect> findbyWorkerId(int workerId){
         return workerAndJobRepository.findByWorkerId(workerId);
     }
 }

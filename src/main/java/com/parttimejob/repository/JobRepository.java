@@ -35,6 +35,5 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Query(value = "select job from Job job where job.title like  CONCAT('%',?1,'%')")
     Page<Job> findByTitleLike(String content,Pageable pageable);
 
-
     Page<Job> findAll(Pageable pageable);
 }

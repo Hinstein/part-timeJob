@@ -31,7 +31,7 @@ public class WorkerController {
     WorkerDataService workerDataService;
 
     @Autowired
-    WorkerAndJobService workerAndJobService;
+    CollectService collectService;
 
     @Autowired
     JobService jobService;
@@ -150,9 +150,9 @@ public class WorkerController {
     @GetMapping("/worker/collect")
     public String workerCollect(Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("id").toString());
-        List<WorkerAndJob> workerAndJobs=workerAndJobService.findbyWorkerId(workerId);
+        List<Collect> workerAndJobs=collectService.findbyWorkerId(workerId);
         List<Job> jobs =new ArrayList<>();
-        for(WorkerAndJob w:workerAndJobs){
+        for(Collect w:workerAndJobs){
             Job job =jobService.findById(w.getJobId());
             jobs.add(job);
         }

@@ -2,14 +2,11 @@ package com.parttimejob.controller;
 
 import com.parttimejob.entity.Deliver;
 import com.parttimejob.entity.Job;
-import com.parttimejob.entity.Manager;
-import com.parttimejob.entity.WorkerAndJob;
-import com.parttimejob.repository.DeliverRepository;
-import com.parttimejob.repository.JobRepository;
+import com.parttimejob.entity.Collect;
 import com.parttimejob.service.DeliverService;
 import com.parttimejob.service.JobService;
 import com.parttimejob.service.ManagerService;
-import com.parttimejob.service.WorkerAndJobService;
+import com.parttimejob.service.CollectService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,7 +38,7 @@ public class JobController {
     ManagerService managerService;
 
     @Autowired
-    WorkerAndJobService workerAndJobService;
+    CollectService collectService;
 
     @Autowired
     DeliverService deliverService;
@@ -126,7 +123,7 @@ public class JobController {
     public String job(@PathVariable("id") int jobId, Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("id").toString());
         Job job = jobService.findById(jobId);
-        if(workerAndJobService.findByWorkerIdAndJobId(workerId,jobId)!=null){
+        if(collectService.findByWorkerIdAndJobId(workerId,jobId)!=null){
             job.setCollection(1);
         };
         if (deliverService.findByWorkerIdAndJobId(workerId,jobId)!=null){
@@ -139,12 +136,12 @@ public class JobController {
     @ResponseBody
     @PostMapping(value = "/worker/job/save")
     public String saveJob(@RequestParam  HashMap<String, String> map, HttpSession session) {
-        WorkerAndJob workerAndJob = new WorkerAndJob();
+        Collect workerAndJob = new Collect();
         int jobId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(session.getAttribute("id").toString());
         workerAndJob.setJobId(jobId);
         workerAndJob.setWorkerId(workerId);
-        workerAndJobService.save(workerAndJob);
+        collectService.save(workerAndJob);
         return "收藏成功";
     }
 
@@ -153,7 +150,7 @@ public class JobController {
     public String cancelSaveJob(@RequestParam  HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(session.getAttribute("id").toString());
-        workerAndJobService.delete(workerId,jobId);
+        collectService.delete(workerId,jobId);
         return "取消收藏";
     }
 

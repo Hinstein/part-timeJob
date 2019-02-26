@@ -1,6 +1,6 @@
 package com.parttimejob.repository;
 
-import com.parttimejob.entity.WorkerAndJob;
+import com.parttimejob.entity.Collect;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,14 +16,14 @@ import java.util.List;
  * @CreateTime: 2019-02-25 14:37
  * @Description:
  */
-public interface WorkerAndJobRepository extends JpaRepository<WorkerAndJob, Integer> {
+public interface CollectRepository extends JpaRepository<Collect, Integer> {
 
-    WorkerAndJob findByWorkerIdAndJobId(int workerId, int jobId);
+    Collect findByWorkerIdAndJobId(int workerId, int jobId);
 
     @Transactional
     @Modifying
-    @Query(value = "delete from WorkerAndJob a where a.workerId = ?1 and a.jobId=?2 ")
+    @Query(value = "delete from Collect a where a.workerId = ?1 and a.jobId=?2 ")
     void deleteByWorkerIdAndJobId(int workerId, int jobId);
 
-    List<WorkerAndJob> findByWorkerId(int workerId);
+    List<Collect> findByWorkerId(int workerId);
 }

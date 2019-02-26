@@ -60,6 +60,17 @@ public class WorkerData {
     @Column
     private int workerId;
 
+    @Column
+    private int employ;
+
+    public int getEmploy() {
+        return employ;
+    }
+
+    public void setEmploy(int employ) {
+        this.employ = employ;
+    }
+
     public int getWorkerId() {
         return workerId;
     }
