@@ -86,14 +86,26 @@
 
                 <div class="layui-col-md9">
                     <div class="layui-card">
-                        <div class="layui-card-header">我录用的员工</div>
+                        <div class="layui-card-header">请为[[${worker.name}]]安排面试时间</div>
                         <div class="layui-card-body">
-                            <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
-                            <script type="text/html" id="action">
-                                <div class="layui-btn-container">
-                                    <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                            <div class="layui-form">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">请选择日期</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" id="date"
+                                                   placeholder="yyyy年MM月dd日">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">请选择时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" class="layui-input" id="time" placeholder="H点m分">
+                                        </div>
+                                    </div>
                                 </div>
-                            </script>
+                                <button class="layui-btn  layui-btn-radius" id="save" type="button">录用</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,36 +115,45 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script th:inline="none">
-    layui.use(['table'], function () {
-        var table = layui.table;
-        //第一个实例
-        var id = $('#jobId').val();
-        var tableIns = table.render({
-            elem: '#demo'
-            , url: '/manager/employ/list'  //数据接口
-            , page: true //开启分页
-            , skin: 'line'
-            , size: 'lg'
-            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-            , limit: 10 //每页默认显示的数量
-            , cols: [[ //表头
-                {field: 'name', title: '姓名'}
-                , {field: 'age', title: '年龄'}
-                , {field: 'jobIntension', title: '求职意向'}
-                , {field: 'expectation', title: '期望薪资', sort: true}
-                , {fixed: 'right', title: '操作', toolbar: '#action'}
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
 
-            ]]
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#date' //指定元素
         });
-        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'pass') { //通过
-                location.href = "/manager/workerDeliver/" + data.workerId;
-            }
+
+        //时间选择器
+        laydate.render({
+            elem: '#time'
+            , type: 'time'
         });
+    });
+    $(function () {
+        $('#save').click(function () {
+            var date = $('#date').val();
+            var time = $('#time').val();
+            $.ajax({
+                url: '/employ',
+                method: "post",
+                data: {
+                    'date': date,
+                    'time': time
+                },
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    // //清除表单内容
+                },
+                error: function () {
+                    layer.msg("网络错误，通过失败");
+                }
+            });
+            setTimeout(function () {
+                location.href = "/manager/employ";
+            }, 2000);
+        })
     })
 </script>
 </body>

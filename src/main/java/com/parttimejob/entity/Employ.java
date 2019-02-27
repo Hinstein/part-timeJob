@@ -23,6 +23,28 @@ public class Employ {
     @Column
     private int jobId;
 
+    @Column
+    private int managerId;
+
+    @Column
+    private String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -6,10 +6,7 @@ import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -73,7 +70,7 @@ public class ManagerController {
                     return "该账号正在审核中，请等待的管理员审核";
                 }
                 System.out.println("登录成功");
-                session.setAttribute("id", manager1.getId());
+                session.setAttribute("managerId", manager1.getId());
                 session.setAttribute("userName", manager1.getUserName());
                 return "登录成功";
             }
@@ -111,11 +108,9 @@ public class ManagerController {
             WorkerData worker = workerDataService.findByWorkerId(w.getWorkerId());
             workers.add(worker);
         }
-
         int page = Integer.parseInt(request.getParameter("limit"));
         int rows = Integer.parseInt(request.getParameter("page"));
         int size = workers.size();
-
         //截取的开始位置
         int pageStart = (page == 1 ? 0 : (page - 1) * rows);
         //截取的结束位置
@@ -137,22 +132,32 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/deliver/worker/{id}")
-    public String workerInformation(@PathVariable("id") int id, Model model) {
+    public String workerInformation(@PathVariable("id") int id, Model model,HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
+        session.setAttribute("workerId",id);
         return "manager/worker";
     }
 
     @ResponseBody
-    @PostMapping("/employ/{id}")
-    public String employWorker(@PathVariable("id") int workerId, HttpSession session) {
+    @PostMapping("/employ")
+    public String employWorker(HttpSession session, @RequestParam  HashMap<String, String> map) {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
-        Employ employ = employService.findByWorkerIdAndJobId(workerId, jobId);
+        int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
+        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        Employ employ = employService.findByWorkerIdAndJobIdAndManagerId(workerId, jobId,managerId);
+        String date=map.get("date");
+        String time =map.get("time");
+        String dateTime = date+" "+time;
+        System.out.println(date);
+        System.out.println(time);
+        System.out.println(dateTime);
         if (employ == null) {
-            System.out.println(jobId);
             Employ employ1 = new Employ();
             employ1.setWorkerId(workerId);
             employ1.setJobId(jobId);
+            employ1.setDate(dateTime);
+            employ1.setManagerId(managerId);
             employService.save(employ1);
             deliverService.delete(workerId, jobId);
             return "录用成功";
@@ -170,13 +175,8 @@ public class ManagerController {
     @ResponseBody
     @GetMapping("/manager/employ/list")
     public Map<String, Object> employee(HttpSession session, HttpServletRequest request) {
-        int managerId = Integer.parseInt(session.getAttribute("id").toString());
-        List<Job> jobs = jobService.findByManagerId(managerId);
-        List<Employ> employs = new ArrayList<>();
-        for (Job j : jobs) {
-            List<Employ> employ = employService.findByJobId(j.getId());
-            employs.addAll(employ);
-        }
+        int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
+        List<Employ> employs = employService.findByManagerId(managerId);
         List<WorkerData> workers= new ArrayList<>();
         for (Employ e:employs){
             WorkerData workerData=workerDataService.findByWorkerId(e.getWorkerId());
@@ -202,5 +202,20 @@ public class ManagerController {
         result.put("code", 0);
         result.put("msg", "");
         return result;
+    }
+
+    @GetMapping("/manager/workerDeliver/{id}")
+    public String workerDeliver(@PathVariable("id") int id, Model model,HttpSession session) {
+        WorkerData workerData = workerDataService.findByWorkerId(id);
+        model.addAttribute("worker", workerData);
+        return "manager/workerDeliver";
+    }
+
+    @GetMapping("/manager/deliver/worker/setTime")
+    public String cancelEmployee(HttpSession session,Model model){
+        int workerId =Integer.parseInt(session.getAttribute("workerId").toString());
+        WorkerData workerData = workerDataService.findByWorkerId(workerId);
+        model.addAttribute("worker", workerData);
+        return "manager/setTime";
     }
 }

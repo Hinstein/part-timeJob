@@ -38,7 +38,6 @@ public class Manager {
     @Column
     private String phoneNumber;
 
-
     public String getDate() {
         return date;
     }

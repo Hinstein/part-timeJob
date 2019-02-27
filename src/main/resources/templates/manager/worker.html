@@ -125,18 +125,7 @@
     $(function () {
         $('#save').click(function () {
             layer.confirm('是否录用该名职工么', function (index) {
-                $.ajax({
-                    url: '/employ/' + [[${worker.workerId}]],
-                    method: "post",
-                    dataType: "text",
-                    success: function (msg) {
-                        layer.msg(msg);
-                        // //清除表单内容
-                    },
-                    error: function () {
-                        layer.msg("网络错误，通过失败");
-                    }
-                });
+                location.href="/manager/deliver/worker/setTime"
             });
         })
     })

@@ -13,7 +13,9 @@ import java.util.List;
  * @Description:
  */
 public interface EmployRepository extends JpaRepository<Employ, Integer> {
-    Employ findByWorkerIdAndJobId(int workerId, int jobId);
+    Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId,int managerId);
+
+    List<Employ> findByManagerId(int managerId);
 
     List<Employ> findByJobId(int jobId);
 }

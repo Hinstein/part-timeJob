@@ -63,7 +63,7 @@ public class WorkerController {
             System.out.println("存在用户");
             if (worker1.getPassword().equals(password)) {
                 System.out.println("登录成功");
-                session.setAttribute("id", worker1.getId());
+                session.setAttribute("workerId", worker1.getId());
                 session.setAttribute("userName", worker1.getUserName());
                 return "登录成功";
             }
@@ -87,8 +87,8 @@ public class WorkerController {
 
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
-        int id = Integer.parseInt(session.getAttribute("id").toString());
-        WorkerData workerData = workerDataService.findByWorkerId(id);
+        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        WorkerData workerData = workerDataService.findByWorkerId(workerId);
         model.addAttribute("worker", workerData);
         return "worker/resume";
     }
@@ -96,8 +96,8 @@ public class WorkerController {
     @ResponseBody
     @PostMapping("/worker/resume/save")
     public String workerDateSave(WorkerData workerData, HttpSession session) {
-        int id = Integer.parseInt(session.getAttribute("id").toString());
-        workerData.setWorkerId(id);
+        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        workerData.setWorkerId(workerId);
         workerDataService.updata(workerData);
         return "保存成功";
     }
@@ -149,7 +149,7 @@ public class WorkerController {
 
     @GetMapping("/worker/collect")
     public String workerCollect(Model model, HttpSession session) {
-        int workerId = Integer.parseInt(session.getAttribute("id").toString());
+        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
         List<Collect> workerAndJobs=collectService.findbyWorkerId(workerId);
         List<Job> jobs =new ArrayList<>();
         for(Collect w:workerAndJobs){
@@ -162,7 +162,7 @@ public class WorkerController {
 
     @GetMapping("/worker/deliver")
     public String workerDeliver(Model model,HttpSession session){
-        int workerId = Integer.parseInt(session.getAttribute("id").toString());
+        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
         List<Deliver> delivers= deliverService.findByWorkerId(workerId);
         List<Job> jobs =new ArrayList<>();
         for(Deliver w:delivers){
