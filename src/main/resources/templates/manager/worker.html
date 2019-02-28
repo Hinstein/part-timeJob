@@ -110,7 +110,8 @@
                             自我介绍：[[${worker.introduce}]]<br>
                             意向职位：[[${worker.jobIntension}]]<br>
                             工作时间：[[${worker.workerTime}]]<br>
-                            工作经历：[[${worker.workerExperience}]]<hr>
+                            工作经历：[[${worker.workerExperience}]]
+                            <hr>
                             <button class="layui-btn  layui-btn-radius" id="save" type="button">录用</button>
                         </div>
                     </div>
@@ -125,7 +126,7 @@
     $(function () {
         $('#save').click(function () {
             layer.confirm('是否录用该名职工么', function (index) {
-                location.href="/manager/deliver/worker/setTime"
+                location.href = "/manager/deliver/worker/setTime"
             });
         })
     })

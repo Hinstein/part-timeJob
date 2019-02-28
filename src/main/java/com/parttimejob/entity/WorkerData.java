@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @CreateTime: 2019-02-01 19:34
  * @Description:
  */
-@Table(name="workerData")
+@Table(name = "workerData")
 @Entity
 public class WorkerData {
 

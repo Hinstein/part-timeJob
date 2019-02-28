@@ -20,32 +20,27 @@
 <body style="background-color: #F2F2F2;">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">layui 后台布局</div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <div class="layui-logo">兼职网</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item"><a th:href="@{/worker/index}">控制台</a></li>
+            <li class="layui-nav-item"><a th:href="@{/worker/search}">搜索职位</a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
+                <a href="javascript:;">招聘管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
+                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
                 </dl>
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item"><a href="">欢迎兼职者</a></li>
             <li class="layui-nav-item">
-
                 <a href="javascript:;">
-
                     [[${session.userName}]]
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="">退了</a></li>

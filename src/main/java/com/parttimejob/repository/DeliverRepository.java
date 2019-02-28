@@ -15,7 +15,7 @@ import java.util.List;
  * @CreateTime: 2019-02-25 16:04
  * @Description:
  */
-public interface DeliverRepository extends JpaRepository<Deliver,Integer> {
+public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
     Deliver findByWorkerIdAndJobId(int workerId, int jobId);
 
     @Transactional

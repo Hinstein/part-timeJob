@@ -18,24 +18,20 @@
 <body class="layui-layout-body" style="background-color: #F2F2F2;">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">layui 后台布局</div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <div class="layui-logo">兼职网</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item"><a th:href="@{/worker/index}">控制台</a></li>
+            <li class="layui-nav-item"><a th:href="@{/worker/search}">搜索职位</a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
+                <a href="javascript:;">招聘管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
+                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
                 </dl>
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">
-                <a href="">欢迎兼职者</a></li>
+            <li class="layui-nav-item"><a href="">欢迎兼职者</a></li>
             <li class="layui-nav-item">
 
                 <a href="javascript:;">
@@ -43,85 +39,85 @@
                     [[${session.userName}]]
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="">退了</a></li>
         </ul>
     </div>
-
-    <div style="padding: 20px; background-color: #F2F2F2;">
-        <div class="layui-container">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md3">
-                    <div class="layui-card">
-                        <div class="layui-card-header">欢迎您</div>
-                        <div class="layui-card-body">
-                            [[${session.userName}]]
-                        </div>
-
+</div>
+<div style="padding: 20px; background-color: #F2F2F2;">
+    <div class="layui-container">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md3">
+                <div class="layui-card">
+                    <div class="layui-card-header">欢迎您</div>
+                    <div class="layui-card-body">
+                        [[${session.userName}]]
                     </div>
-                    <div class="layui-card">
-                        <div class="layui-card-body">
-                            <a class="layui-btn  " th:href="@{/worker/resume}">
-                                <i class="layui-icon layui-icon-edit"></i>填写简历
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/worker/editor}">
-                                <i class="layui-icon layui-icon-set"></i>安全设置
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/worker/search}">
-                                <i class="layui-icon layui-icon-search"></i>搜索职位
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/worker/collect}">
-                                <i class="layui-icon layui-icon-search"></i>我收藏的职位
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/worker/deliver}">
-                                <i class="layui-icon layui-icon-search"></i>我投递的职位
-                            </a>
-                        </div>
+
+                </div>
+                <div class="layui-card">
+                    <div class="layui-card-body">
+                        <a class="layui-btn  " th:href="@{/worker/resume}">
+                            <i class="layui-icon layui-icon-edit"></i>填写简历
+                        </a>
+                        <hr>
+                        <a class="layui-btn " th:href="@{/worker/editor}">
+                            <i class="layui-icon layui-icon-set"></i>安全设置
+                        </a>
+                        <hr>
+                        <a class="layui-btn " th:href="@{/worker/search}">
+                            <i class="layui-icon layui-icon-search"></i>搜索职位
+                        </a>
+                        <hr>
+                        <a class="layui-btn " th:href="@{/worker/collect}">
+                            <i class="layui-icon layui-icon-search"></i>我收藏的职位
+                        </a>
+                        <hr>
+                        <a class="layui-btn " th:href="@{/worker/deliver}">
+                            <i class="layui-icon layui-icon-search"></i>我投递的职位
+                        </a>
                     </div>
                 </div>
+            </div>
 
-                <div class="layui-col-md9">
-                    <div class="layui-card">
-                        <div class="layui-card-header">修改密码</div>
-                        <div class="layui-card-body">
-                            <form class="layui-form layui-form-pane" id="workerForm">
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">旧密码</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="title" autocomplete="off" placeholder="请输入旧密码"
-                                               class="layui-input" id="oldPassword">
-                                    </div>
+            <div class="layui-col-md9">
+                <div class="layui-card">
+                    <div class="layui-card-header">修改密码</div>
+                    <div class="layui-card-body">
+                        <form class="layui-form layui-form-pane" id="workerForm">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">旧密码</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="title" autocomplete="off" placeholder="请输入旧密码"
+                                           class="layui-input" id="oldPassword">
                                 </div>
-                                <div class="layui-form-item">
-                                    <label class="layui-form-label">新密码</label>
-                                    <div class="layui-input-block">
-                                        <input type="text" name="username" lay-verify="required" placeholder="请输入新密码"
-                                               autocomplete="off" class="layui-input" id="newPassword">
-                                    </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">新密码</label>
+                                <div class="layui-input-block">
+                                    <input type="text" name="username" lay-verify="required" placeholder="请输入新密码"
+                                           autocomplete="off" class="layui-input" id="newPassword">
                                 </div>
+                            </div>
 
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit lay-filter="formDemo" type="button"
-                                                id="worker">修改
-                                        </button>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="formDemo" type="button"
+                                            id="worker">修改
+                                    </button>
 
-                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>

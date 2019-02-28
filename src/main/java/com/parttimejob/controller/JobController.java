@@ -122,10 +122,11 @@ public class JobController {
     public String job(@PathVariable("id") int jobId, Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
         Job job = jobService.findById(jobId);
-        if(collectService.findByWorkerIdAndJobId(workerId,jobId)!=null){
+        if (collectService.findByWorkerIdAndJobId(workerId, jobId) != null) {
             job.setCollection(1);
-        };
-        if (deliverService.findByWorkerIdAndJobId(workerId,jobId)!=null){
+        }
+        ;
+        if (deliverService.findByWorkerIdAndJobId(workerId, jobId) != null) {
             job.setDeliver(1);
         }
         model.addAttribute("job", job);
@@ -134,7 +135,7 @@ public class JobController {
 
     @ResponseBody
     @PostMapping(value = "/worker/job/save")
-    public String saveJob(@RequestParam  HashMap<String, String> map, HttpSession session) {
+    public String saveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
         Collect workerAndJob = new Collect();
         int jobId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
@@ -146,16 +147,16 @@ public class JobController {
 
     @ResponseBody
     @PostMapping(value = "/worker/job/cancelSave")
-    public String cancelSaveJob(@RequestParam  HashMap<String, String> map, HttpSession session) {
+    public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        collectService.delete(workerId,jobId);
+        collectService.delete(workerId, jobId);
         return "取消收藏";
     }
 
     @ResponseBody
     @PostMapping(value = "/worker/job/deliver")
-    public String deliver(@RequestParam  HashMap<String, String> map, HttpSession session) {
+    public String deliver(@RequestParam HashMap<String, String> map, HttpSession session) {
         Deliver deliver = new Deliver();
         int jobId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
@@ -167,10 +168,10 @@ public class JobController {
 
     @ResponseBody
     @PostMapping(value = "/worker/job/cancelDeliver")
-    public String cancelDeliver(@RequestParam  HashMap<String, String> map, HttpSession session) {
+    public String cancelDeliver(@RequestParam HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        deliverService.delete(workerId,jobId);
+        deliverService.delete(workerId, jobId);
         return "取消投递";
     }
 }

@@ -25,15 +25,15 @@ public class EmployService {
         employRepository.save(employ);
     }
 
-    public Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId,int managerId){
-       return employRepository.findByWorkerIdAndJobIdAndManagerId(workerId,jobId,managerId);
+    public Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId, int managerId) {
+        return employRepository.findByWorkerIdAndJobIdAndManagerId(workerId, jobId, managerId);
     }
 
-    public List<Employ> findByJobId(int jobId){
+    public List<Employ> findByJobId(int jobId) {
         return employRepository.findByJobId(jobId);
     }
 
-    public List<Employ> findByManagerId(int managerId){
+    public List<Employ> findByManagerId(int managerId) {
         return employRepository.findByManagerId(managerId);
     }
 }

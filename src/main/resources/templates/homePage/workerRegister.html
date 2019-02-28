@@ -32,13 +32,15 @@
                             <div class="layui-form-item">
                                 <label class="layadmin-user-login-icon layui-icon layui-icon-username"
                                        for="LAY-user-login-nickname"></label>
-                                <input type="text" name="userName" id="LAY-user-login-nickname" lay-verify="required|userName"
+                                <input type="text" name="userName" id="LAY-user-login-nickname"
+                                       lay-verify="required|userName"
                                        placeholder="用户名" class="layui-input">
                             </div>
                             <div class="layui-form-item">
                                 <label class="layadmin-user-login-icon layui-icon layui-icon-password"
                                        for="LAY-user-login-password"></label>
-                                <input type="password" name="password" id="LAY-user-login-password" lay-verify="required|password"
+                                <input type="password" name="password" id="LAY-user-login-password"
+                                       lay-verify="required|password"
                                        placeholder="密码" class="layui-input">
                             </div>
 
@@ -56,7 +58,8 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
 
-                                <a th:href="@{workerLogin}" class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
+                                <a th:href="@{workerLogin}"
+                                   class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
 
                             </div>
                         </form>

@@ -17,11 +17,11 @@ import java.util.List;
  * @Description: 继承JpaRepository来完成对数据库的操作
  */
 
-public interface WorkerRepository extends JpaRepository<Worker,Integer> {
+public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     /**
-     * @Description: 在数据库查找用户
      * @param userName
      * @return Worker
+     * @Description: 在数据库查找用户
      */
     Worker findByUserName(String userName);
 

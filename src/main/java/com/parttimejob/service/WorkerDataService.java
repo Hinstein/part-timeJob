@@ -21,16 +21,15 @@ public class WorkerDataService {
     @Autowired
     WorkerDataRepository workerDataRepository;
 
-    public WorkerData findByWorkerId(int id)
-    {
+    public WorkerData findByWorkerId(int id) {
         return workerDataRepository.findByWorkerId(id);
     }
 
-    public void save(WorkerData workerData){
+    public void save(WorkerData workerData) {
         workerDataRepository.save(workerData);
     }
 
-    public void updata(WorkerData workerData){
+    public void updata(WorkerData workerData) {
         workerDataRepository.update(workerData);
     }
 }

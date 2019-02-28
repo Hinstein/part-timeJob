@@ -18,15 +18,15 @@ public class WorkerService {
     @Autowired
     WorkerRepository workerRepository;
 
-    public Worker findByUserName(String userName){
+    public Worker findByUserName(String userName) {
         return workerRepository.findByUserName(userName);
     }
 
-    public void save(Worker worker){
+    public void save(Worker worker) {
         workerRepository.save(worker);
     }
 
-    public Worker findById(int id){
+    public Worker findById(int id) {
         return workerRepository.findById(id);
     }
 }

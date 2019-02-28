@@ -13,7 +13,7 @@ import java.util.List;
  * @Description:
  */
 public interface EmployRepository extends JpaRepository<Employ, Integer> {
-    Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId,int managerId);
+    Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId, int managerId);
 
     List<Employ> findByManagerId(int managerId);
 

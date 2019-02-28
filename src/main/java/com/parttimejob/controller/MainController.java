@@ -16,33 +16,33 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MainController {
 
     @GetMapping("workerLogin")
-    public String workerLogin(){
+    public String workerLogin() {
         return "homePage/workerLogin";
     }
 
     @GetMapping("managerLogin")
-    public String managerLogin(){
+    public String managerLogin() {
         return "homePage/managerLogin";
     }
 
     @GetMapping("workerRegister")
-    public String workerRegister(){
+    public String workerRegister() {
         return "homePage/workerRegister";
     }
 
     @GetMapping("managerRegister")
-    public String managerRegister(){
+    public String managerRegister() {
         return "homePage/managerRegister";
     }
 
     @GetMapping("index")
-    public String index(){
+    public String index() {
         return "homePage/index";
     }
 
 
     @GetMapping("admin/login")
-    public String adminLogin(){
+    public String adminLogin() {
         return "admin/login";
     }
 }

@@ -132,23 +132,23 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/deliver/worker/{id}")
-    public String workerInformation(@PathVariable("id") int id, Model model,HttpSession session) {
+    public String workerInformation(@PathVariable("id") int id, Model model, HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
-        session.setAttribute("workerId",id);
+        session.setAttribute("workerId", id);
         return "manager/worker";
     }
 
     @ResponseBody
     @PostMapping("/employ")
-    public String employWorker(HttpSession session, @RequestParam  HashMap<String, String> map) {
+    public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map) {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
         int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        Employ employ = employService.findByWorkerIdAndJobIdAndManagerId(workerId, jobId,managerId);
-        String date=map.get("date");
-        String time =map.get("time");
-        String dateTime = date+" "+time;
+        Employ employ = employService.findByWorkerIdAndJobIdAndManagerId(workerId, jobId, managerId);
+        String date = map.get("date");
+        String time = map.get("time");
+        String dateTime = date + " " + time;
         System.out.println(date);
         System.out.println(time);
         System.out.println(dateTime);
@@ -177,9 +177,9 @@ public class ManagerController {
     public Map<String, Object> employee(HttpSession session, HttpServletRequest request) {
         int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
         List<Employ> employs = employService.findByManagerId(managerId);
-        List<WorkerData> workers= new ArrayList<>();
-        for (Employ e:employs){
-            WorkerData workerData=workerDataService.findByWorkerId(e.getWorkerId());
+        List<WorkerData> workers = new ArrayList<>();
+        for (Employ e : employs) {
+            WorkerData workerData = workerDataService.findByWorkerId(e.getWorkerId());
             workers.add(workerData);
         }
         int page = Integer.parseInt(request.getParameter("limit"));
@@ -205,17 +205,24 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/workerDeliver/{id}")
-    public String workerDeliver(@PathVariable("id") int id, Model model,HttpSession session) {
+    public String workerDeliver(@PathVariable("id") int id, Model model, HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
         return "manager/workerDeliver";
     }
 
     @GetMapping("/manager/deliver/worker/setTime")
-    public String cancelEmployee(HttpSession session,Model model){
-        int workerId =Integer.parseInt(session.getAttribute("workerId").toString());
+    public String cancelEmployee(HttpSession session, Model model) {
+        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
         WorkerData workerData = workerDataService.findByWorkerId(workerId);
         model.addAttribute("worker", workerData);
         return "manager/setTime";
+    }
+
+    @GetMapping("/manager/job/{id}")
+    public String jobId(@PathVariable("id") int id, Model model) {
+        Job job = jobService.findById(id);
+        model.addAttribute("job", job);
+        return "manager/job";
     }
 }

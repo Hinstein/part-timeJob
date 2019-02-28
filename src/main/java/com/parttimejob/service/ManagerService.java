@@ -27,33 +27,32 @@ public class ManagerService {
 
     @Transactional
     public Page<Manager> getManagers(int pageNo, int pageSize) {
-        if(pageNo==0){
-            pageNo=1;
+        if (pageNo == 0) {
+            pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
         return managerRepository.findByAudit(0, pageable);
     }
 
-    public void deleteManagerById(int id){
+    public void deleteManagerById(int id) {
         managerRepository.deleteManagerById(id);
     }
 
-    public void passManager(int id){
+    public void passManager(int id) {
         managerRepository.passManager(id);
     }
 
-    public Manager findByUserName(String userName){
-        return  managerRepository.findByUserName(userName);
+    public Manager findByUserName(String userName) {
+        return managerRepository.findByUserName(userName);
     }
 
-    public void save(Manager manager){
+    public void save(Manager manager) {
         managerRepository.save(manager);
     }
 
-    public Manager findById(int id){
+    public Manager findById(int id) {
         return managerRepository.findById(id);
     }
-
 
 
 }

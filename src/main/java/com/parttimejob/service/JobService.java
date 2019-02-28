@@ -41,24 +41,23 @@ public class JobService {
         jobRepository.deleteById(id);
     }
 
-    public List<Job> findByManagerId(int id)
-    {
+    public List<Job> findByManagerId(int id) {
         return jobRepository.findByManagerId(id);
     }
 
     @Transactional
-    public Page<Job> findByTitleLike(String content,int pageNo, int pageSize) {
-        if(pageNo==0){
-            pageNo=1;
+    public Page<Job> findByTitleLike(String content, int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return jobRepository.findByTitleLike(content,pageable);
+        return jobRepository.findByTitleLike(content, pageable);
     }
 
     @Transactional
     public Page<Job> getJobs(int pageNo, int pageSize) {
-        if(pageNo==0){
-            pageNo=1;
+        if (pageNo == 0) {
+            pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
         return jobRepository.findAll(pageable);

@@ -17,7 +17,7 @@ import java.util.List;
  * @CreateTime: 2019-01-21 19:07
  * @Description:
  */
-public interface ManagerRepository extends JpaRepository<Manager,Integer> {
+public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     Manager findByUserName(String userName);
 
     Manager findById(int id);
@@ -34,5 +34,5 @@ public interface ManagerRepository extends JpaRepository<Manager,Integer> {
     @Query(value = "update Manager a SET a.audit = 1 where id =?1")
     void passManager(int id);
 
-    Page<Manager> findByAudit(int audit , Pageable pageable);
+    Page<Manager> findByAudit(int audit, Pageable pageable);
 }

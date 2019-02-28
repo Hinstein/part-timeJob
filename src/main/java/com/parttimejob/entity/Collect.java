@@ -10,7 +10,7 @@ import javax.persistence.*;
  * @Description:
  */
 @Entity
-@Table(name="collect")
+@Table(name = "collect")
 public class Collect {
 
     @Id

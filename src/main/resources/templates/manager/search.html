@@ -146,7 +146,7 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'pass') { //通过
-                location.href = "/worker/job/" + data.id;
+                location.href = "/manager/job/" + data.id;
             }
         });
         $(function () {

@@ -150,26 +150,26 @@ public class WorkerController {
     @GetMapping("/worker/collect")
     public String workerCollect(Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        List<Collect> workerAndJobs=collectService.findbyWorkerId(workerId);
-        List<Job> jobs =new ArrayList<>();
-        for(Collect w:workerAndJobs){
-            Job job =jobService.findById(w.getJobId());
+        List<Collect> workerAndJobs = collectService.findbyWorkerId(workerId);
+        List<Job> jobs = new ArrayList<>();
+        for (Collect w : workerAndJobs) {
+            Job job = jobService.findById(w.getJobId());
             jobs.add(job);
         }
-        model.addAttribute("jobs",jobs);
+        model.addAttribute("jobs", jobs);
         return "worker/collect";
     }
 
     @GetMapping("/worker/deliver")
-    public String workerDeliver(Model model,HttpSession session){
+    public String workerDeliver(Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        List<Deliver> delivers= deliverService.findByWorkerId(workerId);
-        List<Job> jobs =new ArrayList<>();
-        for(Deliver w:delivers){
-            Job job =jobService.findById(w.getJobId());
+        List<Deliver> delivers = deliverService.findByWorkerId(workerId);
+        List<Job> jobs = new ArrayList<>();
+        for (Deliver w : delivers) {
+            Job job = jobService.findById(w.getJobId());
             jobs.add(job);
         }
-        model.addAttribute("jobs",jobs);
+        model.addAttribute("jobs", jobs);
         return "worker/deliver";
     }
 

@@ -24,19 +24,19 @@ public class DeliverService {
         deliverRepository.save(deliver);
     }
 
-    public Deliver findByWorkerIdAndJobId(int workerId, int jobId){
-        return deliverRepository.findByWorkerIdAndJobId(workerId,jobId);
+    public Deliver findByWorkerIdAndJobId(int workerId, int jobId) {
+        return deliverRepository.findByWorkerIdAndJobId(workerId, jobId);
     }
 
-    public void delete(int workerId, int jobId){
-        deliverRepository.deleteByWorkerIdAndJobId(workerId,jobId);
+    public void delete(int workerId, int jobId) {
+        deliverRepository.deleteByWorkerIdAndJobId(workerId, jobId);
     }
 
-    public List<Deliver> findByWorkerId(int workerId){
+    public List<Deliver> findByWorkerId(int workerId) {
         return deliverRepository.findByWorkerId(workerId);
     }
 
-    public List<Deliver> findByJobId(int jobId){
+    public List<Deliver> findByJobId(int jobId) {
         return deliverRepository.findByJobId(jobId);
     }
 }
