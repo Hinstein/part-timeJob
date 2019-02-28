@@ -108,7 +108,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/workers")
-    public String allWorkers(){
+    public String allWorkers() {
         return "admin/worker/all";
     }
 
@@ -128,7 +128,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/worker/information")
-    public String workerInformation(){
+    public String workerInformation() {
         return "admin/worker/information";
     }
 
@@ -148,18 +148,18 @@ public class AdminController {
     }
 
     @GetMapping("/admin/jobs")
-    public String adminJobs(){
+    public String adminJobs() {
         return "admin/job/all";
     }
 
     @GetMapping("/admin/manager/editor")
-    public String managerEditor(){
+    public String managerEditor() {
         return "admin/manager/editor";
     }
 
     @ResponseBody
     @GetMapping("/admin/manager/editor/data")
-    public Map<String, Object> managerEditorData(HttpServletRequest request){
+    public Map<String, Object> managerEditorData(HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Page<Manager> managers = managerService.findAll(pageNumber, pageSize);
@@ -170,5 +170,29 @@ public class AdminController {
         JSONArray json = JSONArray.fromObject(managers.getContent());
         result.put("data", json);
         return result;
+    }
+
+    @GetMapping("/admin/worker/{id}")
+    public String workerId(@PathVariable("id") int id, Model model) {
+        Worker worker = workerService.findById(id);
+        WorkerData workerData = workerDataService.findByWorkerId(id);
+        model.addAttribute("w", worker);
+        model.addAttribute("worker", workerData);
+        return "admin/worker/editor";
+    }
+
+    @ResponseBody
+    @PostMapping("/admin/worker/save")
+    public String adminWorkerSave(WorkerData workerData, HttpServletRequest request) {
+        workerDataService.save(workerData);
+        int workerId = Integer.parseInt(request.getParameter("workerId"));
+        String workerName = request.getParameter("workerName");
+        String workerPassword = request.getParameter("workerPassword");
+        Worker worker=new Worker();
+        worker.setId(workerId);
+        worker.setUserName(workerName);
+        worker.setPassword(workerPassword);
+        workerService.save(worker);
+        return "更新成功";
     }
 }
