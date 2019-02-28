@@ -1,6 +1,8 @@
 package com.parttimejob.repository;
 
 import com.parttimejob.entity.WorkerData;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,4 +35,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
     int update(WorkerData workerData);
 
     WorkerData findByWorkerId(int id);
+
+    @Override
+    Page<WorkerData> findAll(Pageable pageable);
 }

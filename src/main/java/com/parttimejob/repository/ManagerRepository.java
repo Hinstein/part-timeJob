@@ -35,4 +35,12 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     void passManager(int id);
 
     Page<Manager> findByAudit(int audit, Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Manager m SET m.password= :#{#manager.password} where m.id = :#{#manager.id}")
+    void saveEditor(Manager manager);
+
+    @Override
+    Page<Manager> findAll(Pageable pageable);
 }

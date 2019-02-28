@@ -64,19 +64,17 @@ public class ManagerController {
         String password = manager.getPassword();
         Manager manager1 = managerService.findByUserName(username);
         if (manager1 != null) {
-            System.out.println("存在用户");
             if (manager1.getPassword().equals(password)) {
                 if (manager1.getAudit() == 0) {
                     return "该账号正在审核中，请等待的管理员审核";
                 }
-                System.out.println("登录成功");
                 session.setAttribute("managerId", manager1.getId());
                 session.setAttribute("userName", manager1.getUserName());
                 return "登录成功";
             }
             return "密码错误";
         }
-        System.out.println("失败");
+
         return "不存在该用户";
     }
 
@@ -149,9 +147,6 @@ public class ManagerController {
         String date = map.get("date");
         String time = map.get("time");
         String dateTime = date + " " + time;
-        System.out.println(date);
-        System.out.println(time);
-        System.out.println(dateTime);
         if (employ == null) {
             Employ employ1 = new Employ();
             employ1.setWorkerId(workerId);
@@ -224,5 +219,26 @@ public class ManagerController {
         Job job = jobService.findById(id);
         model.addAttribute("job", job);
         return "manager/job";
+    }
+
+    @GetMapping("/manager/editor")
+    public String managerEditor(){
+        return "manager/editor";
+    }
+
+    @ResponseBody
+    @PostMapping("/manager/editor/save")
+    public String changePassword(@RequestParam("newPassword") String newPassword,
+                                 @RequestParam("oldPassword") String oldPassword,
+                                 HttpSession session) {
+        int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
+        Manager manager = managerService.findById(managerId);
+        if (manager.getPassword().equals(oldPassword)) {
+            manager.setPassword(newPassword);
+            managerService.saveEditor(manager);
+            return "更新密码成功！";
+        } else {
+            return "旧密码错误";
+        }
     }
 }

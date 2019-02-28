@@ -4,8 +4,12 @@ package com.parttimejob.service;
 import com.parttimejob.entity.WorkerData;
 import com.parttimejob.repository.WorkerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -31,5 +35,14 @@ public class WorkerDataService {
 
     public void updata(WorkerData workerData) {
         workerDataRepository.update(workerData);
+    }
+
+    @Transactional
+    public Page<WorkerData> findAll(int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return workerDataRepository.findAll(pageable);
     }
 }

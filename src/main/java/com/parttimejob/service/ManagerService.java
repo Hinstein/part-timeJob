@@ -26,7 +26,7 @@ public class ManagerService {
     ManagerRepository managerRepository;
 
     @Transactional
-    public Page<Manager> getManagers(int pageNo, int pageSize) {
+    public Page<Manager> findByAudit(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
         }
@@ -54,5 +54,16 @@ public class ManagerService {
         return managerRepository.findById(id);
     }
 
+    public void saveEditor(Manager manager) {
+        managerRepository.saveEditor(manager);
+    }
 
+    @Transactional
+    public Page<Manager> findAll(int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return managerRepository.findAll( pageable);
+    }
 }

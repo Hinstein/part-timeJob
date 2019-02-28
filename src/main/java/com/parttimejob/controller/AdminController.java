@@ -3,10 +3,13 @@ package com.parttimejob.controller;
 import com.parttimejob.entity.Admin;
 import com.parttimejob.entity.Manager;
 import com.parttimejob.entity.Worker;
+import com.parttimejob.entity.WorkerData;
 import com.parttimejob.repository.AdminRepository;
 import com.parttimejob.repository.ManagerRepository;
 import com.parttimejob.service.AdminService;
 import com.parttimejob.service.ManagerService;
+import com.parttimejob.service.WorkerDataService;
+import com.parttimejob.service.WorkerService;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -42,6 +46,12 @@ public class AdminController {
     @Autowired
     ManagerService managerService;
 
+    @Autowired
+    WorkerService workerService;
+
+    @Autowired
+    WorkerDataService workerDataService;
+
     @PostMapping("admin/login")
     @ResponseBody
     public String adminLogin(Admin admin, HttpSession session) {
@@ -51,14 +61,12 @@ public class AdminController {
         if (admin1 != null) {
             if (admin1.getPassword().equals(password)) {
                 session.setAttribute("adminUserName", admin1.getUserName());
-                System.out.println("登录成功！");
                 return "登录成功,正在跳转";
             }
             return "密码错误";
         }
         return "不存在该用户";
     }
-
 
     @GetMapping("admin/index")
     public String adminIndex() {
@@ -74,7 +82,6 @@ public class AdminController {
     @PostMapping("admin/manager/audit/delete/{id}")
     public String deleteManager(@PathVariable("id") Integer id) {
         managerService.deleteManagerById(id);
-
         return "删除成功";
     }
 
@@ -87,10 +94,75 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping("admin/manager/audit/data")
-    public Map<String, Object> managerAudit(Model model, HttpServletRequest request) {
+    public Map<String, Object> managerAudit(HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
-        Page<Manager> managers = managerService.getManagers(pageNumber, pageSize);
+        Page<Manager> managers = managerService.findByAudit(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", managers.getTotalElements());
+        JSONArray json = JSONArray.fromObject(managers.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @GetMapping("/admin/workers")
+    public String allWorkers(){
+        return "admin/worker/all";
+    }
+
+    @ResponseBody
+    @GetMapping("/admin/workers/data")
+    public Map<String, Object> workersData(HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Worker> workers = workerService.getWorkers(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", workers.getTotalElements());
+        JSONArray json = JSONArray.fromObject(workers.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @GetMapping("/admin/worker/information")
+    public String workerInformation(){
+        return "admin/worker/information";
+    }
+
+    @ResponseBody
+    @GetMapping("/admin/workers/information/data")
+    public Map<String, Object> workersInformationData(HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<WorkerData> workers = workerDataService.findAll(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", workers.getTotalElements());
+        JSONArray json = JSONArray.fromObject(workers.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @GetMapping("/admin/jobs")
+    public String adminJobs(){
+        return "admin/job/all";
+    }
+
+    @GetMapping("/admin/manager/editor")
+    public String managerEditor(){
+        return "admin/manager/editor";
+    }
+
+    @ResponseBody
+    @GetMapping("/admin/manager/editor/data")
+    public Map<String, Object> managerEditorData(HttpServletRequest request){
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Manager> managers = managerService.findAll(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");

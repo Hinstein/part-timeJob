@@ -9,13 +9,11 @@
     <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
           th:href="@{/assets/layui/css/layui.css}">
 
-
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">layui 后台布局</div>
-        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <div class="layui-logo">兼职网后台</div>
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
             <li class="layui-nav-item"><a href="">商品管理</a></li>
@@ -30,11 +28,9 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">欢迎管理员</li>
+            <li class="layui-nav-item"><a href="">欢迎管理员</a></li>
             <li class="layui-nav-item">
-
                 <a href="javascript:;">
-
                     [[${session.adminUserName}]]
                 </a>
                 <dl class="layui-nav-child">
@@ -53,22 +49,23 @@
                 <li class="layui-nav-item">
                     <a class="" href="javascript:;">兼职者管理</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;">列表一</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="javascript:;">列表三</a></dd>
-                        <dd><a href="">超链接</a></dd>
+                        <dd><a th:href="@{/admin/workers}">兼职账号</a></dd>
+                        <dd><a th:href="@{/admin/worker/information}">兼职者资料</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;">招聘者管理</a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
-                        <dd><a href="javascript:;">列表二</a></dd>
-                        <dd><a href="">超链接</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">云市场</a></li>
-                <li class="layui-nav-item"><a href="">发布商品</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">职位管理</a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">BBS论坛管理</a></li>
             </ul>
         </div>
     </div>
@@ -93,7 +90,6 @@
             <a href="/doc/element/layout.html#admin" target="_blank" class="layui-btn layui-btn-lg">获取该布局代码</a>
 
             <br><br><br><br>
-
 
             下面是充数内容，为的是出现滚动条<br>
         </div>

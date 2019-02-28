@@ -60,16 +60,13 @@ public class WorkerController {
         String password = worker.getPassword();
         Worker worker1 = workerService.findByUserName(username);
         if (worker1 != null) {
-            System.out.println("存在用户");
             if (worker1.getPassword().equals(password)) {
-                System.out.println("登录成功");
                 session.setAttribute("workerId", worker1.getId());
                 session.setAttribute("userName", worker1.getUserName());
                 return "登录成功";
             }
             return "密码错误";
         }
-        System.out.println("失败");
         return "不存在该用户";
     }
 
@@ -101,27 +98,6 @@ public class WorkerController {
         workerDataService.updata(workerData);
         return "保存成功";
     }
-
-//    @ResponseBody
-//    @PostMapping("/worker/editor/save")
-//    public Map<String, String> changePassword(@RequestParam("newPassword") String newPassword,
-//                                              @RequestParam("oldPassword") String oldPassword,
-//                                              HttpSession session) {
-//        Map<String, String> map = new HashMap<>(50);
-//        System.out.println("sss");
-//        String username = (String) session.getAttribute("userName");
-//        Worker worker =workerRepository.findByUserName(username);
-//        if (worker.getPassword().equals(oldPassword)) {
-//            worker.setPassword(newPassword);
-//            map.put("msg", "更新密码成功！");
-//            workerRepository.save(worker);
-//        } else if (newPassword.equals("") || oldPassword.equals("")) {
-//            map.put("msg", "密码不能为空");
-//        } else {
-//            map.put("msg", "旧密码错误");
-//        }
-//        return map;
-//    }
 
     @ResponseBody
     @PostMapping("/worker/editor/save")

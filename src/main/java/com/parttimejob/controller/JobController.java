@@ -88,13 +88,6 @@ public class JobController {
         return "删除成功";
     }
 
-//    @ResponseBody
-//    @PostMapping("/job/find")
-//    public List<Job> jobFindByContent(Job job) {
-//        List<Job> jobs =jobService.findByNameLike(job.getContent());
-//        return jobs ;
-//    }
-
     @ResponseBody
     @GetMapping("/worker/search/allJobs")
     public Map<String, Object> managerAudit(HttpServletRequest request,

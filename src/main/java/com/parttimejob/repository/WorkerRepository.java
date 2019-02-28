@@ -1,6 +1,8 @@
 package com.parttimejob.repository;
 
 import com.parttimejob.entity.Worker;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +28,6 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     Worker findByUserName(String userName);
 
     Worker findById(int id);
+
+    Page<Worker> findAll(Pageable pageable);
 }

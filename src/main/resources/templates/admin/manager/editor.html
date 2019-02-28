@@ -59,8 +59,8 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a href="javascript:;">招聘者管理</a>
                     <dl class="layui-nav-child">
-                        <dd class="layui-this"><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
-                        <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
+                        <dd><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
+                        <dd class="layui-this"><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -79,20 +79,19 @@
         <div class="layui-fluid" style=" padding: 15px;">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">&nbsp;新建招聘者审核</div>
+                    <div class="layui-card-header">&nbsp;招聘者资料管理</div>
                     <div class="layui-card-body">
 
                         <table class="layui-hide" id="demo" lay-filter="test"></table>
                         <script type="text/html" id="toolbarDemo">
                             <div class="layui-btn-container">
-                                <button class="layui-btn layui-btn-sm" lay-event="batchPass">批量通过</button>
                                 <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除
                                 </button>
                             </div>
                         </script>
                         <script type="text/html" id="action">
                             <div class="layui-btn-container">
-                                <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
+                                <button class="layui-btn layui-btn-sm" lay-event="pass">编辑</button>
                                 <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
                             </div>
                         </script>
@@ -100,7 +99,7 @@
                 </div>
             </div>
             <div class="layui-footer">
-                招聘者审核界面
+                招聘者资料管理界面
             </div>
         </div>
     </div>
@@ -114,7 +113,7 @@
         //第一个实例
         var tableIns = table.render({
             elem: '#demo'
-            , url: '/admin/manager/audit/data' //数据接口
+            , url: '/admin/manager/editor/data' //数据接口
             , toolbar: '#toolbarDemo'
             , page: true //开启分页
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
