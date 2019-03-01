@@ -56,4 +56,15 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
     @Modifying
     @Query(value = "delete from Deliver a where a.workerId =?1")
     void deleteDeliverByWorkerId(int id);
+
+    /**
+     * 通过工作id删除所有投递信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Deliver a where a.jobId =?1")
+    void deleteDeliverByJobId(int id);
+
+
 }

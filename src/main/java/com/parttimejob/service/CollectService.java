@@ -64,4 +64,12 @@ public class CollectService {
         collectRepository.deleteCollectByWorkerId(workerId);
     }
 
+    /**
+     * 通过工作id删除收藏信息
+     * @param jobId
+     */
+    public void deleteCollectByJobId(int jobId){
+        collectRepository.deleteCollectByJobId(jobId);
+    }
+
 }

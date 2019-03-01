@@ -29,7 +29,7 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">欢迎管理员</li>
+            <li class="layui-nav-item"><a>欢迎管理员</a></li>
             <li class="layui-nav-item">
 
                 <a href="javascript:;">
@@ -67,7 +67,6 @@
                     <a href="javascript:;">职位管理</a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
-
                     </dl>
                 </li>
                 <li class="layui-nav-item"><a href="">BBS论坛管理</a></li>
@@ -151,12 +150,12 @@
                         success: function (msg) {
                             layer.msg(msg);
                             // //清除表单内容
+                            tableIns.reload();
                         },
                         error: function () {
                             layer.msg("网络错误，通过失败");
                         }
                     });
-                    tableIns.reload();
                 });
             } else if (layEvent === 'delete') { //删除
                 layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
@@ -167,12 +166,12 @@
                         success: function (msg) {
                             layer.msg(msg);
                             // //清除表单内容
+                            tableIns.reload();
                         },
                         error: function () {
                             layer.msg("网络错误，通过失败");
                         }
                     });
-                    tableIns.reload();
                 });
             }
         });

@@ -1,5 +1,6 @@
 package com.parttimejob.service;
 
+import com.parttimejob.entity.Job;
 import com.parttimejob.entity.Manager;
 import com.parttimejob.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,18 @@ public class ManagerService {
     @Autowired
     ManagerRepository managerRepository;
 
+    @Autowired
+    CollectService collectService;
+
+    @Autowired
+    DeliverService deliverService;
+
+    @Autowired
+    EmployService employService;
+
+    @Autowired
+    JobService jobService;
+
     /**
      * 分页查找出未通过审核的招聘者
      * @param pageNo
@@ -42,10 +55,17 @@ public class ManagerService {
 
     /**
      * 通过招聘者的id删除
-     * @param id
+     * @param managerId
      */
-    public void deleteManagerById(int id) {
-        managerRepository.deleteManagerById(id);
+    public void deleteManagerById(int managerId) {
+        List<Job> jobs = jobService.findByManagerId(managerId);
+        for(Job j:jobs){
+            collectService.deleteCollectByJobId(j.getId());
+            deliverService.deleteDeliverByJobId(j.getId());
+        }
+        employService.deleteEmployByManagerId(managerId);
+        jobService.deleteJobByManagerId(managerId);
+        managerRepository.deleteManagerById(managerId);
     }
 
     /**

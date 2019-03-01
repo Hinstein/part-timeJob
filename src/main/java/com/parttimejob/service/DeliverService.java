@@ -72,4 +72,12 @@ public class DeliverService {
     public void deleteDeliverByWorkerId(int workerId){
         deliverRepository.deleteDeliverByWorkerId(workerId);
     }
+
+    /**
+     * 通过兼职者id删除投递信息
+     * @param jobId
+     */
+    public void deleteDeliverByJobId(int jobId){
+        deliverRepository.deleteDeliverByJobId(jobId);
+    }
 }

@@ -29,7 +29,7 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item">欢迎管理员</li>
+            <li class="layui-nav-item"><a>欢迎管理员</a></li>
             <li class="layui-nav-item">
 
                 <a href="javascript:;">
@@ -129,21 +129,21 @@
                 , {field: 'email', title: '邮箱'}
                 , {
                     field: 'educationBackground', title: '教育背景', templet: function (d) {
-                        if (d.educationBackground == '1')
+                        if (d.educationBackground === '1')
                             return "小学";
-                        else if (d.educationBackground == '2')
+                        else if (d.educationBackground === '2')
                             return "初中";
-                        else if (d.educationBackground == '3')
+                        else if (d.educationBackground === '3')
                             return "高中";
-                        else if (d.educationBackground == '4')
+                        else if (d.educationBackground === '4')
                             return "中专";
-                        else if (d.educationBackground == '5')
+                        else if (d.educationBackground === '5')
                             return "大专";
-                        else if (d.educationBackground == '6')
+                        else if (d.educationBackground === '6')
                             return "本科";
-                        else if (d.educationBackground == '7')
+                        else if (d.educationBackground === '7')
                             return "研究生";
-                        else if (d.educationBackground == '0')
+                        else if (d.educationBackground === '0')
                             return "未填写";
                     }
                 }
@@ -156,6 +156,22 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'pass') {
                 location.href = "/admin/worker/" + data.workerId;
+            } else if (layEvent === 'delete') {
+                layer.confirm('删除id为' + data.workerId + '账号么', function (index) {
+                    $.ajax({
+                        url: '/admin/worker/delete/' + data.workerId,
+                        method: "post",
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                            // //清除表单内容
+                            tableIns.reload();
+                        },
+                        error: function () {
+                            layer.msg("网络错误，通过失败");
+                        }
+                    });
+                })
             }
         });
         table.on('toolbar(test)', function (obj) {
@@ -175,19 +191,19 @@
                     layer.confirm('删除id为' + ids + '账号么', function (index) {
                         for (var i = 0; i < data.length; i++) {
                             $.ajax({
-                                url: 'worker/delete/' + data[i].id,
+                                url: '/admin/worker/delete/' + data[i].id,
                                 method: "post",
                                 dataType: "text",
                                 success: function (msg) {
                                     layer.msg(msg);
                                     // //清除表单内容
+                                    tableIns.reload();
                                 },
                                 error: function () {
                                     layer.msg("网络错误，通过失败");
                                 }
                             });
                         }
-                        tableIns.reload();
                     });
             }
         });

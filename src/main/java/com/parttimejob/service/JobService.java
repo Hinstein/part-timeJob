@@ -25,6 +25,15 @@ public class JobService {
     @Autowired
     JobRepository jobRepository;
 
+    @Autowired
+    CollectService collectService;
+
+    @Autowired
+    DeliverService deliverService;
+
+    @Autowired
+    EmployService employService;
+
     /**
      * 保存该工作
      * @param job
@@ -54,7 +63,10 @@ public class JobService {
      * 通过id删除该工作
      * @param id
      */
-    public void delete(int id) {
+    public void deleteById(int id) {
+        collectService.deleteCollectByJobId(id);
+        deliverService.deleteDeliverByJobId(id);
+        employService.deleteEmployByJobId(id);
         jobRepository.deleteById(id);
     }
 
@@ -98,4 +110,10 @@ public class JobService {
         return jobRepository.findAll(pageable);
     }
 
+    /**
+     * 通过招聘者id删除工作
+     */
+    public void deleteJobByManagerId(int ManagerId){
+        jobRepository.deleteJobByManagerId(ManagerId);
+    }
 }

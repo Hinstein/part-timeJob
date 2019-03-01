@@ -65,4 +65,22 @@ public class EmployService {
     public void deleteEmployByWorkerId(int workerId){
         employRepository.deleteEmployByWorkerId(workerId);
     }
+
+    /**
+     * 通过招聘者的id删除雇佣信息
+     * @param managerId
+     */
+    public void deleteEmployByManagerId(int managerId){
+        employRepository.deleteEmployByManagerId(managerId);
+    }
+
+
+    /**
+     * 通过工作的id删除雇佣信息
+     * @param managerId
+     */
+    public void deleteEmployByJobId(int jobId){
+        employRepository.deleteEmployByJobId(jobId);
+    }
+
 }

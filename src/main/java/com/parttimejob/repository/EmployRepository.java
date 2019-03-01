@@ -47,4 +47,23 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
     @Modifying
     @Query(value = "delete from Employ a where a.workerId =?1")
     void deleteEmployByWorkerId(int id);
+
+    /**
+     * 通过招聘者id删除所有雇佣信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Employ a where a.managerId =?1")
+    void deleteEmployByManagerId(int id);
+
+    /**
+     * 通过招聘id删除所有雇佣信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Employ a where a.jobId =?1")
+    void deleteEmployByJobId(int id);
+
 }

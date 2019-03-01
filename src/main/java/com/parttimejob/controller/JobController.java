@@ -117,7 +117,7 @@ public class JobController {
     @ResponseBody
     @PostMapping("/manager/job/delete/{id}")
     public String jobDelete(@PathVariable("id") Integer id) {
-        jobService.delete(id);
+        jobService.deleteById(id);
         return "删除成功";
     }
 

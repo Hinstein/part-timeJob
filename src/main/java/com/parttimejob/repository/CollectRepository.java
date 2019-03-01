@@ -46,4 +46,13 @@ public interface CollectRepository extends JpaRepository<Collect, Integer> {
     @Modifying
     @Query(value = "delete from Collect a where a.workerId =?1")
     void deleteCollectByWorkerId(int id);
+
+    /**
+     * 通过工作id删除工作信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Collect a where a.jobId =?1")
+    void deleteCollectByJobId(int id);
 }

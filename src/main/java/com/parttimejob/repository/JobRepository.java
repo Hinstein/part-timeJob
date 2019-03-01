@@ -63,4 +63,13 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      */
     @Override
     Page<Job> findAll(Pageable pageable);
+
+    /**
+     * 通过招聘者id删除所有工作
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Job a where a.managerId =?1")
+    void deleteJobByManagerId(int id);
 }

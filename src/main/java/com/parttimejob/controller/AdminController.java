@@ -1,15 +1,9 @@
 package com.parttimejob.controller;
 
-import com.parttimejob.entity.Admin;
-import com.parttimejob.entity.Manager;
-import com.parttimejob.entity.Worker;
-import com.parttimejob.entity.WorkerData;
+import com.parttimejob.entity.*;
 import com.parttimejob.repository.AdminRepository;
 import com.parttimejob.repository.ManagerRepository;
-import com.parttimejob.service.AdminService;
-import com.parttimejob.service.ManagerService;
-import com.parttimejob.service.WorkerDataService;
-import com.parttimejob.service.WorkerService;
+import com.parttimejob.service.*;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -52,6 +46,8 @@ public class AdminController {
     @Autowired
     WorkerDataService workerDataService;
 
+    @Autowired
+    JobService jobService;
     /**
      * 管理员登录
      * @param admin
@@ -209,7 +205,7 @@ public class AdminController {
      */
     @GetMapping("/admin/manager/editor")
     public String managerEditor() {
-        return "admin/manager/editor";
+        return "admin/manager/all";
     }
 
     /**
@@ -271,9 +267,60 @@ public class AdminController {
     /**
      * 删除兼职用户
      */
-//    @ResponseBody
-//    @PostMapping("worker/delete/{id}")
-//    public String workerDelete(@PathVariable("id")int id){
-//        workerService.d
-//    }
+    @ResponseBody
+    @PostMapping("/admin/worker/delete/{id}")
+    public String workerDelete(@PathVariable("id")int id){
+        workerService.deleteById(id);
+        return "删除成功！";
+    }
+
+    /**
+     * 招聘者资料页面
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("/admin/manager/{id}")
+    public String managerId(@PathVariable("id") int id, Model model) {
+        Manager manager =managerService.findById(id);
+        model.addAttribute("manager",manager);
+        return "admin/manager/editor";
+    }
+
+    /**
+     * 招聘者修改页面
+     * @param manager
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/admin/manager/save")
+    public String managerSave(Manager manager){
+        managerService.save(manager);
+        return "修改成功！";
+    }
+
+    /**
+     * 工作信息页面
+     * @param id
+     * @param model
+     * @return
+     */
+    @GetMapping("/admin/job/{id}")
+    public String jobId(@PathVariable("id") int id, Model model) {
+        Job job =jobService.findById(id);
+        model.addAttribute("job",job);
+        return "admin/job/editor";
+    }
+
+    /**
+     * 删除工作
+     * @param id
+     * @return
+     */
+    @ResponseBody
+    @PostMapping("/admin/job/delete/{id}")
+    public String jobDelete(@PathVariable("id")int id){
+        jobService.deleteById(id);
+        return "删除成功";
+    }
 }
