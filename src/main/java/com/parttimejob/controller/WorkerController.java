@@ -39,6 +39,11 @@ public class WorkerController {
     @Autowired
     DeliverService deliverService;
 
+    /**
+     * 兼职者注册
+     * @param worker
+     * @return
+     */
     @ResponseBody
     @PostMapping("/worker/register")
     public String registerWorker(Worker worker) {
@@ -53,6 +58,12 @@ public class WorkerController {
         return "注册成功";
     }
 
+    /**
+     * 兼职者登录
+     * @param worker
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping("/worker/login")
     public String workerLogin(Worker worker, HttpSession session) {
@@ -70,18 +81,33 @@ public class WorkerController {
         return "不存在该用户";
     }
 
+    /**
+     * 来到兼职者更换密码页面
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/worker/editor")
     public String workerEditor(HttpSession session, Model model) {
 
         return "worker/editor";
     }
 
+    /**
+     * 来到兼职者主页
+     * @return
+     */
     @GetMapping("/worker/index")
     public String workerIndex() {
         return "worker/index";
     }
 
-
+    /**
+     * 来到兼职者简历页面
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
@@ -90,6 +116,12 @@ public class WorkerController {
         return "worker/resume";
     }
 
+    /**
+     * 异步保存兼职者简历
+     * @param workerData
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping("/worker/resume/save")
     public String workerDateSave(WorkerData workerData, HttpSession session) {
@@ -99,6 +131,13 @@ public class WorkerController {
         return "保存成功";
     }
 
+    /**
+     * 异步更新用户密码
+     * @param newPassword
+     * @param oldPassword
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping("/worker/editor/save")
     public String changePassword(@RequestParam("newPassword") String newPassword,
@@ -118,15 +157,25 @@ public class WorkerController {
         }
     }
 
+    /**
+     * 来到兼职者查找工作页面
+     * @return
+     */
     @GetMapping("/worker/search")
     public String workerSearch() {
         return "worker/search";
     }
 
+    /**
+     * 来到兼职者搜藏页面
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/worker/collect")
     public String workerCollect(Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        List<Collect> workerAndJobs = collectService.findbyWorkerId(workerId);
+        List<Collect> workerAndJobs = collectService.findByWorkerId(workerId);
         List<Job> jobs = new ArrayList<>();
         for (Collect w : workerAndJobs) {
             Job job = jobService.findById(w.getJobId());
@@ -136,6 +185,12 @@ public class WorkerController {
         return "worker/collect";
     }
 
+    /**
+     * 来到兼职者投递页面
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/worker/deliver")
     public String workerDeliver(Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());

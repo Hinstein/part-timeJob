@@ -18,6 +18,11 @@ public class AdminService {
     @Autowired
     AdminRepository adminRepository;
 
+    /**
+     * 通过用户名找到管理员
+     * @param userName
+     * @return
+     */
     public Admin findByUserName(String userName) {
         return adminRepository.findByUserName(userName);
     }

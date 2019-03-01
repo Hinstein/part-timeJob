@@ -19,10 +19,25 @@ import java.util.List;
  */
 public interface JobRepository extends JpaRepository<Job, Integer> {
 
+    /**
+     * 通过招聘者找到该招聘者的所有工作
+     * @param id
+     * @return
+     */
     List<Job> findByManagerId(int id);
 
+    /**
+     * 通过工作id找到该工作
+     * @param id
+     * @return
+     */
     Job findById(int id);
 
+    /**
+     * 通过工作实体类更新该工作
+     * @param job
+     * @return
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE Job job  SET job.content= :#{#job.content}," +
@@ -32,8 +47,20 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
             "WHERE job.id = :#{#job.id}")
     int updateEditor(Job job);
 
+    /**
+     * 通过工作的招聘信息找到相应的工作
+     * @param content
+     * @param pageable
+     * @return
+     */
     @Query(value = "select job from Job job where job.title like  CONCAT('%',?1,'%')")
     Page<Job> findByTitleLike(String content, Pageable pageable);
 
+    /**
+     * 分页获得所有工作
+     * @param pageable
+     * @return
+     */
+    @Override
     Page<Job> findAll(Pageable pageable);
 }

@@ -2,7 +2,10 @@ package com.parttimejob.repository;
 
 import com.parttimejob.entity.Employ;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -13,9 +16,35 @@ import java.util.List;
  * @Description:
  */
 public interface EmployRepository extends JpaRepository<Employ, Integer> {
+    /**
+     * 通过兼职者id，工作id和招聘者id找到雇佣信息
+     * @param workerId
+     * @param jobId
+     * @param managerId
+     * @return
+     */
     Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId, int managerId);
 
+    /**
+     * 通过招聘者id找到所有雇佣信息
+     * @param managerId
+     * @return
+     */
     List<Employ> findByManagerId(int managerId);
 
+    /**
+     * 通过工作id找到所有雇佣信息
+     * @param jobId
+     * @return
+     */
     List<Employ> findByJobId(int jobId);
+
+    /**
+     * 通过兼职者id删除所有雇佣信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Employ a where a.workerId =?1")
+    void deleteEmployByWorkerId(int id);
 }

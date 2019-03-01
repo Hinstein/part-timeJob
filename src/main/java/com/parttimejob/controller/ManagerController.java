@@ -43,6 +43,11 @@ public class ManagerController {
     @Autowired
     JobService jobService;
 
+    /**
+     * 招聘者注册
+     * @param manager
+     * @return
+     */
     @ResponseBody
     @PostMapping("/manager/register")
     public String registerWorker(Manager manager) {
@@ -57,6 +62,12 @@ public class ManagerController {
         return "注册成功,等待管理员审核";
     }
 
+    /**
+     * 招聘者登录
+     * @param manager
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping("/manager/login")
     public String managerLogin(Manager manager, HttpSession session) {
@@ -78,16 +89,31 @@ public class ManagerController {
         return "不存在该用户";
     }
 
+    /**
+     * 来到招聘者主页
+     * @return
+     */
     @GetMapping("/manager/index")
     public String managerIndex() {
         return "manager/index";
     }
 
+    /**
+     * 招聘者查找工作页面
+     * @return
+     */
     @GetMapping("/manager/search")
     public String managerSearch() {
         return "manager/search";
     }
 
+    /**
+     * 招聘者投递页面
+     * @param jobId
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/manager/job/deliver/{id}")
     public String jobDeliver(@PathVariable("id") int jobId, Model model, HttpSession session) {
         Job job = new Job();
@@ -97,6 +123,12 @@ public class ManagerController {
         return "manager/job/deliver";
     }
 
+    /**
+     * 招聘者所招聘的员工信息
+     * @param jobId
+     * @param request
+     * @return
+     */
     @ResponseBody
     @GetMapping("/manager/job/deliver/worker/{id}")
     public Map<String, Object> jobDeliver(@PathVariable("id") int jobId, HttpServletRequest request) {
@@ -129,6 +161,13 @@ public class ManagerController {
 
     }
 
+    /**
+     * 查看投递的兼职者的资料
+     * @param id
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/manager/deliver/worker/{id}")
     public String workerInformation(@PathVariable("id") int id, Model model, HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
@@ -137,6 +176,12 @@ public class ManagerController {
         return "manager/worker";
     }
 
+    /**
+     * 录用兼职者
+     * @param session
+     * @param map
+     * @return
+     */
     @ResponseBody
     @PostMapping("/employ")
     public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map) {
@@ -161,12 +206,21 @@ public class ManagerController {
         }
     }
 
+    /**
+     * 来到兼职者录用的员工页面
+     * @return
+     */
     @GetMapping("/manager/employ")
     public String managerEmployee() {
         return "manager/employ";
     }
 
-
+    /**
+     * 得到所有的录用的员工
+     * @param session
+     * @param request
+     * @return
+     */
     @ResponseBody
     @GetMapping("/manager/employ/list")
     public Map<String, Object> employee(HttpSession session, HttpServletRequest request) {
@@ -199,6 +253,13 @@ public class ManagerController {
         return result;
     }
 
+    /**
+     * 查看员工资料
+     * @param id
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/manager/workerDeliver/{id}")
     public String workerDeliver(@PathVariable("id") int id, Model model, HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
@@ -206,6 +267,12 @@ public class ManagerController {
         return "manager/workerDeliver";
     }
 
+    /**
+     * 安排员工面试时间页面
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/manager/deliver/worker/setTime")
     public String cancelEmployee(HttpSession session, Model model) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
@@ -214,6 +281,12 @@ public class ManagerController {
         return "manager/setTime";
     }
 
+    /**
+     * 找到工作
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/manager/job/{id}")
     public String jobId(@PathVariable("id") int id, Model model) {
         Job job = jobService.findById(id);
@@ -221,11 +294,22 @@ public class ManagerController {
         return "manager/job";
     }
 
+    /**
+     * 兼职者更新密码
+     * @return
+     */
     @GetMapping("/manager/editor")
     public String managerEditor(){
         return "manager/editor";
     }
 
+    /**
+     * 兼职者保存密码
+     * @param newPassword
+     * @param oldPassword
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping("/manager/editor/save")
     public String changePassword(@RequestParam("newPassword") String newPassword,

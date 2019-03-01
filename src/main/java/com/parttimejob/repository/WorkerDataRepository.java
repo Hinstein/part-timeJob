@@ -18,6 +18,11 @@ import javax.transaction.Transactional;
  */
 public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer> {
 
+    /**
+     * 通过兼职者实体类更新该兼职者的个人资料
+     * @param workerData
+     * @return
+     */
     @Modifying
     @Transactional
     @Query(value = "UPDATE WorkerData workerData  SET workerData.age= :#{#workerData.age}," +
@@ -34,8 +39,27 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
             "WHERE workerData.workerId = :#{#workerData.workerId}")
     int update(WorkerData workerData);
 
+    /**
+     * 通过兼职者的id找到该兼职者的个人资料
+     * @param id
+     * @return
+     */
     WorkerData findByWorkerId(int id);
 
+    /**
+     * 分页找到所有兼职者的个人资料
+     * @param pageable
+     * @return
+     */
     @Override
     Page<WorkerData> findAll(Pageable pageable);
+
+    /**
+     * 通过兼职者的id删除兼职者的个人资料
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from WorkerData a where a.workerId =?1")
+    void deleteWorkerDataByWorkerId(int id);
 }

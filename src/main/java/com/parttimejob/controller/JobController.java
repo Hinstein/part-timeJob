@@ -43,6 +43,12 @@ public class JobController {
     @Autowired
     DeliverService deliverService;
 
+    /**
+     * 发布工作
+     * @param job
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping("/manager/publish/save")
     public String managerPublishSave(Job job, HttpSession session) {
@@ -54,6 +60,12 @@ public class JobController {
         return "发布成功！";
     }
 
+    /**
+     * 查找所有工作
+     * @param session
+     * @param model
+     * @return
+     */
     @GetMapping("/manager/allJob")
     public String findAllJob(HttpSession session, Model model) {
         int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
@@ -62,11 +74,22 @@ public class JobController {
         return "manager/job/allJob";
     }
 
+    /**
+     * 发布工作
+     * @return
+     */
     @GetMapping("/manager/publish")
     public String managerPublish() {
         return "/manager/job/publish";
     }
 
+
+    /**
+     * 编辑工作页面
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/manager/job/editor/{id}")
     public String managerJobEditor(@PathVariable("id") Integer id, Model model) {
         Job job = jobService.findById(id);
@@ -74,6 +97,11 @@ public class JobController {
         return "manager/job/editor";
     }
 
+    /**
+     * 保存工作
+     * @param job
+     * @return
+     */
     @ResponseBody
     @PostMapping("/manager/job/editor/save")
     public String jobSave(Job job) {
@@ -81,6 +109,11 @@ public class JobController {
         return "保存成功";
     }
 
+    /**
+     * 删除工作
+     * @param id
+     * @return
+     */
     @ResponseBody
     @PostMapping("/manager/job/delete/{id}")
     public String jobDelete(@PathVariable("id") Integer id) {
@@ -88,6 +121,12 @@ public class JobController {
         return "删除成功";
     }
 
+    /**
+     * 查询工作
+     * @param request
+     * @param content
+     * @return
+     */
     @ResponseBody
     @GetMapping("/worker/search/allJobs")
     public Map<String, Object> managerAudit(HttpServletRequest request,
@@ -111,6 +150,13 @@ public class JobController {
         return result;
     }
 
+    /**
+     * 查看工作信息
+     * @param jobId
+     * @param model
+     * @param session
+     * @return
+     */
     @GetMapping("/worker/job/{id}")
     public String job(@PathVariable("id") int jobId, Model model, HttpSession session) {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
@@ -126,6 +172,12 @@ public class JobController {
         return "worker/job";
     }
 
+    /**
+     * 收藏工作
+     * @param map
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/worker/job/save")
     public String saveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
@@ -138,6 +190,12 @@ public class JobController {
         return "收藏成功";
     }
 
+    /**
+     * 取消收藏
+     * @param map
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/worker/job/cancelSave")
     public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
@@ -147,6 +205,12 @@ public class JobController {
         return "取消收藏";
     }
 
+    /**
+     * 投递工作
+     * @param map
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/worker/job/deliver")
     public String deliver(@RequestParam HashMap<String, String> map, HttpSession session) {
@@ -159,6 +223,12 @@ public class JobController {
         return "投递成功";
     }
 
+    /**
+     * 取消投递
+     * @param map
+     * @param session
+     * @return
+     */
     @ResponseBody
     @PostMapping(value = "/worker/job/cancelDeliver")
     public String cancelDeliver(@RequestParam HashMap<String, String> map, HttpSession session) {

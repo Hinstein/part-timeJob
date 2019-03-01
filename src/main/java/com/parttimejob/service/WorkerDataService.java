@@ -25,18 +25,38 @@ public class WorkerDataService {
     @Autowired
     WorkerDataRepository workerDataRepository;
 
+    /**
+     * 通过兼职者的id，找到该兼职者的资料
+     * @param id
+     * @return
+     */
     public WorkerData findByWorkerId(int id) {
         return workerDataRepository.findByWorkerId(id);
     }
 
+    /**
+     * 保存兼职者资料
+     * @param workerData
+     */
     public void save(WorkerData workerData) {
         workerDataRepository.save(workerData);
     }
 
+
+    /**
+     * 更新该兼职者的资料
+     * @param workerData
+     */
     public void updata(WorkerData workerData) {
         workerDataRepository.update(workerData);
     }
 
+    /**
+     * 分页得到兼职者的资料
+     * @param pageNo
+     * @param pageSize
+     * @return
+     */
     @Transactional
     public Page<WorkerData> findAll(int pageNo, int pageSize) {
         if (pageNo == 0) {
@@ -44,5 +64,13 @@ public class WorkerDataService {
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
         return workerDataRepository.findAll(pageable);
+    }
+
+    /**
+     * 通过兼职者的id删除兼职者的资料
+     * @param workerId
+     */
+    public void deleteWorkerDataByWorkerId(int workerId){
+        workerDataRepository.deleteWorkerDataByWorkerId(workerId);
     }
 }

@@ -18,21 +18,50 @@ import java.util.List;
 public class CollectService {
 
     @Autowired
-    CollectRepository workerAndJobRepository;
+    CollectRepository collectRepository;
 
+    /**
+     * 保存搜藏
+     * @param collect
+     */
     public void save(Collect collect) {
-        workerAndJobRepository.save(collect);
+        collectRepository.save(collect);
     }
 
+    /**
+     * 通过兼职者id和工作id找到收藏
+     * @param workerId
+     * @param jobId
+     * @return
+     */
     public Collect findByWorkerIdAndJobId(int workerId, int jobId) {
-        return workerAndJobRepository.findByWorkerIdAndJobId(workerId, jobId);
+        return collectRepository.findByWorkerIdAndJobId(workerId, jobId);
     }
 
+    /**
+     * 通过兼职者id和工作id删除收藏
+     * @param workerId
+     * @param jobId
+     */
     public void delete(int workerId, int jobId) {
-        workerAndJobRepository.deleteByWorkerIdAndJobId(workerId, jobId);
+        collectRepository.deleteByWorkerIdAndJobId(workerId, jobId);
     }
 
-    public List<Collect> findbyWorkerId(int workerId) {
-        return workerAndJobRepository.findByWorkerId(workerId);
+    /**
+     * 通过兼职者id找到该兼职者的所有收藏信息
+     * @param workerId
+     * @return
+     */
+    public List<Collect> findByWorkerId(int workerId) {
+        return collectRepository.findByWorkerId(workerId);
     }
+
+    /**
+     * 通过兼职者id删除收藏信息
+     * @param workerId
+     */
+    public void deleteCollectByWorkerId(int workerId){
+        collectRepository.deleteCollectByWorkerId(workerId);
+    }
+
 }

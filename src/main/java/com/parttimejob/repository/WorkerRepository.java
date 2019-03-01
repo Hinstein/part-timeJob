@@ -21,13 +21,33 @@ import java.util.List;
 
 public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     /**
+     * 通过用户名找到找到兼职者
      * @param userName
      * @return Worker
-     * @Description: 在数据库查找用户
      */
     Worker findByUserName(String userName);
 
+    /**
+     * 通过id找到兼职者
+     * @param id
+     * @return
+     */
     Worker findById(int id);
 
+    /**
+     * 分页找到所有兼职者
+     * @param pageable
+     * @return
+     */
+    @Override
     Page<Worker> findAll(Pageable pageable);
+
+    /**
+     *通过id删除兼职者信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Worker a where a.id =?1")
+    void deleteWorkerById(int id);
 }

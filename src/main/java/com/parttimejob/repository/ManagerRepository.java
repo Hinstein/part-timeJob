@@ -18,29 +18,60 @@ import java.util.List;
  * @Description:
  */
 public interface ManagerRepository extends JpaRepository<Manager, Integer> {
+    /**
+     * 通过用户名找到招聘者
+     * @param userName
+     * @return
+     */
     Manager findByUserName(String userName);
 
+    /**
+     * 通过id找到招聘者
+     * @param id
+     * @return
+     */
     Manager findById(int id);
 
-    List<Manager> findByAudit(int i);
-
+    /**
+     * 通过id删除招聘者
+     * @param id
+     */
     @Transactional
     @Modifying
     @Query(value = "delete from Manager a where a.id =?1")
     void deleteManagerById(int id);
 
+    /**
+     * 通过审核
+     * @param id
+     */
     @Transactional
     @Modifying
     @Query(value = "update Manager a SET a.audit = 1 where id =?1")
     void passManager(int id);
 
+    /**
+     * 分页找到所有未通过审核的招聘者
+     * @param audit
+     * @param pageable
+     * @return
+     */
     Page<Manager> findByAudit(int audit, Pageable pageable);
 
+    /**
+     * 保存招聘者
+     * @param manager
+     */
     @Transactional
     @Modifying
     @Query(value = "update Manager m SET m.password= :#{#manager.password} where m.id = :#{#manager.id}")
     void saveEditor(Manager manager);
 
+    /**
+     * 分页找到所有招聘者
+     * @param pageable
+     * @return
+     */
     @Override
     Page<Manager> findAll(Pageable pageable);
 }

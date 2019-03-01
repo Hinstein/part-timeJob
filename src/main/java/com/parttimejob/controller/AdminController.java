@@ -52,6 +52,12 @@ public class AdminController {
     @Autowired
     WorkerDataService workerDataService;
 
+    /**
+     * 管理员登录
+     * @param admin
+     * @param session
+     * @return
+     */
     @PostMapping("admin/login")
     @ResponseBody
     public String adminLogin(Admin admin, HttpSession session) {
@@ -68,16 +74,29 @@ public class AdminController {
         return "不存在该用户";
     }
 
+    /**
+     * 管理员主页
+     * @return
+     */
     @GetMapping("admin/index")
     public String adminIndex() {
         return "admin/index";
     }
 
+    /**
+     * 未通过审核的兼职者页面
+     * @return
+     */
     @GetMapping("admin/manager/audit")
     public String managerAudit() {
         return "admin/manager/audit";
     }
 
+    /**
+     * 删除兼职者
+     * @param id
+     * @return
+     */
     @ResponseBody
     @PostMapping("admin/manager/audit/delete/{id}")
     public String deleteManager(@PathVariable("id") Integer id) {
@@ -85,6 +104,11 @@ public class AdminController {
         return "删除成功";
     }
 
+    /**
+     * 兼职者通过审核
+     * @param id
+     * @return
+     */
     @ResponseBody
     @PostMapping("admin/manager/audit/pass/{id}")
     public String passManager(@PathVariable("id") Integer id) {
@@ -92,6 +116,11 @@ public class AdminController {
         return "通过成功";
     }
 
+    /**
+     * 兼职者投递信息
+     * @param request
+     * @return
+     */
     @ResponseBody
     @GetMapping("admin/manager/audit/data")
     public Map<String, Object> managerAudit(HttpServletRequest request) {
@@ -107,11 +136,20 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 查看所有兼职者页面
+     * @return
+     */
     @GetMapping("/admin/workers")
     public String allWorkers() {
         return "admin/worker/all";
     }
 
+    /**
+     * 所有兼职者资料页面
+     * @param request
+     * @return
+     */
     @ResponseBody
     @GetMapping("/admin/workers/data")
     public Map<String, Object> workersData(HttpServletRequest request) {
@@ -127,11 +165,20 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 兼职者信息页面
+     * @return
+     */
     @GetMapping("/admin/worker/information")
     public String workerInformation() {
         return "admin/worker/information";
     }
 
+    /**
+     * 得到所有兼职者信息页面
+     * @param request
+     * @return
+     */
     @ResponseBody
     @GetMapping("/admin/workers/information/data")
     public Map<String, Object> workersInformationData(HttpServletRequest request) {
@@ -147,16 +194,29 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 查找所有工作页面
+     * @return
+     */
     @GetMapping("/admin/jobs")
     public String adminJobs() {
         return "admin/job/all";
     }
 
+    /**
+     * 查找招聘者页面
+     * @return
+     */
     @GetMapping("/admin/manager/editor")
     public String managerEditor() {
         return "admin/manager/editor";
     }
 
+    /**
+     * 查找招聘者资料
+     * @param request
+     * @return
+     */
     @ResponseBody
     @GetMapping("/admin/manager/editor/data")
     public Map<String, Object> managerEditorData(HttpServletRequest request) {
@@ -172,6 +232,12 @@ public class AdminController {
         return result;
     }
 
+    /**
+     * 兼职者资料页面
+     * @param id
+     * @param model
+     * @return
+     */
     @GetMapping("/admin/worker/{id}")
     public String workerId(@PathVariable("id") int id, Model model) {
         Worker worker = workerService.findById(id);
@@ -181,6 +247,12 @@ public class AdminController {
         return "admin/worker/editor";
     }
 
+    /**
+     * 更新兼职者资料页面
+     * @param workerData
+     * @param request
+     * @return
+     */
     @ResponseBody
     @PostMapping("/admin/worker/save")
     public String adminWorkerSave(WorkerData workerData, HttpServletRequest request) {
@@ -195,4 +267,13 @@ public class AdminController {
         workerService.save(worker);
         return "更新成功";
     }
+
+    /**
+     * 删除兼职用户
+     */
+//    @ResponseBody
+//    @PostMapping("worker/delete/{id}")
+//    public String workerDelete(@PathVariable("id")int id){
+//        workerService.d
+//    }
 }

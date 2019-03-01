@@ -18,12 +18,32 @@ import java.util.List;
  */
 public interface CollectRepository extends JpaRepository<Collect, Integer> {
 
+    /**
+     * 通过兼职者id和工作找到收藏信息
+     * @param workerId
+     * @param jobId
+     * @return
+     */
     Collect findByWorkerIdAndJobId(int workerId, int jobId);
 
+    /**
+     * 通过兼职者id和工作id删除收藏信息
+     * @param workerId
+     * @param jobId
+     */
     @Transactional
     @Modifying
     @Query(value = "delete from Collect a where a.workerId = ?1 and a.jobId=?2 ")
     void deleteByWorkerIdAndJobId(int workerId, int jobId);
 
     List<Collect> findByWorkerId(int workerId);
+
+    /**
+     * 通过兼职者id删除收藏信息
+     * @param id
+     */
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Collect a where a.workerId =?1")
+    void deleteCollectByWorkerId(int id);
 }
