@@ -1,6 +1,12 @@
 package com.parttimejob.controller;
 
+import com.parttimejob.entity.Job;
+import com.parttimejob.service.JobService;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -14,6 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class MainController {
+
+    @Autowired
+    JobService jobService;
 
     /**
      * 兼职者登录页面
@@ -56,7 +65,9 @@ public class MainController {
      * @return
      */
     @GetMapping("index")
-    public String index() {
+    public String index(Model model) {
+        Page<Job> jobs=jobService.getJobs(1,27);
+        model.addAttribute("jobs",jobs);
         return "homePage/index";
     }
 

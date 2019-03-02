@@ -8,431 +8,144 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>桂林最新兼职招聘信息,桂林大学生找兼职网 - GUET兼职网</title>
+    <title>兼职者页面</title>
 
-    <link rel="stylesheet" href="/static/assets/index/css/reset.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/reset.css-version=2.29.51.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/header.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/header.css-version=2.29.51.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/container_header.css-version=2.29.5120170315.css"
-          th:href="@{/assets/index/css/container_header.css-version=2.29.5120170315.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/index.css-version=2.29.5120170321.css"
-          th:href="@{/assets/index/css/index.css-version=2.29.5120170321.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/container_footer.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/container_footer.css-version=2.29.51.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/footer.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/footer.css-version=2.29.51.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/side_navigation_box.css-version=2.29.5120170310.css"
-          th:href="@{/assets/index/css/side_navigation_box.css-version=2.29.5120170310.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/content_side_box.css-version=2.29.5120170213.css"
-          th:href="@{/assets/index/css/content_side_box.css-version=2.29.5120170213.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/alt.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/alt.css-version=2.29.51.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/font-awesome.min.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/font-awesome.min.css-version=2.29.51.css}">
-    <link rel="stylesheet" href="/static/assets/index/css/font-awesome-ie7.min.css-version=2.29.51.css"
-          th:href="@{/assets/index/css/font-awesome-ie7.min.css-version=2.29.51.css}">
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+
 </head>
-
 <body>
-
-<header class="header">
-    <nav class="w_main navigation_box">
-        <div class="city_wrap">
-            <span class="city">桂林</span> <a rel="nofollow" href="">[切换城市]</a>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a href="" layadmin-event="flexible" title="logo">
+                    兼职网
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a href="" target="_blank" title="首页">
+                    首页
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a href="" target="_blank" title="首页">
+                    BBS论坛
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;" layadmin-event="about">
+                    登录</a>
+            </li>
+            <li class="layui-nav-item " lay-unselect>
+                <a href="javascript:;" layadmin-event="about">
+                    注册</a>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="layui-container">
+    <div class="layui-row">
+        <div class="layui-col-md11">
+            <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的职位">
         </div>
-        <div class="channel_box">
-            <a rel="nofollow" th:href="@{index}">首页</a>
-            <a rel="nofollow" th:href="@{workerLogin}">登录</a>
-            <a rel="nofollow" th:href="@{workerRegister}">注册</a>
+        <div class="layui-col-md1">
+            <button class="layui-btn" id="search" type="button">搜索</button>
         </div>
-    </nav>
-</header>
-<section class="container">
-    <header class="w_main">
-        <div class="logo_box clearfix">
-            <div class="search_wrap left">
-                <input name="k" growing-track='true' type="text" placeholder="请输入搜索的内容" class="search" id="search"
-                       value="">
-                <input type="button" value="搜索" class="submit" id="submit">
-            </div>
-            <a href="" id="j-wrzbtn22" class="public right">进入招聘管理</a>
-            <a href="" class="public u-kjjz_btn right"> 发布兼职</a>
+    </div>
+</div>
+<br>
+<div class="layui-container  layui-hide-xs">
+    <div class="layui-carousel" id="test1">
+        <div carousel-item>
+            <div><img th:src="@{/assets/picture/index1.jpg}" th:width="1140px"></div>
+            <div><img th:src="@{/assets/picture/index2.jpg}" th:width="1140px"></div>
         </div>
-    </header>
-    <article class="w_main">
-        <aside class="option_box">
-            <div class="tabs clearfix">
-                <a>最新兼职</a>
-            </div>
-            <div class="cnts">
-                <ul class="box">
-                    <li><span>类&nbsp;&nbsp;型:</span>
-                        <a href="" class="selected">不限</a>
-                        <a href="" class="tab">日结兼职</a>
-                        <a href="" class="tab">短期兼职</a>
-                        <a href="" class="tab">长期兼职</a>
-                        <a href="" class="tab">周末兼职</a>
-                        <a href="" class="tab">全职招聘</a>
-                        <a href="" class="tab">寒假工</a>
-                        <a href="" class="tab">暑假工</a>
-                        <a href="">手机兼职<span class="new">hot！</a>
-
-                    </li>
-                    <li><span>种&nbsp;&nbsp;类:</span>
-
-                        <a href="" class="selected">不限</a>
-                        <a href="" class="tab">服务员</a>
-                        <a href="" class="tab">送餐员</a>
-                        <a href="" class="tab">促销</a>
-                        <a href="" class="tab">销售</a>
-                        <a href="" class="tab">导购</a>
-                        <a href="" class="tab">派单</a>
-                        <a href="" class="tab">调研</a>
-                        <a href="" class="tab">普工</a>
-                        <a href="" class="tab">快递分拣</a>
-                        <a href="" class="tab">其他</a>
-                        <a href="" class="tab">临时工</a>
-                        <a href="" class="tab">家教导师</a>
-                        <a href="" class="tab">网络编辑</a>
-                        <a href="" class="tab">文员助理</a>
-                        <a href="" class="tab">客服</a>
-                        <a href="" class="tab">校园活动</a>
-                        <a href="" class="tab">翻译</a>
-                        <a href="" class="tab">设计</a>
-                        <a href="" class="tab">实习</a>
-                        <a href="" class="tab">安保</a>
-                        <a href="" class="tab">礼仪</a>
-                        <a href="" class="tab">模特</a>
-                        <a href="" class="tab">演出</a>
-                    </li>
-
-                    <li><span>区&nbsp;&nbsp;域:</span>
-
-                        <a href="" class="selected">不限</a>
-                        <a href="" class="tab">南宁</a>
-                        <a href="" class="tab">柳州</a>
-                        <a href="" class="tab">桂林</a>
-                        <a href="" class="tab">梧州</a>
-                        <a href="" class="tab">北海</a>
-                        <a href="" class="tab">防城港</a>
-                        <a href="" class="tab">钦州</a>
-                        <a href="" class="tab">贵港</a>
-                        <a href="" class="tab">玉林</a>
-                        <a href="" class="tab">白色</a>
-                        <a href="" class="tab">贺州</a>
-                        <a href="" class="tab">河池</a>
-                    </li>
-                </ul>
-            </div>
-        </aside>
-        <div class="order_box">
-            <ul class="order_tab">
-                <a href="">
-                    <li class="cur">最新发布</li>
-                </a><a href="">
-                <li class="">最高薪资</li>
-            </a><a href="">
-                <li class="">最多人看</li>
-            </a></ul>
-        </div>
-        <div class="content_box clearfix">
-            <div class="content_list_box">
-                <ul class="content_list_wrap" id="content_list_wrap">
-
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-                    <li>
-                        <div class="left type_wrap">
-                            <i class="type qt"></i>
-                        </div>
-                        <a href="" class="left title hot">急！唯品会新春回馈日招募</a>
-                        <div class="left area">
-                            <span title="海珠"><i class="icon-map-marker"></i>&nbsp;海珠</span>
-                        </div>
-                        <div class="left visited">
-                            <span title="60770"><i class="icon-user"></i>&nbsp;60770</span>
-                        </div>
-                        <div class="left date" title="刚刚">
-                            <i class="icon-time"></i> 刚刚
-                        </div>
-                    </li>
-
-                </ul>
-
-                <div class="content_page_box">
-                    <ul class="content_page_wrap" id="content_page_wrap">
-                        <li><a class="selected" rel="nofollow" href="">1</a></li>
-
-                        <li><a class="" rel="nofollow" href="">2</a></li>
-
-                        <li><a class="" rel="nofollow" href="">3</a></li>
-
-                        <li><a class="" rel="nofollow" href="">4</a></li>
-
-                        <li><a class="" rel="nofollow" href="">5</a></li>
-
-                        <li><a class="" rel="nofollow" href="">6</a></li>
-
-                        <li><a class="" rel="nofollow" href="">7</a></li>
-
-                        <li><a class="" rel="nofollow" href="">8</a></li>
-
-                        <li><a class="" rel="nofollow" href="">9</a></li>
-
-                        <li><a class="" rel="nofollow" href="">10</a></li>
-
-                        <li class="next"><a rel="nofollow" href="">下一页</a></li>
-                    </ul>
-                </div>
-
-                <!-- 猜你喜欢职位 -->
-            </div>
-            <div style="float: right;">
-
-                <!-- 寒假工banner -->
-                <a class="content_ad_pic" href=""><img th:src="@{/assets/index/png/winter_banner.png}"></a>
-                <div class="content_ad_box" style="border:1px solid #dddddd;margin-bottom:20px;">
-                    <div class="p1">GUET兼职简介</div>
-                    <div class="p2">
-                        想提高招聘效果，发兼职？<a href="">马上发布</a>
-                    </div>
-                    <ul class="rcm_text">
-                        <li>
-                            <h2>一个真实可靠的兼职招聘平台</h2>
-                            <p>兼职信息经过多重核查，更加真实可靠。</p>
-                        </li>
-                        <li>
-                            <h2>一起来颠覆兼职招聘行业</h2>
-                            <p>我们希望未来能够为每一位用GUET兼职的同学都买一份保险。</p>
-                        </li>
-                        <li>
-                            <h2>共同打造绿色的兼职平台</h2>
-                            <p>GUET兼职已成为中国绿色兼职平台的领头羊。</p>
-                        </li>
-                        <li>
-                            <h2>给学生提供靠谱的兼职，给企业提供靠谱的好员工</h2>
-                            <p>来GUET兼职发布优质的兼职，让高质的学生投身于你们的工作之中。</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </article>
-
-    <footer class="w_main container_footer">
-    </footer>
-</section>
-
-
-<footer class="footer">
-    <div class="w_main channel">
-        <a rel="nofollow" href="" style="padding-left: 0;">关于我们</a>|
-        <a rel="nofollow" href="">加入我们</a>|
-        <a rel="nofollow" href="">企业推广</a>|
-        <a rel="nofollow" href="">帮助中心</a>| &nbsp; &nbsp; &nbsp; 邮编：541004　 &nbsp;
-        &nbsp;| &nbsp; &nbsp;业务电话：0773-2290083
-        <a class="qq" rel="nofollow" href="">
-            <img th:src="@{/assets/index/png/kf_qq.png}"/></a>
-        <a class="qq" rel="nofollow" href=""><img th:src="@{/assets/index/png/yw_qq.png}"/></a>
-
     </div>
 
-</footer>
+</div>
+<br>
+<div class="layui-container" style="background-color: #FFF">
+    <div class="layui-row">
+        <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
+            <ul class="layui-tab-title">
+                <li class="layui-this">推荐</li>
+                <li>最新</li>
+                <li>最热</li>
+            </ul>
+            <div class="layui-tab-content" >
+                <div class="layui-tab-item layui-show">
+                    <div class="layui-fluid layadmin-maillist-fluid">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md4 layui-col-sm12" th:each="job:${jobs}" >
+                                <div class="layadmin-contact-box">
+                                    <div class="layui-col-md8 layadmin-padding-left20 layui-col-sm6" style="text-align: center;">
+                                        <a href="javascript:;">
+                                            <h3 class="layadmin-title">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </h3>
+                                        </a>
+                                        <span>薪资:</span>
+                                        <span th:text="${job.lowPay}"></span>
+                                        <span class="layui-red">-</span>
+                                        <span th:text="${job.hightPay}"></span>
+                                        <div class="layadmin-address">
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="container">
+                    <div class="layui-row">
+                    <div class="layui-card layui-col-md4" th:each="job:${jobs}" >
+                        <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                        <div class="layui-card-body">
+                            发布时间:
+                            <text th:text="${job.date}"></text>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">内容3</div>
+            </div>
+        </div>
+        <div style="text-align: center;">
+            <button class="layui-btn" >查看更多</button>
+        </div>
+    </div>
 
-
+</div>
+<br>
+<br>
+<br>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            , width: '1140px' //设置容器宽度
+            , height: '460px'
+            , arrow: 'always' //始终显示箭头
+            //,anim: 'updown' //切换动画方式
+        });
+    });
+</script>
 </body>
 </html>
