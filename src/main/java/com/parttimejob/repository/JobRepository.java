@@ -72,4 +72,8 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Modifying
     @Query(value = "delete from Job a where a.managerId =?1")
     void deleteJobByManagerId(int id);
+
+    Page<Job> findByManagerId(int id,Pageable pageable);
+
+
 }

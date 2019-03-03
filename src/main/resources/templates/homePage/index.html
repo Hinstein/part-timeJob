@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>兼职者页面</title>
+    <title>兼职网</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
 
@@ -20,12 +20,12 @@
     <div class="layui-header">
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                <a href="" layadmin-event="flexible" title="logo">
+                <a th:href="@{/index}" layadmin-event="flexible" title="logo">
                     兼职网
                 </a>
             </li>
-            <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                <a href="" target="_blank" title="首页">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker}!=null">
+                <a th:href="@{/worker/index}" target="_blank" title="首页">
                     首页
                 </a>
             </li>
@@ -36,12 +36,21 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-            <li class="layui-nav-item" lay-unselect>
-                <a href="javascript:;" layadmin-event="about">
+            <li class="layui-nav-item" lay-unselect th:if="${session.worker}!=null">
+                <a th:href="@{/worker/index}" layadmin-event="about">
+                    [[${session.worker.userName}]]</a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
+                    <dd><a th:href="@{/worker/exit}">退出</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect th:if="${session.worker}==null">
+                <a th:href="@{workerLogin}" layadmin-event="about">
                     登录</a>
             </li>
-            <li class="layui-nav-item " lay-unselect>
-                <a href="javascript:;" layadmin-event="about">
+            <li class="layui-nav-item " lay-unselect th:if="${session.worker}==null">
+                <a th:href="@{workerRegister}" layadmin-event="about">
                     注册</a>
             </li>
             <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
@@ -76,58 +85,70 @@
 </div>
 <br>
 <div class="layui-container" style="background-color: #FFF">
-    <div class="layui-row">
-        <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
-            <ul class="layui-tab-title">
-                <li class="layui-this">推荐</li>
-                <li>最新</li>
-                <li>最热</li>
-            </ul>
-            <div class="layui-tab-content" >
-                <div class="layui-tab-item layui-show">
-                    <div class="layui-fluid layadmin-maillist-fluid">
-                        <div class="layui-row layui-col-space15">
-                            <div class="layui-col-md4 layui-col-sm12" th:each="job:${jobs}" >
-                                <div class="layadmin-contact-box">
-                                    <div class="layui-col-md8 layadmin-padding-left20 layui-col-sm6" style="text-align: center;">
-                                        <a href="javascript:;">
-                                            <h3 class="layadmin-title">
-                                                <strong th:text="${job.title}">title</strong>
-                                            </h3>
-                                        </a>
-                                        <span>薪资:</span>
-                                        <span th:text="${job.lowPay}"></span>
-                                        <span class="layui-red">-</span>
-                                        <span th:text="${job.hightPay}"></span>
-                                        <div class="layadmin-address">
-                                            发布时间:
-                                            <text th:text="${job.date}"></text>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">推荐</li>
+            <li>最新</li>
+            <li>最热</li>
+        </ul>
+        <div class="layui-tab-content">
+            <div class="layui-tab-item layui-show">
+                <div class="container">
+                    <div class="layui-row">
+                        <div class="layui-card layui-col-md4" th:each="job:${jobs}">
+                            <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                            <div class="layui-card-body">
+                                <p><span>薪资:</span>
+                                    <span th:text="${job.lowPay}"></span>
+                                    <span class="layui-red">-</span>
+                                    <span th:text="${job.hightPay}"></span></p>
+                                发布时间:
+                                <text th:text="${job.date}"></text>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-tab-item">
-                    <div class="container">
+            </div>
+            <div class="layui-tab-item">
+                <div class="container">
                     <div class="layui-row">
-                    <div class="layui-card layui-col-md4" th:each="job:${jobs}" >
-                        <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
-                        <div class="layui-card-body">
-                            发布时间:
-                            <text th:text="${job.date}"></text>
+                        <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
+                            <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                            <div class="layui-card-body">
+                                <p><span>薪资:</span>
+                                    <span th:text="${job.lowPay}"></span>
+                                    <span class="layui-red">-</span>
+                                    <span th:text="${job.hightPay}"></span></p>
+                                发布时间:
+                                <text th:text="${job.date}"></text>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-tab-item">内容3</div>
             </div>
-        </div>
-        <div style="text-align: center;">
-            <button class="layui-btn" >查看更多</button>
+            <div class="layui-tab-item">
+                <div class="container">
+                    <div class="layui-row">
+                        <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
+                            <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                            <div class="layui-card-body">
+                                <p><span>薪资:</span>
+                                    <span th:text="${job.lowPay}"></span>
+                                    <span class="layui-red">-</span>
+                                    <span th:text="${job.hightPay}"></span></p>
+                                发布时间:
+                                <text th:text="${job.date}"></text>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button class="layui-btn" type="button" id="more">查看更多</button>
+            </div>
+            <input th:value="${session.worker}" hidden="hidden" id="check">
         </div>
     </div>
-
 </div>
 <br>
 <br>
@@ -146,6 +167,20 @@
             //,anim: 'updown' //切换动画方式
         });
     });
+    $(function () {
+        $('#more').click(function () {
+            var worker = $('#check').val();
+            console.log(worker);
+            if (worker === '') {
+                layer.msg("请先登录!");
+                setTimeout(function () {
+                    location.href = "workerLogin";
+                },1000)
+            } else {
+                location.href = "/worker/search";
+            }
+        });
+    })
 </script>
 </body>
 </html>

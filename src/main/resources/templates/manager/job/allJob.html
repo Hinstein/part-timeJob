@@ -11,113 +11,118 @@
     <title>招聘者页面</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
-
-    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/template.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 </head>
-
-<body style="background-color: #F2F2F2;">
-<div class="layui-layout layui-layout-admin layui-layout-body">
+<body>
+<div class="layui-layout layui-layout-admin">
     <div class="layui-header">
-        <div class="layui-logo">兼职网</div>
         <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a href="" layadmin-event="flexible" title="logo">
+                    兼职网
+                </a>
+            </li>
+
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a href="" target="_blank" title="首页">
+                    BBS论坛
+                </a>
             </li>
         </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a href="">欢迎招聘者</a></li>
-            <li class="layui-nav-item">
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/search}">职位管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
                 <a href="javascript:;">
-                    [[${session.userName}]]
+                    [[${session.manager.userName}]]
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
+                    <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
+                    <dd><a>退出</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
+                </dl>
+            </li>
         </ul>
     </div>
-    <div style="padding: 20px; background-color: #F2F2F2;">
-        <div class="layui-container">
-            <div class="layui-row layui-col-space15">
-                <div class="layui-col-md3">
-                    <div class="layui-card">
-                        <div class="layui-card-header">欢迎您</div>
-                        <div class="layui-card-body">
-                            [[${session.userName}]]
-                        </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md2">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div style="text-align: center;">
+                        <img th:src="@{/assets/picture/head.png}">
                     </div>
-                    <div class="layui-card">
-                        <div class="layui-card-body">
-                            <a class="layui-btn  " th:href="@{/manager/publish}">
-                                <i class="layui-icon layui-icon-edit"></i>发布兼职
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/manager/editor}">
-                                <i class="layui-icon layui-icon-set"></i>安全设置
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/manager/search}">
-                                <i class="layui-icon layui-icon-search"></i>搜索职位
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/manager/allJob}">
-                                <i class="layui-icon layui-icon-search"></i>我发布的职位
-                            </a>
-                            <hr>
-                            <a class="layui-btn " th:href="@{/manager/employ}">
-                                <i class="layui-icon layui-icon-search"></i>我录用的员工
-                            </a>
-                        </div>
+                    <br>
+                    <div style="text-align: center;">
+                        <h2> [[${session.manager.userName}]]</h2>
+                    </div>
+                    <hr>
+                    <div>
+                        <a class="layui-btn layui-btn-primary  " th:href="@{/manager/publish}">
+                            发布兼职
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px">
+                        <a class="layui-btn layui-btn-primary" th:href="@{/manager/editor}">
+                            安全设置
+                        </a></div>
+                    <div style="padding-top: 5px">
+                        <a class="layui-btn layui-btn-primary" th:href="@{/manager/search}">
+                            搜索职位
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px">
+                        <a class="layui-btn layui-btn-primary " th:href="@{/manager/allJobs}">
+                            我发布的职位
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px">
+                        <a class="layui-btn layui-btn-primary " th:href="@{/manager/employ}">
+                            我录用的员工
+                        </a>
                     </div>
                 </div>
-                <div class="layui-col-md9">
-                    <div class="layui-fluid" style="padding:0">
-                        <div class="layadmin-caller">
-                            <div class="caller-contar">
-                                <div class="caller-item" th:each="job:${jobs}">
-                                    <div class="caller-main caller-fl">
-                                        <p><strong th:text="${job.title}">标题</strong></p>
-                                        <p><i class="layui-icon layui-icon-log"></i>发布时间：<em th:text="${job.date}"></em>
-                                        </p>
-                                    </div>
-                                    <div class=" caller-fr">
-                                        薪资:
-                                        <em th:text="${job.lowPay}"></em>-
-                                        <em th:text="${job.hightPay}"></em>
-                                        <a class="layui-btn layui-btn-warm"
-                                           th:href="@{/manager/job/deliver/}+${job.id}">查看投递信息</a>
-                                        <a class="layui-btn" th:href="@{/manager/job/editor/}+${job.id}"
-                                           style="margin-left: 0;">编辑</a>
-                                        <button class="delete layui-btn layui-btn-danger delete"
-                                                th:attr="del_uri=@{/manager/job/delete/}+${job.id}" type="button"
-                                                style="margin-top: 0;margin-left: 0;">删除
-                                        </button>
-                                        <form id="deleteForm" method="post">
-                                            <input type="hidden">
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
+            </div>
+        </div>
+        <div class="layui-col-md10">
+            <div class="layui-card">
+                <div class="layui-card-header">我发布的职位</div>
+                <div class="layui-card-body">
+                    <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
+                    <script type="text/html" id="action">
+                        <div class="layui-btn-container">
+                            <button class="layui-btn layui-btn-sm " lay-event="pass">查看投递信息</button>
+                            <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="editor">编辑</button>
+                            <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
                         </div>
-                    </div>
+                    </script>
                 </div>
             </div>
         </div>
     </div>
 </div>
+</div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script>
+<script th:inline="none">
     $(".delete").click(function () {
         var url = $(this).attr("del_uri");
         layer.confirm('删除该招聘信息么', function (index) {
@@ -140,6 +145,56 @@
         });
         return false;
     })
+
+    layui.use(['table'], function () {
+        var table = layui.table;
+        //第一个实例
+        var tableIns = table.render({
+            elem: '#demo'
+            , url: '/manager/find/allJobs' //数据接口
+            , page: true //开启分页
+            , skin: 'line'
+            , size: 'lg'
+            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                {field: 'title', title: '信息'}
+                , {field: 'lowPay', title: '最低工资', width: '10%'}
+                , {field: 'hightPay', title: '最高工资', width: '10%'}
+                , {field: 'date', title: '发布时间', sort: true, width: '20%'}
+                , {fixed: 'right', title: '操作', toolbar: '#action', width: '25%'}
+            ]]
+        });
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'pass') { //通过
+                location.href = "/manager/job/deliver/" + data.id;
+            } else if (layEvent === 'editor') {
+                location.href = "/manager/job/editor/" + data.id;
+            } else if (layEvent === 'delete') {
+                layer.confirm('删除该招聘信息么', function (index) {
+                    // $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
+                    // console.log(url);
+                    $.ajax({
+                        url: url,
+                        method: "post",
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                            setTimeout(function () {
+                                location.href = "/manager/allJobs";
+                            }, 2000);
+                        },
+                        error: function () {
+                            layer.msg("网络错误，通过失败");
+                        }
+                    });
+                });
+            }
+        });
+    });
 </script>
 </body>
 </html>

@@ -1,0 +1,24 @@
+package com.parttimejob.service;
+
+import com.parttimejob.entity.EvaluationToWorker;
+import com.parttimejob.repository.EvaluationToWorkerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * @BelongsProject: part-timeJob
+ * @BelongsPackage: com.parttimejob.service
+ * @Author: Hinstein
+ * @CreateTime: 2019-03-03 16:48
+ * @Description:
+ */
+@Service
+public class EvaluationToWorkerService {
+
+    @Autowired
+    EvaluationToWorkerRepository evaluationToWorkerRepository;
+
+    public void evaluationToWorkerSave(EvaluationToWorker evaluation) {
+        evaluationToWorkerRepository.save(evaluation);
+    }
+}

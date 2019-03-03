@@ -32,12 +32,11 @@ public class EmployService {
     /**
      * 通过兼职者的id，工作的id，招聘者的id找到雇佣信息
      * @param workerId
-     * @param jobId
      * @param managerId
      * @return
      */
-    public Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId, int managerId) {
-        return employRepository.findByWorkerIdAndJobIdAndManagerId(workerId, jobId, managerId);
+    public Employ findByWorkerIdAndManagerId(int workerId,  int managerId) {
+        return employRepository.findByWorkerIdAndManagerId(workerId,  managerId);
     }
 
     /**
@@ -59,6 +58,15 @@ public class EmployService {
     }
 
     /**
+     * 通过兼职者的id找到雇佣信息
+     * @param workerId
+     * @return
+     */
+    public List<Employ> findByWorkerId(int workerId) {
+        return employRepository.findByWorkerId(workerId);
+    }
+
+    /**
      * 通过兼职者的id删除雇佣信息
      * @param workerId
      */
@@ -77,10 +85,14 @@ public class EmployService {
 
     /**
      * 通过工作的id删除雇佣信息
-     * @param managerId
+     * @param jobId
      */
     public void deleteEmployByJobId(int jobId){
         employRepository.deleteEmployByJobId(jobId);
     }
+
+public void evaluated(int workerId,int managerId){
+        employRepository.evaluated(workerId,managerId);
+}
 
 }

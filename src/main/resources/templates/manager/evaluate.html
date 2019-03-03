@@ -11,7 +11,6 @@
     <title>招聘者页面</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
-
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 </head>
 <body>
@@ -106,53 +105,70 @@
 
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header">我录用的员工</div>
+                <div class="layui-card-header">给予兼职者评价</div>
                 <div class="layui-card-body">
-                    <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
-                    <script type="text/html" id="action">
-                        <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                    <form class="layui-form">
+                        评分：
+                        <div id="test1"></div>
+                        <br>
+                        <div class="layui-form-item layui-form-text">
+                            评价：
+                            <textarea class="layui-textarea" placeholder="给兼职者评价吧!" id="content"></textarea>
                         </div>
-                    </script>
+                        <div class="layui-form-item">
+                            <div class="layui-input-right">
+                                <button class="layui-btn" id="put" type="button">提交</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script th:inline="none">
-    layui.use(['table'], function () {
-        var table = layui.table;
-        //第一个实例
-        var id = $('#jobId').val();
-        var tableIns = table.render({
-            elem: '#demo'
-            , url: '/manager/employ/list'  //数据接口
-            , page: true //开启分页
-            , skin: 'line'
-            , size: 'lg'
-            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-            , limit: 10 //每页默认显示的数量
-            , cols: [[ //表头
-                {field: 'name', title: '姓名'}
-                , {field: 'age', title: '年龄'}
-                , {field: 'jobIntension', title: '求职意向'}
-                , {field: 'expectation', title: '期望薪资', sort: true}
-                , {fixed: 'right', title: '操作', toolbar: '#action'}
+<script>
+    layui.use('rate', function () {
+        var rate = layui.rate;
+        var ins1 = rate.render({
+            elem: '#test1'  //绑定元素
+            , choose: function (value) {
+                if (value > 4) layer.msg('哇五星好评!');
+                else if (value > 3) layer.msg('不错!');
+                else if (value > 2) layer.msg('好评!');
+                else if (value > 1) layer.msg('一般!');
+                else if (value > 0) layer.msg('还需努力！');
 
-            ]]
-        });
-        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'pass') { //通过
-                location.href = "/manager/workerDeliver/" + data.workerId;
             }
         });
-    })
+    });
+    $(function () {
+        $("#put").click(function () {
+            var star = $('.layui-icon-rate-solid').length;
+            var content = $('#content').val();
+            var workerId = [[${worker.id}]];
+            $.ajax({
+                url: '/manager/worker/evaluate/save',
+                method: "post",
+                dataType: "text",
+                data: {
+                    star: star,
+                    content: content,
+                    workerId: workerId
+                },
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href="/manager/evaluate";
+                    },1000)
+                },
+                error: function () {
+                    layer.msg("网络错误，通过失败");
+                }
+            });
+        })
+    });
 </script>
 </body>
 </html>

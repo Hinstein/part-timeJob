@@ -1,8 +1,6 @@
 package com.parttimejob.controller;
 
-import com.parttimejob.entity.Deliver;
-import com.parttimejob.entity.Job;
-import com.parttimejob.entity.Collect;
+import com.parttimejob.entity.*;
 import com.parttimejob.service.DeliverService;
 import com.parttimejob.service.JobService;
 import com.parttimejob.service.ManagerService;
@@ -52,28 +50,35 @@ public class JobController {
     @ResponseBody
     @PostMapping("/manager/publish/save")
     public String managerPublishSave(Job job, HttpSession session) {
-        int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
-        job.setManagerId(managerId);
+        Manager manager=(Manager)session.getAttribute("manager");
+        job.setManagerId(manager.getId());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         job.setDate(df.format(new Date()));
         jobService.jobSave(job);
         return "发布成功！";
     }
 
-    /**
-     * 查找所有工作
-     * @param session
-     * @param model
-     * @return
-     */
-    @GetMapping("/manager/allJob")
-    public String findAllJob(HttpSession session, Model model) {
-        int managerId = Integer.parseInt(session.getAttribute("managerId").toString());
-        List<Job> jobs = jobService.findByManagerId(managerId);
-        model.addAttribute("jobs", jobs);
+
+    @GetMapping("/manager/allJobs")
+    public String findAllJob() {
         return "manager/job/allJob";
     }
 
+    @ResponseBody
+    @GetMapping("/manager/find/allJobs")
+    public Map<String, Object> findAllJobs(HttpSession session, HttpServletRequest request) {
+    Manager manager = (Manager) session.getAttribute("manager");
+    int pageSize = Integer.parseInt(request.getParameter("limit"));
+    int pageNumber = Integer.parseInt(request.getParameter("page"));
+    Map<String, Object> result = new HashMap<String, Object>();
+    Page<Job> jobs =jobService.findByManagerId(manager.getId(),pageNumber, pageSize);
+    result.put("code", 0);
+    result.put("msg", "");
+    result.put("count", jobs.getTotalElements());
+    JSONArray json = JSONArray.fromObject(jobs.getContent());
+    result.put("data", json);
+    return result;
+    }
     /**
      * 发布工作
      * @return
@@ -159,15 +164,16 @@ public class JobController {
      */
     @GetMapping("/worker/job/{id}")
     public String job(@PathVariable("id") int jobId, Model model, HttpSession session) {
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        Worker worker = (Worker)session.getAttribute("worker");
         Job job = jobService.findById(jobId);
-        if (collectService.findByWorkerIdAndJobId(workerId, jobId) != null) {
+        job.setViews(job.getViews()+1);
+        if (collectService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setCollection(1);
         }
-        ;
-        if (deliverService.findByWorkerIdAndJobId(workerId, jobId) != null) {
+        if (deliverService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setDeliver(1);
         }
+        jobService.jobSave(job);
         model.addAttribute("job", job);
         return "worker/job";
     }
@@ -183,9 +189,9 @@ public class JobController {
     public String saveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
         Collect workerAndJob = new Collect();
         int jobId = Integer.parseInt(map.get("id"));
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        Worker worker = (Worker)session.getAttribute("worker");
         workerAndJob.setJobId(jobId);
-        workerAndJob.setWorkerId(workerId);
+        workerAndJob.setWorkerId(worker.getId());
         collectService.save(workerAndJob);
         return "收藏成功";
     }
@@ -200,8 +206,8 @@ public class JobController {
     @PostMapping(value = "/worker/job/cancelSave")
     public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        collectService.delete(workerId, jobId);
+        Worker worker = (Worker)session.getAttribute("worker");
+        collectService.delete(worker.getId(), jobId);
         return "取消收藏";
     }
 
@@ -216,9 +222,9 @@ public class JobController {
     public String deliver(@RequestParam HashMap<String, String> map, HttpSession session) {
         Deliver deliver = new Deliver();
         int jobId = Integer.parseInt(map.get("id"));
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        Worker worker = (Worker)session.getAttribute("worker");
         deliver.setJobId(jobId);
-        deliver.setWorkerId(workerId);
+        deliver.setWorkerId(worker.getId());
         deliverService.save(deliver);
         return "投递成功";
     }
@@ -233,8 +239,8 @@ public class JobController {
     @PostMapping(value = "/worker/job/cancelDeliver")
     public String cancelDeliver(@RequestParam HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
-        deliverService.delete(workerId, jobId);
+        Worker worker = (Worker)session.getAttribute("worker");
+        deliverService.delete(worker.getId(), jobId);
         return "取消投递";
     }
 }

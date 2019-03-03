@@ -19,11 +19,10 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
     /**
      * 通过兼职者id，工作id和招聘者id找到雇佣信息
      * @param workerId
-     * @param jobId
      * @param managerId
      * @return
      */
-    Employ findByWorkerIdAndJobIdAndManagerId(int workerId, int jobId, int managerId);
+    Employ findByWorkerIdAndManagerId(int workerId, int managerId);
 
     /**
      * 通过招聘者id找到所有雇佣信息
@@ -38,6 +37,13 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
      * @return
      */
     List<Employ> findByJobId(int jobId);
+
+    /**
+     * 通过兼职者id找到雇佣信息
+     * @param workerId
+     * @return
+     */
+    List<Employ> findByWorkerId(int workerId);
 
     /**
      * 通过兼职者id删除所有雇佣信息
@@ -65,5 +71,10 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
     @Modifying
     @Query(value = "delete from Employ a where a.jobId =?1")
     void deleteEmployByJobId(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Employ a SET a.evaluate = 1 where a.workerId =?1 and a.managerId =?2")
+    void evaluated(int workerId,int managerId);
 
 }

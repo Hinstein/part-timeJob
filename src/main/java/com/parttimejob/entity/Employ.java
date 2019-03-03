@@ -29,6 +29,17 @@ public class Employ {
     @Column
     private String date;
 
+    @Column
+    private int evaluate;
+
+    public int getEvaluate() {
+        return evaluate;
+    }
+
+    public void setEvaluate(int evaluate) {
+        this.evaluate = evaluate;
+    }
+
     public String getDate() {
         return date;
     }

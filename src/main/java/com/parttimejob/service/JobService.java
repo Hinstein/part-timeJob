@@ -7,6 +7,7 @@ import com.parttimejob.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -113,7 +114,35 @@ public class JobService {
     /**
      * 通过招聘者id删除工作
      */
-    public void deleteJobByManagerId(int ManagerId){
-        jobRepository.deleteJobByManagerId(ManagerId);
+    public void deleteJobByManagerId(int managerId){
+        jobRepository.deleteJobByManagerId(managerId);
+    }
+
+    public Page<Job> findByManagerId(int id, int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return jobRepository.findByManagerId(id,pageable);
+    }
+
+    @Transactional
+    public Page<Job> finDescByTime( int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "date");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        return jobRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public Page<Job> finDescByViews( int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "views");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        return jobRepository.findAll(pageable);
     }
 }
