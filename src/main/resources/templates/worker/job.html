@@ -18,15 +18,16 @@
     <div class="layui-header">
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                <a th:href="@{/index}" layadmin-event="flexible" title="logo">
+                <a th:href="@{/index}" layadmin-event="flexible"  target="_blank" title="logo">
                     兼职网
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect >
-                <a th:href="@{/worker/index}" target="_blank" title="首页" >
+                <a th:href="@{/worker/index}"  title="首页" >
                     首页
                 </a>
             </li>
+
 
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a href="" target="_blank" title="首页">
@@ -50,7 +51,7 @@
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
                     <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
-                    <dd><a>退出</a></dd>
+                    <dd><a th:href="@{/worker/exit}">退出</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>

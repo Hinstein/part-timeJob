@@ -167,13 +167,13 @@ public class JobController {
         Worker worker = (Worker)session.getAttribute("worker");
         Job job = jobService.findById(jobId);
         job.setViews(job.getViews()+1);
+        jobService.jobSave(job);
         if (collectService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setCollection(1);
         }
         if (deliverService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setDeliver(1);
         }
-        jobService.jobSave(job);
         model.addAttribute("job", job);
         return "worker/job";
     }

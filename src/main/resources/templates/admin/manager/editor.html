@@ -119,15 +119,11 @@
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">审核状态</label>
+                                    <label class="layui-form-label">姓名</label>
                                     <div class="layui-input-inline">
-                                        <select name="audit" lay-verify="required" lay-search="">
-                                            <option value="0" th:selected="${manager.audit==0}">
-                                                未审核
-                                            </option>
-                                            <option value="1" th:selected="${manager.audit==1}">通过审核
-                                            </option>
-                                        </select>
+                                        <input type="text" name="name" required lay-verify="required|name"
+                                               placeholder="姓名"
+                                               autocomplete="off" class="layui-input" th:value="${manager.name}">
                                     </div>
                                 </div>
                                 <div class="layui-inline">
@@ -139,6 +135,20 @@
                                                th:value="${manager.date}">
                                     </div>
                                 </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">审核状态</label>
+                                    <div class="layui-input-inline">
+                                        <select name="audit" lay-verify="required" lay-search="">
+                                            <option value="0" th:selected="${manager.audit==0}">未审核
+                                            </option>
+                                            <option value="1" th:selected="${manager.audit==1}">通过审核
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-input-block">
@@ -177,6 +187,9 @@
             , password: [
                 /^[\S]{6,12}$/
                 , '密码必须6到12位，且不能出现空格'
+            ], name: [
+                /^([\u4e00-\u9fa5]){2,7}$/
+                , '姓名只能是中文，长度为2-7位'
             ]
         });
         form.on('submit(go)', function (data) {

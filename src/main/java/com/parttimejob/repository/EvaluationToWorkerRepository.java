@@ -3,6 +3,8 @@ package com.parttimejob.repository;
 import com.parttimejob.entity.EvaluationToWorker;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 /**
  * @BelongsProject: part-timeJob
  * @BelongsPackage: com.parttimejob.repository
@@ -12,5 +14,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface EvaluationToWorkerRepository extends JpaRepository<EvaluationToWorker,Integer>
 {
+    List<EvaluationToWorker> findByManagerId(int id);
 
+    EvaluationToWorker findByManagerIdAndWorkerId(int managerId,int workerId);
 }

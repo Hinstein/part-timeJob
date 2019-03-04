@@ -5,6 +5,8 @@ import com.parttimejob.repository.EvaluationToWorkerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @BelongsProject: part-timeJob
  * @BelongsPackage: com.parttimejob.service
@@ -20,5 +22,13 @@ public class EvaluationToWorkerService {
 
     public void evaluationToWorkerSave(EvaluationToWorker evaluation) {
         evaluationToWorkerRepository.save(evaluation);
+    }
+
+    public List<EvaluationToWorker> findByManagerId(int id) {
+        return evaluationToWorkerRepository.findByManagerId(id);
+    }
+
+    public EvaluationToWorker findByManagerIdAndWorkerId(int managerId, int workerId) {
+        return evaluationToWorkerRepository.findByManagerIdAndWorkerId(managerId, workerId);
     }
 }

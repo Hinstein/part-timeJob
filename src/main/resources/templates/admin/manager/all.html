@@ -122,12 +122,13 @@
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'id', title: 'ID', sort: true, fixed: 'left'}
                 , {field: 'userName', title: '用户名'}
+                , {field: 'name', title: '姓名'}
                 , {field: 'phoneNumber', title: '手机号'}
                 , {field: 'email', title: '邮箱'}
                 , {field: 'date', title: '注册时间', sort: true}
                 , {
                     field: 'audit', title: '审核状态', templet: function (d) {
-                        return d.audit == '0' ? "<span class='layui-red'>等待审核</span>" : "通过审核";
+                        return d.audit == '0' ? "<span style=\"color: #FF5722;\">等待审核</span>" : "通过审核";
                     }
                 }
                 , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}

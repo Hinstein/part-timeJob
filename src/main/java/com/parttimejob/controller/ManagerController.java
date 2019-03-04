@@ -46,6 +46,9 @@ public class ManagerController {
     @Autowired
     EvaluationToWorkerService evaluationToWorkerService;
 
+    @Autowired
+    CollectService collectService;
+
     /**
      * 招聘者注册
      *
@@ -84,6 +87,13 @@ public class ManagerController {
                     return "该账号正在审核中，请等待的管理员审核";
                 }
                 session.setAttribute("manager", manager1);
+                session.setAttribute("username",manager1.getUserName());
+                List<Employ> employs =employService.findByManagerId(manager1.getId());
+                List<Job> jobs =jobService.findByManagerId(manager1.getId());
+                List<EvaluationToWorker> evaluations= evaluationToWorkerService.findByManagerId(manager1.getId());
+                session.setAttribute("employs",employs.size());
+                session.setAttribute("jobs",jobs.size());
+                session.setAttribute("evaluations",evaluations.size());
                 return "登录成功";
             }
             return "密码错误";
@@ -92,13 +102,24 @@ public class ManagerController {
         return "不存在该用户";
     }
 
+    @GetMapping("/manager/exit")
+    public String workerExit( HttpSession session) {
+        session.removeAttribute("manager");
+        session.removeAttribute("username");
+        session.removeAttribute("employs");
+        session.removeAttribute("jobs");
+        session.removeAttribute("evaluations");
+        return "redirect:/index";
+    }
+
     /**
      * 来到招聘者主页
      *
      * @return
      */
     @GetMapping("/manager/index")
-    public String managerIndex() {
+    public String managerIndex(HttpSession session) {
+
         return "manager/index";
     }
 
@@ -206,11 +227,12 @@ public class ManagerController {
             employ1.setWorkerId(workerId);
             employ1.setDate(dateTime);
             employ1.setManagerId(manager.getId());
+            employ1.setJobId(jobId);
             employService.save(employ1);
             deliverService.delete(workerId, jobId);
             return "录用成功";
         } else {
-            return "你已经录用";
+            return "你已经录用过该名员工";
         }
     }
 
@@ -347,6 +369,8 @@ public class ManagerController {
     @GetMapping("/manager/worker/evaluate/{id}")
     public String evaluate(@PathVariable("id") int id, Model model,HttpSession session) {
         Worker worker = workerService.findById(id);
+        WorkerData workerData =workerDataService.findByWorkerId(id);
+        model.addAttribute("workerData",workerData);
         model.addAttribute("worker", worker);
         return "/manager/evaluate";
     }
@@ -356,13 +380,28 @@ public class ManagerController {
     public String evaluateSave(EvaluationToWorker evaluation, HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
         evaluation.setManagerId(manager.getId());
+        evaluation.setManagerName(manager.getName());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        evaluation.setDate(df.format(new Date()));
         employService.evaluated(evaluation.getWorkerId(), manager.getId());
         evaluationToWorkerService.evaluationToWorkerSave(evaluation);
         return "评价成功！";
     }
 
     @GetMapping("/manager/evaluate")
-    public String workerEvaluate() {
+    public String workerEvaluate(HttpSession session,Model model) {
+        Manager manager =(Manager) session.getAttribute("manager");
+        List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByManagerId(manager.getId());
+        System.out.println(evaluations.size());
+        model.addAttribute("evaluations",evaluations);
         return "/manager/workerEvaluate";
+    }
+
+    @GetMapping("/manager/evaluation/{id}")
+    public String evaluation(@PathVariable("id") int id, Model model,HttpSession session) {
+        Manager manager =(Manager) session.getAttribute("manager");
+        EvaluationToWorker evaluation = evaluationToWorkerService.findByManagerIdAndWorkerId(manager.getId(),id);
+        model.addAttribute("evaluation", evaluation);
+        return "/manager/evaluation";
     }
 }

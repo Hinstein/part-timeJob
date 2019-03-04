@@ -9,8 +9,8 @@
     <meta name="author" content="">
 
     <title>招聘者页面</title>
-    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
 
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 </head>
 <body>
@@ -112,35 +112,18 @@
                 </div>
             </div>
         </div>
+
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header">用户信息</div>
+                <div class="layui-card-header">[[${evaluation.workerName}]]的评价</div>
                 <div class="layui-card-body">
-                    姓名：[[${worker.name}]]
-                    <br>
-                    年龄：[[${worker.age}]]<br>
-                    邮箱：[[${worker.email}]]<br>
-                    电话号码：[[${worker.phoneNumber}]]<br>
-                    性别：
-                    <text th:if="${worker.sex}==0">男</text>
-                    <text th:if="${worker.sex}==1">女</text>
-                    <br>
-                    教育背景：
-                    <text th:if="${worker.educationBackground}==1">小学</text>
-                    <text th:if="${worker.educationBackground}==2">初中</text>
-                    <text th:if="${worker.educationBackground}==3">高中</text>
-                    <text th:if="${worker.educationBackground}==4">中专</text>
-                    <text th:if="${worker.educationBackground}==5">大专</text>
-                    <text th:if="${worker.educationBackground}==6">本科</text>
-                    <text th:if="${worker.educationBackground}==7">研究生</text>
-                    <br>
-                    期望薪资：[[${worker.expectation}]]<br>
-                    自我介绍：[[${worker.introduce}]]<br>
-                    意向职位：[[${worker.jobIntension}]]<br>
-                    工作时间：[[${worker.workerTime}]]<br>
-                    工作经历：[[${worker.workerExperience}]]
-                    <hr>
-                    <button class="layui-btn  layui-btn-radius" id="save" type="button">录用</button>
+                    <form class="layui-form">
+                        <p>评分：[[${evaluation.star}]]星</p>
+
+                          <p>评价：[[${evaluation.content}]]</p>
+                        <p>评价人:[[${evaluation.managerName}]]</p>
+
+                    </form>
                 </div>
             </div>
         </div>
@@ -149,14 +132,5 @@
 
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script>
-    $(function () {
-        $('#save').click(function () {
-            layer.confirm('是否录用该名职工么', function (index) {
-                location.href = "/manager/deliver/worker/setTime"
-            });
-        })
-    })
-</script>
 </body>
 </html>

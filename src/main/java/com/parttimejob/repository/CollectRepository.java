@@ -1,6 +1,7 @@
 package com.parttimejob.repository;
 
 import com.parttimejob.entity.Collect;
+import com.parttimejob.entity.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -55,4 +56,5 @@ public interface CollectRepository extends JpaRepository<Collect, Integer> {
     @Modifying
     @Query(value = "delete from Collect a where a.jobId =?1")
     void deleteCollectByJobId(int id);
+
 }

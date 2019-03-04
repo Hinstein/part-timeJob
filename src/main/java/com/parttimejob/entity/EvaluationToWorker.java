@@ -24,10 +24,43 @@ public class EvaluationToWorker {
     private int managerId;
 
     @Column
+    private String workerName;
+
+    @Column
+    private String managerName;
+
+    @Column
     private int star;
 
     @Column
     private String content;
+
+    @Column
+    private  String date;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getWorkerName() {
+        return workerName;
+    }
+
+    public void setWorkerName(String workerName) {
+        this.workerName = workerName;
+    }
+
+    public String getManagerName() {
+        return managerName;
+    }
+
+    public void setManagerName(String managerName) {
+        this.managerName = managerName;
+    }
 
     public Integer getId() {
         return id;

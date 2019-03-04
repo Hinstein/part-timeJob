@@ -76,6 +76,7 @@ public class WorkerController {
         if (worker1 != null) {
             if (worker1.getPassword().equals(password)) {
                 session.setAttribute("worker", worker1);
+                session.setAttribute("username",worker1.getUserName());
                 WorkerData workerData=workerDataService.findByWorkerId(worker1.getId());
                 session.setAttribute("workerData",workerData);
                 return "登录成功";
@@ -225,7 +226,9 @@ public class WorkerController {
     @GetMapping("/worker/exit")
     public String workerExit( HttpSession session) {
       session.removeAttribute("worker");
-        return "redirect:/index";
+      session.removeAttribute("username");
+      session.removeAttribute("workerData");
+      return "redirect:/index";
     }
 
 }

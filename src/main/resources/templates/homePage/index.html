@@ -24,7 +24,7 @@
                     兼职网
                 </a>
             </li>
-            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker}!=null">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.username}!=null">
                 <a th:href="@{/worker/index}" target="_blank" title="首页">
                     首页
                 </a>
@@ -36,20 +36,20 @@
             </li>
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-            <li class="layui-nav-item" lay-unselect th:if="${session.worker}!=null">
+            <li class="layui-nav-item" lay-unselect th:if="${session.username}!=null">
                 <a th:href="@{/worker/index}" layadmin-event="about">
-                    [[${session.worker.userName}]]</a>
+                    [[${session.username}]]</a>
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
                     <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
                     <dd><a th:href="@{/worker/exit}">退出</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item" lay-unselect th:if="${session.worker}==null">
+            <li class="layui-nav-item" lay-unselect th:if="${session.username}==null">
                 <a th:href="@{workerLogin}" layadmin-event="about">
                     登录</a>
             </li>
-            <li class="layui-nav-item " lay-unselect th:if="${session.worker}==null">
+            <li class="layui-nav-item " lay-unselect th:if="${session.username}==null">
                 <a th:href="@{workerRegister}" layadmin-event="about">
                     注册</a>
             </li>
@@ -62,17 +62,6 @@
 <br>
 <br>
 <br>
-<br>
-<div class="layui-container">
-    <div class="layui-row">
-        <div class="layui-col-md11">
-            <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的职位">
-        </div>
-        <div class="layui-col-md1">
-            <button class="layui-btn" id="search" type="button">搜索</button>
-        </div>
-    </div>
-</div>
 <br>
 <div class="layui-container  layui-hide-xs">
     <div class="layui-carousel" id="test1">
@@ -146,7 +135,7 @@
             <div style="text-align: center;">
                 <button class="layui-btn" type="button" id="more">查看更多</button>
             </div>
-            <input th:value="${session.worker}" hidden="hidden" id="check">
+            <input th:value="${session.username}" hidden="hidden" id="check">
         </div>
     </div>
 </div>
