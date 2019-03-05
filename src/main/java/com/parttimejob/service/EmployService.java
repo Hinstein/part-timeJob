@@ -23,6 +23,7 @@ public class EmployService {
 
     /**
      * 保存员工
+     *
      * @param employ
      */
     public void save(Employ employ) {
@@ -31,16 +32,18 @@ public class EmployService {
 
     /**
      * 通过兼职者的id，工作的id，招聘者的id找到雇佣信息
+     *
      * @param workerId
      * @param managerId
      * @return
      */
-    public Employ findByWorkerIdAndManagerId(int workerId,  int managerId) {
-        return employRepository.findByWorkerIdAndManagerId(workerId,  managerId);
+    public Employ findByWorkerIdAndManagerId(int workerId, int managerId) {
+        return employRepository.findByWorkerIdAndManagerId(workerId, managerId);
     }
 
     /**
      * 通过工作的id找到雇佣信息
+     *
      * @param jobId
      * @return
      */
@@ -50,6 +53,7 @@ public class EmployService {
 
     /**
      * 通过招聘者的id找到雇佣信息
+     *
      * @param managerId
      * @return
      */
@@ -59,6 +63,7 @@ public class EmployService {
 
     /**
      * 通过兼职者的id找到雇佣信息
+     *
      * @param workerId
      * @return
      */
@@ -68,31 +73,37 @@ public class EmployService {
 
     /**
      * 通过兼职者的id删除雇佣信息
+     *
      * @param workerId
      */
-    public void deleteEmployByWorkerId(int workerId){
+    public void deleteEmployByWorkerId(int workerId) {
         employRepository.deleteEmployByWorkerId(workerId);
     }
 
     /**
      * 通过招聘者的id删除雇佣信息
+     *
      * @param managerId
      */
-    public void deleteEmployByManagerId(int managerId){
+    public void deleteEmployByManagerId(int managerId) {
         employRepository.deleteEmployByManagerId(managerId);
     }
 
 
     /**
      * 通过工作的id删除雇佣信息
+     *
      * @param jobId
      */
-    public void deleteEmployByJobId(int jobId){
+    public void deleteEmployByJobId(int jobId) {
         employRepository.deleteEmployByJobId(jobId);
     }
 
-public void evaluated(int workerId,int managerId){
-        employRepository.evaluated(workerId,managerId);
-}
+    public void evaluated(int workerId, int managerId) {
+        employRepository.evaluated(workerId, managerId);
+    }
 
+    public Employ findByWorkerIdAndJobId(int workerId,int jobId){
+        return employRepository.findByWorkerIdAndManagerId(workerId,jobId);
+    }
 }

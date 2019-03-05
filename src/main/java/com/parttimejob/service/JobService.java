@@ -145,4 +145,22 @@ public class JobService {
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
         return jobRepository.findAll(pageable);
     }
+
+    public void collectionSave(int id){
+         jobRepository.collectionSave(id);
+    }
+
+    public void deliverSave(int id){
+        jobRepository.deliverSave(id);
+    }
+
+    public void collectionCancel(int id){
+        jobRepository.collectionCancel(id);
+    }
+
+    public void deliverCancel(int id){
+        jobRepository.deliverCancel(id);
+    }
+
+
 }

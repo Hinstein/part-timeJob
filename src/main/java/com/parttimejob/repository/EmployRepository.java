@@ -77,4 +77,5 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
     @Query(value = "update Employ a SET a.evaluate = 1 where a.workerId =?1 and a.managerId =?2")
     void evaluated(int workerId,int managerId);
 
+    Employ findByWorkerIdAndJobId(int workerId,int jobId);
 }

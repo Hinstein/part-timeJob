@@ -44,6 +44,28 @@ public class Job {
     @Column
     private int views;
 
+    @Column
+    private int checkCollection;
+
+    @Column
+    private int checkDeliver;
+
+    public int getCheckCollection() {
+        return checkCollection;
+    }
+
+    public void setCheckCollection(int checkCollection) {
+        this.checkCollection = checkCollection;
+    }
+
+    public int getCheckDeliver() {
+        return checkDeliver;
+    }
+
+    public void setCheckDeliver(int checkDeliver) {
+        this.checkDeliver = checkDeliver;
+    }
+
     public int getViews() {
         return views;
     }

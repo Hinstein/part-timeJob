@@ -85,7 +85,11 @@
                 <div class="container">
                     <div class="layui-row">
                         <div class="layui-card layui-col-md4" th:each="job:${jobs}">
-                            <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                            <div class="layui-card-header">
+                                <a th:href="@{/worker/job/}+${job.id}">
+                                    <strong th:text="${job.title}">title</strong>
+                                </a>
+                            </div>
                             <div class="layui-card-body">
                                 <p><span>薪资:</span>
                                     <span th:text="${job.lowPay}"></span>
@@ -102,7 +106,11 @@
                 <div class="container">
                     <div class="layui-row">
                         <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
-                            <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                            <div class="layui-card-header">
+                                <a th:href="@{/worker/job/}+${job.id}">
+                                    <strong th:text="${job.title}">title</strong>
+                                </a>
+                            </div>
                             <div class="layui-card-body">
                                 <p><span>薪资:</span>
                                     <span th:text="${job.lowPay}"></span>
@@ -119,7 +127,11 @@
                 <div class="container">
                     <div class="layui-row">
                         <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
-                            <div class="layui-card-header"><strong th:text="${job.title}">title</strong></div>
+                            <div class="layui-card-header">
+                                <a th:href="@{/worker/job/}+${job.id}">
+                                    <strong th:text="${job.title}">title</strong>
+                                </a>
+                            </div>
                             <div class="layui-card-body">
                                 <p><span>薪资:</span>
                                     <span th:text="${job.lowPay}"></span>
@@ -164,7 +176,7 @@
                 layer.msg("请先登录!");
                 setTimeout(function () {
                     location.href = "workerLogin";
-                },1000)
+                }, 1000)
             } else {
                 location.href = "/worker/search";
             }

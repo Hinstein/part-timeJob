@@ -122,8 +122,10 @@
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md4" th:each="job:${jobs}">
                         <div class="layui-card">
-                            <div class="layui-card-header"><a th:href="@{/worker/job/}+${job.id}"><strong
-                                    th:text="${job.title}">title</strong></a></div>
+                            <div class="layui-card-header">
+                                <a th:href="@{/worker/job/}+${job.id}">
+                                    <strong th:text="${job.title}">title</strong></a>
+                            </div>
                             <div class="layui-card-body">
                                 <p><span>薪资:</span>
                                     <span th:text="${job.lowPay}"></span>

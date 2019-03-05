@@ -77,5 +77,23 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     Page<Job> findByManagerId(int id,Pageable pageable);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Job a SET a.collection = a.collection+1 where a.id =?1")
+    void collectionSave(int id);
 
+    @Transactional
+    @Modifying
+    @Query(value = "update Job a SET a.deliver = a.deliver+1 where a.id =?1")
+    void deliverSave(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Job a SET a.collection = a.collection-1 where a.id =?1")
+    void collectionCancel(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Job a SET a.deliver = a.deliver-1 where a.id =?1")
+    void deliverCancel(int id);
 }

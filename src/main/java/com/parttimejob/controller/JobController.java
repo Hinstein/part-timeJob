@@ -1,10 +1,7 @@
 package com.parttimejob.controller;
 
 import com.parttimejob.entity.*;
-import com.parttimejob.service.DeliverService;
-import com.parttimejob.service.JobService;
-import com.parttimejob.service.ManagerService;
-import com.parttimejob.service.CollectService;
+import com.parttimejob.service.*;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +37,9 @@ public class JobController {
 
     @Autowired
     DeliverService deliverService;
+
+    @Autowired
+    EmployService employService;
 
     /**
      * 发布工作
@@ -169,10 +169,14 @@ public class JobController {
         job.setViews(job.getViews()+1);
         jobService.jobSave(job);
         if (collectService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
-            job.setCollection(1);
+            job.setCheckCollection(1);
         }
         if (deliverService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
-            job.setDeliver(1);
+            job.setCheckDeliver(1);
+        }
+        if(employService.findByWorkerIdAndJobId(worker.getId(),jobId)!=null){
+            job.setCheckCollection(2);
+            job.setCheckDeliver(2);
         }
         model.addAttribute("job", job);
         return "worker/job";
@@ -191,6 +195,7 @@ public class JobController {
         int jobId = Integer.parseInt(map.get("id"));
         Worker worker = (Worker)session.getAttribute("worker");
         workerAndJob.setJobId(jobId);
+        jobService.collectionSave(jobId);
         workerAndJob.setWorkerId(worker.getId());
         collectService.save(workerAndJob);
         return "收藏成功";
@@ -208,6 +213,7 @@ public class JobController {
         int jobId = Integer.parseInt(map.get("id"));
         Worker worker = (Worker)session.getAttribute("worker");
         collectService.delete(worker.getId(), jobId);
+        jobService.collectionCancel(jobId);
         return "取消收藏";
     }
 
@@ -226,6 +232,7 @@ public class JobController {
         deliver.setJobId(jobId);
         deliver.setWorkerId(worker.getId());
         deliverService.save(deliver);
+        jobService.deliverSave(jobId);
         return "投递成功";
     }
 
@@ -241,6 +248,7 @@ public class JobController {
         int jobId = Integer.parseInt(map.get("id"));
         Worker worker = (Worker)session.getAttribute("worker");
         deliverService.delete(worker.getId(), jobId);
+        jobService.deliverCancel(jobId);
         return "取消投递";
     }
 }
