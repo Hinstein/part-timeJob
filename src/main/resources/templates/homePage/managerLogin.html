@@ -18,7 +18,7 @@
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                 <ul class="layui-tab-title layui-row">
-                    <li class=" layui-col-md6"><a th:href="@{workerLogin}">我是兼职者</a></li>
+                    <li class=" layui-col-md6"><a th:href="@{/workerLogin}">我是兼职者</a></li>
                     <li class="layui-this layui-col-md6">
                         我是招聘者
                     </li>
@@ -55,7 +55,7 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-                                <a th:href="@{managerRegister}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+                                <a th:href="@{/managerRegister}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
                             </div>
                         </form>
                     </div>
@@ -98,16 +98,15 @@
         });
         form.on('submit(manager)', function (data) {
             $.ajax({
-                url: 'manager/login',
+                url: '/manager/login',
                 method: "post",
                 data: data.field,
                 dataType: "text",
                 success: function (msg) {
-                    layer.msg(msg);
                     // //清除表单内容
                     var success = "登录成功";
                     if (success == msg) {
-                        location.href = "manager/index";
+                        location.href = "/manager/index";
                     }
                 },
                 error: function () {

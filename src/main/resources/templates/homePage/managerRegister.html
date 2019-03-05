@@ -17,7 +17,7 @@
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                 <ul class="layui-tab-title layui-row">
-                    <li class=" layui-col-md6"><a th:href="@{workerRegister}">我是兼职者</a></li>
+                    <li class=" layui-col-md6"><a th:href="@{/workerRegister}">我是兼职者</a></li>
                     <li class="layui-col-md6 layui-this">
                         我是招聘者
                     </li>
@@ -75,7 +75,7 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
 
-                                <a th:href="@{managerLogin}"
+                                <a th:href="@{/managerLogin}"
                                    class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
 
                             </div>
@@ -126,7 +126,7 @@
             console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
             $.ajax({
-                url: 'manager/register',
+                url: '/manager/register',
                 method: "post",
                 data: data.field,
 
@@ -138,7 +138,7 @@
                     if (success == msg) {
 
                         setTimeout(function () {
-                            location.href = "managerLogin";
+                            location.href = "/managerLogin";
                         }, 2000);
                     }
                 },

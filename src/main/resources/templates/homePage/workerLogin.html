@@ -18,7 +18,7 @@
                 <ul class="layui-tab-title layui-row">
                     <li class="layui-this layui-col-md6">我是兼职者</li>
                     <li class="layui-col-md6">
-                        <a th:href="@{managerLogin}">我是招聘者</a></li>
+                        <a th:href="@{/managerLogin}">我是招聘者</a></li>
                 </ul>
                 <div class="layui-tab-content">
                     <br>
@@ -52,7 +52,7 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
 
-                                <a th:href="@{workerRegister}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+                                <a th:href="@{/workerRegister}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
                             </div>
                         </form>
                     </div>
@@ -98,16 +98,15 @@
         });
         form.on('submit(worker)', function (data) {
             $.ajax({
-                url: 'worker/login',
+                url: '/worker/login',
                 method: "post",
                 data: data.field,
                 dataType: "text",
                 success: function (msg) {
-                    layer.msg(msg);
                     // //清除表单内容
                     var success = "登录成功";
-                    if (success == msg) {
-                        location.href = "worker/index";
+                    if (success === msg) {
+                        location.href = "/worker/index";
                     }
                 },
                 error: function () {

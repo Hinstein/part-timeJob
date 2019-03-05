@@ -46,11 +46,11 @@
                 </dl>
             </li>
             <li class="layui-nav-item" lay-unselect th:if="${session.username}==null">
-                <a th:href="@{workerLogin}" layadmin-event="about">
+                <a th:href="@{/workerLogin}" layadmin-event="about">
                     登录</a>
             </li>
             <li class="layui-nav-item " lay-unselect th:if="${session.username}==null">
-                <a th:href="@{workerRegister}" layadmin-event="about">
+                <a th:href="@{/workerRegister}" layadmin-event="about">
                     注册</a>
             </li>
             <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
@@ -175,7 +175,7 @@
             if (worker === '') {
                 layer.msg("请先登录!");
                 setTimeout(function () {
-                    location.href = "workerLogin";
+                    location.href = "/workerLogin";
                 }, 1000)
             } else {
                 location.href = "/worker/search";
