@@ -27,6 +27,50 @@ public class BBS {
     @Column
     private int status;
 
+    @Column
+    private int adminId;
+
+    @Column
+    private int managerId;
+
+    @Column
+    private int workerId;
+
+    @Column
+    private String title;
+
+    public int getAdminId() {
+        return adminId;
+    }
+
+    public void setAdminId(int adminId) {
+        this.adminId = adminId;
+    }
+
+    public int getManagerId() {
+        return managerId;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
+    }
+
+    public int getWorkerId() {
+        return workerId;
+    }
+
+    public void setWorkerId(int workerId) {
+        this.workerId = workerId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
     public Integer getId() {
         return id;
     }
