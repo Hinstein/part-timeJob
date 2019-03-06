@@ -404,4 +404,30 @@ public class ManagerController {
         model.addAttribute("evaluation", evaluation);
         return "/manager/evaluation";
     }
+
+    @GetMapping("/manager/search/worker")
+    public String managerSearchWorker() {
+        return "/manager/searchWorker";
+    }
+
+    @GetMapping("/manager/workerInformation/{id}")
+    public String workerInformations(@PathVariable("id") int id, Model model, HttpSession session) {
+        WorkerData workerData = workerDataService.findByWorkerId(id);
+        model.addAttribute("worker", workerData);
+        session.setAttribute("workerId", id);
+        return "/manager/worker";
+    }
+
+    @GetMapping("/manager/informationEditor")
+    public String managerId(HttpSession session, Model model) {
+        return "/manager/informationEditor";
+    }
+
+    @ResponseBody
+    @PostMapping("/manager/information/save")
+    public String managerInformationSave(Manager manager,HttpSession session){
+        managerService.informationSave(manager);
+        session.setAttribute("manager",manager);
+        return "修改成功！";
+    }
 }

@@ -124,4 +124,8 @@ public class ManagerService {
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
         return managerRepository.findAll( pageable);
     }
+
+    public void informationSave(Manager manager){
+        managerRepository.informationSave(manager);
+    }
 }

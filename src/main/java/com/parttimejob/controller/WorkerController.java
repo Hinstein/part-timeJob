@@ -44,6 +44,7 @@ public class WorkerController {
 
     /**
      * 兼职者注册
+     *
      * @param worker
      * @return
      */
@@ -63,6 +64,7 @@ public class WorkerController {
 
     /**
      * 兼职者登录
+     *
      * @param worker
      * @param session
      * @return
@@ -76,9 +78,9 @@ public class WorkerController {
         if (worker1 != null) {
             if (worker1.getPassword().equals(password)) {
                 session.setAttribute("worker", worker1);
-                session.setAttribute("username",worker1.getUserName());
-                WorkerData workerData=workerDataService.findByWorkerId(worker1.getId());
-                session.setAttribute("workerData",workerData);
+                session.setAttribute("username", worker1.getUserName());
+                WorkerData workerData = workerDataService.findByWorkerId(worker1.getId());
+                session.setAttribute("workerData", workerData);
                 return "登录成功";
             }
             return "密码错误";
@@ -88,34 +90,40 @@ public class WorkerController {
 
     /**
      * 来到兼职者更换密码页面
-     * @param session
-     * @param model
+     *
      * @return
      */
     @GetMapping("/worker/editor")
-    public String workerEditor(HttpSession session, Model model) {
+    public String workerEditor() {
 
-        return "worker/editor";
+        return "/worker/editor";
     }
 
     /**
      * 来到兼职者主页
+     *
      * @return
      */
     @GetMapping("/worker/index")
-    public String workerIndex() {
-        return "worker/index";
+    public String workerIndex(HttpSession session, Model model) {
+        WorkerData workerData = (WorkerData) session.getAttribute("workerData");
+        if (workerData.getName() == null) {
+            return "redirect:/worker/resume";
+        } else {
+            return "worker/index";
+        }
     }
 
     /**
      * 来到兼职者简历页面
+     *
      * @param session
      * @param model
      * @return
      */
     @GetMapping("/worker/resume")
     public String workerResume(HttpSession session, Model model) {
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
         model.addAttribute("worker", workerData);
         return "worker/resume";
@@ -123,6 +131,7 @@ public class WorkerController {
 
     /**
      * 异步保存兼职者简历
+     *
      * @param workerData
      * @param session
      * @return
@@ -130,7 +139,7 @@ public class WorkerController {
     @ResponseBody
     @PostMapping("/worker/resume/save")
     public String workerDateSave(WorkerData workerData, HttpSession session) {
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         workerData.setWorkerId(worker.getId());
         workerDataService.updata(workerData);
         return "保存成功";
@@ -138,6 +147,7 @@ public class WorkerController {
 
     /**
      * 异步更新用户密码
+     *
      * @param newPassword
      * @param oldPassword
      * @param session
@@ -164,6 +174,7 @@ public class WorkerController {
 
     /**
      * 来到兼职者查找工作页面
+     *
      * @return
      */
     @GetMapping("/worker/search")
@@ -173,13 +184,14 @@ public class WorkerController {
 
     /**
      * 来到兼职者搜藏页面
+     *
      * @param model
      * @param session
      * @return
      */
     @GetMapping("/worker/collect")
     public String workerCollect(Model model, HttpSession session) {
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         System.out.println(worker.getId());
         List<Collect> workerAndJobs = collectService.findByWorkerId(worker.getId());
         List<Job> jobs = new ArrayList<>();
@@ -193,13 +205,14 @@ public class WorkerController {
 
     /**
      * 来到兼职者投递页面
+     *
      * @param model
      * @param session
      * @return
      */
     @GetMapping("/worker/deliver")
     public String workerDeliver(Model model, HttpSession session) {
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         List<Deliver> delivers = deliverService.findByWorkerId(worker.getId());
         List<Job> jobs = new ArrayList<>();
         for (Deliver w : delivers) {
@@ -212,7 +225,7 @@ public class WorkerController {
 
     @GetMapping("/worker/employ")
     public String workerEmploy(Model model, HttpSession session) {
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         List<Employ> employs = employService.findByWorkerId(worker.getId());
         List<Job> jobs = new ArrayList<>();
         for (Employ w : employs) {
@@ -224,11 +237,11 @@ public class WorkerController {
     }
 
     @GetMapping("/worker/exit")
-    public String workerExit( HttpSession session) {
-      session.removeAttribute("worker");
-      session.removeAttribute("username");
-      session.removeAttribute("workerData");
-      return "redirect:/index";
+    public String workerExit(HttpSession session) {
+        session.removeAttribute("worker");
+        session.removeAttribute("username");
+        session.removeAttribute("workerData");
+        return "redirect:/index";
     }
 
 }

@@ -74,4 +74,13 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
      */
     @Override
     Page<Manager> findAll(Pageable pageable);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Manager m  SET m.userName= :#{#manager.userName}," +
+            "m.name= :#{#manager.name}," +
+            "m.email= :#{#manager.email}," +
+            "m.phoneNumber= :#{#manager.phoneNumber} " +
+            "WHERE m.id = :#{#manager.id}")
+    void informationSave(Manager manager);
 }

@@ -157,28 +157,43 @@
         //第一个实例
         var tableIns = table.render({
             elem: '#demo'
-            , url: '/worker/search/allJobs' //数据接口
+            , url: '/admin/workers/information/data' //数据接口
             , page: true //开启分页
             , skin: 'line'
             , size: 'lg'
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                {field: 'title', title: '信息', width: '40%'}
-                , {field: 'lowPay', title: '最低工资'}
-                , {field: 'hightPay', title: '最高工资'}
-                , {field: 'date', title: '发布时间', sort: true, width: '20%'}
-                , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}
-                // , {
-                //     field: 'audit', title: '是否收藏', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
-                // , {
-                //     field: 'audit', title: '是否投递', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
+                {field: 'name', title: '名字'}
+                , {
+                    field: 'sex', title: '性别', templet: function (d) {
+                        return d.sex == '0' ? "女" : "男";
+                    }
+                }
+                , {field: 'age', title: '年龄'}
+                , {field: 'phoneNumber', title: '电话号码'}
+                , {field: 'email', title: '邮箱'}
+                , {
+                    field: 'educationBackground', title: '教育背景', templet: function (d) {
+                        if (d.educationBackground === 1)
+                            return "小学";
+                        else if (d.educationBackground === 2)
+                            return "初中";
+                        else if (d.educationBackground === 3)
+                            return "高中";
+                        else if (d.educationBackground === 4)
+                            return "中专";
+                        else if (d.educationBackground === 5)
+                            return "大专";
+                        else if (d.educationBackground === 6)
+                            return "本科";
+                        else if (d.educationBackground === 7)
+                            return "研究生";
+                        else if (d.educationBackground === 0)
+                            return "未填写";
+                    }
+                }
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}
             ]]
         });
         table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -186,23 +201,23 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'pass') { //通过
-                location.href = "/manager/job/" + data.id;
+                location.href = "/manager/workerInformation/" + data.workerId;
             }
         });
-        $(function () {
-            $("#search").click(function () {
-                var content = $('#content').val();
-                tableIns.reload({
-                    where: { //设定异步数据接口的额外参数，任意设
-                        content: content
-                        //…
-                    }
-                    , page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-            })
-        });
+        // $(function () {
+        //     $("#search").click(function () {
+        //         var content = $('#content').val();
+        //         tableIns.reload({
+        //             where: { //设定异步数据接口的额外参数，任意设
+        //                 content: content
+        //                 //…
+        //             }
+        //             , page: {
+        //                 curr: 1 //重新从第 1 页开始
+        //             }
+        //         });
+        //     })
+        // });
     });
 </script>
 </body>

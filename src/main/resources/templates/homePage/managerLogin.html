@@ -108,6 +108,7 @@
                     if (success == msg) {
                         location.href = "/manager/index";
                     }
+                    layer.msg(msg);
                 },
                 error: function () {
                     layer.msg("网络错误，注册失败");

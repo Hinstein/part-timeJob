@@ -14,7 +14,8 @@
 
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 </head>
-<body><div class="layui-layout layui-layout-admin">
+<body>
+<div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item layadmin-flexible" lay-unselect>
@@ -128,21 +129,55 @@
         </div>
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header">搜索职位</div>
+                <div class="layui-card-header">&nbsp;招聘者资料修改</div>
                 <div class="layui-card-body">
-                    <div class="demoTable" >
-                        <div class="layui-inline">
-                            <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的职位">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">用户名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="userName" required lay-verify="required|userName"
+                                           autocomplete="off" class="layui-input"
+                                           th:value="${session.manager.userName}">
+                                    <input name="id" hidden="hidden" th:value="${session.manager.id}">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">姓名</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="name" required lay-verify="required|name"
+                                           placeholder="姓名"
+                                           autocomplete="off" class="layui-input" th:value="${session.manager.name}">
+                                </div>
+                            </div>
                         </div>
-                        <button class="layui-btn" id="search" type="button">搜索</button>
-                    </div>
-                    <br>
-                    <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
-                    <script type="text/html" id="action">
-                        <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">邮箱</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="email" required lay-verify="required|email"
+                                           placeholder="请输入邮箱"
+                                           autocomplete="off" class="layui-input" th:value="${session.manager.email}">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">电话号码</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="phoneNumber" required lay-verify="required|phone"
+                                           placeholder="请输入电话号码" autocomplete="off" class="layui-input"
+                                           th:value="${session.manager.phoneNumber}">
+                                </div>
+                            </div>
                         </div>
-                    </script>
+                        <input th:value="${session.manager.id}" hidden="hidden" name="id">
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button class="layui-btn" lay-submit="" lay-filter="go"
+                                >修改
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -151,57 +186,46 @@
 
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script th:inline="none">
-    layui.use(['table'], function () {
-        var table = layui.table;
-        //第一个实例
-        var tableIns = table.render({
-            elem: '#demo'
-            , url: '/worker/search/allJobs' //数据接口
-            , page: true //开启分页
-            , skin: 'line'
-            , size: 'lg'
-            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-            , limit: 10 //每页默认显示的数量
-            , cols: [[ //表头
-                {field: 'title', title: '信息', width: '40%'}
-                , {field: 'lowPay', title: '最低工资'}
-                , {field: 'hightPay', title: '最高工资'}
-                , {field: 'date', title: '发布时间', sort: true, width: '20%'}
-                , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}
-                // , {
-                //     field: 'audit', title: '是否收藏', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
-                // , {
-                //     field: 'audit', title: '是否投递', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
-            ]]
-        });
-        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'pass') { //通过
-                location.href = "/manager/job/" + data.id;
+<script>
+    layui.use('form', function () {
+        var form = layui.form;
+        form.verify({
+            userName: function (value, item) { //value：表单的值、item：表单的DOM对象
+                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                    return '用户名不能有特殊字符';
+                }
+                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                    return '用户名首尾不能出现下划线\'_\'';
+                }
+                if (/^\d+\d+\d$/.test(value)) {
+                    return '用户名不能全为数字';
+                }
             }
+            , password: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ], name: [
+                /^([\u4e00-\u9fa5]){2,7}$/
+                , '姓名只能是中文，长度为2-7位'
+            ]
         });
-        $(function () {
-            $("#search").click(function () {
-                var content = $('#content').val();
-                tableIns.reload({
-                    where: { //设定异步数据接口的额外参数，任意设
-                        content: content
-                        //…
-                    }
-                    , page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-            })
+        form.on('submit(go)', function (data) {
+            $.ajax({
+                url: '/manager/information/save',
+                method: "post",
+                data: data.field,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href = "/manager/informationEditor";
+                    }, 1000)
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
     });
 </script>
