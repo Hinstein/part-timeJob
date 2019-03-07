@@ -39,6 +39,17 @@ public class BBS {
     @Column
     private String title;
 
+    @Column
+    private int views;
+
+    public int getViews() {
+        return views;
+    }
+
+    public void setViews(int views) {
+        this.views = views;
+    }
+
     public int getAdminId() {
         return adminId;
     }

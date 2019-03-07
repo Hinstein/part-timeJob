@@ -523,6 +523,14 @@ public class ManagerController {
     @GetMapping("/manager/BBS/look/{id}")
     public String look(@PathVariable("id")int id,Model model){
         BBS bbs=bbsService.findById(id);
+        if(bbs.getStatus()==1)
+        {
+            model.addAttribute("status","招聘者");
+        }
+        else if(bbs.getStatus()==2){
+            model.addAttribute("status","兼职者");
+        }
+        bbsService.views(id);
         model.addAttribute("bbs",bbs);
         return "manager/BBS/look";
     }

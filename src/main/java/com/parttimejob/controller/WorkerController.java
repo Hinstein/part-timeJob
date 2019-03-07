@@ -2,16 +2,17 @@ package com.parttimejob.controller;
 
 import com.parttimejob.entity.*;
 import com.parttimejob.service.*;
+import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @BelongsProject: part-timeJob
@@ -31,6 +32,9 @@ public class WorkerController {
     WorkerDataService workerDataService;
 
     @Autowired
+    ManagerService  managerService;
+
+    @Autowired
     CollectService collectService;
 
     @Autowired
@@ -41,6 +45,9 @@ public class WorkerController {
 
     @Autowired
     EmployService employService;
+
+    @Autowired
+    BBSService bbsService;
 
     /**
      * 兼职者注册
@@ -242,6 +249,112 @@ public class WorkerController {
         session.removeAttribute("username");
         session.removeAttribute("workerData");
         return "redirect:/index";
+    }
+
+
+
+    @GetMapping("/worker/BBS/index")
+    public String managerBBSIndex() {
+        return "/worker/bbs/index";
+    }
+
+    @ResponseBody
+    @GetMapping("/worker/BBS/delete/{id}")
+    public String deleteBBS(@PathVariable("id")int id){
+        bbsService.deleteById(id);
+        return "删除成功！";
+    }
+
+    @GetMapping("/worker/BBS/publish")
+    public String workerBBSPublish() {
+        return "/worker/bbs/publish";
+    }
+
+    @GetMapping("/worker/BBS/editor")
+    public String workerBBSEditor(){
+        return "/worker/BBS/post";
+    }
+
+    @GetMapping("/worker/BBS/editor/{id}")
+    public String myBBSEditor(@PathVariable("id")int id,Model model){
+        BBS bbs=bbsService.findById(id);
+        model.addAttribute("bbs",bbs);
+        return "/worker/BBS/editor";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/BBS/editor/save")
+    public String manageBBSEditorSave(BBS bbs){
+        bbsService.editorSave(bbs);
+        return "修改成功！";
+    }
+
+    @GetMapping("/worker/BBS/search")
+    public String managerBBSSearch(){
+        return "worker/BBS/search";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/BBS/publish/save")
+    public String manageBBSPublishSave(BBS bbs,HttpSession session){
+        Worker worker=(Worker) session.getAttribute("worker");
+        bbs.setStatus(1);
+        bbs.setWorkerId(worker.getId());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        bbs.setDate(df.format(new Date()));
+        bbsService.BBSSave(bbs);
+        return "发布成功！";
+    }
+
+    @ResponseBody
+    @GetMapping("/worker/BBS/article")
+    public  Map<String, Object> managerBBSArticle(HttpSession session, HttpServletRequest request){
+        Worker worker=(Worker)session.getAttribute("worker");
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<BBS> bbs = bbsService.findByWorkerId(worker.getId(),pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", bbs.getTotalElements());
+        JSONArray json = JSONArray.fromObject(bbs.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @ResponseBody
+    @GetMapping("/worker/BBS/findAll")
+    public  Map<String, Object> managerBBSArticleFindAll(HttpSession session,HttpServletRequest request){
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<BBS> bbs = bbsService.findAll(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", bbs.getTotalElements());
+        JSONArray json = JSONArray.fromObject(bbs.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @GetMapping("/worker/BBS/look/{id}")
+    public String look(@PathVariable("id")int id,Model model){
+        BBS bbs=bbsService.findById(id);
+        if(bbs.getStatus()==1)
+        {
+            model.addAttribute("status","招聘者");
+            WorkerData workerData = workerDataService.findByWorkerId(bbs.getWorkerId());
+            model.addAttribute("username",workerData.getName());
+        }
+        else if(bbs.getStatus()==2){
+            model.addAttribute("status","兼职者");
+
+            Manager manager=managerService.findById(bbs.getManagerId());
+            model.addAttribute("username",manager.getName());
+        }
+        bbsService.views(id);
+        model.addAttribute("bbs",bbs);
+        return "/worker/BBS/look";
     }
 
 }

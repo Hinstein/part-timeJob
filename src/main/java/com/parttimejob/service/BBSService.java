@@ -55,4 +55,18 @@ public class BBSService {
     public void deleteById(int id){
         bbsRepository.deleteById(id);
     }
+
+    @Transactional
+    public Page<BBS> findByWorkerId(int managerId,int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return bbsRepository.findByWorkerId(managerId,pageable);
+    }
+
+    public void views(int id){
+        bbsRepository.views(id);
+    }
+
 }

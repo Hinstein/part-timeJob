@@ -19,6 +19,8 @@ import javax.transaction.Transactional;
 public interface BBSRepository extends JpaRepository<BBS, Integer> {
     Page<BBS> findByManagerId(int id, Pageable pageable);
 
+    Page<BBS> findByWorkerId(int id, Pageable pageable);
+
     BBS findById(int id);
 
     @Modifying
@@ -32,4 +34,9 @@ public interface BBSRepository extends JpaRepository<BBS, Integer> {
     Page<BBS> findAll(Pageable pageable);
 
     void deleteById(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update BBS a SET a.views = a.views+1 where a.id =?1")
+    void views(int id);
 }

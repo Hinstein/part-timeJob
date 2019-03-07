@@ -24,43 +24,96 @@
                     兼职网
                 </a>
             </li>
-            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.username}!=null">
-                <a th:href="@{/worker/index}" th:if="${session.worker!=null}" target="_blank" title="首页">
-                    首页
-                </a>
-                <a th:href="@{/manager/index}" th:if="${session.manager!=null}" target="_blank" title="首页">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker!=null}">
+                <a th:href="@{/worker/index}" target="_blank" title="首页">
                     首页
                 </a>
             </li>
-            <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                <a th:href="@{/worker/BBS/index}" th:if="${session.worker!=null}" title="首页">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
+                <a th:href="@{/manager/index}"  target="_blank" title="首页">
+                    首页
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect  th:if="${session.worker!=null}">
+                <a th:href="@{/worker/BBS/index}" title="首页">
                     BBS论坛
                 </a>
-                <a th:href="@{/manager/BBS/index}" th:if="${session.manager!=null}" title="首页">
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
+                <a th:href="@{/manager/BBS/index}"  title="首页">
                     BBS论坛
                 </a>
             </li>
         </ul>
-        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-            <li class="layui-nav-item" lay-unselect th:if="${session.username}!=null">
-                <a th:href="@{/worker/index}" layadmin-event="about">
-                    [[${session.username}]]</a>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.username}==null">
+            <li class="layui-nav-item" lay-unselect >
+                <a th:href="@{/workerLogin}" layadmin-event="about">
+                    登录</a>
+            </li>
+            <li class="layui-nav-item " lay-unselect >
+                <a th:href="@{/workerRegister}" layadmin-event="about">
+                    注册</a>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.manager}">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
+                    <dd><a th:href="@{/manager/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/manager/allJobs}">我发布的职位</a></dd>
+                    <dd><a th:href="@{/manager/employ}">我录用的员工</a></dd>
+                    <dd><a th:href="@{/manager/evaluate}">我给予的评价</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    [[${session.manager.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/informationEditor}">资料管理</a></dd>
+                    <dd><a th:href="@{/manager/editor}">修改密码</a></dd>
+                    <dd><a th:href="@{/manager/exit}">退出</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
+                    <dd><a th:href="@{/manager/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/manager/search/worker}">搜索简历</a></dd>
+                    <dd><a th:href="@{/manager/allJobs}">我发布的职位</a></dd>
+                    <dd><a th:href="@{/manager/employ}">我录用的员工</a></dd>
+                    <dd><a th:href="@{/manager/evaluate}">我给予的评价</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.worker}">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    [[${session.worker.userName}]]
+                </a>
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
                     <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
                     <dd><a th:href="@{/worker/exit}">退出</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item" lay-unselect th:if="${session.username}==null">
-                <a th:href="@{/workerLogin}" layadmin-event="about">
-                    登录</a>
-            </li>
-            <li class="layui-nav-item " lay-unselect th:if="${session.username}==null">
-                <a th:href="@{/workerRegister}" layadmin-event="about">
-                    注册</a>
-            </li>
-            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
                 <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
+                </dl>
             </li>
         </ul>
     </div>
