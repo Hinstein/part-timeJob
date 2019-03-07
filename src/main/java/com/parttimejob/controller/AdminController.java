@@ -62,6 +62,7 @@ public class AdminController {
         Admin admin1 = adminService.findByUserName(username);
         if (admin1 != null) {
             if (admin1.getPassword().equals(password)) {
+                session.setAttribute("username",admin1.getUserName());
                 session.setAttribute("adminUserName", admin1.getUserName());
                 return "登录成功,正在跳转";
             }

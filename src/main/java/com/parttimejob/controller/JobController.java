@@ -24,7 +24,7 @@ import java.util.*;
  */
 
 @Controller
-public class JobController {
+public class     JobController {
 
     @Autowired
     JobService jobService;

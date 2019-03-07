@@ -281,7 +281,7 @@ public class ManagerController {
             List<WorkerData> workers1 = workers.subList(pageStart, pageEnd);
             JSONArray json = JSONArray.fromObject(workers1);
             result.put("data", json);
-        } else {
+        } else if(size>0) {
             JSONArray json = JSONArray.fromObject(workers);
             result.put("data", json);
         }
