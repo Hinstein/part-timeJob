@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @BelongsProject: part-timeJob
@@ -19,7 +20,11 @@ import javax.transaction.Transactional;
 public interface BBSRepository extends JpaRepository<BBS, Integer> {
     Page<BBS> findByManagerId(int id, Pageable pageable);
 
+    List<BBS> findByManagerId(int id);
+
     Page<BBS> findByWorkerId(int id, Pageable pageable);
+
+    List<BBS> findByWorkerId(int id);
 
     BBS findById(int id);
 

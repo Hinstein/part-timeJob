@@ -31,4 +31,8 @@ public class EvaluationToWorkerService {
     public EvaluationToWorker findByManagerIdAndWorkerId(int managerId, int workerId) {
         return evaluationToWorkerRepository.findByManagerIdAndWorkerId(managerId, workerId);
     }
+
+    public List<EvaluationToWorker> findByWorkerId(int id) {
+        return evaluationToWorkerRepository.findByWorkerId(id);
+    }
 }

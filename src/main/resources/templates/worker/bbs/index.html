@@ -111,36 +111,34 @@
             <div class="layui-card">
                 <div class="layui-card-header">控制台</div>
                 <div class="layui-card-body">
-
                     <div class="layui-carousel  layadmin-backlog" style="background-color:#fff;">
-
                         <ul class="layui-row layui-col-space10">
                             <li class="layui-col-xs3">
                                 <a lay-href="app/content/comment.html" class="layadmin-backlog-body"
-                                   onclick="layer.tips('我发布的职位数', this, {tips: 3});">
-                                    <h3>我发布的职位</h3>
-                                    <p><cite>[[${session.jobs}]]</cite></p>
+                                   onclick="layer.tips('我收藏的职位', this, {tips: 3});">
+                                    <h3>我收藏的职位</h3>
+                                    <p><cite>[[${session.collectList}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
                                 <a lay-href="app/forum/list.html" class="layadmin-backlog-body"
-                                   onclick="layer.tips('我录用的员工数', this, {tips: 3});">
-                                    <h3>我录用的员工</h3>
-                                    <p><cite>[[${session.employs}]]</cite></p>
+                                   onclick="layer.tips('我投递的职位', this, {tips: 3});">
+                                    <h3>我投递的职位</h3>
+                                    <p><cite>[[${session.delivers}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
                                 <a lay-href="template/goodslist.html" class="layadmin-backlog-body"
-                                   onclick="layer.tips('我给予的评价数', this, {tips: 3});">
-                                    <h3>我给予的评价</h3>
-                                    <p><cite>[[${session.evaluations}]]</cite></p>
+                                   onclick="layer.tips('我收到的评价', this, {tips: 3});">
+                                    <h3>我收到的评价</h3>
+                                    <p><cite>[[${session.bbs}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
-                                <a href="javascript:;" onclick="layer.tips('不跳转', this, {tips: 3});"
+                                <a onclick="layer.tips('发帖数', this, {tips: 3});"
                                    class="layadmin-backlog-body">
                                     <h3>发帖数</h3>
-                                    <p><cite>20</cite></p>
+                                    <p><cite>[[${session.evaluations}]]</cite></p>
                                 </a>
                             </li>
                         </ul>
@@ -148,13 +146,13 @@
                 </div>
             </div>
             <div class="layui-card">
-                <div class="layui-card-header">搜索职位</div>
+                <div class="layui-card-header">搜索帖子</div>
                 <div class="layui-card-body">
 
                     <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
                     <script type="text/html" id="action">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="look">查看</button>
                         </div>
                     </script>
                 </div>

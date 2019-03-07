@@ -16,5 +16,7 @@ public interface EvaluationToWorkerRepository extends JpaRepository<EvaluationTo
 {
     List<EvaluationToWorker> findByManagerId(int id);
 
+    List<EvaluationToWorker> findByWorkerId(int id);
+
     EvaluationToWorker findByManagerIdAndWorkerId(int managerId,int workerId);
 }

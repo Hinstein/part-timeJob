@@ -49,6 +49,9 @@ public class WorkerController {
     @Autowired
     BBSService bbsService;
 
+    @Autowired
+    EvaluationToWorkerService evaluationToWorkerService;
+
     /**
      * 兼职者注册
      *
@@ -88,6 +91,14 @@ public class WorkerController {
                 session.setAttribute("username", worker1.getUserName());
                 WorkerData workerData = workerDataService.findByWorkerId(worker1.getId());
                 session.setAttribute("workerData", workerData);
+                List<Collect> collectList = collectService.findByWorkerId(worker1.getId());
+                List<Deliver> delivers = deliverService.findByWorkerId(worker1.getId());
+                List<BBS> bbs=bbsService.findByWorkerId(worker1.getId());
+                List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerId(worker1.getId());
+                session.setAttribute("collectList", collectList.size());
+                session.setAttribute("delivers", delivers.size());
+                session.setAttribute("bbs", bbs.size());
+                session.setAttribute("evaluations", evaluations.size());
                 return "登录成功";
             }
             return "密码错误";

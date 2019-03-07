@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @BelongsProject: part-timeJob
@@ -67,6 +68,16 @@ public class BBSService {
 
     public void views(int id){
         bbsRepository.views(id);
+    }
+
+    public List<BBS> findByWorkerId(int id)
+    {
+        return bbsRepository.findByWorkerId(id);
+    }
+
+    public List<BBS> findByManagerId(int id)
+    {
+        return bbsRepository.findByManagerId(id);
     }
 
 }
