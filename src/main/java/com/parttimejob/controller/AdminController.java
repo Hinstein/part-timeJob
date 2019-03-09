@@ -48,8 +48,13 @@ public class AdminController {
 
     @Autowired
     JobService jobService;
+
+    @Autowired
+    BBSService bbsService;
+
     /**
      * 管理员登录
+     *
      * @param admin
      * @param session
      * @return
@@ -62,8 +67,16 @@ public class AdminController {
         Admin admin1 = adminService.findByUserName(username);
         if (admin1 != null) {
             if (admin1.getPassword().equals(password)) {
-                session.setAttribute("username",admin1.getUserName());
+                session.setAttribute("username", admin1.getUserName());
                 session.setAttribute("adminUserName", admin1.getUserName());
+                List<Worker> workers = workerService.findAll();
+                List<Manager> managers = managerService.findAll();
+                List<Job> jobs=jobService.findAll();
+                List<BBS> bbs = bbsService.findAll();
+                session.setAttribute("workers", workers.size());
+                session.setAttribute("managers", managers.size());
+                session.setAttribute("bbs", bbs.size());
+                session.setAttribute("jobs", jobs.size());
                 return "登录成功,正在跳转";
             }
             return "密码错误";
@@ -71,8 +84,20 @@ public class AdminController {
         return "不存在该用户";
     }
 
+    @GetMapping("/admin/exit")
+    public String adminExit(HttpSession session){
+        session.removeAttribute("username");
+        session.removeAttribute("adminUserName");
+        session.removeAttribute("workers");
+        session.removeAttribute("managers");
+        session.removeAttribute("bbs");
+        session.removeAttribute("jobs");
+       return "redirect:/index";
+    }
+
     /**
      * 管理员主页
+     *
      * @return
      */
     @GetMapping("admin/index")
@@ -82,6 +107,7 @@ public class AdminController {
 
     /**
      * 未通过审核的兼职者页面
+     *
      * @return
      */
     @GetMapping("admin/manager/audit")
@@ -91,6 +117,7 @@ public class AdminController {
 
     /**
      * 删除兼职者
+     *
      * @param id
      * @return
      */
@@ -103,6 +130,7 @@ public class AdminController {
 
     /**
      * 兼职者通过审核
+     *
      * @param id
      * @return
      */
@@ -115,6 +143,7 @@ public class AdminController {
 
     /**
      * 兼职者投递信息
+     *
      * @param request
      * @return
      */
@@ -135,6 +164,7 @@ public class AdminController {
 
     /**
      * 查看所有兼职者页面
+     *
      * @return
      */
     @GetMapping("/admin/workers")
@@ -144,6 +174,7 @@ public class AdminController {
 
     /**
      * 所有兼职者资料页面
+     *
      * @param request
      * @return
      */
@@ -164,6 +195,7 @@ public class AdminController {
 
     /**
      * 兼职者信息页面
+     *
      * @return
      */
     @GetMapping("/admin/worker/information")
@@ -173,6 +205,7 @@ public class AdminController {
 
     /**
      * 得到所有兼职者信息页面
+     *
      * @param request
      * @return
      */
@@ -193,6 +226,7 @@ public class AdminController {
 
     /**
      * 查找所有工作页面
+     *
      * @return
      */
     @GetMapping("/admin/jobs")
@@ -202,6 +236,7 @@ public class AdminController {
 
     /**
      * 查找招聘者页面
+     *
      * @return
      */
     @GetMapping("/admin/manager/editor")
@@ -211,6 +246,7 @@ public class AdminController {
 
     /**
      * 查找招聘者资料
+     *
      * @param request
      * @return
      */
@@ -231,6 +267,7 @@ public class AdminController {
 
     /**
      * 兼职者资料页面
+     *
      * @param id
      * @param model
      * @return
@@ -246,6 +283,7 @@ public class AdminController {
 
     /**
      * 更新兼职者资料页面
+     *
      * @param workerData
      * @param request
      * @return
@@ -257,7 +295,7 @@ public class AdminController {
         int workerId = Integer.parseInt(request.getParameter("workerId"));
         String workerName = request.getParameter("workerName");
         String workerPassword = request.getParameter("workerPassword");
-        Worker worker=new Worker();
+        Worker worker = new Worker();
         worker.setId(workerId);
         worker.setUserName(workerName);
         worker.setPassword(workerPassword);
@@ -270,58 +308,103 @@ public class AdminController {
      */
     @ResponseBody
     @PostMapping("/admin/worker/delete/{id}")
-    public String workerDelete(@PathVariable("id")int id){
+    public String workerDelete(@PathVariable("id") int id) {
         workerService.deleteById(id);
         return "删除成功！";
     }
 
     /**
      * 招聘者资料页面
+     *
      * @param id
      * @param model
      * @return
      */
     @GetMapping("/admin/manager/{id}")
     public String managerId(@PathVariable("id") int id, Model model) {
-        Manager manager =managerService.findById(id);
-        model.addAttribute("manager",manager);
+        Manager manager = managerService.findById(id);
+        model.addAttribute("manager", manager);
         return "admin/manager/editor";
     }
 
     /**
      * 招聘者修改页面
+     *
      * @param manager
      * @return
      */
     @ResponseBody
     @PostMapping("/admin/manager/save")
-    public String managerSave(Manager manager){
+    public String managerSave(Manager manager) {
         managerService.save(manager);
         return "修改成功！";
     }
 
     /**
      * 工作信息页面
+     *
      * @param id
      * @param model
      * @return
      */
     @GetMapping("/admin/job/{id}")
     public String jobId(@PathVariable("id") int id, Model model) {
-        Job job =jobService.findById(id);
-        model.addAttribute("job",job);
+        Job job = jobService.findById(id);
+        model.addAttribute("job", job);
         return "admin/job/editor";
     }
 
     /**
      * 删除工作
+     *
      * @param id
      * @return
      */
     @ResponseBody
     @PostMapping("/admin/job/delete/{id}")
-    public String jobDelete(@PathVariable("id")int id){
+    public String jobDelete(@PathVariable("id") int id) {
         jobService.deleteById(id);
         return "删除成功";
+    }
+
+    @GetMapping("/admin/BBS/index")
+    public String bbsIndex(){
+        return "/admin/BBS/index";
+    }
+
+    @ResponseBody
+    @GetMapping("/admin/BBS/data")
+    public Map<String, Object> bbsData(HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<BBS> bbs = bbsService.findAll(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", bbs.getTotalElements());
+        JSONArray json = JSONArray.fromObject(bbs.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @ResponseBody
+    @PostMapping("/admin/BBS/delete/{id}")
+    public String bbsDelete(@PathVariable("id") int id) {
+        bbsService.deleteById(id);
+        return "删除成功！";
+    }
+
+    @GetMapping("/admin/BBS/editor/{id}")
+    public String bbsEditor(@PathVariable("id")int id,Model model){
+        BBS bbs=bbsService.findById(id);
+        model.addAttribute("bbs",bbs);
+        return "/admin/BBS/editor";
+    }
+
+    @ResponseBody
+    @PostMapping("/admin/BBS/editor/save")
+    public String bbsEditorSave(BBS bbs){
+        bbsService.editorSave(bbs);
+        return "修改成功！";
     }
 }

@@ -80,4 +80,8 @@ public class BBSService {
         return bbsRepository.findByManagerId(id);
     }
 
+    public List<BBS> findAll(){
+        return bbsRepository.findAll();
+    }
+
 }

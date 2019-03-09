@@ -94,11 +94,11 @@
                             <dd><a th:href="@{/admin/worker/information}">兼职者资料</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item ">
                         <a href="javascript:;">招聘者管理</a>
                         <dl class="layui-nav-child">
-                            <dd ><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
-                            <dd class="layui-this"> <a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
+                            <dd><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
+                            <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -107,10 +107,10 @@
                             <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;">BBS论坛管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
+                            <dd  class="layui-this"><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
                         </dl>
                     </li>
 
@@ -122,9 +122,9 @@
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <a>主页</a>
             <span>/</span>
-            <a>招聘者管理</a>
+            <a>BBS论坛管理</a>
             <span>/</span>
-            <a>招聘者资料修改</a>
+            <a>帖子信息管理</a>
         </div>
 
 
@@ -134,82 +134,25 @@
                 <div class="layui-card">
                     <div class="layui-card-header">&nbsp;招聘者资料管理</div>
                     <div class="layui-card-body">
-                        <form class="layui-form">
+                        <form class="layui-form layui-form-pane">
                             <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">用户名</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="userName" required lay-verify="required|userName"
-                                               autocomplete="off" class="layui-input" th:value="${manager.userName}">
-                                        <input name="id" hidden="hidden" th:value="${manager.id}">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">密码</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="password" required lay-verify="required|password"
-                                               autocomplete="off" class="layui-input" th:value="${manager.password}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">邮箱</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="email" required lay-verify="required|email"
-                                               placeholder="请输入邮箱"
-                                               autocomplete="off" class="layui-input" th:value="${manager.email}">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">电话号码</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="phoneNumber" required lay-verify="required|phone"
-                                               placeholder="请输入电话号码" autocomplete="off" class="layui-input"
-                                               th:value="${manager.phoneNumber}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">姓名</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="name" required lay-verify="required|name"
-                                               placeholder="姓名"
-                                               autocomplete="off" class="layui-input" th:value="${manager.name}">
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">注册时间</label>
-                                    <div class="layui-input-inline">
-                                        <input type="text" name="date" required lay-verify="required"
-                                               placeholder="请选择工作时间"
-                                               autocomplete="off" class="layui-input"
-                                               th:value="${manager.date}">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">审核状态</label>
-                                    <div class="layui-input-inline">
-                                        <select name="audit" lay-verify="required" lay-search="">
-                                            <option value="0" th:selected="${manager.audit==0}">未审核
-                                            </option>
-                                            <option value="1" th:selected="${manager.audit==1}">通过审核
-                                            </option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                            </div>
-                            <div class="layui-form-item">
+                                <label class="layui-form-label">标题</label>
                                 <div class="layui-input-block">
-                                    <button class="layui-btn" lay-submit="" lay-filter="go"
-                                    >修改
-                                    </button>
+                                    <input type="text" name="title" autocomplete="off" placeholder="请输入标题"
+                                           class="layui-input" lay-verify="required" th:value="${bbs.title}">
                                 </div>
                             </div>
+                            <div class="layui-form-item layui-form-text">
+                                <label class="layui-form-label">帖子内容</label>
+                                <div class="layui-input-block">
+                                        <textarea id="demo" style="display: none;" name="content"
+                                                  lay-verify="content">[[${bbs.content}]] </textarea>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <button class="layui-btn" lay-submit="" lay-filter="go" type="button">修改</button>
+                            </div>
+                            <input th:value="${bbs.id}" hidden="hidden" name="id">
                         </form>
                     </div>
                 </div>
@@ -220,31 +163,21 @@
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
-    layui.use('form', function () {
+    layui.use(['form', 'layedit'], function () {
         var form = layui.form;
+        var layedit = layui.layedit;
+        var index = layedit.build('demo'); //建立编辑器
         form.verify({
-            userName: function (value, item) { //value：表单的值、item：表单的DOM对象
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
-                }
-                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
-                    return '用户名首尾不能出现下划线\'_\'';
-                }
-                if (/^\d+\d+\d$/.test(value)) {
-                    return '用户名不能全为数字';
-                }
+            content: function (value) {
+                layedit.sync(index);
             }
-            , password: [
-                /^[\S]{6,12}$/
-                , '密码必须6到12位，且不能出现空格'
-            ], name: [
-                /^([\u4e00-\u9fa5]){2,7}$/
-                , '姓名只能是中文，长度为2-7位'
-            ]
         });
         form.on('submit(go)', function (data) {
+            // console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+            // console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+            // console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
             $.ajax({
-                url: '/admin/manager/save',
+                url: '/admin/BBS/editor/save',
                 method: "post",
                 data: data.field,
                 dataType: "text",

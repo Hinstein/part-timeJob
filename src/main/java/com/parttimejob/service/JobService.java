@@ -162,5 +162,5 @@ public class JobService {
         jobRepository.deliverCancel(id);
     }
 
-
+    public List<Job> findAll(){return jobRepository.findAll();}
 }

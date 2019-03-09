@@ -1,6 +1,7 @@
 package com.parttimejob.repository;
 
 import com.parttimejob.entity.Manager;
+import org.omg.PortableServer.LIFESPAN_POLICY_ID;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +25,9 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
      * @return
      */
     Manager findByUserName(String userName);
+
+    @Override
+    List<Manager> findAll();
 
     /**
      * 通过id找到招聘者

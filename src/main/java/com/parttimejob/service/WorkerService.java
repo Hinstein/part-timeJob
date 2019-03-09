@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * @BelongsProject: part-timeJob
@@ -36,6 +37,7 @@ public class WorkerService {
 
     /**
      * 通过用户名找到兼职者
+     *
      * @param userName
      * @return
      */
@@ -45,6 +47,7 @@ public class WorkerService {
 
     /**
      * 保存兼职者
+     *
      * @param worker
      */
     public void save(Worker worker) {
@@ -53,6 +56,7 @@ public class WorkerService {
 
     /**
      * 通过id找到兼职者
+     *
      * @param id
      * @return
      */
@@ -62,6 +66,7 @@ public class WorkerService {
 
     /**
      * 分页得到所有兼职者的资料
+     *
      * @param pageNo
      * @param pageSize
      * @return
@@ -77,9 +82,10 @@ public class WorkerService {
 
     /**
      * 删除兼职者，并且删除有关该兼职者的收藏，投递，雇佣，个人资料
+     *
      * @param id
      */
-    public void deleteById(int id){
+    public void deleteById(int id) {
         workerDataService.deleteWorkerDataByWorkerId(id);
         employService.deleteEmployByWorkerId(id);
         deliverService.deleteDeliverByWorkerId(id);
@@ -87,4 +93,7 @@ public class WorkerService {
         workerRepository.deleteWorkerById(id);
     }
 
+    public List<Worker> findAll() {
+        return workerRepository.findAll();
+    }
 }

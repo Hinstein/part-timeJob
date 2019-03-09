@@ -128,4 +128,8 @@ public class ManagerService {
     public void informationSave(Manager manager){
         managerRepository.informationSave(manager);
     }
+
+    public List<Manager> findAll(){
+        return managerRepository.findAll();
+    }
 }

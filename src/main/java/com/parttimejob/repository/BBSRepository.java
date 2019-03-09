@@ -22,6 +22,8 @@ public interface BBSRepository extends JpaRepository<BBS, Integer> {
 
     List<BBS> findByManagerId(int id);
 
+    List<BBS> findAll();
+
     Page<BBS> findByWorkerId(int id, Pageable pageable);
 
     List<BBS> findByWorkerId(int id);

@@ -101,16 +101,16 @@
                             <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item ">
                         <a href="javascript:;">职位管理</a>
                         <dl class="layui-nav-child">
-                            <dd  class="layui-this"><a th:href="@{/admin/jobs}">查看职位</a></dd>
+                            <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;">BBS论坛管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
+                            <dd  class="layui-this"><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
                         </dl>
                     </li>
 
@@ -122,9 +122,9 @@
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <a>主页</a>
             <span>/</span>
-            <a>职位管理</a>
+            <a>BBS论坛管理</a>
             <span>/</span>
-            <a>查看所有职位</a>
+            <a>查看所有帖子</a>
         </div>
 
 
@@ -132,7 +132,7 @@
         <div class="layui-fluid" style=" padding: 15px;">
             <div class="layui-col-md12">
                 <div class="layui-card">
-                    <div class="layui-card-header">&nbsp;兼职账号管理</div>
+                    <div class="layui-card-header">&nbsp;BBS论坛管理</div>
                     <div class="layui-card-body">
                         <table class="layui-hide" id="demo" lay-filter="test"></table>
                         <script type="text/html" id="toolbarDemo">
@@ -155,14 +155,13 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-
 <script th:inline="none">
     layui.use(['table'], function () {
         var table = layui.table;
         //第一个实例
         var tableIns = table.render({
             elem: '#demo'
-            , url: '/worker/search/allJobs' //数据接口
+            , url: '/admin/BBS/data' //数据接口
             , toolbar: '#toolbarDemo'
             , page: true //开启分页
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
@@ -171,10 +170,8 @@
                 {type: 'checkbox', fixed: 'left'}
                 , {field: 'id', title: 'ID', sort: true}
                 , {field: 'title', title: '标题', width: '40%'}
-                , {field: 'lowPay', title: '最低工资'}
-                , {field: 'hightPay', title: '最高工资'}
-                , {field: 'date', title: '发布时间', sort: true, width: '15%'}
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}
+                , {field: 'date', title: '发布时间', sort: true}
+                , {fixed: 'right', title: '操作', toolbar: '#action'}
             ]]
         });
         //监听事件
@@ -182,25 +179,24 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'pass') { //通过
-                location.href = "/admin/job/" + data.id;
-            } else if (layEvent === 'delete') { //删除
-                layer.confirm('删除标题为' + data.title + '的工作么', function (index) {
+            if (layEvent === 'delete') { //删除
+                layer.confirm('删除id为' + data.id + '账号么', function (index) {
                     $.ajax({
-                        url: '/admin/job/delete/' + data.id,
+                        url: '/admin/BBS/delete/' + data.id,
                         method: "post",
                         dataType: "text",
                         success: function (msg) {
                             layer.msg(msg);
-                            tableIns.reload();
                             // //清除表单内容
+                            tableIns.reload();
                         },
                         error: function () {
                             layer.msg("网络错误，通过失败");
                         }
                     });
-
                 });
+            } else if (layEvent === 'pass') {
+                location.href = "/admin/BBS/editor/" + data.id;
             }
         });
         //头工具栏事件
@@ -218,10 +214,10 @@
                             ids += data[i].id;
                         }
                     }
-                    layer.confirm('删除id为' + ids + '的工作么', function (index) {
+                    layer.confirm('删除id为' + ids + '账号么', function (index) {
                         for (var i = 0; i < data.length; i++) {
                             $.ajax({
-                                url: '/admin/job/delete/' + data[i].id,
+                                url: '/admin/BBS/delete/' + data.id,
                                 method: "post",
                                 dataType: "text",
                                 success: function (msg) {

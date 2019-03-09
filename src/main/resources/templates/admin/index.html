@@ -2,110 +2,289 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>兼职网后台管理系统</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
           th:href="@{/assets/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 
 </head>
 <body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
-    <div class="layui-header">
-        <div class="layui-logo">兼职网后台</div>
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
-            <li class="layui-nav-item"><a href="">用户</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">邮件管理</a></dd>
-                    <dd><a href="">消息管理</a></dd>
-                    <dd><a href="">授权管理</a></dd>
-                </dl>
-            </li>
-        </ul>
-        <ul class="layui-nav layui-layout-right">
-            <li class="layui-nav-item"><a>欢迎管理员</a></li>
-            <li class="layui-nav-item">
-                <a href="javascript:;">
-                    [[${session.adminUserName}]]
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
-                    <dd><a href="">安全设置</a></dd>
-                </dl>
-            </li>
-            <li class="layui-nav-item"><a href="">退了</a></li>
-        </ul>
-    </div>
 
-
-
-    <div class="layui-side layui-bg-black">
-        <div class="layui-side-scroll">
-            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item">
-                    <a class="" href="javascript:;">兼职者管理</a>
+<div id="LAY_app">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header">
+            <!-- 头部区域 -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                    <a th:href="@{/admin/index}" layadmin-event="flexible" title="侧边伸缩">
+                        <i class="layui-icon layui-icon-home"></i>
+                    </a>
+                </li>
+            </ul>
+            <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>    兼职者管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/workers}">兼职账号</a></dd>
                         <dd><a th:href="@{/admin/worker/information}">兼职者资料</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">招聘者管理</a>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>    招聘者管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
-                        <dd><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
+                        <dd class="layui-this"><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
+                        <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">职位管理</a>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>    职位管理</cite>
+                    </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item"><a href="">BBS论坛管理</a></li>
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>     BBS论坛管理</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item" lay-unselect>
+                    <a href="javascript:;">
+                        <cite>     [[${session.adminUserName}]]</cite>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd layadmin-event="logout" style="text-align: center;"><a th:href="@{/admin/exit}">退出</a></dd>
+                    </dl>
+                </li>
+
+                <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                    <a href="javascript:;" layadmin-event="about"><i
+                            class="layui-icon layui-icon-more-vertical"></i></a>
+                </li>
+
             </ul>
         </div>
-    </div>
 
-    <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">
-            内容主体区域
+        <!-- 侧边菜单 -->
+        <div class="layui-side layui-side-menu">
+            <div class="layui-side-scroll">
+                <div class="layui-logo" lay-href="home/console.html">
+                    <span>兼职网后台</span>
+                </div>
 
-            <br><br>
+                <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
+                    lay-filter="layadmin-system-side-menu">
 
-            <blockquote class="layui-elem-quote">
-                注意：该页面只是简单的后台布局示例，并不是一整套后台系统方案，您可以关注 layui 官方提供后台模板解决方案：
-                <a href="https://www.layui.com/admin/" target="_blank" class="layui-btn layui-btn-danger">layuiAdmin</a>
-            </blockquote>
+                    <li class="layui-nav-item">
+                        <a class="" href="javascript:;">兼职者管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a th:href="@{/admin/workers}">兼职账号</a></dd>
+                            <dd><a th:href="@{/admin/worker/information}">兼职者资料</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">招聘者管理</a>
+                        <dl class="layui-nav-child">
+                            <dd class="layui-this"><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
+                            <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">职位管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">BBS论坛管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
+                        </dl>
+                    </li>
 
-            <blockquote class="layui-elem-quote">
-                layui 之所以赢得如此多人的青睐，更多是在于它“前后台系统通吃”的能力。既可编织出绚丽的前台页面，又可满足繁杂的后台功能需求。
-                <br>layui 后台布局， 致力于让每一位开发者都能轻松搭建自己的后台模板。
-            </blockquote>
-
-            <a href="/doc/element/layout.html#admin" target="_blank" class="layui-btn layui-btn-lg">获取该布局代码</a>
-
-            <br><br><br><br>
-
-            下面是充数内容，为的是出现滚动条<br>
+                </ul>
+            </div>
         </div>
-    </div>
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+
+        <div class="layadmin-pagetabs" id="LAY_app_tabs">
+           <a>主页</a>
+        </div>
+
+        <!-- 主体内容 -->
+        <div class="layui-body" >
+            <div class="layui-fluid" >
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md8">
+                        <div class="layui-row layui-col-space15">
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">控制台</div>
+                                    <div class="layui-card-body">
+                                        <div class="layui-carousel  layadmin-backlog" style="background-color:#fff;">
+                                            <ul class="layui-row layui-col-space10">
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="app/content/comment.html" class="layadmin-backlog-body"
+                                                       onclick="layer.tips('我收藏的职位', this, {tips: 3});">
+                                                        <h3>招聘者数量</h3>
+                                                        <p><cite>[[${session.workers}]]</cite></p>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="app/forum/list.html" class="layadmin-backlog-body"
+                                                       onclick="layer.tips('我投递的职位', this, {tips: 3});">
+                                                        <h3>兼职者数量</h3>
+                                                        <p><cite>[[${session.managers}]]</cite></p>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a lay-href="template/goodslist.html" class="layadmin-backlog-body"
+                                                       onclick="layer.tips('我收到的评价', this, {tips: 3});">
+                                                        <h3>兼职数量</h3>
+                                                        <p><cite>[[${session.jobs}]]</cite></p>
+                                                    </a>
+                                                </li>
+                                                <li class="layui-col-xs3">
+                                                    <a onclick="layer.tips('发帖数', this, {tips: 3});"
+                                                       class="layadmin-backlog-body">
+                                                        <h3>发帖数</h3>
+                                                        <p><cite>[[${session.bbs}]]</cite></p>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md12">
+                                <div class="layui-card">
+                                    <div class="layui-card-header">数据概览</div>
+                                    <div class="layui-card-body">
+
+                                        <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade"
+                                             lay-filter="LAY-index-dataview">
+                                            <div carousel-item id="LAY-index-dataview">
+                                                <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i>
+                                                </div>
+                                                <div></div>
+                                                <div></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="layui-card">
+                                    <div class="layui-tab layui-tab-brief layadmin-latestData">
+                                        <ul class="layui-tab-title">
+                                            <li class="layui-this">今日热搜</li>
+                                            <li>今日热帖</li>
+                                        </ul>
+                                        <div class="layui-tab-content">
+                                            <div class="layui-tab-item layui-show">
+                                                <table id="LAY-index-topSearch"></table>
+                                            </div>
+                                            <div class="layui-tab-item">
+                                                <table id="LAY-index-topCard"></table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-col-md4">
+                        <div class="layui-card">
+                            <div class="layui-card-header">版本信息</div>
+                            <div class="layui-card-body layui-text">
+                                <table class="layui-table">
+                                    <colgroup>
+                                        <col width="100">
+                                        <col>
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <td>当前版本</td>
+                                        <td>
+                                          1.0.0
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>基于框架</td>
+                                        <td>
+                                            springboot / spring data jpa / layui
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="layui-card">
+                            <div class="layui-card-header">效果报告</div>
+                            <div class="layui-card-body layadmin-takerates">
+                                <div class="layui-progress" lay-showPercent="yes">
+                                    <h3>招聘率（日同比 28% <span class="layui-edge layui-edge-top" lay-tips="增长"
+                                                          lay-offset="-15"></span>）</h3>
+                                    <div class="layui-progress-bar" lay-percent="65%"></div>
+                                </div>
+                                <div class="layui-progress" lay-showPercent="yes">
+                                    <h3>发帖率（日同比 11% <span class="layui-edge layui-edge-bottom" lay-tips="下降"
+                                                          lay-offset="-15"></span>）</h3>
+                                    <div class="layui-progress-bar" lay-percent="32%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="layui-card">
+                            <div class="layui-card-header">实时监控</div>
+                            <div class="layui-card-body layadmin-takerates">
+                                <div class="layui-progress" lay-showPercent="yes">
+                                    <h3>CPU使用率</h3>
+                                    <div class="layui-progress-bar" lay-percent="58%"></div>
+                                </div>
+                                <div class="layui-progress" lay-showPercent="yes">
+                                    <h3>内存占用率</h3>
+                                    <div class="layui-progress-bar layui-bg-red" lay-percent="90%"></div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                作者心语
+                                <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
+                            </div>
+                            <div class="layui-card-body layui-text layadmin-text">
+                                <p>一直以来，layui 秉承无偿开源的初心，虔诚致力于服务各层次前后端 Web
+                                    开发者，在商业横飞的当今时代，这一信念从未动摇。即便身单力薄，仍然重拾决心，埋头造轮，以尽可能地填补产品本身的缺口。</p>
+                                <p>在过去的一段的时间，我一直在寻求持久之道，已维持你眼前所见的一切。而 layuiAdmin 是我们尝试解决的手段之一。我相信真正有爱于 layui
+                                    生态的你，定然不会错过这一拥抱吧。</p>
+                                <p>子曰：君子不用防，小人防不住。请务必通过官网正规渠道，获得 <a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>！
+                                </p>
+                                <p>—— 贤心（<a href="http://www.layui.com/" target="_blank">layui.com</a>）</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-
-<script>
-</script>
 </body>
 </html>

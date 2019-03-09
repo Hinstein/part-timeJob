@@ -26,7 +26,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      */
     List<Job> findByManagerId(int id);
 
-
+    List<Job> findAll();
 
     /**
      * 通过工作id找到该工作

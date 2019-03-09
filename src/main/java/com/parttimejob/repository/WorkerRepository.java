@@ -50,4 +50,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     @Modifying
     @Query(value = "delete from Worker a where a.id =?1")
     void deleteWorkerById(int id);
+
+    @Override
+    List<Worker> findAll();
 }
