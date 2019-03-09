@@ -27,6 +27,7 @@ public class WorkerDataService {
 
     /**
      * 通过兼职者的id，找到该兼职者的资料
+     *
      * @param id
      * @return
      */
@@ -36,6 +37,7 @@ public class WorkerDataService {
 
     /**
      * 保存兼职者资料
+     *
      * @param workerData
      */
     public void save(WorkerData workerData) {
@@ -45,6 +47,7 @@ public class WorkerDataService {
 
     /**
      * 更新该兼职者的资料
+     *
      * @param workerData
      */
     public void updata(WorkerData workerData) {
@@ -53,6 +56,7 @@ public class WorkerDataService {
 
     /**
      * 分页得到兼职者的资料
+     *
      * @param pageNo
      * @param pageSize
      * @return
@@ -68,9 +72,19 @@ public class WorkerDataService {
 
     /**
      * 通过兼职者的id删除兼职者的资料
+     *
      * @param workerId
      */
-    public void deleteWorkerDataByWorkerId(int workerId){
+    public void deleteWorkerDataByWorkerId(int workerId) {
         workerDataRepository.deleteWorkerDataByWorkerId(workerId);
+    }
+
+    @Transactional
+    public Page<WorkerData> findByJobIntensionLike(String content, int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return workerDataRepository.findByJobIntensionLike(content, pageable);
     }
 }

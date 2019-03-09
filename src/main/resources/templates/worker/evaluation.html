@@ -120,27 +120,14 @@
             </div>
         </div>
         <div class="layui-col-md10">
-            <div class="layui-card" th:if="${jobs.size()==0}">
-                <div class="layui-card-header" >
-                    你还没有被录取过哦！
-                </div>
-            </div>
-            <div class="layui-row"  >
-                <div class="layui-row layui-col-space15">
-                    <div class="layui-col-md4" th:each="job:${jobs}">
-                        <div class="layui-card">
-                            <div class="layui-card-header"><a th:href="@{/worker/job/}+${job.id}"><strong
-                                    th:text="${job.title}">title</strong></a></div>
-                            <div class="layui-card-body">
-                                <p><span>薪资:</span>
-                                    <span th:text="${job.lowPay}"></span>
-                                    <span class="layui-red">-</span>
-                                    <span th:text="${job.hightPay}"></span></p>
-                                发布时间:
-                                <text th:text="${job.date}"></text>
-                            </div>
-                        </div>
-                    </div>
+            <div class="layui-card">
+                <div class="layui-card-header">[[${evaluation.managerName}]]的评价</div>
+                <div class="layui-card-body">
+                    <form class="layui-form">
+                        <p>评分：[[${evaluation.star}]]星</p>
+                        <p>评价：[[${evaluation.content}]]</p>
+                        <p>评价人:[[${evaluation.workerName}]]</p>
+                    </form>
                 </div>
             </div>
         </div>

@@ -179,6 +179,7 @@
                 success: function (msg) {
                     layer.msg(msg);
                     // //清除表单内容
+                    $('#workerForm')[0].reset();
                 },
                 error: function () {
                     layer.msg("网络错误，注册失败");

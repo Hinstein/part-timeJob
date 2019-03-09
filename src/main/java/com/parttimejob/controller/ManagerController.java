@@ -398,15 +398,13 @@ public class ManagerController {
     public String workerEvaluate(HttpSession session, Model model) {
         Manager manager = (Manager) session.getAttribute("manager");
         List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByManagerId(manager.getId());
-        System.out.println(evaluations.size());
         model.addAttribute("evaluations", evaluations);
         return "/manager/workerEvaluate";
     }
 
     @GetMapping("/manager/evaluation/{id}")
     public String evaluation(@PathVariable("id") int id, Model model, HttpSession session) {
-        Manager manager = (Manager) session.getAttribute("manager");
-        EvaluationToWorker evaluation = evaluationToWorkerService.findByManagerIdAndWorkerId(manager.getId(), id);
+        EvaluationToWorker evaluation = evaluationToWorkerService.findById(id);
         model.addAttribute("evaluation", evaluation);
         return "/manager/evaluation";
     }
@@ -535,5 +533,30 @@ public class ManagerController {
         bbsService.views(id);
         model.addAttribute("bbs",bbs);
         return "manager/BBS/look";
+    }
+
+    @ResponseBody
+    @GetMapping("/manager/workers/information/data")
+    public Map<String, Object> workersInformationData(HttpServletRequest request,
+                                                      @RequestParam(value = "content", required = false) String content) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        if (content != null) {
+            Page<WorkerData> workers = workerDataService.findByJobIntensionLike(content, pageNumber, pageSize);
+            result.put("count", workers.getTotalElements());
+            JSONArray json = JSONArray.fromObject(workers.getContent());
+            result.put("data", json);
+        } else {
+            Page<WorkerData> workers = workerDataService.findAll(pageNumber, pageSize);
+            result.put("count", workers.getTotalElements());
+            JSONArray json = JSONArray.fromObject(workers.getContent());
+            result.put("data", json);
+        }
+        result.put("code", 0);
+        result.put("msg", "");
+        return result;
     }
 }

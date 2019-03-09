@@ -57,6 +57,9 @@ public class WorkerController {
     @Autowired
     EvaluationToWorkerService evaluationToWorkerService;
 
+    @Autowired
+    EvaluationToManagerService evaluationToManagerService;
+
     /**
      * 兼职者注册
      *
@@ -207,14 +210,11 @@ public class WorkerController {
                                  @RequestParam("oldPassword") String oldPassword,
                                  HttpSession session) {
         Map<String, String> map = new HashMap<>(50);
-        String username = (String) session.getAttribute("userName");
-        Worker worker = workerService.findByUserName(username);
+        Worker worker = (Worker) session.getAttribute("worker");
         if (worker.getPassword().equals(oldPassword)) {
             worker.setPassword(newPassword);
             workerService.save(worker);
             return "更新密码成功！";
-        } else if (newPassword.equals("") || oldPassword.equals("")) {
-            return "密码不能为空";
         } else {
             return "旧密码错误";
         }
@@ -281,7 +281,7 @@ public class WorkerController {
             jobs.add(job);
         }
         model.addAttribute("jobs", jobs);
-        return "worker/employ";
+        return "/worker/employ";
     }
 
     @GetMapping("/worker/exit")
@@ -398,6 +398,68 @@ public class WorkerController {
         return "/worker/BBS/look";
     }
 
+
+    @GetMapping("/worker/employ/job/{id}")
+    public String workerEmployee(@PathVariable("id")int id,Model model){
+        Job job=jobService.findById(id);
+        job.setCheckEmploy(1);
+        bbsService.views(id);
+        Manager manager =managerService.findById(job.getManagerId());
+        model.addAttribute("manager",manager);
+        model.addAttribute("job",job);
+        return "/worker/job";
+    }
+
+    @GetMapping("/worker/evaluationToManager/{id}")
+    public String evaluationToManager(@PathVariable("id")int id,Model model){
+        Manager manager=managerService.findById(id);
+        model.addAttribute("manager",manager);
+        return "/worker/evaluationToManager";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/evaluationToManager/save")
+    public String evaluationToManager(EvaluationToManager evaluation, HttpSession session) {
+        Worker worker = (Worker) session.getAttribute("worker");
+        WorkerData workerData =workerDataService.findByWorkerId(worker.getId());
+        evaluation.setWorkerId(worker.getId());
+        evaluation.setWorkerName(workerData.getName());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        evaluation.setDate(df.format(new Date()));
+        employService.evaluated(worker.getId(),evaluation.getManagerId());
+        evaluationToManagerService.evaluationToManagerSave(evaluation);
+        return "评价成功！";
+    }
+
+    @GetMapping("/worker/evaluate")
+    public String workerEvaluate(HttpSession session, Model model) {
+        Worker worker = (Worker) session.getAttribute("worker");
+        List<EvaluationToManager> evaluations = evaluationToManagerService.findByWorkerId(worker.getId());
+        model.addAttribute("evaluations", evaluations);
+        return "/worker/managerEvaluate";
+    }
+
+    @GetMapping("/worker/evaluation/{id}")
+    public String evaluation(@PathVariable("id") int id, Model model, HttpSession session) {
+        EvaluationToManager evaluation = evaluationToManagerService.findById(id);
+        model.addAttribute("evaluation", evaluation);
+        return "/worker/evaluation";
+    }
+
+    @GetMapping("/worker/evaluated")
+    public String workerEvaluated(HttpSession session, Model model) {
+        Worker worker = (Worker) session.getAttribute("worker");
+        List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerId(worker.getId());
+        model.addAttribute("evaluations", evaluations);
+        return "/worker/workerEvaluate";
+    }
+
+    @GetMapping("/worker/receiveEvaluation/{id}")
+    public String receiveEvaluation(@PathVariable("id") int id, Model model) {
+        EvaluationToWorker evaluation = evaluationToWorkerService.findById(id);
+        model.addAttribute("evaluation", evaluation);
+        return "/worker/receiveEvaluation";
+    }
 }
 
 

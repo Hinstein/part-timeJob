@@ -11,6 +11,7 @@
     <title>兼职者页面</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 </head>
 <body>
@@ -18,15 +19,16 @@
     <div class="layui-header">
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                <a th:href="@{/index}" layadmin-event="flexible" target="_blank" title="logo">
+                <a th:href="@{/index}" layadmin-event="flexible" title="logo">
                     兼职网
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                <a th:href="@{/worker/index}" title="首页">
+                <a th:href="@{/worker/index}" target="_blank" title="首页">
                     首页
                 </a>
             </li>
+
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a th:href="@{/worker/BBS/index}" target="_blank" title="首页">
                     BBS论坛
@@ -119,127 +121,33 @@
             </div>
         </div>
         <div class="layui-col-md10">
-            <div class="layui-card">
-                <div class="layui-card-header"><h2>[[${job.title}]]</h2></div>
-                <div class="layui-card-body">
-                    <text th:utext="${job.content}"></text>
-                    <br>
-                    浏览量：[[${job.views}]] 收藏量：[[${job.collection}]] 投递量：[[${job.deliver}]]
-                    <hr>
-                    <div th:if="${job.checkEmploy}!=1">
-                        <button th:if="${job.checkCollection}==0" class="layui-btn  layui-btn-radius" id="save">收藏
-                        </button>
-                        <button th:if="${job.checkCollection}==1" class="layui-btn layui-btn-warm layui-btn-radius"
-                                id="cancelSave">已收藏
-                        </button>
-                        <button th:if="${job.checkDeliver}==0" class="layui-btn  layui-btn-radius" id="deliver">投递简历
-                        </button>
-                        <button th:if="${job.checkDeliver}==1" class="layui-btn layui-btn-warm layui-btn-radius"
-                                id="cancelDeliver">已投递
-                        </button>
+            <div class="layui-card" th:if="${evaluations.size()==0}">
+                <div class="layui-card-header">
+                    你还没有评价过兼职者哦！
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md4" th:each="evaluation:${evaluations}">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <a th:href="@{/worker/receiveEvaluation/}+${evaluation.id}"> <strong>[[${evaluation.workerName}]]</strong></a>
+                            </div>
+                            <div class="layui-card-body">
+                                <p><span>等级:</span>
+                                    <span th:text="${evaluation.star}"></span>星
+                                </p>
+                                评价时间:
+                                <text th:text="${evaluation.date}"></text>
+                            </div>
+                        </div>
                     </div>
-                    <button th:if="${job.checkEmploy}==1" class="layui-btn  layui-btn-radius"
-                            id="evaluation">评价招聘者
-                    </button>
-                    <input hidden="hidden" th:value="${job.id}" id="jobId" name="id">
-                    <input hidden="hidden" th:value="${manager.id}" id="managerId" name="managerId">
                 </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script>
-    $(function () {
-        var id = $("#jobId").val();
-        $("#save").click(function () {
-            layer.confirm('是否收藏该职位么', function (index) {
-                var params = {};
-                params.id = id;
-                $.ajax({
-                    url: 'save',
-                    method: "post",
-                    data: params,
-                    dataType: "text",
-                    success: function (msg) {
-                        location.href = "/worker/job/" + id;
-
-                    },
-                    error: function () {
-                        layer.msg("网络错误，登录失败");
-                    }
-                });
-            });
-        });
-        $("#cancelSave").click(function () {
-            layer.confirm('是否取消收藏该职位么', function (index) {
-                var params = {};
-                params.id = id;
-                $.ajax({
-                    url: 'cancelSave',
-                    method: "post",
-                    data: params,
-                    dataType: "text",
-                    success: function (msg) {
-
-                        location.href = "/worker/job/" + id;
-
-                    },
-                    error: function () {
-                        layer.msg("网络错误，登录失败");
-                    }
-                });
-            });
-        })
-    });
-    $("#deliver").click(function () {
-        layer.confirm('是否投递该职位么', function (index) {
-            var id = $("#jobId").val();
-            var params = {};
-            params.id = id;
-            $.ajax({
-                url: 'deliver',
-                method: "post",
-                data: params,
-                dataType: "text",
-                success: function (msg) {
-                    location.href = "/worker/job/" + id;
-                },
-                error: function () {
-                    layer.msg("网络错误，登录失败");
-                }
-            });
-        })
-    });
-    $("#cancelDeliver").click(function () {
-        layer.confirm('是否取消投递该职位么', function (index) {
-            var id = $("#jobId").val();
-            var params = {};
-            params.id = id;
-            $.ajax({
-                url: 'cancelDeliver',
-                method: "post",
-                data: params,
-                dataType: "text",
-                success: function (msg) {
-                    location.href = "/worker/job/" + id;
-                },
-                error: function () {
-                    layer.msg("网络错误，登录失败");
-                }
-            });
-        })
-    });
-    $("#evaluation").click(function () {
-        layer.confirm('是否评论该招聘者么', function (index) {
-            var id = $("#managerId").val();
-            var params = {};
-            params.id = id;
-            location.href = "/worker/evaluationToManager/" + id;
-        })
-    })
-</script>
 </body>
 </html>

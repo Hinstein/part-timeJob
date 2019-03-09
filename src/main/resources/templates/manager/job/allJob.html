@@ -147,29 +147,6 @@
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script th:inline="none">
-    $(".delete").click(function () {
-        var url = $(this).attr("del_uri");
-        layer.confirm('删除该招聘信息么', function (index) {
-            // $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
-            // console.log(url);
-            $.ajax({
-                url: url,
-                method: "post",
-                dataType: "text",
-                success: function (msg) {
-                    layer.msg(msg);
-                    setTimeout(function () {
-                        location.href = "/manager/allJob";
-                    }, 2000);
-                },
-                error: function () {
-                    layer.msg("网络错误，通过失败");
-                }
-            });
-        });
-        return false;
-    })
-
     layui.use(['table'], function () {
         var table = layui.table;
         //第一个实例
@@ -199,17 +176,13 @@
                 location.href = "/manager/job/editor/" + data.id;
             } else if (layEvent === 'delete') {
                 layer.confirm('删除该招聘信息么', function (index) {
-                    // $("#deleteForm").attr("action", $(this).attr("del_uri")).submit();
-                    // console.log(url);
                     $.ajax({
-                        url: url,
+                        url: "/manager/job/delete/" + data.id,
                         method: "post",
                         dataType: "text",
                         success: function (msg) {
                             layer.msg(msg);
-                            setTimeout(function () {
-                                location.href = "/manager/allJobs";
-                            }, 2000);
+                            tableIns.reload();
                         },
                         error: function () {
                             layer.msg("网络错误，通过失败");

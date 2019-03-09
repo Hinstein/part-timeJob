@@ -62,4 +62,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
     @Modifying
     @Query(value = "delete from WorkerData a where a.workerId =?1")
     void deleteWorkerDataByWorkerId(int id);
+//
+    @Query(value = "select w from WorkerData w where w.jobIntension like CONCAT('%',?1,'%')")
+    Page<WorkerData> findByJobIntensionLike(String content, Pageable pageable);
 }

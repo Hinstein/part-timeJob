@@ -50,6 +50,17 @@ public class Job {
     @Column
     private int checkDeliver;
 
+    @Column
+    private int checkEmploy;
+
+    public int getCheckEmploy() {
+        return checkEmploy;
+    }
+
+    public void setCheckEmploy(int checkEmploy) {
+        this.checkEmploy = checkEmploy;
+    }
+
     public int getCheckCollection() {
         return checkCollection;
     }

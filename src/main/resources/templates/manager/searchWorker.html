@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>搜索职位</title>
+    <title>搜索简历</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
 
@@ -128,11 +128,11 @@
         </div>
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header">搜索职位</div>
+                <div class="layui-card-header">搜索简历</div>
                 <div class="layui-card-body">
                     <div class="demoTable" >
                         <div class="layui-inline">
-                            <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的职位">
+                            <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的简历">
                         </div>
                         <button class="layui-btn" id="search" type="button">搜索</button>
                     </div>
@@ -157,7 +157,7 @@
         //第一个实例
         var tableIns = table.render({
             elem: '#demo'
-            , url: '/admin/workers/information/data' //数据接口
+            , url: '/manager/workers/information/data' //数据接口
             , page: true //开启分页
             , skin: 'line'
             , size: 'lg'
@@ -204,20 +204,20 @@
                 location.href = "/manager/workerInformation/" + data.workerId;
             }
         });
-        // $(function () {
-        //     $("#search").click(function () {
-        //         var content = $('#content').val();
-        //         tableIns.reload({
-        //             where: { //设定异步数据接口的额外参数，任意设
-        //                 content: content
-        //                 //…
-        //             }
-        //             , page: {
-        //                 curr: 1 //重新从第 1 页开始
-        //             }
-        //         });
-        //     })
-        // });
+        $(function () {
+            $("#search").click(function () {
+                var content = $('#content').val();
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        content: content
+                        //…
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            })
+        });
     });
 </script>
 </body>

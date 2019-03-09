@@ -178,6 +178,8 @@ public class     JobController {
             job.setCheckCollection(2);
             job.setCheckDeliver(2);
         }
+        Manager manager =managerService.findById(job.getManagerId());
+        model.addAttribute("manager",manager);
         model.addAttribute("job", job);
         return "worker/job";
     }

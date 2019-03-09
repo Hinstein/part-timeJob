@@ -136,7 +136,7 @@
                     <div class="layui-col-md4" th:each="evaluation:${evaluations}">
                         <div class="layui-card">
                             <div class="layui-card-header">
-                               <a th:href="@{/manager/evaluation/}+${evaluation.workerId}"> <strong>[[${evaluation.workerName}]]</strong></a>
+                               <a th:href="@{/manager/evaluation/}+${evaluation.id}"> <strong>[[${evaluation.workerName}]]</strong></a>
                             </div>
                             <div class="layui-card-body">
                                 <p><span>等级:</span>
