@@ -60,6 +60,16 @@ public class WorkerData {
     @Column
     private int workerId;
 
+    @Column
+    private int checkCollect;
+
+    public int getCheckCollect() {
+        return checkCollect;
+    }
+
+    public void setCheckCollect(int checkCollect) {
+        this.checkCollect = checkCollect;
+    }
 
     public int getWorkerId() {
         return workerId;

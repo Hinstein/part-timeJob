@@ -48,10 +48,16 @@ public class ManagerController {
     EvaluationToWorkerService evaluationToWorkerService;
 
     @Autowired
+    EvaluationToManagerService evaluationToManagerService;
+
+    @Autowired
     CollectService collectService;
 
     @Autowired
     BBSService bbsService;
+
+    @Autowired
+    CollectWorkerService collectWorkerService;
 
     /**
      * 招聘者注册
@@ -416,9 +422,12 @@ public class ManagerController {
 
     @GetMapping("/manager/workerInformation/{id}")
     public String workerInformations(@PathVariable("id") int id, Model model, HttpSession session) {
+        Manager manager =(Manager)session.getAttribute("manager");
         WorkerData workerData = workerDataService.findByWorkerId(id);
+        if(collectWorkerService.findByWorkerIdAndManagerId(id,manager.getId())!=null){
+            workerData.setCheckCollect(1);
+        }
         model.addAttribute("worker", workerData);
-        session.setAttribute("workerId", id);
         return "/manager/worker";
     }
 
@@ -558,5 +567,62 @@ public class ManagerController {
         result.put("code", 0);
         result.put("msg", "");
         return result;
+    }
+
+    @GetMapping("/manager/evaluated")
+    public String managerEvaluated(HttpSession session, Model model) {
+        Manager manager = (Manager) session.getAttribute("manager");
+        List<EvaluationToManager> evaluations = evaluationToManagerService.findByManagerId(manager.getId());
+        model.addAttribute("evaluations", evaluations);
+        return "/manager/managerEvaluate";
+    }
+
+    @GetMapping("/manager/receiveEvaluation/{id}")
+    public String receiveEvaluation(@PathVariable("id") int id, Model model) {
+        EvaluationToManager evaluation =  evaluationToManagerService.findById(id);
+        model.addAttribute("evaluation", evaluation);
+        return "/manager/receiveEvaluation";
+    }
+
+    @ResponseBody
+    @PostMapping(value = "/manager/workerData/save")
+    public String saveWorkerData(@RequestParam HashMap<String, String> map, HttpSession session) {
+        CollectWorker managerAndWorker = new CollectWorker();
+        int workerDataId = Integer.parseInt(map.get("id"));
+        int workerId = Integer.parseInt(map.get("workerId"));
+        Manager manager = (Manager)session.getAttribute("manager");
+        managerAndWorker.setWorkerId(workerId);
+        managerAndWorker.setManagerId(manager.getId());
+        managerAndWorker.setWorkerDataId(workerDataId);
+        collectWorkerService.save(managerAndWorker);
+        return "收藏成功";
+    }
+
+    /**
+     * 取消收藏
+     * @param map
+     * @param session
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(value = "/manager/workerData/cancelSave")
+    public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session,Model model) {
+        int workerId = Integer.parseInt(map.get("workerId"));
+        Manager manager = (Manager)session.getAttribute("manager");
+        collectWorkerService.deleteByWorkerIdAndManagerId(workerId,manager.getId());
+        return "取消收藏";
+    }
+
+    @GetMapping("/manager/collect")
+    public String workerCollect(Model model, HttpSession session) {
+        Manager manager = (Manager)session.getAttribute("manager");
+        List<CollectWorker> collectWorkers = collectWorkerService.findByManagerId(manager.getId());
+        List<WorkerData> workerData = new ArrayList<>();
+        for (CollectWorker w : collectWorkers) {
+            WorkerData workerData1 = workerDataService.findByWorkerId(w.getWorkerId());
+            workerData.add(workerData1);
+        }
+        model.addAttribute("workers", workerData);
+        return "/manager/collect";
     }
 }
