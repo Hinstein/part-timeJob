@@ -29,7 +29,6 @@ public class MainController {
      */
     @GetMapping("/workerLogin")
     public String workerLogin() {
-        System.out.println("controller");
         return "/homePage/workerLogin";
     }
 
