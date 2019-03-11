@@ -192,7 +192,7 @@
             if (layEvent === 'delete') { //删除
                 layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
                     $.ajax({
-                        url: 'audit/delete/' + data.id,
+                        url: '/admin/manager/audit/delete' + data.id,
                         method: "post",
                         dataType: "text",
                         success: function (msg) {
@@ -218,7 +218,7 @@
                     // layer.alert(JSON.stringify(data));
                     var ids = '';
                     for (var i = 0; i < data.length; i++) {
-                        if (i != (data.length - 1)) {
+                        if (i !== (data.length - 1)) {
                             ids += data[i].id + ",";
                         } else {
                             ids += data[i].id;
@@ -227,7 +227,7 @@
                     layer.confirm('删除id为' + ids + '账号么', function (index) {
                         for (var i = 0; i < data.length; i++) {
                             $.ajax({
-                                url: 'audit/delete/' + data[i].id,
+                                url: '/admin/manager/audit/delete' + data[i].id,
                                 method: "post",
                                 dataType: "text",
                                 success: function (msg) {

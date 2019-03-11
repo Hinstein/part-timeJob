@@ -114,30 +114,6 @@ public class WorkerController {
         return "不存在该用户";
     }
 
-    @RequestMapping("/login")
-    public String login(String name,String password) {
-
-        //1、获取subject
-        Subject subject = SecurityUtils.getSubject();
-
-        //2、封装用户数据
-        UsernamePasswordToken token = new UsernamePasswordToken(name,password);
-
-        //3、执行登录方法
-        try {
-            //交给Realm处理--->执行它的认证方法
-            subject.login(token);
-            //登录成功
-            return "redirect:/testThymeleaf";
-        }catch (UnknownAccountException e){
-            //登录失败:用户名不存在
-            return "用户名不存在";
-        }catch (IncorrectCredentialsException e){
-            //登录失败：密码错误
-            return "密码错误";
-        }
-    }
-
 
     /**
      * 来到兼职者更换密码页面
@@ -161,7 +137,7 @@ public class WorkerController {
         if (workerData.getName() == null) {
             return "redirect:/worker/resume";
         } else {
-            return "worker/index";
+            return "/worker/index";
         }
     }
 
@@ -177,7 +153,7 @@ public class WorkerController {
         Worker worker = (Worker) session.getAttribute("worker");
         WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
         model.addAttribute("worker", workerData);
-        return "worker/resume";
+        return "/worker/resume";
     }
 
     /**
@@ -248,7 +224,7 @@ public class WorkerController {
             jobs.add(job);
         }
         model.addAttribute("jobs", jobs);
-        return "worker/collect";
+        return "/worker/collect";
     }
 
     /**
@@ -268,7 +244,7 @@ public class WorkerController {
             jobs.add(job);
         }
         model.addAttribute("jobs", jobs);
-        return "worker/deliver";
+        return "/worker/deliver";
     }
 
     @GetMapping("/worker/employ")

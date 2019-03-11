@@ -159,7 +159,7 @@
     $(function () {
         $("#worker").click(function () {
             $.ajax({
-                url: 'editor/save',
+                url: '/worker/editor/save',
                 method: "post",
                 data: {
                     "oldPassword": $('#oldPassword').val(),

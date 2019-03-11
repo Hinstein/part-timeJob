@@ -211,16 +211,6 @@
                 , {field: 'hightPay', title: '最高工资'}
                 , {field: 'date', title: '发布时间', sort: true, width: '20%'}
                 , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}
-                // , {
-                //     field: 'audit', title: '是否收藏', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
-                // , {
-                //     field: 'audit', title: '是否投递', templet: function (d) {
-                //         return d.audit == '0' ? "<span class='layui-red'>未审核</span>" : "审核";
-                //     }
-                // }
             ]]
         });
         table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"

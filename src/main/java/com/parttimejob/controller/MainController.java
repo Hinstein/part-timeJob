@@ -27,43 +27,44 @@ public class MainController {
      * 兼职者登录页面
      * @return
      */
-    @GetMapping("workerLogin")
+    @GetMapping("/workerLogin")
     public String workerLogin() {
-        return "homePage/workerLogin";
+        System.out.println("controller");
+        return "/homePage/workerLogin";
     }
 
     /**
      * 招聘者登录页面
      * @return
      */
-    @GetMapping("managerLogin")
+    @GetMapping("/managerLogin")
     public String managerLogin() {
-        return "homePage/managerLogin";
+        return "/homePage/managerLogin";
     }
 
     /**
      * 兼职者注册页面
      * @return
      */
-    @GetMapping("workerRegister")
+    @GetMapping("/workerRegister")
     public String workerRegister() {
-        return "homePage/workerRegister";
+        return "/homePage/workerRegister";
     }
 
     /**
      * 招聘者注册页面
      * @return
      */
-    @GetMapping("managerRegister")
+    @GetMapping("/managerRegister")
     public String managerRegister() {
-        return "homePage/managerRegister";
+        return "/homePage/managerRegister";
     }
 
     /**
      * 招聘网主页
      * @return
      */
-    @GetMapping("index")
+    @GetMapping("/index")
     public String index(Model model) {
         Page<Job> jobs=jobService.getJobs(1,27);
         Page<Job> jobs1=jobService.finDescByTime(1,27);
@@ -71,15 +72,15 @@ public class MainController {
         model.addAttribute("jobs",jobs);
         model.addAttribute("jobs1",jobs1);
         model.addAttribute("jobs2",jobs2);
-        return "homePage/index";
+        return "/homePage/index";
     }
 
     /**
      * 后台登录页面
      * @return
      */
-    @GetMapping("admin/login")
+    @GetMapping("/admin/login")
     public String adminLogin() {
-        return "admin/login";
+        return "/admin/login";
     }
 }

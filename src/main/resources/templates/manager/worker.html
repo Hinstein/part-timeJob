@@ -181,7 +181,7 @@
         });
 
         $("#save").click(function () {
-            layer.confirm('是否收藏该职位么', function (index) {
+            layer.confirm('是否收藏该简历么', function (index) {
                 var id = $("#workerDataId").val();
                 var workerId = $("#workerId").val();
                 $.ajax({
@@ -203,7 +203,7 @@
             });
         });
         $("#cancelSave").click(function () {
-            layer.confirm('是否取消收藏该职位么', function (index) {
+            layer.confirm('是否取消收藏该简历么', function (index) {
                 var id = $("#workerDataId").val();
                 var workerId = $("#workerId").val();
                 $.ajax({

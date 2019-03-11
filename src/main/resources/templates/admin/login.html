@@ -41,10 +41,10 @@
                 success: function (msg) {
                     var success = "登录成功,正在跳转";
                     layer.msg(msg);
-                    if (success == msg) {
+                    if (success === msg) {
                         $('#adminForm')[0].reset();
                         setTimeout(function () {
-                            location.href = "index";
+                            location.href = "/index";
                         }, 2000);
                     }
                 },

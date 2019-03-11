@@ -59,7 +59,7 @@ public class AdminController {
      * @param session
      * @return
      */
-    @PostMapping("admin/login")
+    @PostMapping("/admin/login")
     @ResponseBody
     public String adminLogin(Admin admin, HttpSession session) {
         String username = admin.getUserName();
@@ -100,9 +100,9 @@ public class AdminController {
      *
      * @return
      */
-    @GetMapping("admin/index")
+    @GetMapping("/admin/index")
     public String adminIndex() {
-        return "admin/index";
+        return "/admin/index";
     }
 
     /**
@@ -110,9 +110,9 @@ public class AdminController {
      *
      * @return
      */
-    @GetMapping("admin/manager/audit")
+    @GetMapping("/admin/manager/audit")
     public String managerAudit() {
-        return "admin/manager/audit";
+        return "/admin/manager/audit";
     }
 
     /**
@@ -122,7 +122,7 @@ public class AdminController {
      * @return
      */
     @ResponseBody
-    @PostMapping("admin/manager/audit/delete/{id}")
+    @PostMapping("/admin/manager/audit/delete/{id}")
     public String deleteManager(@PathVariable("id") Integer id) {
         managerService.deleteManagerById(id);
         return "删除成功";
@@ -135,7 +135,7 @@ public class AdminController {
      * @return
      */
     @ResponseBody
-    @PostMapping("admin/manager/audit/pass/{id}")
+    @PostMapping("/admin/manager/audit/pass/{id}")
     public String passManager(@PathVariable("id") Integer id) {
         managerService.passManager(id);
         return "通过成功";
@@ -148,7 +148,7 @@ public class AdminController {
      * @return
      */
     @ResponseBody
-    @GetMapping("admin/manager/audit/data")
+    @GetMapping("/admin/manager/audit/data")
     public Map<String, Object> managerAudit(HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
@@ -169,7 +169,7 @@ public class AdminController {
      */
     @GetMapping("/admin/workers")
     public String allWorkers() {
-        return "admin/worker/all";
+        return "/admin/worker/all";
     }
 
     /**
@@ -200,7 +200,7 @@ public class AdminController {
      */
     @GetMapping("/admin/worker/information")
     public String workerInformation() {
-        return "admin/worker/information";
+        return "/admin/worker/information";
     }
 
     /**
@@ -231,7 +231,7 @@ public class AdminController {
      */
     @GetMapping("/admin/jobs")
     public String adminJobs() {
-        return "admin/job/all";
+        return "/admin/job/all";
     }
 
     /**
@@ -241,7 +241,7 @@ public class AdminController {
      */
     @GetMapping("/admin/manager/editor")
     public String managerEditor() {
-        return "admin/manager/all";
+        return "/admin/manager/all";
     }
 
     /**
@@ -278,7 +278,7 @@ public class AdminController {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("w", worker);
         model.addAttribute("worker", workerData);
-        return "admin/worker/editor";
+        return "/admin/worker/editor";
     }
 
     /**
@@ -324,7 +324,7 @@ public class AdminController {
     public String managerId(@PathVariable("id") int id, Model model) {
         Manager manager = managerService.findById(id);
         model.addAttribute("manager", manager);
-        return "admin/manager/editor";
+        return "/admin/manager/editor";
     }
 
     /**
@@ -351,7 +351,7 @@ public class AdminController {
     public String jobId(@PathVariable("id") int id, Model model) {
         Job job = jobService.findById(id);
         model.addAttribute("job", job);
-        return "admin/job/editor";
+        return "/admin/job/editor";
     }
 
     /**

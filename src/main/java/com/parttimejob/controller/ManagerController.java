@@ -130,9 +130,8 @@ public class ManagerController {
      * @return
      */
     @GetMapping("/manager/index")
-    public String managerIndex(HttpSession session) {
-
-        return "manager/index";
+    public String managerIndex() {
+        return "/manager/index";
     }
 
     /**
@@ -142,7 +141,7 @@ public class ManagerController {
      */
     @GetMapping("/manager/search")
     public String managerSearch() {
-        return "manager/search";
+        return "/manager/search";
     }
 
     /**
@@ -159,7 +158,7 @@ public class ManagerController {
         job.setId(jobId);
         session.setAttribute("jobId", jobId);
         model.addAttribute("job", job);
-        return "manager/job/deliver";
+        return "/manager/job/deliver";
     }
 
     /**
@@ -214,7 +213,7 @@ public class ManagerController {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
         session.setAttribute("workerId", id);
-        return "manager/worker";
+        return "/manager/worker";
     }
 
     /**
@@ -255,7 +254,7 @@ public class ManagerController {
      */
     @GetMapping("/manager/employ")
     public String managerEmployee() {
-        return "manager/employ";
+        return "/manager/employ";
     }
 
     /**
@@ -312,7 +311,7 @@ public class ManagerController {
         Employ employ = employService.findByWorkerIdAndManagerId(id, manager.getId());
         model.addAttribute("employ", employ);
         model.addAttribute("worker", workerData);
-        return "manager/workerDeliver";
+        return "/manager/workerDeliver";
     }
 
     /**
@@ -327,7 +326,7 @@ public class ManagerController {
         int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
         WorkerData workerData = workerDataService.findByWorkerId(workerId);
         model.addAttribute("worker", workerData);
-        return "manager/setTime";
+        return "/manager/setTime";
     }
 
     /**
@@ -341,7 +340,7 @@ public class ManagerController {
     public String jobId(@PathVariable("id") int id, Model model) {
         Job job = jobService.findById(id);
         model.addAttribute("job", job);
-        return "manager/job";
+        return "/manager/job";
     }
 
     /**
@@ -351,7 +350,7 @@ public class ManagerController {
      */
     @GetMapping("/manager/editor")
     public String managerEditor() {
-        return "manager/editor";
+        return "/manager/editor";
     }
 
     /**
@@ -432,7 +431,7 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/informationEditor")
-    public String managerId(HttpSession session, Model model) {
+    public String managerId() {
         return "/manager/informationEditor";
     }
 
@@ -447,7 +446,7 @@ public class ManagerController {
 
     @GetMapping("/manager/BBS/index")
     public String managerBBSIndex() {
-        return "manager/bbs/index";
+        return "/manager/bbs/index";
     }
 
     @ResponseBody
@@ -459,19 +458,19 @@ public class ManagerController {
 
     @GetMapping("/manager/BBS/publish")
     public String managerBBSPublish() {
-        return "manager/bbs/publish";
+        return "/manager/bbs/publish";
     }
 
     @GetMapping("/manager/BBS/editor")
     public String managerBBSEditor(){
-        return "manager/BBS/post";
+        return "/manager/BBS/post";
     }
 
     @GetMapping("/manager/BBS/editor/{id}")
     public String myBBSEditor(@PathVariable("id")int id,Model model){
         BBS bbs=bbsService.findById(id);
         model.addAttribute("bbs",bbs);
-        return "manager/BBS/editor";
+        return "/manager/BBS/editor";
     }
 
     @ResponseBody
@@ -483,7 +482,7 @@ public class ManagerController {
 
     @GetMapping("/manager/BBS/search")
     public String managerBBSSearch(){
-        return "manager/BBS/search";
+        return "/manager/BBS/search";
     }
 
     @ResponseBody

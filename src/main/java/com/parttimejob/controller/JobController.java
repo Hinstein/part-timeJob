@@ -99,7 +99,7 @@ public class     JobController {
     public String managerJobEditor(@PathVariable("id") Integer id, Model model) {
         Job job = jobService.findById(id);
         model.addAttribute("job", job);
-        return "manager/job/editor";
+        return "/manager/job/editor";
     }
 
     /**
@@ -181,7 +181,7 @@ public class     JobController {
         Manager manager =managerService.findById(job.getManagerId());
         model.addAttribute("manager",manager);
         model.addAttribute("job", job);
-        return "worker/job";
+        return "/worker/job";
     }
 
     /**
