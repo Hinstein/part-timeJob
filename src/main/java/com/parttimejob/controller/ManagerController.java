@@ -59,6 +59,9 @@ public class ManagerController {
     @Autowired
     CollectWorkerService collectWorkerService;
 
+    @Autowired
+    MessageService messageService;
+
     /**
      * 招聘者注册
      *
@@ -627,5 +630,13 @@ public class ManagerController {
         }
         model.addAttribute("workers", workerData);
         return "/manager/collect";
+    }
+
+    @GetMapping("/manager/message")
+    public String managerMessage(HttpSession session,Model model){
+        Manager manager = (Manager) session.getAttribute("manager");
+        List<Message> messages =messageService.findByManagerId(manager.getId());
+        model.addAttribute("messages",messages);
+        return "/manager/message";
     }
 }

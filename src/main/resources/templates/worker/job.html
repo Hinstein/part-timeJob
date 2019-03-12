@@ -139,26 +139,42 @@
                     <br>
                     浏览量：[[${job.views}]] 收藏量：[[${job.collection}]] 投递量：[[${job.deliver}]]
                     <hr>
-                    <div th:if="${job.checkEmploy!=1&&job.checkEmploy!=2}">
-                        <button th:if="${job.checkCollection}==0" class="layui-btn  layui-btn-radius" id="save">收藏
+                    <span th:if="${job.checkEmploy!=1&&job.checkEmploy!=2}">
+                        <button th:if="${job.checkCollection}==0" class="layui-btn  layui-btn-radius" id="save"
+                                style="margin-left: 10px; ">收藏
                         </button>
                         <button th:if="${job.checkCollection}==1" class="layui-btn layui-btn-warm layui-btn-radius"
-                                id="cancelSave">已收藏
+                                id="cancelSave" style="margin-left: 10px; ">已收藏
                         </button>
-                        <button th:if="${job.checkDeliver}==0" class="layui-btn  layui-btn-radius" id="deliver">投递简历
+                        <button th:if="${job.checkDeliver}==0" class="layui-btn  layui-btn-radius" id="deliver"
+                                style="margin-left: 10px; ">投递简历
                         </button>
                         <button th:if="${job.checkDeliver}==1" class="layui-btn layui-btn-warm layui-btn-radius"
-                                id="cancelDeliver">已投递
+                                id="cancelDeliver" style="margin-left: 10px; ">已投递
                         </button>
-                    </div>
+                    </span>
                     <button th:if="${job.checkEmploy}==1" class="layui-btn  layui-btn-radius"
-                            id="evaluation">评价招聘者
+                            id="evaluation" style="margin-left: 10px; ">评价招聘者
                     </button>
                     <button th:if="${job.checkEmploy}==2" class="layui-btn  layui-btn-radius layui-btn-warm"
-                            id="evaluated">您已评价过该招聘者
+                            id="evaluated" style="margin-left: 10px; ">您已评价过该招聘者
                     </button>
+                    <button class="layui-btn  layui-btn-radius" id="message" style="margin-left: 10px; ">给招聘者留言</button>
                     <input hidden="hidden" th:value="${job.id}" id="jobId" name="id">
                     <input hidden="hidden" th:value="${manager.id}" id="managerId" name="managerId">
+                </div>
+            </div>
+            <div class="layui-card" id="test" hidden="hidden">
+                <div class="layui-card-header"><h2>给招聘者留言</h2></div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item layui-form-text">
+                        <textarea class="layui-textarea" placeholder="把你想说的都写上去吧!" id="content"></textarea>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-right">
+                            <button class="layui-btn" id="send" type="button">走你！</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -258,7 +274,38 @@
     });
     $("#evaluated").click(function () {
         layer.msg("您以评价过该招聘者");
-    })
+    });
+    $("#message").click(function () {
+            $("#test").show();
+            layer.close(layer.index);
+    });
+    $("#send").click(function () {
+        layer.confirm('是否给招聘者留言', function (index) {
+        var managerId = $("#managerId").val();
+        var jobId = $("#jobId").val();
+        var content =$("#content").val();
+        $.ajax({
+            url: "/worker/sendMessage" ,
+            method: "post",
+            data: {
+                managerId: managerId,
+                jobId: jobId,
+                content:content
+            },
+            dataType: "text",
+            success: function (msg) {
+                layer.msg(msg);
+                setTimeout(function () {
+                    location.href = "/worker/job/" + jobId;
+                },2000);
+
+            },
+            error: function () {
+                layer.msg("网络错误，登录失败");
+            }
+        });
+        })
+    });
 </script>
 </body>
 </html>

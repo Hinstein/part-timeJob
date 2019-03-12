@@ -60,6 +60,9 @@ public class WorkerController {
     @Autowired
     EvaluationToManagerService evaluationToManagerService;
 
+    @Autowired
+    MessageService messageService;
+
     /**
      * 兼职者注册
      *
@@ -216,7 +219,6 @@ public class WorkerController {
     @GetMapping("/worker/collect")
     public String workerCollect(Model model, HttpSession session) {
         Worker worker = (Worker) session.getAttribute("worker");
-        System.out.println(worker.getId());
         List<Collect> workerAndJobs = collectService.findByWorkerId(worker.getId());
         List<Job> jobs = new ArrayList<>();
         for (Collect w : workerAndJobs) {
@@ -440,6 +442,19 @@ public class WorkerController {
         EvaluationToWorker evaluation = evaluationToWorkerService.findById(id);
         model.addAttribute("evaluation", evaluation);
         return "/worker/receiveEvaluation";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/sendMessage")
+    public String saveMessage(Message message,HttpSession session){
+        Worker worker =(Worker)session.getAttribute("worker");
+        WorkerData workerData= workerDataService.findByWorkerId(worker.getId());
+        message.setWorkerId(worker.getId());
+        message.setWorkerName(workerData.getName());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        message.setDate(df.format(new Date()));
+        messageService.save(message);
+        return "留言成功！";
     }
 }
 

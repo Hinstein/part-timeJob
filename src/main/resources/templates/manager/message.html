@@ -8,10 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>搜索职位</title>
+    <title>招聘者页面</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
-
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 </head>
 <body>
@@ -23,10 +22,14 @@
                     兼职网
                 </a>
             </li>
-
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a th:href="@{/manager/index}" title="首页">
                     首页
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/manager/BBS/index}" title="BBS论坛">
+                    BBS论坛
                 </a>
             </li>
         </ul>
@@ -145,106 +148,33 @@
             </div>
         </div>
         <div class="layui-col-md10">
-            <div class="layui-card">
-                <div class="layui-card-header">&nbsp;招聘者资料修改</div>
-                <div class="layui-card-body">
-                    <form class="layui-form">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">用户名</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="userName" required lay-verify="required|userName"
-                                           autocomplete="off" class="layui-input"
-                                           th:value="${session.manager.userName}">
-                                    <input name="id" hidden="hidden" th:value="${session.manager.id}">
-                                </div>
+            <div class="layui-card" th:if="${messages.size()==0}">
+                <div class="layui-card-header">
+                    你还没有留言过哦！
+                </div>
+            </div>
+            <div class="layui-row">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md4" th:each="message:${messages}">
+                        <div class="layui-card">
+                            <div class="layui-card-header">
+                                <a th:href="@{/manager/workerInformation/}+${message.workerId}">
+                                    <strong>[[${message.workerName}]]</strong></a>
                             </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">姓名</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="name" required lay-verify="required|name"
-                                           placeholder="姓名"
-                                           autocomplete="off" class="layui-input" th:value="${session.manager.name}">
-                                </div>
+                            <div class="layui-card-body">
+                                <p> 评价时间:
+                                    <span th:text="${message.date}"></span>
+                                </p>
+                                留言内容:<span th:text="${message.content}"></span>
                             </div>
                         </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">邮箱</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="email" required lay-verify="required|email"
-                                           placeholder="请输入邮箱"
-                                           autocomplete="off" class="layui-input" th:value="${session.manager.email}">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">电话号码</label>
-                                <div class="layui-input-inline">
-                                    <input type="text" name="phoneNumber" required lay-verify="required|phone"
-                                           placeholder="请输入电话号码" autocomplete="off" class="layui-input"
-                                           th:value="${session.manager.phoneNumber}">
-                                </div>
-                            </div>
-                        </div>
-                        <input th:value="${session.manager.id}" hidden="hidden" name="id">
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="go"
-                                >修改
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script>
-    layui.use('form', function () {
-        var form = layui.form;
-        form.verify({
-            userName: function (value, item) { //value：表单的值、item：表单的DOM对象
-                if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
-                    return '用户名不能有特殊字符';
-                }
-                if (/(^\_)|(\__)|(\_+$)/.test(value)) {
-                    return '用户名首尾不能出现下划线\'_\'';
-                }
-                if (/^\d+\d+\d$/.test(value)) {
-                    return '用户名不能全为数字';
-                }
-            }
-            , password: [
-                /^[\S]{6,12}$/
-                , '密码必须6到12位，且不能出现空格'
-            ], name: [
-                /^([\u4e00-\u9fa5]){2,7}$/
-                , '姓名只能是中文，长度为2-7位'
-            ]
-        });
-        form.on('submit(go)', function (data) {
-            $.ajax({
-                url: '/manager/information/save',
-                method: "post",
-                data: data.field,
-                dataType: "text",
-                success: function (msg) {
-                    layer.msg(msg);
-                    setTimeout(function () {
-                        location.href = "/manager/informationEditor";
-                    }, 1000)
-                },
-                error: function () {
-                    layer.msg("网络错误，登录失败");
-                }
-            });
-            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-        });
-    });
-</script>
 </body>
 </html>
