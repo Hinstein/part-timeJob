@@ -20,19 +20,19 @@ public class CollectWorkerService {
     @Autowired
     CollectWorkerRepository collectWorkerRepository;
 
-    public CollectWorker findByWorkerIdAndManagerId(int workerId,int managerId){
-        return collectWorkerRepository.findByWorkerIdAndManagerId(workerId,managerId);
+    public CollectWorker findByWorkerIdAndManagerId(int workerId, int managerId) {
+        return collectWorkerRepository.findByWorkerIdAndManagerId(workerId, managerId);
     }
 
-    public CollectWorker save(CollectWorker collectWorker){
+    public CollectWorker save(CollectWorker collectWorker) {
         return collectWorkerRepository.save(collectWorker);
     }
 
-    public void deleteByWorkerIdAndManagerId(int workerId,int managerId){
-        collectWorkerRepository.deleteByWorkerIdAndManagerId(workerId,managerId);
+    public void deleteByWorkerIdAndManagerId(int workerId, int managerId) {
+        collectWorkerRepository.deleteByWorkerIdAndManagerId(workerId, managerId);
     }
 
-    public List<CollectWorker> findByManagerId(int managerId){
+    public List<CollectWorker> findByManagerId(int managerId) {
         return collectWorkerRepository.findByManagerId(managerId);
     }
 }

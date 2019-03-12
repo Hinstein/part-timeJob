@@ -22,25 +22,25 @@ public class BBSService {
     @Autowired
     BBSRepository bbsRepository;
 
-    public void BBSSave(BBS bbs){
+    public void BBSSave(BBS bbs) {
         bbsRepository.save(bbs);
     }
 
 
     @Transactional
-    public Page<BBS> findByManagerId(int managerId,int pageNo, int pageSize) {
+    public Page<BBS> findByManagerId(int managerId, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return bbsRepository.findByManagerId(managerId,pageable);
+        return bbsRepository.findByManagerId(managerId, pageable);
     }
 
-    public BBS findById(int id){
+    public BBS findById(int id) {
         return bbsRepository.findById(id);
     }
 
-    public void editorSave(BBS bbs){
+    public void editorSave(BBS bbs) {
         bbsRepository.editorSave(bbs);
     }
 
@@ -53,34 +53,32 @@ public class BBSService {
         return bbsRepository.findAll(pageable);
     }
 
-    public void deleteById(int id){
+    public void deleteById(int id) {
         bbsRepository.deleteById(id);
     }
 
     @Transactional
-    public Page<BBS> findByWorkerId(int managerId,int pageNo, int pageSize) {
+    public Page<BBS> findByWorkerId(int managerId, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return bbsRepository.findByWorkerId(managerId,pageable);
+        return bbsRepository.findByWorkerId(managerId, pageable);
     }
 
-    public void views(int id){
+    public void views(int id) {
         bbsRepository.views(id);
     }
 
-    public List<BBS> findByWorkerId(int id)
-    {
+    public List<BBS> findByWorkerId(int id) {
         return bbsRepository.findByWorkerId(id);
     }
 
-    public List<BBS> findByManagerId(int id)
-    {
+    public List<BBS> findByManagerId(int id) {
         return bbsRepository.findByManagerId(id);
     }
 
-    public List<BBS> findAll(){
+    public List<BBS> findAll() {
         return bbsRepository.findAll();
     }
 

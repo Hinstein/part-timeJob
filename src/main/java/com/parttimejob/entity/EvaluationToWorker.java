@@ -36,7 +36,7 @@ public class EvaluationToWorker {
     private String content;
 
     @Column
-    private  String date;
+    private String date;
 
     public String getDate() {
         return date;

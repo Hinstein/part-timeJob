@@ -12,13 +12,12 @@ import java.util.List;
  * @CreateTime: 2019-03-03 16:47
  * @Description:
  */
-public interface EvaluationToWorkerRepository extends JpaRepository<EvaluationToWorker,Integer>
-{
+public interface EvaluationToWorkerRepository extends JpaRepository<EvaluationToWorker, Integer> {
     List<EvaluationToWorker> findByManagerId(int id);
 
     List<EvaluationToWorker> findByWorkerId(int id);
 
-    EvaluationToWorker findByManagerIdAndWorkerId(int managerId,int workerId);
+    EvaluationToWorker findByManagerIdAndWorkerId(int managerId, int workerId);
 
     EvaluationToWorker findById(int id);
 }

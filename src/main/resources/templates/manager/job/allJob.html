@@ -81,48 +81,60 @@
                         <h2> [[${session.manager.name}]]</h2>
                     </div>
                     <hr>
-                    <div>
-                        <a class="layui-btn layui-btn-primary  " th:href="@{/manager/publish}">
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/manager/publish}">
                             发布兼职
                         </a>
                     </div>
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary" th:href="@{/manager/editor}">
-                            安全设置
-                        </a>
-                    </div>
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary" th:href="@{/manager/informationEditor}">
+                    <hr>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/manager/informationEditor}">
                             资料管理
                         </a>
                     </div>
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary " th:href="@{/manager/search/worker}">
+                    <div style="text-align: center">
+                        <a th:href="@{/manager/editor}">
+                            安全设置
+                        </a>
+                    </div>
+                    <hr>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/manager/search/worker}">
                             搜索简历
                         </a>
                     </div>
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary" th:href="@{/manager/search}">
+                    <div style="text-align: center">
+                        <a th:href="@{/manager/collect}">
+                            我收藏的简历
+                        </a>
+                    </div>
+                    <hr>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/manager/search}">
                             搜索职位
                         </a>
                     </div>
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary " th:href="@{/manager/allJobs}">
+                    <div style="text-align: center">
+                        <a th:href="@{/manager/allJobs}">
                             我发布的职位
                         </a>
                     </div>
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary " th:href="@{/manager/employ}">
+                    <hr>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/manager/employ}">
                             我录用的员工
                         </a>
                     </div>
-
-                    <div style="padding-top: 5px">
-                        <a class="layui-btn layui-btn-primary " th:href="@{/manager/evaluate}">
+                    <div style="text-align: center">
+                        <a th:href="@{/manager/evaluate}">
                             我给予的评价
                         </a>
                     </div>
-
+                    <div style="text-align: center">
+                        <a th:href="@{/manager/evaluated}">
+                            我收到的评价
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

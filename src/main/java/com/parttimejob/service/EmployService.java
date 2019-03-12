@@ -103,7 +103,7 @@ public class EmployService {
         employRepository.evaluated(workerId, managerId);
     }
 
-    public Employ findByWorkerIdAndJobId(int workerId,int jobId){
-        return employRepository.findByWorkerIdAndManagerId(workerId,jobId);
+    public Employ findByWorkerIdAndJobId(int workerId, int jobId) {
+        return employRepository.findByWorkerIdAndManagerId(workerId, jobId);
     }
 }

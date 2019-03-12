@@ -24,6 +24,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 //        registry.addViewController("/").setViewName("/index");
 //    }
 //
+
     /**
      * 注册拦截器
      *

@@ -108,12 +108,12 @@
                             收藏的职位
                         </a></div>
                     <div style="padding-top: 5px;text-align: center">
-                        <a  th:href="@{/worker/deliver}">
+                        <a th:href="@{/worker/deliver}">
                             投递的职位
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
-                        <a  th:href="@{/worker/employ}">
+                        <a th:href="@{/worker/employ}">
                             被录用的职位
                         </a>
                     </div>
@@ -124,7 +124,7 @@
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
-                        <a  th:href="@{/worker/evaluated}">
+                        <a th:href="@{/worker/evaluated}">
                             我收到的评价
                         </a>
                     </div>
@@ -139,7 +139,7 @@
                     <br>
                     浏览量：[[${job.views}]] 收藏量：[[${job.collection}]] 投递量：[[${job.deliver}]]
                     <hr>
-                    <div th:if="${job.checkEmploy}!=1">
+                    <div th:if="${job.checkEmploy!=1&&job.checkEmploy!=2}">
                         <button th:if="${job.checkCollection}==0" class="layui-btn  layui-btn-radius" id="save">收藏
                         </button>
                         <button th:if="${job.checkCollection}==1" class="layui-btn layui-btn-warm layui-btn-radius"
@@ -153,6 +153,9 @@
                     </div>
                     <button th:if="${job.checkEmploy}==1" class="layui-btn  layui-btn-radius"
                             id="evaluation">评价招聘者
+                    </button>
+                    <button th:if="${job.checkEmploy}==2" class="layui-btn  layui-btn-radius layui-btn-warm"
+                            id="evaluated">您已评价过该招聘者
                     </button>
                     <input hidden="hidden" th:value="${job.id}" id="jobId" name="id">
                     <input hidden="hidden" th:value="${manager.id}" id="managerId" name="managerId">
@@ -252,6 +255,9 @@
             params.id = id;
             location.href = "/worker/evaluationToManager/" + id;
         })
+    });
+    $("#evaluated").click(function () {
+        layer.msg("您以评价过该招聘者");
     })
 </script>
 </body>

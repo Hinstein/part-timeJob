@@ -15,9 +15,9 @@ import java.util.List;
  * @CreateTime: 2019-03-09 15:58
  * @Description:
  */
-public interface CollectWorkerRepository extends JpaRepository<CollectWorker,Integer> {
+public interface CollectWorkerRepository extends JpaRepository<CollectWorker, Integer> {
 
-    CollectWorker findByWorkerIdAndManagerId(int workerId,int managerId);
+    CollectWorker findByWorkerIdAndManagerId(int workerId, int managerId);
 
     @Transactional
     @Modifying

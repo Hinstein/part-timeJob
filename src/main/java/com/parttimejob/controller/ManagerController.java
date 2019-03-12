@@ -101,8 +101,8 @@ public class ManagerController {
                 List<Employ> employs = employService.findByManagerId(manager1.getId());
                 List<Job> jobs = jobService.findByManagerId(manager1.getId());
                 List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByManagerId(manager1.getId());
-                List<BBS> bbs=bbsService.findByManagerId(manager1.getId());
-                session.setAttribute("bbs",bbs.size());
+                List<BBS> bbs = bbsService.findByManagerId(manager1.getId());
+                session.setAttribute("bbs", bbs.size());
                 session.setAttribute("employs", employs.size());
                 session.setAttribute("jobs", jobs.size());
                 session.setAttribute("evaluations", evaluations.size());
@@ -286,7 +286,7 @@ public class ManagerController {
             List<WorkerData> workers1 = workers.subList(pageStart, pageEnd);
             JSONArray json = JSONArray.fromObject(workers1);
             result.put("data", json);
-        } else if(size>0) {
+        } else if (size > 0) {
             JSONArray json = JSONArray.fromObject(workers);
             result.put("data", json);
         }
@@ -390,13 +390,17 @@ public class ManagerController {
     @PostMapping("/manager/worker/evaluate/save")
     public String evaluateSave(EvaluationToWorker evaluation, HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
-        evaluation.setManagerId(manager.getId());
-        evaluation.setManagerName(manager.getName());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        evaluation.setDate(df.format(new Date()));
-        employService.evaluated(evaluation.getWorkerId(), manager.getId());
-        evaluationToWorkerService.evaluationToWorkerSave(evaluation);
-        return "评价成功！";
+        if (evaluationToWorkerService.findByManagerIdAndWorkerId(manager.getId(), evaluation.getWorkerId()) != null) {
+            return "您以评价过该兼职者！";
+        } else {
+            evaluation.setManagerId(manager.getId());
+            evaluation.setManagerName(manager.getName());
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            evaluation.setDate(df.format(new Date()));
+            employService.evaluated(evaluation.getWorkerId(), manager.getId());
+            evaluationToWorkerService.evaluationToWorkerSave(evaluation);
+            return "评价成功！";
+        }
     }
 
     @GetMapping("/manager/evaluate")
@@ -421,9 +425,10 @@ public class ManagerController {
 
     @GetMapping("/manager/workerInformation/{id}")
     public String workerInformations(@PathVariable("id") int id, Model model, HttpSession session) {
-        Manager manager =(Manager)session.getAttribute("manager");
+        Manager manager = (Manager) session.getAttribute("manager");
         WorkerData workerData = workerDataService.findByWorkerId(id);
-        if(collectWorkerService.findByWorkerIdAndManagerId(id,manager.getId())!=null){
+        session.setAttribute("workerId",workerData.getWorkerId());
+        if (collectWorkerService.findByWorkerIdAndManagerId(id, manager.getId()) != null) {
             workerData.setCheckCollect(1);
         }
         model.addAttribute("worker", workerData);
@@ -451,7 +456,7 @@ public class ManagerController {
 
     @ResponseBody
     @GetMapping("/manager/BBS/delete/{id}")
-    public String deleteBBS(@PathVariable("id")int id){
+    public String deleteBBS(@PathVariable("id") int id) {
         bbsService.deleteById(id);
         return "删除成功！";
     }
@@ -462,33 +467,33 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/BBS/editor")
-    public String managerBBSEditor(){
+    public String managerBBSEditor() {
         return "/manager/BBS/post";
     }
 
     @GetMapping("/manager/BBS/editor/{id}")
-    public String myBBSEditor(@PathVariable("id")int id,Model model){
-        BBS bbs=bbsService.findById(id);
-        model.addAttribute("bbs",bbs);
+    public String myBBSEditor(@PathVariable("id") int id, Model model) {
+        BBS bbs = bbsService.findById(id);
+        model.addAttribute("bbs", bbs);
         return "/manager/BBS/editor";
     }
 
     @ResponseBody
     @PostMapping("/manager/BBS/editor/save")
-    public String manageBBSEditorSave(BBS bbs){
+    public String manageBBSEditorSave(BBS bbs) {
         bbsService.editorSave(bbs);
         return "修改成功！";
     }
 
     @GetMapping("/manager/BBS/search")
-    public String managerBBSSearch(){
+    public String managerBBSSearch() {
         return "/manager/BBS/search";
     }
 
     @ResponseBody
     @PostMapping("/manager/BBS/publish/save")
-    public String manageBBSPublishSave(BBS bbs,HttpSession session){
-        Manager manager=(Manager)session.getAttribute("manager");
+    public String manageBBSPublishSave(BBS bbs, HttpSession session) {
+        Manager manager = (Manager) session.getAttribute("manager");
         bbs.setStatus(2);
         bbs.setManagerId(manager.getId());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -499,11 +504,11 @@ public class ManagerController {
 
     @ResponseBody
     @GetMapping("/manager/BBS/article")
-    public  Map<String, Object> managerBBSArticle(HttpSession session,HttpServletRequest request){
-        Manager manager=(Manager)session.getAttribute("manager");
+    public Map<String, Object> managerBBSArticle(HttpSession session, HttpServletRequest request) {
+        Manager manager = (Manager) session.getAttribute("manager");
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
-        Page<BBS> bbs = bbsService.findByManagerId(manager.getId(),pageNumber, pageSize);
+        Page<BBS> bbs = bbsService.findByManagerId(manager.getId(), pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
@@ -515,7 +520,7 @@ public class ManagerController {
 
     @ResponseBody
     @GetMapping("/manager/BBS/findAll")
-    public  Map<String, Object> managerBBSArticleFindAll(HttpSession session,HttpServletRequest request){
+    public Map<String, Object> managerBBSArticleFindAll(HttpSession session, HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Page<BBS> bbs = bbsService.findAll(pageNumber, pageSize);
@@ -529,17 +534,15 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/BBS/look/{id}")
-    public String look(@PathVariable("id")int id,Model model){
-        BBS bbs=bbsService.findById(id);
-        if(bbs.getStatus()==1)
-        {
-            model.addAttribute("status","招聘者");
-        }
-        else if(bbs.getStatus()==2){
-            model.addAttribute("status","兼职者");
+    public String look(@PathVariable("id") int id, Model model) {
+        BBS bbs = bbsService.findById(id);
+        if (bbs.getStatus() == 1) {
+            model.addAttribute("status", "招聘者");
+        } else if (bbs.getStatus() == 2) {
+            model.addAttribute("status", "兼职者");
         }
         bbsService.views(id);
-        model.addAttribute("bbs",bbs);
+        model.addAttribute("bbs", bbs);
         return "manager/BBS/look";
     }
 
@@ -578,7 +581,7 @@ public class ManagerController {
 
     @GetMapping("/manager/receiveEvaluation/{id}")
     public String receiveEvaluation(@PathVariable("id") int id, Model model) {
-        EvaluationToManager evaluation =  evaluationToManagerService.findById(id);
+        EvaluationToManager evaluation = evaluationToManagerService.findById(id);
         model.addAttribute("evaluation", evaluation);
         return "/manager/receiveEvaluation";
     }
@@ -589,7 +592,7 @@ public class ManagerController {
         CollectWorker managerAndWorker = new CollectWorker();
         int workerDataId = Integer.parseInt(map.get("id"));
         int workerId = Integer.parseInt(map.get("workerId"));
-        Manager manager = (Manager)session.getAttribute("manager");
+        Manager manager = (Manager) session.getAttribute("manager");
         managerAndWorker.setWorkerId(workerId);
         managerAndWorker.setManagerId(manager.getId());
         managerAndWorker.setWorkerDataId(workerDataId);
@@ -599,22 +602,23 @@ public class ManagerController {
 
     /**
      * 取消收藏
+     *
      * @param map
      * @param session
      * @return
      */
     @ResponseBody
     @PostMapping(value = "/manager/workerData/cancelSave")
-    public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session,Model model) {
+    public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session, Model model) {
         int workerId = Integer.parseInt(map.get("workerId"));
-        Manager manager = (Manager)session.getAttribute("manager");
-        collectWorkerService.deleteByWorkerIdAndManagerId(workerId,manager.getId());
+        Manager manager = (Manager) session.getAttribute("manager");
+        collectWorkerService.deleteByWorkerIdAndManagerId(workerId, manager.getId());
         return "取消收藏";
     }
 
     @GetMapping("/manager/collect")
     public String workerCollect(Model model, HttpSession session) {
-        Manager manager = (Manager)session.getAttribute("manager");
+        Manager manager = (Manager) session.getAttribute("manager");
         List<CollectWorker> collectWorkers = collectWorkerService.findByManagerId(manager.getId());
         List<WorkerData> workerData = new ArrayList<>();
         for (CollectWorker w : collectWorkers) {

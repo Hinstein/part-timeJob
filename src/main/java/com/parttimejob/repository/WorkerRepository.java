@@ -22,6 +22,7 @@ import java.util.List;
 public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     /**
      * 通过用户名找到找到兼职者
+     *
      * @param userName
      * @return Worker
      */
@@ -29,6 +30,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
 
     /**
      * 通过id找到兼职者
+     *
      * @param id
      * @return
      */
@@ -36,6 +38,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
 
     /**
      * 分页找到所有兼职者
+     *
      * @param pageable
      * @return
      */
@@ -43,7 +46,8 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     Page<Worker> findAll(Pageable pageable);
 
     /**
-     *通过id删除兼职者信息
+     * 通过id删除兼职者信息
+     *
      * @param id
      */
     @Transactional

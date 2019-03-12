@@ -71,7 +71,7 @@ public class AdminController {
                 session.setAttribute("adminUserName", admin1.getUserName());
                 List<Worker> workers = workerService.findAll();
                 List<Manager> managers = managerService.findAll();
-                List<Job> jobs=jobService.findAll();
+                List<Job> jobs = jobService.findAll();
                 List<BBS> bbs = bbsService.findAll();
                 session.setAttribute("workers", workers.size());
                 session.setAttribute("managers", managers.size());
@@ -85,14 +85,14 @@ public class AdminController {
     }
 
     @GetMapping("/admin/exit")
-    public String adminExit(HttpSession session){
+    public String adminExit(HttpSession session) {
         session.removeAttribute("username");
         session.removeAttribute("adminUserName");
         session.removeAttribute("workers");
         session.removeAttribute("managers");
         session.removeAttribute("bbs");
         session.removeAttribute("jobs");
-       return "redirect:/index";
+        return "redirect:/index";
     }
 
     /**
@@ -368,7 +368,7 @@ public class AdminController {
     }
 
     @GetMapping("/admin/BBS/index")
-    public String bbsIndex(){
+    public String bbsIndex() {
         return "/admin/BBS/index";
     }
 
@@ -395,15 +395,15 @@ public class AdminController {
     }
 
     @GetMapping("/admin/BBS/editor/{id}")
-    public String bbsEditor(@PathVariable("id")int id,Model model){
-        BBS bbs=bbsService.findById(id);
-        model.addAttribute("bbs",bbs);
+    public String bbsEditor(@PathVariable("id") int id, Model model) {
+        BBS bbs = bbsService.findById(id);
+        model.addAttribute("bbs", bbs);
         return "/admin/BBS/editor";
     }
 
     @ResponseBody
     @PostMapping("/admin/BBS/editor/save")
-    public String bbsEditorSave(BBS bbs){
+    public String bbsEditorSave(BBS bbs) {
         bbsService.editorSave(bbs);
         return "修改成功！";
     }

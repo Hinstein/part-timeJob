@@ -37,6 +37,7 @@ public class JobService {
 
     /**
      * 保存该工作
+     *
      * @param job
      */
     public void jobSave(Job job) {
@@ -45,6 +46,7 @@ public class JobService {
 
     /**
      * 通过id找到工作
+     *
      * @param id
      * @return
      */
@@ -54,6 +56,7 @@ public class JobService {
 
     /**
      * 更新该工作信息
+     *
      * @param job
      */
     public void updateEditor(Job job) {
@@ -62,6 +65,7 @@ public class JobService {
 
     /**
      * 通过id删除该工作
+     *
      * @param id
      */
     public void deleteById(int id) {
@@ -73,6 +77,7 @@ public class JobService {
 
     /**
      * 通过招聘者的id找到所有的工作
+     *
      * @param id
      * @return
      */
@@ -82,6 +87,7 @@ public class JobService {
 
     /**
      * 分页得到job的模糊查询
+     *
      * @param content
      * @param pageNo
      * @param pageSize
@@ -98,6 +104,7 @@ public class JobService {
 
     /**
      * 分页得到所有工作
+     *
      * @param pageNo
      * @param pageSize
      * @return
@@ -114,7 +121,7 @@ public class JobService {
     /**
      * 通过招聘者id删除工作
      */
-    public void deleteJobByManagerId(int managerId){
+    public void deleteJobByManagerId(int managerId) {
         jobRepository.deleteJobByManagerId(managerId);
     }
 
@@ -123,44 +130,46 @@ public class JobService {
             pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return jobRepository.findByManagerId(id,pageable);
+        return jobRepository.findByManagerId(id, pageable);
     }
 
     @Transactional
-    public Page<Job> finDescByTime( int pageNo, int pageSize) {
+    public Page<Job> finDescByTime(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
         }
         Sort sort = new Sort(Sort.Direction.DESC, "date");
-        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return jobRepository.findAll(pageable);
     }
 
     @Transactional
-    public Page<Job> finDescByViews( int pageNo, int pageSize) {
+    public Page<Job> finDescByViews(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
         }
         Sort sort = new Sort(Sort.Direction.DESC, "views");
-        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return jobRepository.findAll(pageable);
     }
 
-    public void collectionSave(int id){
-         jobRepository.collectionSave(id);
+    public void collectionSave(int id) {
+        jobRepository.collectionSave(id);
     }
 
-    public void deliverSave(int id){
+    public void deliverSave(int id) {
         jobRepository.deliverSave(id);
     }
 
-    public void collectionCancel(int id){
+    public void collectionCancel(int id) {
         jobRepository.collectionCancel(id);
     }
 
-    public void deliverCancel(int id){
+    public void deliverCancel(int id) {
         jobRepository.deliverCancel(id);
     }
 
-    public List<Job> findAll(){return jobRepository.findAll();}
+    public List<Job> findAll() {
+        return jobRepository.findAll();
+    }
 }

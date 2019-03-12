@@ -27,7 +27,7 @@
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>    兼职者管理</cite>
+                        <cite> 兼职者管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/workers}">兼职账号</a></dd>
@@ -36,7 +36,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>    招聘者管理</cite>
+                        <cite> 招聘者管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd class="layui-this"><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
@@ -45,7 +45,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>    职位管理</cite>
+                        <cite> 职位管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
@@ -53,7 +53,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>     BBS论坛管理</cite>
+                        <cite> BBS论坛管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
@@ -62,7 +62,7 @@
 
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>     [[${session.adminUserName}]]</cite>
+                        <cite> [[${session.adminUserName}]]</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd layadmin-event="logout" style="text-align: center;"><a th:href="@{/admin/exit}">退出</a></dd>
@@ -90,7 +90,7 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a class="" href="javascript:;">兼职者管理</a>
                         <dl class="layui-nav-child">
-                            <dd  class="layui-this"><a th:href="@{/admin/workers}">兼职账号</a></dd>
+                            <dd class="layui-this"><a th:href="@{/admin/workers}">兼职账号</a></dd>
                             <dd><a th:href="@{/admin/worker/information}">兼职者资料</a></dd>
                         </dl>
                     </li>
@@ -128,24 +128,26 @@
         </div>
 
         <div class="layui-body" style="background-color: #F2F2F2;">
-        <div class="layui-fluid" style=" padding: 15px;">
-            <div class="layui-col-md12">
-                <div class="layui-card">
-                    <div class="layui-card-header">&nbsp;兼职账号管理</div>
-                    <div class="layui-card-body">
-                        <table class="layui-hide" id="demo" lay-filter="test"></table>
-                        <script type="text/html" id="toolbarDemo">
-                            <div class="layui-btn-container">
-                                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除
-                                </button>
-                            </div>
-                        </script>
-                        <script type="text/html" id="action">
-                            <div class="layui-btn-container">
-                                <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
-                                <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除</button>
-                            </div>
-                        </script>
+            <div class="layui-fluid" style=" padding: 15px;">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-header">&nbsp;兼职账号管理</div>
+                        <div class="layui-card-body">
+                            <table class="layui-hide" id="demo" lay-filter="test"></table>
+                            <script type="text/html" id="toolbarDemo">
+                                <div class="layui-btn-container">
+                                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除
+                                    </button>
+                                </div>
+                            </script>
+                            <script type="text/html" id="action">
+                                <div class="layui-btn-container">
+                                    <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除
+                                    </button>
+                                </div>
+                            </script>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -154,7 +156,6 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-
 <script th:inline="none">
     layui.use(['table'], function () {
         var table = layui.table;

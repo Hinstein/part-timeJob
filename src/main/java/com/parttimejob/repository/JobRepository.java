@@ -21,6 +21,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /**
      * 通过招聘者找到该招聘者的所有工作
+     *
      * @param id
      * @return
      */
@@ -30,6 +31,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /**
      * 通过工作id找到该工作
+     *
      * @param id
      * @return
      */
@@ -37,6 +39,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /**
      * 通过工作实体类更新该工作
+     *
      * @param job
      * @return
      */
@@ -51,6 +54,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /**
      * 通过工作的招聘信息找到相应的工作
+     *
      * @param content
      * @param pageable
      * @return
@@ -60,6 +64,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /**
      * 分页获得所有工作
+     *
      * @param pageable
      * @return
      */
@@ -68,6 +73,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
 
     /**
      * 通过招聘者id删除所有工作
+     *
      * @param id
      */
     @Transactional
@@ -75,7 +81,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Query(value = "delete from Job a where a.managerId =?1")
     void deleteJobByManagerId(int id);
 
-    Page<Job> findByManagerId(int id,Pageable pageable);
+    Page<Job> findByManagerId(int id, Pageable pageable);
 
     @Transactional
     @Modifying

@@ -1,52 +1,250 @@
-.logo_box{ padding: 20px 20px; padding-right: 0;padding-left: 0;}
-.logo_box .left{ float: left;}
-.logo_box .right{ float: right;}
-.logo_box .search_wrap{ margin-top: 12px;}
-.logo_box .search{ width: 300px; height: 30px; border: 1px solid #d1cecf; border-right: 0px solid; padding: 0 10px; outline: none;}
-.logo_box .submit{ width: 75px; height: 32px; border: 1px solid #f39800; outline: none; background-color: #f39800; color: #fff; cursor: pointer;}
-.logo_box .submit{
-	transition: background-color 0.2s, border-color 0.2s;
-	-moz-transition: background-color 0.2s, border-color 0.2s;	/* Firefox 4 */
-	-webkit-transition: background-color 0.2s, border-color 0.2s;	/* Safari 和 Chrome */
-	-o-transition: background-color 0.2s, border-color 0.2s;	/* Opera */
+.logo_box {
+    padding: 20px 20px;
+    padding-right: 0;
+    padding-left: 0;
 }
-.logo_box .submit:hover{ background-color: #fd711c; border-color: #fd711c;}
-.logo_box .public{background-color: #fd711c; color: #fff; line-height: 40px; padding:0 10px; text-align: center; border-radius: 5px; font-size: 16px; margin-top: 8px;}
 
-
-.logo_box .public{
-	transition: background-color 0.2s;
-	-moz-transition: background-color 0.2s;	/* Firefox 4 */
-	-webkit-transition: background-color 0.2s;	/* Safari 和 Chrome */
-	-o-transition: background-color 0.2s;	/* Opera */
+.logo_box .left {
+    float: left;
 }
-.logo_box .public:hover{ text-decoration: none; background-color: #f39800;}
-.logo_box .u-kjjz_btn{  background-color:#65b015; margin-right: 10px; }
-.logo_box .u-kjjz_btn:hover{ text-decoration: none; background-color: #518d11;}
-.logo_box .u-mrw_btn{  background-color:#f39800; margin-right: 10px; }
-.logo_box .u-mrw_btn:hover{ text-decoration: none; background-color: #db8a02;}
 
-.banner_box{ position: relative; height: 108px; overflow: hidden;}
-.banner_box_imgs{ position: absolute; width: 100%; height: 100%; top: 0; left: 0;}
-.banner_box_imgs a{ float: left; display: block;}
-.banner_box_imgs img{ height: 108px; width: 1000px; display: block;}
-.banner_box_btns{ position: absolute; bottom: 0; right: 0; margin-bottom: 10px; margin-right: 15px;}
-.banner_box_btns a{ display: block; width: 10px; height: 10px; float: right; margin: auto 5px; background-color: #ccc; border-radius: 5px; cursor: pointer;}
-.banner_box_btns a.selected{ background-color: #fff; box-shadow: 0 0 5px #1541DD;}
-.banner_box_tab{ position:absolute; top:32px; bottom:0; left:0; right:0; z-index:1;}
-.banner_box_tab a{ position:absolute; top:0; height:100%; width:90px;}
-.banner_box_tab a span{ display:block; width:39px; height:70px; position:absolute; top:50%; left:50%; margin:-35px 0 0 -20px;}
-.banner_box_tab a.banner_box_tab_l{ left:0;}
-.banner_box_tab a.banner_box_tab_l span{ background:url("tab.png")/*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ 0 bottom no-repeat;}
-.banner_box_tab a.first span{ background:url("tab.png")/*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ 0 0 no-repeat;}
-.banner_box_tab a.banner_box_tab_r{ right:0;}
-.banner_box_tab a.banner_box_tab_r span{background:url("tab.png")/*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ right bottom no-repeat;}
-.banner_box_tab a.last span{ background:url("tab.png")/*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ right 0 no-repeat;}
-.bigImg{ position:fixed; top:0; bottom:0; left:0; right:0;}
-.bigImg .bigImg_overfly{ background:#000; width:100%; height:100%; position:absolute; left:0; top:0; z-index:1;}
-.bigImg .bigImg_close{ position:absolute; top:5px; right:5px; width:50px; height:50px; display:block; background:#fff; text-align:center; line-height:50px; color:#000; cursor:pointer; font-size:32px; border-radius:25px; z-index:3;}
-.bigImg .bigImg_img{ height:100%; width:100%; text-align:center; position:relative; z-index:2;}
-.bigImg .bigImg_img img{ max-height:100%; max-width:80%; margin:0 auto;}
+.logo_box .right {
+    float: right;
+}
 
-.bread-crumb_box{ font-size: 14px; padding: 10px 0;color: #6c6c6c;}
-.bread-crumb_box a{ color: #2674d1;}
+.logo_box .search_wrap {
+    margin-top: 12px;
+}
+
+.logo_box .search {
+    width: 300px;
+    height: 30px;
+    border: 1px solid #d1cecf;
+    border-right: 0px solid;
+    padding: 0 10px;
+    outline: none;
+}
+
+.logo_box .submit {
+    width: 75px;
+    height: 32px;
+    border: 1px solid #f39800;
+    outline: none;
+    background-color: #f39800;
+    color: #fff;
+    cursor: pointer;
+}
+
+.logo_box .submit {
+    transition: background-color 0.2s, border-color 0.2s;
+    -moz-transition: background-color 0.2s, border-color 0.2s; /* Firefox 4 */
+    -webkit-transition: background-color 0.2s, border-color 0.2s; /* Safari 和 Chrome */
+    -o-transition: background-color 0.2s, border-color 0.2s; /* Opera */
+}
+
+.logo_box .submit:hover {
+    background-color: #fd711c;
+    border-color: #fd711c;
+}
+
+.logo_box .public {
+    background-color: #fd711c;
+    color: #fff;
+    line-height: 40px;
+    padding: 0 10px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+
+.logo_box .public {
+    transition: background-color 0.2s;
+    -moz-transition: background-color 0.2s; /* Firefox 4 */
+    -webkit-transition: background-color 0.2s; /* Safari 和 Chrome */
+    -o-transition: background-color 0.2s; /* Opera */
+}
+
+.logo_box .public:hover {
+    text-decoration: none;
+    background-color: #f39800;
+}
+
+.logo_box .u-kjjz_btn {
+    background-color: #65b015;
+    margin-right: 10px;
+}
+
+.logo_box .u-kjjz_btn:hover {
+    text-decoration: none;
+    background-color: #518d11;
+}
+
+.logo_box .u-mrw_btn {
+    background-color: #f39800;
+    margin-right: 10px;
+}
+
+.logo_box .u-mrw_btn:hover {
+    text-decoration: none;
+    background-color: #db8a02;
+}
+
+.banner_box {
+    position: relative;
+    height: 108px;
+    overflow: hidden;
+}
+
+.banner_box_imgs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.banner_box_imgs a {
+    float: left;
+    display: block;
+}
+
+.banner_box_imgs img {
+    height: 108px;
+    width: 1000px;
+    display: block;
+}
+
+.banner_box_btns {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 10px;
+    margin-right: 15px;
+}
+
+.banner_box_btns a {
+    display: block;
+    width: 10px;
+    height: 10px;
+    float: right;
+    margin: auto 5px;
+    background-color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.banner_box_btns a.selected {
+    background-color: #fff;
+    box-shadow: 0 0 5px #1541DD;
+}
+
+.banner_box_tab {
+    position: absolute;
+    top: 32px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.banner_box_tab a {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 90px;
+}
+
+.banner_box_tab a span {
+    display: block;
+    width: 39px;
+    height: 70px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -35px 0 0 -20px;
+}
+
+.banner_box_tab a.banner_box_tab_l {
+    left: 0;
+}
+
+.banner_box_tab a.banner_box_tab_l span {
+    background: url("tab.png") /*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ 0 bottom no-repeat;
+}
+
+.banner_box_tab a.first span {
+    background: url("tab.png") /*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ 0 0 no-repeat;
+}
+
+.banner_box_tab a.banner_box_tab_r {
+    right: 0;
+}
+
+.banner_box_tab a.banner_box_tab_r span {
+    background: url("tab.png") /*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ right bottom no-repeat;
+}
+
+.banner_box_tab a.last span {
+    background: url("tab.png") /*tpa=http://www.jianzhimao.com/web/assets/img/tab.png*/ right 0 no-repeat;
+}
+
+.bigImg {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.bigImg .bigImg_overfly {
+    background: #000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+}
+
+.bigImg .bigImg_close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 50px;
+    height: 50px;
+    display: block;
+    background: #fff;
+    text-align: center;
+    line-height: 50px;
+    color: #000;
+    cursor: pointer;
+    font-size: 32px;
+    border-radius: 25px;
+    z-index: 3;
+}
+
+.bigImg .bigImg_img {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+}
+
+.bigImg .bigImg_img img {
+    max-height: 100%;
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.bread-crumb_box {
+    font-size: 14px;
+    padding: 10px 0;
+    color: #6c6c6c;
+}
+
+.bread-crumb_box a {
+    color: #2674d1;
+}

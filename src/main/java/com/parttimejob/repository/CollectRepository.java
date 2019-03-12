@@ -21,6 +21,7 @@ public interface CollectRepository extends JpaRepository<Collect, Integer> {
 
     /**
      * 通过兼职者id和工作找到收藏信息
+     *
      * @param workerId
      * @param jobId
      * @return
@@ -29,6 +30,7 @@ public interface CollectRepository extends JpaRepository<Collect, Integer> {
 
     /**
      * 通过兼职者id和工作id删除收藏信息
+     *
      * @param workerId
      * @param jobId
      */
@@ -41,6 +43,7 @@ public interface CollectRepository extends JpaRepository<Collect, Integer> {
 
     /**
      * 通过兼职者id删除收藏信息
+     *
      * @param id
      */
     @Transactional
@@ -50,6 +53,7 @@ public interface CollectRepository extends JpaRepository<Collect, Integer> {
 
     /**
      * 通过工作id删除工作信息
+     *
      * @param id
      */
     @Transactional

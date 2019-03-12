@@ -40,6 +40,7 @@ public class ManagerService {
 
     /**
      * 分页查找出未通过审核的招聘者
+     *
      * @param pageNo
      * @param pageSize
      * @return
@@ -55,11 +56,12 @@ public class ManagerService {
 
     /**
      * 通过招聘者的id删除
+     *
      * @param managerId
      */
     public void deleteManagerById(int managerId) {
         List<Job> jobs = jobService.findByManagerId(managerId);
-        for(Job j:jobs){
+        for (Job j : jobs) {
             collectService.deleteCollectByJobId(j.getId());
             deliverService.deleteDeliverByJobId(j.getId());
         }
@@ -70,6 +72,7 @@ public class ManagerService {
 
     /**
      * 该招聘者通过审核
+     *
      * @param id
      */
     public void passManager(int id) {
@@ -78,6 +81,7 @@ public class ManagerService {
 
     /**
      * 通过用户名找到招聘者
+     *
      * @param userName
      * @return
      */
@@ -87,6 +91,7 @@ public class ManagerService {
 
     /**
      * 保存招聘者
+     *
      * @param manager
      */
     public void save(Manager manager) {
@@ -95,6 +100,7 @@ public class ManagerService {
 
     /**
      * 通过id找到招聘者
+     *
      * @param id
      * @return
      */
@@ -104,6 +110,7 @@ public class ManagerService {
 
     /**
      * 保存招聘者的资料
+     *
      * @param manager
      */
     public void saveEditor(Manager manager) {
@@ -112,6 +119,7 @@ public class ManagerService {
 
     /**
      * 分页查找出所有招聘者
+     *
      * @param pageNo
      * @param pageSize
      * @return
@@ -122,14 +130,14 @@ public class ManagerService {
             pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return managerRepository.findAll( pageable);
+        return managerRepository.findAll(pageable);
     }
 
-    public void informationSave(Manager manager){
+    public void informationSave(Manager manager) {
         managerRepository.informationSave(manager);
     }
 
-    public List<Manager> findAll(){
+    public List<Manager> findAll() {
         return managerRepository.findAll();
     }
 }

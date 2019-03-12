@@ -18,6 +18,7 @@ import java.util.List;
 public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
     /**
      * 通过兼职者id和工作id找到所有投递信息
+     *
      * @param workerId
      * @param jobId
      * @return
@@ -26,6 +27,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
 
     /**
      * 通过兼职者id和工作id删除投递信息
+     *
      * @param workerId
      * @param jobId
      */
@@ -36,6 +38,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
 
     /**
      * 通过兼职者id找到所有投递信息
+     *
      * @param workerId
      * @return
      */
@@ -43,6 +46,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
 
     /**
      * 通过工作id找到所有投递信息
+     *
      * @param jobId
      * @return
      */
@@ -50,6 +54,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
 
     /**
      * 通过兼职者id删除所有投递信息
+     *
      * @param id
      */
     @Transactional
@@ -59,6 +64,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
 
     /**
      * 通过工作id删除所有投递信息
+     *
      * @param id
      */
     @Transactional

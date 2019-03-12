@@ -37,7 +37,7 @@ public class WorkerController {
     WorkerDataService workerDataService;
 
     @Autowired
-    ManagerService  managerService;
+    ManagerService managerService;
 
     @Autowired
     CollectService collectService;
@@ -101,7 +101,7 @@ public class WorkerController {
                 session.setAttribute("workerData", workerData);
                 List<Collect> collectList = collectService.findByWorkerId(worker1.getId());
                 List<Deliver> delivers = deliverService.findByWorkerId(worker1.getId());
-                List<BBS> bbs=bbsService.findByWorkerId(worker1.getId());
+                List<BBS> bbs = bbsService.findByWorkerId(worker1.getId());
                 List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerId(worker1.getId());
                 session.setAttribute("collectList", collectList.size());
                 session.setAttribute("delivers", delivers.size());
@@ -269,7 +269,6 @@ public class WorkerController {
     }
 
 
-
     @GetMapping("/worker/BBS/index")
     public String managerBBSIndex() {
         return "/worker/bbs/index";
@@ -277,7 +276,7 @@ public class WorkerController {
 
     @ResponseBody
     @GetMapping("/worker/BBS/delete/{id}")
-    public String deleteBBS(@PathVariable("id")int id){
+    public String deleteBBS(@PathVariable("id") int id) {
         bbsService.deleteById(id);
         return "删除成功！";
     }
@@ -288,33 +287,33 @@ public class WorkerController {
     }
 
     @GetMapping("/worker/BBS/editor")
-    public String workerBBSEditor(){
+    public String workerBBSEditor() {
         return "/worker/BBS/post";
     }
 
     @GetMapping("/worker/BBS/editor/{id}")
-    public String myBBSEditor(@PathVariable("id")int id,Model model){
-        BBS bbs=bbsService.findById(id);
-        model.addAttribute("bbs",bbs);
+    public String myBBSEditor(@PathVariable("id") int id, Model model) {
+        BBS bbs = bbsService.findById(id);
+        model.addAttribute("bbs", bbs);
         return "/worker/BBS/editor";
     }
 
     @ResponseBody
     @PostMapping("/worker/BBS/editor/save")
-    public String manageBBSEditorSave(BBS bbs){
+    public String manageBBSEditorSave(BBS bbs) {
         bbsService.editorSave(bbs);
         return "修改成功！";
     }
 
     @GetMapping("/worker/BBS/search")
-    public String managerBBSSearch(){
+    public String managerBBSSearch() {
         return "worker/BBS/search";
     }
 
     @ResponseBody
     @PostMapping("/worker/BBS/publish/save")
-    public String manageBBSPublishSave(BBS bbs,HttpSession session){
-        Worker worker=(Worker) session.getAttribute("worker");
+    public String manageBBSPublishSave(BBS bbs, HttpSession session) {
+        Worker worker = (Worker) session.getAttribute("worker");
         bbs.setStatus(1);
         bbs.setWorkerId(worker.getId());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -325,11 +324,11 @@ public class WorkerController {
 
     @ResponseBody
     @GetMapping("/worker/BBS/article")
-    public  Map<String, Object> managerBBSArticle(HttpSession session, HttpServletRequest request){
-        Worker worker=(Worker)session.getAttribute("worker");
+    public Map<String, Object> managerBBSArticle(HttpSession session, HttpServletRequest request) {
+        Worker worker = (Worker) session.getAttribute("worker");
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
-        Page<BBS> bbs = bbsService.findByWorkerId(worker.getId(),pageNumber, pageSize);
+        Page<BBS> bbs = bbsService.findByWorkerId(worker.getId(), pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
@@ -341,7 +340,7 @@ public class WorkerController {
 
     @ResponseBody
     @GetMapping("/worker/BBS/findAll")
-    public  Map<String, Object> managerBBSArticleFindAll(HttpSession session,HttpServletRequest request){
+    public Map<String, Object> managerBBSArticleFindAll(HttpSession session, HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Page<BBS> bbs = bbsService.findAll(pageNumber, pageSize);
@@ -355,41 +354,43 @@ public class WorkerController {
     }
 
     @GetMapping("/worker/BBS/look/{id}")
-    public String look(@PathVariable("id")int id,Model model){
-        BBS bbs=bbsService.findById(id);
-        if(bbs.getStatus()==1)
-        {
-            model.addAttribute("status","招聘者");
+    public String look(@PathVariable("id") int id, Model model) {
+        BBS bbs = bbsService.findById(id);
+        if (bbs.getStatus() == 1) {
+            model.addAttribute("status", "招聘者");
             WorkerData workerData = workerDataService.findByWorkerId(bbs.getWorkerId());
-            model.addAttribute("username",workerData.getName());
-        }
-        else if(bbs.getStatus()==2){
-            model.addAttribute("status","兼职者");
+            model.addAttribute("username", workerData.getName());
+        } else if (bbs.getStatus() == 2) {
+            model.addAttribute("status", "兼职者");
 
-            Manager manager=managerService.findById(bbs.getManagerId());
-            model.addAttribute("username",manager.getName());
+            Manager manager = managerService.findById(bbs.getManagerId());
+            model.addAttribute("username", manager.getName());
         }
         bbsService.views(id);
-        model.addAttribute("bbs",bbs);
+        model.addAttribute("bbs", bbs);
         return "/worker/BBS/look";
     }
 
 
     @GetMapping("/worker/employ/job/{id}")
-    public String workerEmployee(@PathVariable("id")int id,Model model){
-        Job job=jobService.findById(id);
+    public String workerEmployee(@PathVariable("id") int id, Model model, HttpSession session) {
+        Job job = jobService.findById(id);
         job.setCheckEmploy(1);
         bbsService.views(id);
-        Manager manager =managerService.findById(job.getManagerId());
-        model.addAttribute("manager",manager);
-        model.addAttribute("job",job);
+        Worker worker = (Worker) session.getAttribute("worker");
+        Manager manager = managerService.findById(job.getManagerId());
+        if (evaluationToManagerService.findByManagerIdAndWorkerId(manager.getId(), worker.getId()) != null) {
+            job.setCheckEmploy(2);
+        }
+        model.addAttribute("manager", manager);
+        model.addAttribute("job", job);
         return "/worker/job";
     }
 
     @GetMapping("/worker/evaluationToManager/{id}")
-    public String evaluationToManager(@PathVariable("id")int id,Model model){
-        Manager manager=managerService.findById(id);
-        model.addAttribute("manager",manager);
+    public String evaluationToManager(@PathVariable("id") int id, Model model) {
+        Manager manager = managerService.findById(id);
+        model.addAttribute("manager", manager);
         return "/worker/evaluationToManager";
     }
 
@@ -397,14 +398,18 @@ public class WorkerController {
     @PostMapping("/worker/evaluationToManager/save")
     public String evaluationToManager(EvaluationToManager evaluation, HttpSession session) {
         Worker worker = (Worker) session.getAttribute("worker");
-        WorkerData workerData =workerDataService.findByWorkerId(worker.getId());
-        evaluation.setWorkerId(worker.getId());
-        evaluation.setWorkerName(workerData.getName());
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        evaluation.setDate(df.format(new Date()));
-        employService.evaluated(worker.getId(),evaluation.getManagerId());
-        evaluationToManagerService.evaluationToManagerSave(evaluation);
-        return "评价成功！";
+        if (evaluationToManagerService.findByManagerIdAndWorkerId(evaluation.getManagerId(), worker.getId()) != null) {
+            return "您以评价过该招聘者！";
+        } else {
+            WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
+            evaluation.setWorkerId(worker.getId());
+            evaluation.setWorkerName(workerData.getName());
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            evaluation.setDate(df.format(new Date()));
+            employService.evaluated(worker.getId(), evaluation.getManagerId());
+            evaluationToManagerService.evaluationToManagerSave(evaluation);
+            return "评价成功！";
+        }
     }
 
     @GetMapping("/worker/evaluate")

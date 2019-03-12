@@ -20,6 +20,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
 
     /**
      * 通过兼职者实体类更新该兼职者的个人资料
+     *
      * @param workerData
      * @return
      */
@@ -41,6 +42,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
 
     /**
      * 通过兼职者的id找到该兼职者的个人资料
+     *
      * @param id
      * @return
      */
@@ -48,6 +50,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
 
     /**
      * 分页找到所有兼职者的个人资料
+     *
      * @param pageable
      * @return
      */
@@ -56,13 +59,15 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
 
     /**
      * 通过兼职者的id删除兼职者的个人资料
+     *
      * @param id
      */
     @Transactional
     @Modifying
     @Query(value = "delete from WorkerData a where a.workerId =?1")
     void deleteWorkerDataByWorkerId(int id);
-//
+
+    //
     @Query(value = "select w from WorkerData w where w.jobIntension like CONCAT('%',?1,'%')")
     Page<WorkerData> findByJobIntensionLike(String content, Pageable pageable);
 }

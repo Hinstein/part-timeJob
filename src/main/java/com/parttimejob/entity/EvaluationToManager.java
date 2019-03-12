@@ -35,7 +35,7 @@ public class EvaluationToManager {
     private String content;
 
     @Column
-    private  String date;
+    private String date;
 
     public Integer getId() {
         return id;

@@ -21,6 +21,7 @@ import java.util.List;
 public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     /**
      * 通过用户名找到招聘者
+     *
      * @param userName
      * @return
      */
@@ -31,6 +32,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
     /**
      * 通过id找到招聘者
+     *
      * @param id
      * @return
      */
@@ -38,6 +40,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
     /**
      * 通过id删除招聘者
+     *
      * @param id
      */
     @Transactional
@@ -47,6 +50,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
     /**
      * 通过审核
+     *
      * @param id
      */
     @Transactional
@@ -56,6 +60,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
     /**
      * 分页找到所有未通过审核的招聘者
+     *
      * @param audit
      * @param pageable
      * @return
@@ -64,6 +69,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
     /**
      * 保存招聘者
+     *
      * @param manager
      */
     @Transactional
@@ -73,6 +79,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
 
     /**
      * 分页找到所有招聘者
+     *
      * @param pageable
      * @return
      */

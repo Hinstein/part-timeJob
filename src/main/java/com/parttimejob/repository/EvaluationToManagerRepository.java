@@ -13,14 +13,13 @@ import java.util.List;
  * @Description:
  */
 
-    public interface EvaluationToManagerRepository extends JpaRepository<EvaluationToManager,Integer>
-    {
-        List<EvaluationToManager> findByManagerId(int id);
+public interface EvaluationToManagerRepository extends JpaRepository<EvaluationToManager, Integer> {
+    List<EvaluationToManager> findByManagerId(int id);
 
 
-        List<EvaluationToManager> findByWorkerId(int id);
+    List<EvaluationToManager> findByWorkerId(int id);
 
-        EvaluationToManager findByManagerIdAndWorkerId(int managerId,int workerId);
+    EvaluationToManager findByManagerIdAndWorkerId(int managerId, int workerId);
 
-        EvaluationToManager findById(int id);
-    }
+    EvaluationToManager findById(int id);
+}

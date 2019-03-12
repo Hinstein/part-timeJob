@@ -27,7 +27,7 @@
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>    兼职者管理</cite>
+                        <cite> 兼职者管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/workers}">兼职账号</a></dd>
@@ -36,7 +36,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>    招聘者管理</cite>
+                        <cite> 招聘者管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd class="layui-this"><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
@@ -45,7 +45,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>    职位管理</cite>
+                        <cite> 职位管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
@@ -53,7 +53,7 @@
                 </li>
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>     BBS论坛管理</cite>
+                        <cite> BBS论坛管理</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
@@ -62,7 +62,7 @@
 
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
-                        <cite>     [[${session.adminUserName}]]</cite>
+                        <cite> [[${session.adminUserName}]]</cite>
                     </a>
                     <dl class="layui-nav-child">
                         <dd layadmin-event="logout" style="text-align: center;"><a th:href="@{/admin/exit}">退出</a></dd>
@@ -94,10 +94,10 @@
                             <dd><a th:href="@{/admin/worker/information}">兼职者资料</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item ">
                         <a href="javascript:;">招聘者管理</a>
                         <dl class="layui-nav-child">
-                            <dd class="layui-this"><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
+                            <dd class=""><a th:href="@{/admin/manager/audit}">招聘者审核</a></dd>
                             <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
                         </dl>
                     </li>
@@ -120,12 +120,12 @@
 
 
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
-           <a>主页</a>
+            <a>主页</a>
         </div>
 
         <!-- 主体内容 -->
-        <div class="layui-body" >
-            <div class="layui-fluid" >
+        <div class="layui-body">
+            <div class="layui-fluid">
                 <div class="layui-row layui-col-space15">
                     <div class="layui-col-md8">
                         <div class="layui-row layui-col-space15">
@@ -218,7 +218,7 @@
                                     <tr>
                                         <td>当前版本</td>
                                         <td>
-                                          1.0.0
+                                            1.0.0
                                         </td>
                                     </tr>
                                     <tr>

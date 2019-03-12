@@ -25,6 +25,7 @@ public class MainController {
 
     /**
      * 兼职者登录页面
+     *
      * @return
      */
     @GetMapping("/workerLogin")
@@ -34,6 +35,7 @@ public class MainController {
 
     /**
      * 招聘者登录页面
+     *
      * @return
      */
     @GetMapping("/managerLogin")
@@ -43,6 +45,7 @@ public class MainController {
 
     /**
      * 兼职者注册页面
+     *
      * @return
      */
     @GetMapping("/workerRegister")
@@ -52,6 +55,7 @@ public class MainController {
 
     /**
      * 招聘者注册页面
+     *
      * @return
      */
     @GetMapping("/managerRegister")
@@ -61,21 +65,23 @@ public class MainController {
 
     /**
      * 招聘网主页
+     *
      * @return
      */
     @GetMapping("/index")
     public String index(Model model) {
-        Page<Job> jobs=jobService.getJobs(1,27);
-        Page<Job> jobs1=jobService.finDescByTime(1,27);
-        Page<Job> jobs2=jobService.finDescByViews(1,27);
-        model.addAttribute("jobs",jobs);
-        model.addAttribute("jobs1",jobs1);
-        model.addAttribute("jobs2",jobs2);
+        Page<Job> jobs = jobService.getJobs(1, 27);
+        Page<Job> jobs1 = jobService.finDescByTime(1, 27);
+        Page<Job> jobs2 = jobService.finDescByViews(1, 27);
+        model.addAttribute("jobs", jobs);
+        model.addAttribute("jobs1", jobs1);
+        model.addAttribute("jobs2", jobs2);
         return "/homePage/index";
     }
 
     /**
      * 后台登录页面
+     *
      * @return
      */
     @GetMapping("/admin/login")

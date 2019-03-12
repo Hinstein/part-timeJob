@@ -24,7 +24,7 @@ import java.util.*;
  */
 
 @Controller
-public class     JobController {
+public class JobController {
 
     @Autowired
     JobService jobService;
@@ -43,6 +43,7 @@ public class     JobController {
 
     /**
      * 发布工作
+     *
      * @param job
      * @param session
      * @return
@@ -50,7 +51,7 @@ public class     JobController {
     @ResponseBody
     @PostMapping("/manager/publish/save")
     public String managerPublishSave(Job job, HttpSession session) {
-        Manager manager=(Manager)session.getAttribute("manager");
+        Manager manager = (Manager) session.getAttribute("manager");
         job.setManagerId(manager.getId());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         job.setDate(df.format(new Date()));
@@ -67,20 +68,22 @@ public class     JobController {
     @ResponseBody
     @GetMapping("/manager/find/allJobs")
     public Map<String, Object> findAllJobs(HttpSession session, HttpServletRequest request) {
-    Manager manager = (Manager) session.getAttribute("manager");
-    int pageSize = Integer.parseInt(request.getParameter("limit"));
-    int pageNumber = Integer.parseInt(request.getParameter("page"));
-    Map<String, Object> result = new HashMap<String, Object>();
-    Page<Job> jobs =jobService.findByManagerId(manager.getId(),pageNumber, pageSize);
-    result.put("code", 0);
-    result.put("msg", "");
-    result.put("count", jobs.getTotalElements());
-    JSONArray json = JSONArray.fromObject(jobs.getContent());
-    result.put("data", json);
-    return result;
+        Manager manager = (Manager) session.getAttribute("manager");
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Map<String, Object> result = new HashMap<String, Object>();
+        Page<Job> jobs = jobService.findByManagerId(manager.getId(), pageNumber, pageSize);
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", jobs.getTotalElements());
+        JSONArray json = JSONArray.fromObject(jobs.getContent());
+        result.put("data", json);
+        return result;
     }
+
     /**
      * 发布工作
+     *
      * @return
      */
     @GetMapping("/manager/publish")
@@ -91,6 +94,7 @@ public class     JobController {
 
     /**
      * 编辑工作页面
+     *
      * @param id
      * @param model
      * @return
@@ -104,6 +108,7 @@ public class     JobController {
 
     /**
      * 保存工作
+     *
      * @param job
      * @return
      */
@@ -116,6 +121,7 @@ public class     JobController {
 
     /**
      * 删除工作
+     *
      * @param id
      * @return
      */
@@ -128,6 +134,7 @@ public class     JobController {
 
     /**
      * 查询工作
+     *
      * @param request
      * @param content
      * @return
@@ -157,6 +164,7 @@ public class     JobController {
 
     /**
      * 查看工作信息
+     *
      * @param jobId
      * @param model
      * @param session
@@ -164,9 +172,9 @@ public class     JobController {
      */
     @GetMapping("/worker/job/{id}")
     public String job(@PathVariable("id") int jobId, Model model, HttpSession session) {
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         Job job = jobService.findById(jobId);
-        job.setViews(job.getViews()+1);
+        job.setViews(job.getViews() + 1);
         jobService.jobSave(job);
         if (collectService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setCheckCollection(1);
@@ -174,18 +182,19 @@ public class     JobController {
         if (deliverService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setCheckDeliver(1);
         }
-        if(employService.findByWorkerIdAndJobId(worker.getId(),jobId)!=null){
+        if (employService.findByWorkerIdAndJobId(worker.getId(), jobId) != null) {
             job.setCheckCollection(2);
             job.setCheckDeliver(2);
         }
-        Manager manager =managerService.findById(job.getManagerId());
-        model.addAttribute("manager",manager);
+        Manager manager = managerService.findById(job.getManagerId());
+        model.addAttribute("manager", manager);
         model.addAttribute("job", job);
         return "/worker/job";
     }
 
     /**
      * 收藏工作
+     *
      * @param map
      * @param session
      * @return
@@ -195,7 +204,7 @@ public class     JobController {
     public String saveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
         Collect workerAndJob = new Collect();
         int jobId = Integer.parseInt(map.get("id"));
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         workerAndJob.setJobId(jobId);
         jobService.collectionSave(jobId);
         workerAndJob.setWorkerId(worker.getId());
@@ -205,6 +214,7 @@ public class     JobController {
 
     /**
      * 取消收藏
+     *
      * @param map
      * @param session
      * @return
@@ -213,7 +223,7 @@ public class     JobController {
     @PostMapping(value = "/worker/job/cancelSave")
     public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         collectService.delete(worker.getId(), jobId);
         jobService.collectionCancel(jobId);
         return "取消收藏";
@@ -221,6 +231,7 @@ public class     JobController {
 
     /**
      * 投递工作
+     *
      * @param map
      * @param session
      * @return
@@ -230,7 +241,7 @@ public class     JobController {
     public String deliver(@RequestParam HashMap<String, String> map, HttpSession session) {
         Deliver deliver = new Deliver();
         int jobId = Integer.parseInt(map.get("id"));
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         deliver.setJobId(jobId);
         deliver.setWorkerId(worker.getId());
         deliverService.save(deliver);
@@ -240,6 +251,7 @@ public class     JobController {
 
     /**
      * 取消投递
+     *
      * @param map
      * @param session
      * @return
@@ -248,7 +260,7 @@ public class     JobController {
     @PostMapping(value = "/worker/job/cancelDeliver")
     public String cancelDeliver(@RequestParam HashMap<String, String> map, HttpSession session) {
         int jobId = Integer.parseInt(map.get("id"));
-        Worker worker = (Worker)session.getAttribute("worker");
+        Worker worker = (Worker) session.getAttribute("worker");
         deliverService.delete(worker.getId(), jobId);
         jobService.deliverCancel(jobId);
         return "取消投递";

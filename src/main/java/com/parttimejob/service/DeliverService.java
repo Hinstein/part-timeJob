@@ -22,6 +22,7 @@ public class DeliverService {
 
     /**
      * 保存投递
+     *
      * @param deliver
      */
     public void save(Deliver deliver) {
@@ -30,6 +31,7 @@ public class DeliverService {
 
     /**
      * 通过兼职者的id和工作的id找到投递
+     *
      * @param workerId
      * @param jobId
      * @return
@@ -40,6 +42,7 @@ public class DeliverService {
 
     /**
      * 通过兼职者id删除所有投递
+     *
      * @param workerId
      * @param jobId
      */
@@ -49,6 +52,7 @@ public class DeliverService {
 
     /**
      * 通过兼职者id找到投递信息
+     *
      * @param workerId
      * @return
      */
@@ -58,6 +62,7 @@ public class DeliverService {
 
     /**
      * 通过工作id找到投递信息
+     *
      * @param jobId
      * @return
      */
@@ -67,17 +72,19 @@ public class DeliverService {
 
     /**
      * 通过兼职者id删除投递信息
+     *
      * @param workerId
      */
-    public void deleteDeliverByWorkerId(int workerId){
+    public void deleteDeliverByWorkerId(int workerId) {
         deliverRepository.deleteDeliverByWorkerId(workerId);
     }
 
     /**
      * 通过兼职者id删除投递信息
+     *
      * @param jobId
      */
-    public void deleteDeliverByJobId(int jobId){
+    public void deleteDeliverByJobId(int jobId) {
         deliverRepository.deleteDeliverByJobId(jobId);
     }
 }
