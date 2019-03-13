@@ -407,4 +407,31 @@ public class AdminController {
         bbsService.editorSave(bbs);
         return "修改成功！";
     }
+
+    @ResponseBody
+    @GetMapping("/admin/job/hot")
+    public Map<String, Object> jobHot() {
+        Page<Job> jobs2 = jobService.finDescByViews(1, 10);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", jobs2.getTotalElements());
+        JSONArray json = JSONArray.fromObject(jobs2.getContent());
+        result.put("data", json);
+        return result;
+    }
+
+    @ResponseBody
+    @GetMapping("/admin/job/new")
+    public Map<String, Object> jobNew() {
+        Page<Job> jobs1 = jobService.finDescByTime(1, 10);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", jobs1.getTotalElements());
+        JSONArray json = JSONArray.fromObject(jobs1.getContent());
+        result.put("data", json);
+        return result;
+    }
+
 }

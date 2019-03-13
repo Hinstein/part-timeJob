@@ -137,21 +137,21 @@
                                             <ul class="layui-row layui-col-space10">
                                                 <li class="layui-col-xs3">
                                                     <a lay-href="app/content/comment.html" class="layadmin-backlog-body"
-                                                       onclick="layer.tips('我收藏的职位', this, {tips: 3});">
+                                                       onclick="layer.tips('招聘者数量', this, {tips: 3});">
                                                         <h3>招聘者数量</h3>
                                                         <p><cite>[[${session.workers}]]</cite></p>
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs3">
                                                     <a lay-href="app/forum/list.html" class="layadmin-backlog-body"
-                                                       onclick="layer.tips('我投递的职位', this, {tips: 3});">
+                                                       onclick="layer.tips('兼职者数量', this, {tips: 3});">
                                                         <h3>兼职者数量</h3>
                                                         <p><cite>[[${session.managers}]]</cite></p>
                                                     </a>
                                                 </li>
                                                 <li class="layui-col-xs3">
                                                     <a lay-href="template/goodslist.html" class="layadmin-backlog-body"
-                                                       onclick="layer.tips('我收到的评价', this, {tips: 3});">
+                                                       onclick="layer.tips('兼职数量', this, {tips: 3});">
                                                         <h3>兼职数量</h3>
                                                         <p><cite>[[${session.jobs}]]</cite></p>
                                                     </a>
@@ -188,17 +188,29 @@
                                 <div class="layui-card">
                                     <div class="layui-tab layui-tab-brief layadmin-latestData">
                                         <ul class="layui-tab-title">
-                                            <li class="layui-this">今日热搜</li>
-                                            <li>今日热帖</li>
+                                            <li class="layui-this">热门工作</li>
+                                            <li>最新工作</li>
                                         </ul>
                                         <div class="layui-tab-content">
                                             <div class="layui-tab-item layui-show">
-                                                <table id="LAY-index-topSearch"></table>
+                                                <table class="layui-table" id="hot" lay-filter="test"
+                                                       lay-skin="line">
+                                                </table>
                                             </div>
                                             <div class="layui-tab-item">
-                                                <table id="LAY-index-topCard"></table>
+                                                <table class="layui-table" id="new" lay-filter="test"
+                                                       lay-skin="line">
+                                                </table>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="layui-card">
+                                    <div class="layui-card-header">招聘者活跃排名</div>
+                                    <div class="layui-card-body">
+                                        <table class="layui-table" id="manager" lay-filter="test"
+                                               lay-skin="line">
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -269,13 +281,7 @@
                                 <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
                             </div>
                             <div class="layui-card-body layui-text layadmin-text">
-                                <p>一直以来，layui 秉承无偿开源的初心，虔诚致力于服务各层次前后端 Web
-                                    开发者，在商业横飞的当今时代，这一信念从未动摇。即便身单力薄，仍然重拾决心，埋头造轮，以尽可能地填补产品本身的缺口。</p>
-                                <p>在过去的一段的时间，我一直在寻求持久之道，已维持你眼前所见的一切。而 layuiAdmin 是我们尝试解决的手段之一。我相信真正有爱于 layui
-                                    生态的你，定然不会错过这一拥抱吧。</p>
-                                <p>子曰：君子不用防，小人防不住。请务必通过官网正规渠道，获得 <a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>！
-                                </p>
-                                <p>—— 贤心（<a href="http://www.layui.com/" target="_blank">layui.com</a>）</p>
+
                             </div>
                         </div>
                     </div>
@@ -286,5 +292,53 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script th:inline="none">
+    layui.use(['table'], function () {
+        var table = layui.table;
+        table.render({
+            elem: '#manager'
+            , url: '/worker/manager/active' //数据接口
+            , page: false //开启分页
+            , skin: 'line'
+            , size: 'lg'
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                {field: 'name', title: '姓名'}
+                , {field: 'email', title: '邮箱'}
+                , {field: 'phoneNumber', title: '电话号码'}
+            ]]
+        });
+        table.render({
+            elem: '#new'
+            , url: '/admin/job/new' //数据接口
+            , page: false //开启分页
+            , skin: 'line'
+            , size: 'lg'
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                 {field: 'id', title: 'ID', sort: true}
+                , {field: 'title', title: '标题'}
+                , {field: 'lowPay', title: '最低工资'}
+                , {field: 'hightPay', title: '最高工资'}
+                , {field: 'date', title: '发布时间', sort: true}
+            ]]
+        });
+        table.render({
+            elem: '#hot'
+            , url: '/admin/job/hot' //数据接口
+            , page: false //开启分页
+            , skin: 'line'
+            , size: 'lg'
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                 {field: 'id', title: 'ID', sort: true}
+                , {field: 'title', title: '标题'}
+                , {field: 'lowPay', title: '最低工资'}
+                , {field: 'hightPay', title: '最高工资'}
+                , {field: 'date', title: '发布时间', sort: true}
+            ]]
+        });
+    })
+</script>
 </body>
 </html>
