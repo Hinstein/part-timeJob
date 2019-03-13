@@ -65,8 +65,8 @@
             <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
                 <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
-                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
                 </dl>
             </li>
         </ul>
@@ -122,12 +122,12 @@
                     <hr>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/worker/evaluate}">
-                            我给予的评价
+                            给予的评价
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/worker/evaluated}">
-                            我收到的评价
+                            收到的评价
                         </a>
                     </div>
                 </div>
@@ -143,21 +143,21 @@
                             <li class="layui-col-xs3">
                                 <a lay-href="app/content/comment.html" class="layadmin-backlog-body"
                                    onclick="layer.tips('我收藏的职位', this, {tips: 3});">
-                                    <h3>我收藏的职位</h3>
+                                    <h3>收藏的职位</h3>
                                     <p><cite>[[${session.collectList}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
                                 <a lay-href="app/forum/list.html" class="layadmin-backlog-body"
                                    onclick="layer.tips('我投递的职位', this, {tips: 3});">
-                                    <h3>我投递的职位</h3>
+                                    <h3>投递的职位</h3>
                                     <p><cite>[[${session.delivers}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
                                 <a lay-href="template/goodslist.html" class="layadmin-backlog-body"
                                    onclick="layer.tips('我收到的评价', this, {tips: 3});">
-                                    <h3>我收到的评价</h3>
+                                    <h3>收到的评价</h3>
                                     <p><cite>[[${session.bbs}]]</cite></p>
                                 </a>
                             </li>

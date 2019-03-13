@@ -22,13 +22,14 @@
                     兼职网
                 </a>
             </li>
+
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a th:href="@{/manager/index}" title="首页">
                     首页
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                <a th:href="@{/manager/BBS/index}" title="BBS论坛">
+                <a th:href="@{/manager/BBS/index}" title="首页">
                     BBS论坛
                 </a>
             </li>
@@ -39,9 +40,17 @@
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
                     <dd><a th:href="@{/manager/search}">搜索职位</a></dd>
-                    <dd><a th:href="@{/manager/allJobs}">我发布的职位</a></dd>
-                    <dd><a th:href="@{/manager/employ}">我录用的员工</a></dd>
-                    <dd><a th:href="@{/manager/evaluate}">我给予的评价</a></dd>
+                    <dd><a th:href="@{/manager/allJobs}">发布的职位</a></dd>
+                    <dd><a th:href="@{/manager/employ}">录用的员工</a></dd>
+                    <dd><a th:href="@{/manager/evaluate}">给予的评价</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/manager/BBS/index}">论坛管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/BBS/publish}">发布帖子</a></dd>
+                    <dd><a th:href="@{/manager/BBS/editor}">管理帖子</a></dd>
+                    <dd><a th:href="@{/manager/BBS/search}">搜索帖子</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item" lay-unselect>
@@ -60,9 +69,9 @@
                     <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
                     <dd><a th:href="@{/manager/search}">搜索职位</a></dd>
                     <dd><a th:href="@{/manager/search/worker}">搜索简历</a></dd>
-                    <dd><a th:href="@{/manager/allJobs}">我发布的职位</a></dd>
-                    <dd><a th:href="@{/manager/employ}">我录用的员工</a></dd>
-                    <dd><a th:href="@{/manager/evaluate}">我给予的评价</a></dd>
+                    <dd><a th:href="@{/manager/allJobs}">发布的职位</a></dd>
+                    <dd><a th:href="@{/manager/employ}">录用的员工</a></dd>
+                    <dd><a th:href="@{/manager/evaluate}">给予的评价</a></dd>
                 </dl>
             </li>
         </ul>
@@ -109,7 +118,7 @@
                     </div>
                     <div style="text-align: center">
                         <a th:href="@{/manager/collect}">
-                            我收藏的简历
+                            收藏的简历
                         </a>
                     </div>
                     <hr>
@@ -120,28 +129,28 @@
                     </div>
                     <div style="text-align: center">
                         <a th:href="@{/manager/allJobs}">
-                            我发布的职位
+                            发布的职位
                         </a>
                     </div>
                     <hr>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/manager/employ}">
-                            我录用的员工
+                            录用的员工
                         </a>
                     </div>
                     <div style="text-align: center">
                         <a th:href="@{/manager/evaluate}">
-                            我给予的评价
+                            给予的评价
                         </a>
                     </div>
                     <div style="text-align: center">
                         <a th:href="@{/manager/evaluated}">
-                            我收到的评价
+                            收到的评价
                         </a>
                     </div>
                     <div style="text-align: center">
                         <a th:href="@{/manager/message}">
-                            我收到的留言
+                            收到的留言
                         </a>
                     </div>
                 </div>
@@ -157,27 +166,27 @@
                         <ul class="layui-row layui-col-space10">
                             <li class="layui-col-xs3">
                                 <a lay-href="app/content/comment.html" class="layadmin-backlog-body"
-                                   onclick="layer.tips('我发布的职位数', this, {tips: 3});">
-                                    <h3>我发布的职位</h3>
+                                   onclick="layer.tips('发布的职位数', this, {tips: 3});">
+                                    <h3>发布的职位</h3>
                                     <p><cite>[[${session.jobs}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
                                 <a lay-href="app/forum/list.html" class="layadmin-backlog-body"
-                                   onclick="layer.tips('我录用的员工数', this, {tips: 3});">
-                                    <h3>我录用的员工</h3>
+                                   onclick="layer.tips('录用的员工数', this, {tips: 3});">
+                                    <h3>录用的员工</h3>
                                     <p><cite>[[${session.employs}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
                                 <a lay-href="template/goodslist.html" class="layadmin-backlog-body"
-                                   onclick="layer.tips('我给予的评价数', this, {tips: 3});">
-                                    <h3>我给予的评价</h3>
+                                   onclick="layer.tips('给予的评价数', this, {tips: 3});">
+                                    <h3>给予的评价</h3>
                                     <p><cite>[[${session.evaluations}]]</cite></p>
                                 </a>
                             </li>
                             <li class="layui-col-xs3">
-                                <a href="javascript:;" onclick="layer.tips('我的发帖数数', this, {tips: 3});"
+                                <a href="javascript:;" onclick="layer.tips('的发帖数数', this, {tips: 3});"
                                    class="layadmin-backlog-body">
                                     <h3>发帖数</h3>
                                     <p><cite>[[${session.bbs}]]</cite></p>

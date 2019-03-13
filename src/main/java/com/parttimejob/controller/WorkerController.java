@@ -277,7 +277,7 @@ public class WorkerController {
     }
 
     @ResponseBody
-    @GetMapping("/worker/BBS/delete/{id}")
+    @PostMapping("/worker/BBS/delete/{id}")
     public String deleteBBS(@PathVariable("id") int id) {
         bbsService.deleteById(id);
         return "删除成功！";
@@ -455,6 +455,22 @@ public class WorkerController {
         message.setDate(df.format(new Date()));
         messageService.save(message);
         return "留言成功！";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/evaluation/use/{id}")
+    public String evaluationUsed(@PathVariable("id") int id){
+
+        evaluationToWorkerService.usedEvaluation(id);
+        return "添加成功";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/evaluation/cancel/{id}")
+    public String evaluationCancel(@PathVariable("id") int id)
+    {
+        evaluationToWorkerService.cancelUsedEvaluation(id);
+        return "取消成功！";
     }
 }
 

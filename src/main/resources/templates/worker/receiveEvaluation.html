@@ -64,8 +64,8 @@
             <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
                 <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
-                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
                 </dl>
             </li>
         </ul>
@@ -121,12 +121,12 @@
                     <hr>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/worker/evaluate}">
-                            我给予的评价
+                            给予的评价
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/worker/evaluated}">
-                            我收到的评价
+                            收到的评价
                         </a>
                     </div>
                 </div>
@@ -140,7 +140,13 @@
                         <p>评分：[[${evaluation.star}]]星</p>
                         <p>评价：[[${evaluation.content}]]</p>
                         <p>评价人:[[${evaluation.managerName}]]</p>
+                        <input th:value="${evaluation.id}" id="id" hidden="hidden">
                     </form>
+                    <hr>
+                    <button class="layui-btn-warm layui-btn layui-btn-radius" th:if="${evaluation.used==1}" id="cancel">
+                        取消添加到简历
+                    </button>
+                    <button class="layui-btn layui-btn-radius" th:if="${evaluation.used==0}" id="used">添加到简历</button>
                 </div>
             </div>
         </div>
@@ -148,5 +154,41 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        var id = $("#id").val();
+        $("#used").click(function () {
+            $.ajax({
+                url: "/worker/evaluation/use/" + id,
+                dataType: "Text",
+                method: "post",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href="/worker/receiveEvaluation/"+id;
+                    },1000)
+                }, error: function () {
+                    layer.msg("网络错误，操作失败");
+                }
+            })
+        });
+        $("#cancel").click(function () {
+            $.ajax({
+                url: "/worker/evaluation/cancel/" + id,
+                dataType: "Text",
+                method: "post",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href="/worker/receiveEvaluation/"+id;
+                    },1000)
+                },
+                error: function () {
+                    layer.msg("网络错误，操作失败");
+                }
+            })
+        })
+    })
+</script>
 </body>
 </html>

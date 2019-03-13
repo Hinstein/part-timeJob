@@ -40,4 +40,15 @@ public class EvaluationToWorkerService {
         return evaluationToWorkerRepository.findById(id);
     }
 
+    public void usedEvaluation(int id) {
+        evaluationToWorkerRepository.usedEvaluation(id);
+    }
+
+    public void cancelUsedEvaluation(int id) {
+        evaluationToWorkerRepository.cancelUsedEvaluation(id);
+    }
+
+    public List<EvaluationToWorker> findByWorkerIdAndUsed(int id) {
+        return evaluationToWorkerRepository.findByWorkerIdAndUsed(id, 1);
+    }
 }

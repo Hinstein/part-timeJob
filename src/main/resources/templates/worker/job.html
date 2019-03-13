@@ -63,8 +63,8 @@
             <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
                 <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
-                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
                 </dl>
             </li>
         </ul>
@@ -120,12 +120,12 @@
                     <hr>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/worker/evaluate}">
-                            我给予的评价
+                            给予的评价
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/worker/evaluated}">
-                            我收到的评价
+                            收到的评价
                         </a>
                     </div>
                 </div>
@@ -172,7 +172,7 @@
                     </div>
                     <div class="layui-form-item">
                         <div class="layui-input-right">
-                            <button class="layui-btn" id="send" type="button">走你！</button>
+                            <button class="layui-btn layui-btn-radius" id="send" type="button">走你！</button>
                         </div>
                     </div>
                 </div>

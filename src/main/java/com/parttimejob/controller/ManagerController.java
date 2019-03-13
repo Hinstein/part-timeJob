@@ -434,6 +434,8 @@ public class ManagerController {
         if (collectWorkerService.findByWorkerIdAndManagerId(id, manager.getId()) != null) {
             workerData.setCheckCollect(1);
         }
+        List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerIdAndUsed(id);
+        model.addAttribute("evaluations",evaluations);
         model.addAttribute("worker", workerData);
         return "/manager/worker";
     }
@@ -458,7 +460,7 @@ public class ManagerController {
     }
 
     @ResponseBody
-    @GetMapping("/manager/BBS/delete/{id}")
+    @PostMapping("/manager/BBS/delete/{id}")
     public String deleteBBS(@PathVariable("id") int id) {
         bbsService.deleteById(id);
         return "删除成功！";

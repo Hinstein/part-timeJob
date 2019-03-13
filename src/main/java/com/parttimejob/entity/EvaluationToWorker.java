@@ -38,6 +38,17 @@ public class EvaluationToWorker {
     @Column
     private String date;
 
+    @Column
+    private int used;
+
+    public int getUsed() {
+        return used;
+    }
+
+    public void setUsed(int used) {
+        this.used = used;
+    }
+
     public String getDate() {
         return date;
     }
