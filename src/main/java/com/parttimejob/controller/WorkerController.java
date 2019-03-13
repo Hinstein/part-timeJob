@@ -472,6 +472,19 @@ public class WorkerController {
         evaluationToWorkerService.cancelUsedEvaluation(id);
         return "取消成功！";
     }
+
+    @ResponseBody
+    @GetMapping("/worker/manager/active")
+    public Map<String, Object> managerActive(){
+        Page<Manager> managers = managerService.findManagers(1, 10);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", managers.getTotalElements());
+        JSONArray json = JSONArray.fromObject(managers.getContent());
+        result.put("data", json);
+        return result;
+    }
 }
 
 

@@ -105,6 +105,7 @@ public class ManagerController {
                 List<Job> jobs = jobService.findByManagerId(manager1.getId());
                 List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByManagerId(manager1.getId());
                 List<BBS> bbs = bbsService.findByManagerId(manager1.getId());
+                managerService.active(manager1.getId());
                 session.setAttribute("bbs", bbs.size());
                 session.setAttribute("employs", employs.size());
                 session.setAttribute("jobs", jobs.size());

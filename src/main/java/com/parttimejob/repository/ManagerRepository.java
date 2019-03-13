@@ -94,4 +94,11 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
             "m.phoneNumber= :#{#manager.phoneNumber} " +
             "WHERE m.id = :#{#manager.id}")
     void informationSave(Manager manager);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Manager a SET a.active = a.active+1 where a.id =?1")
+    void active(int id);
+
+
 }

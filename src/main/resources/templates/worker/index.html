@@ -173,6 +173,12 @@
                 </div>
             </div>
             <div class="layui-card">
+                <div class="layui-card-header">招聘者活跃排名</div>
+                <div class="layui-card-body">
+                    <table class="layui-hide" id="manager" lay-filter="test" lay-skin="line"></table>
+                </div>
+            </div>
+            <div class="layui-card">
                 <div class="layui-card-header">搜索职位</div>
                 <div class="layui-card-body">
                     <div class="demoTable">
@@ -214,6 +220,19 @@
                 , {field: 'hightPay', title: '最高工资'}
                 , {field: 'date', title: '发布时间', sort: true, width: '20%'}
                 , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}
+            ]]
+        });
+        table.render({
+            elem: '#manager'
+            , url: '/worker/manager/active' //数据接口
+            , page: false //开启分页
+            , skin: 'line'
+            , size: 'lg'
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                {field: 'name', title: '姓名'}
+                , {field: 'email', title: '邮箱'}
+                , {field: 'phoneNumber', title: '电话号码'}
             ]]
         });
         table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"

@@ -6,6 +6,7 @@ import com.parttimejob.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -139,5 +140,19 @@ public class ManagerService {
 
     public List<Manager> findAll() {
         return managerRepository.findAll();
+    }
+
+    public void active(int id) {
+        managerRepository.active(id);
+    }
+
+    @Transactional
+    public Page<Manager> findManagers(int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "active");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return managerRepository.findAll(pageable);
     }
 }
