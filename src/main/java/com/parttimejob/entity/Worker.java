@@ -26,6 +26,7 @@ public class Worker {
     @Column//省略默认列名就是属性名
     private String password;
 
+
     public Integer getId() {
         return id;
     }

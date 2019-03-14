@@ -3,101 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
-          th:href="@{/assets/layui/css/layui.css}">
-    <link rel="stylesheet" href="../frame/static/css/style.css"
-          th:href="@{/assets/css/adminLogin/admin.css}">
-    <link rel="stylesheet" href="../frame/static/css/style.css"
-          th:href="@{/assets/css/adminLogin/login.css}">
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/login.css}">
 </head>
 <body>
-
-<!--<div class="lrcon l2 Fm">-->
-<!--<div class="lrbox clearfix">-->
-<!--<div class="lr_lf">-->
-<!--<div class="lr_c">-->
-<!--<label class="l1"></label>-->
-<!--<div class="lr_cn">-->
-<!--<p>1亿+</p>-->
-<!--<div class="c_999 f12">全国注册用户数</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="lr_c">-->
-<!--<label class="l2"></label>-->
-<!--<div class="lr_cn">-->
-<!--<p>1亿+</p>-->
-<!--<div class="c_999 f12">简历库总数</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="lr_c">-->
-<!--<label class="l3"></label>-->
-<!--<div class="lr_cn">-->
-<!--<p>500万+</p>-->
-<!--<div class="c_999 f12">每日发布职位数</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="lr_c">-->
-<!--<label class="l4"></label>-->
-<!--<div class="lr_cn">-->
-<!--<p>4,200万+</p>-->
-<!--<div class="c_999 f12">每周发往企业简历数</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--&lt;!&ndash; 邮箱注册&ndash;&gt;-->
-<!--<div class="lr_rt">-->
-
-
-<!--<div class="lr_h1" id="SmsLoginBtn">-->
-<!--<span class="loginway "><a th:href="@{workerRegister}">兼职者注册</a></span>-->
-<!--<span class="gp"></span>-->
-<!--<span class="loginway on">招聘者注册</span>-->
-<!--</div>-->
-<!--<form class="layui-form">-->
-
-<!--<div class="lr_e">-->
-<!--<label><span class="err" style="display:none" id="username_err"></span>账号</label>-->
-<!--<div class="txt" style="z-index:9999;position:relative;">-->
-<!--<input class="ef" name="userName" type="text" placeholder="请输入登录账号"-->
-<!--lay-verify="required|userName">-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="lr_e">-->
-<!--<label><span class="err" style="display:none"></span>密码</label>-->
-<!--<div class="txt">-->
-<!--<input class="ef" name="password" type="password"-->
-<!--placeholder="请输入密码" lay-verify="required|pass">-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="lr_e">-->
-<!--<label><span class="err" style="display:none"></span>电话号码</label>-->
-<!--<div class="txt">-->
-<!--<input class="ef" name="phoneNumber" type="text"-->
-<!--placeholder="请输入电话号码" lay-verify="required|phone">-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="lr_e">-->
-<!--<label><span class="err" style="display:none"></span>邮箱</label>-->
-<!--<div class="txt">-->
-<!--<input class="ef" name="email" type="text"-->
-<!--placeholder="请输入邮箱" lay-verify="required|email">-->
-<!--</div>-->
-<!--</div>-->
-
-<!--<div class="btnbox">-->
-<!--<button type='button' class="p_but" id="manager" lay-submit="" lay-filter="go">注册</button>-->
-<!--</div>-->
-<!--</form>-->
-<!--<div class="lr_p">-->
-<!--已有51Job帐号，-->
-<!--<a class="a2" th:href="@{managerLogin}">直接登录</a>-->
-<!--</div>-->
-<!--</div>-->
-<!--</div>-->
-<!--<div class="lr_bm"></div>-->
-<!--</div>-->
-
 <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;padding:60px 0">
     <div class="layadmin-user-login-main">
         <div class="layadmin-user-login-box layadmin-user-login-header">
@@ -107,7 +17,7 @@
         <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
             <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
                 <ul class="layui-tab-title layui-row">
-                    <li class=" layui-col-md6"><a th:href="@{workerRegister}">我是兼职者</a></li>
+                    <li class=" layui-col-md6"><a th:href="@{/workerRegister}">我是兼职者</a></li>
                     <li class="layui-col-md6 layui-this">
                         我是招聘者
                     </li>
@@ -130,6 +40,13 @@
                                 <input type="password" name="password" id="LAY-user-login-password"
                                        lay-verify="required|password"
                                        placeholder="密码" class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layadmin-user-login-icon layui-icon layui-icon-note"
+                                       for="LAY-user-login-password"></label>
+                                <input type="text" name="name"
+                                       lay-verify="required|name"
+                                       placeholder="名字" class="layui-input">
                             </div>
                             <div class="layui-form-item">
                                 <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone"
@@ -158,7 +75,7 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
 
-                                <a th:href="@{managerLogin}"
+                                <a th:href="@{/managerLogin}"
                                    class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
 
                             </div>
@@ -182,7 +99,6 @@
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
-
     layui.use('form', function () {
         var form = layui.form;
         form.verify({
@@ -200,6 +116,9 @@
             , password: [
                 /^[\S]{6,12}$/
                 , '密码必须6到12位，且不能出现空格'
+            ], name: [
+                /^([\u4e00-\u9fa5]){2,7}$/
+                , '姓名只能是中文，长度为2-7位'
             ]
         });
         form.on('submit(manager)', function (data) {
@@ -207,7 +126,7 @@
             console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
             $.ajax({
-                url: 'manager/register',
+                url: '/manager/register',
                 method: "post",
                 data: data.field,
 
@@ -216,10 +135,9 @@
                     layer.msg(msg);
                     // //清除表单内容
                     var success = "注册成功,等待管理员审核";
-                    if (success == msg) {
-
+                    if (success === msg) {
                         setTimeout(function () {
-                            location.href = "managerLogin";
+                            location.href = "/managerLogin";
                         }, 2000);
                     }
                 },

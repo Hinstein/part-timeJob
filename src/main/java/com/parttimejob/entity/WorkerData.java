@@ -63,6 +63,18 @@ public class WorkerData {
     @Column
     private int checkCollect;
 
+
+    @Column
+    private int active;
+
+    public int getActive() {
+        return active;
+    }
+
+    public void setActive(int active) {
+        this.active = active;
+    }
+
     public int getCheckCollect() {
         return checkCollect;
     }

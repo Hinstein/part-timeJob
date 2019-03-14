@@ -410,8 +410,10 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping("/admin/job/hot")
-    public Map<String, Object> jobHot() {
-        Page<Job> jobs2 = jobService.finDescByViews(1, 10);
+    public Map<String, Object> jobHot(HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Job> jobs2 = jobService.finDescByViews(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
@@ -423,8 +425,10 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping("/admin/job/new")
-    public Map<String, Object> jobNew() {
-        Page<Job> jobs1 = jobService.finDescByTime(1, 10);
+    public Map<String, Object> jobNew(HttpServletRequest request) {
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Job> jobs1 = jobService.finDescByTime(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
@@ -434,4 +438,18 @@ public class AdminController {
         return result;
     }
 
+    @ResponseBody
+    @GetMapping("/admin/worker/active")
+    public Map<String, Object> workerActive(HttpServletRequest request){
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<WorkerData> workerData = workerDataService.workerActive(pageNumber, pageSize);
+        Map<String, Object> result = new HashMap<String, Object>();
+        result.put("code", 0);
+        result.put("msg", "");
+        result.put("count", workerData.getTotalElements());
+        JSONArray json = JSONArray.fromObject(workerData.getContent());
+        result.put("data", json);
+        return result;
+    }
 }

@@ -170,22 +170,6 @@
                             </div>
                             <div class="layui-col-md12">
                                 <div class="layui-card">
-                                    <div class="layui-card-header">数据概览</div>
-                                    <div class="layui-card-body">
-
-                                        <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade"
-                                             lay-filter="LAY-index-dataview">
-                                            <div carousel-item id="LAY-index-dataview">
-                                                <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i>
-                                                </div>
-                                                <div></div>
-                                                <div></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="layui-card">
                                     <div class="layui-tab layui-tab-brief layadmin-latestData">
                                         <ul class="layui-tab-title">
                                             <li class="layui-this">热门工作</li>
@@ -209,6 +193,14 @@
                                     <div class="layui-card-header">招聘者活跃排名</div>
                                     <div class="layui-card-body">
                                         <table class="layui-table" id="manager" lay-filter="test"
+                                               lay-skin="line">
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="layui-card">
+                                    <div class="layui-card-header">兼职者活跃排名</div>
+                                    <div class="layui-card-body">
+                                        <table class="layui-table" id="worker" lay-filter="test"
                                                lay-skin="line">
                                         </table>
                                     </div>
@@ -298,7 +290,7 @@
         table.render({
             elem: '#manager'
             , url: '/worker/manager/active' //数据接口
-            , page: false //开启分页
+            , page: true //开启分页
             , skin: 'line'
             , size: 'lg'
             , limit: 10 //每页默认显示的数量
@@ -306,12 +298,13 @@
                 {field: 'name', title: '姓名'}
                 , {field: 'email', title: '邮箱'}
                 , {field: 'phoneNumber', title: '电话号码'}
+                , {field: 'active', title: '活跃度'}
             ]]
         });
         table.render({
             elem: '#new'
             , url: '/admin/job/new' //数据接口
-            , page: false //开启分页
+            , page: true //开启分页
             , skin: 'line'
             , size: 'lg'
             , limit: 10 //每页默认显示的数量
@@ -326,7 +319,7 @@
         table.render({
             elem: '#hot'
             , url: '/admin/job/hot' //数据接口
-            , page: false //开启分页
+            , page: true //开启分页
             , skin: 'line'
             , size: 'lg'
             , limit: 10 //每页默认显示的数量
@@ -335,7 +328,21 @@
                 , {field: 'title', title: '标题'}
                 , {field: 'lowPay', title: '最低工资'}
                 , {field: 'hightPay', title: '最高工资'}
-                , {field: 'date', title: '发布时间', sort: true}
+                , {field: 'views', title: '热度', sort: true}
+            ]]
+        });
+        table.render({
+            elem: '#worker'
+            , url: '/admin/worker/active' //数据接口
+            , page: true //开启分页
+            , skin: 'line'
+            , size: 'lg'
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                {field: 'name', title: '姓名'}
+                , {field: 'email', title: '邮箱'}
+                , {field: 'phoneNumber', title: '电话号码'}
+                , {field: 'active', title: '活跃度'}
             ]]
         });
     })

@@ -70,4 +70,9 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
     //
     @Query(value = "select w from WorkerData w where w.jobIntension like CONCAT('%',?1,'%')")
     Page<WorkerData> findByJobIntensionLike(String content, Pageable pageable);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update WorkerData a SET a.active = a.active+1 where a.workerId =?1")
+    void active(int id);
 }

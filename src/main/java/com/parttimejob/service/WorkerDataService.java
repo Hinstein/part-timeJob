@@ -1,12 +1,14 @@
 package com.parttimejob.service;
 
 
+import com.parttimejob.entity.Manager;
 import com.parttimejob.entity.WorkerData;
 import com.parttimejob.repository.WorkerDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -86,5 +88,19 @@ public class WorkerDataService {
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
         return workerDataRepository.findByJobIntensionLike(content, pageable);
+    }
+
+    public void active(int id) {
+        workerDataRepository.active(id);
+    }
+
+    @Transactional
+    public Page<WorkerData> workerActive(int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "active");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return workerDataRepository.findAll(pageable);
     }
 }

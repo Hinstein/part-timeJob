@@ -102,6 +102,7 @@ public class WorkerController {
                 session.setAttribute("username", worker1.getUserName());
                 WorkerData workerData = workerDataService.findByWorkerId(worker1.getId());
                 session.setAttribute("workerData", workerData);
+                workerDataService.active(worker1.getId());
                 List<Collect> collectList = collectService.findByWorkerId(worker1.getId());
                 List<Deliver> delivers = deliverService.findByWorkerId(worker1.getId());
                 List<BBS> bbs = bbsService.findByWorkerId(worker1.getId());
@@ -475,8 +476,10 @@ public class WorkerController {
 
     @ResponseBody
     @GetMapping("/worker/manager/active")
-    public Map<String, Object> managerActive(){
-        Page<Manager> managers = managerService.findManagers(1, 10);
+    public Map<String, Object> managerActive(HttpServletRequest request){
+        int pageSize = Integer.parseInt(request.getParameter("limit"));
+        int pageNumber = Integer.parseInt(request.getParameter("page"));
+        Page<Manager> managers = managerService.findManagers(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
@@ -485,6 +488,9 @@ public class WorkerController {
         result.put("data", json);
         return result;
     }
+
+
+
 }
 
 
