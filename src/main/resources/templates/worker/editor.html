@@ -141,14 +141,14 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧密码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" autocomplete="off" placeholder="请输入旧密码"
+                                <input type="text" name="title" autocomplete="off" lay-verify="required|password" placeholder="请输入旧密码"
                                        class="layui-input" id="oldPassword">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">新密码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="username" lay-verify="required" placeholder="请输入新密码"
+                                <input type="text" name="username" lay-verify="required|password" placeholder="请输入新密码"
                                        autocomplete="off" class="layui-input" id="newPassword">
                             </div>
                         </div>
@@ -169,8 +169,15 @@
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
-    $(function () {
-        $("#worker").click(function () {
+    layui.use('form', function () {
+        var form = layui.form;
+        form.verify({
+             password: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+        });
+        form.on('submit(formDemo)', function (data) {
             $.ajax({
                 url: '/worker/editor/save',
                 method: "post",
@@ -188,9 +195,10 @@
                 error: function () {
                     layer.msg("网络错误，登录失败");
                 }
-            })
-        })
-    })
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
 </script>
 </body>
 </html>

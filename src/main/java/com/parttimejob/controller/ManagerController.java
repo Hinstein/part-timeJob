@@ -216,7 +216,9 @@ public class ManagerController {
     public String workerInformation(@PathVariable("id") int id, Model model, HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
-        session.setAttribute("workerId", id);
+//        session.setAttribute("workerId", id);
+        List<EvaluationToWorker> evaluation =evaluationToWorkerService.findByWorkerId(id);
+       model.addAttribute("evaluations",evaluation);
         return "/manager/worker";
     }
 
@@ -228,11 +230,11 @@ public class ManagerController {
      * @return
      */
     @ResponseBody
-    @PostMapping("/employ")
-    public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map) {
+    @PostMapping("/employ/{id}")
+    public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map,@PathVariable("id")int id) {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
         Manager manager = (Manager) session.getAttribute("manager");
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+        int workerId = id;
         Employ employ = employService.findByWorkerIdAndManagerId(workerId, manager.getId());
         String date = map.get("date");
         String time = map.get("time");
@@ -321,13 +323,13 @@ public class ManagerController {
     /**
      * 安排员工面试时间页面
      *
-     * @param session
+     * @param
      * @param model
      * @return
      */
-    @GetMapping("/manager/deliver/worker/setTime")
-    public String cancelEmployee(HttpSession session, Model model) {
-        int workerId = Integer.parseInt(session.getAttribute("workerId").toString());
+    @GetMapping("/manager/deliver/worker/setTime/{id}")
+    public String cancelEmployee(@PathVariable("id") int id, Model model) {
+        int workerId = id;
         WorkerData workerData = workerDataService.findByWorkerId(workerId);
         model.addAttribute("worker", workerData);
         return "/manager/setTime";
@@ -436,6 +438,7 @@ public class ManagerController {
             workerData.setCheckCollect(1);
         }
         List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerIdAndUsed(id);
+        model.addAttribute("evaluationHidden",1);
         model.addAttribute("evaluations",evaluations);
         model.addAttribute("worker", workerData);
         return "/manager/worker";
@@ -641,5 +644,14 @@ public class ManagerController {
         List<Message> messages =messageService.findByManagerId(manager.getId());
         model.addAttribute("messages",messages);
         return "/manager/message";
+    }
+
+    @ResponseBody
+    @PostMapping("/manager/deliver/cancel/{id}")
+    public String deliverCancel(@PathVariable("id")int workerId,HttpSession session){
+        int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
+        deliverService.delete(workerId,jobId);
+            return "已拒绝录用";
+
     }
 }

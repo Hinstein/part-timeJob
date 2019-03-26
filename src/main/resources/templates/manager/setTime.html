@@ -161,24 +161,25 @@
             <div class="layui-card">
                 <div class="layui-card-header">请为[[${worker.name}]]安排面试时间</div>
                 <div class="layui-card-body">
-                    <div class="layui-form">
+                    <form class="layui-form">
                         <div class="layui-form-item">
                             <div class="layui-inline">
                                 <label class="layui-form-label">请选择日期</label>
                                 <div class="layui-input-inline">
                                     <input type="text" class="layui-input" id="date"
-                                           placeholder="yyyy年MM月dd日">
+                                           placeholder="yyyy年MM月dd日" lay-verify="required">
+                                    <input th:value="${worker.workerId}" id="workerId" hidden="hidden">
                                 </div>
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">请选择时间</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="time" placeholder="H点m分">
+                                    <input type="text" class="layui-input" id="time" placeholder="H点m分" lay-verify="required">
                                 </div>
                             </div>
                         </div>
-                        <button class="layui-btn  layui-btn-radius" id="save" type="button">录用</button>
-                    </div>
+                        <button class="layui-btn  layui-btn-radius" lay-submit lay-filter="manager">录用</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -187,7 +188,7 @@
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
-    layui.use('laydate', function () {
+    layui.use(['laydate', 'form'], function () {
         var laydate = layui.laydate;
 
         //执行一个laydate实例
@@ -200,13 +201,13 @@
             elem: '#time'
             , type: 'time'
         });
-    });
-    $(function () {
-        $('#save').click(function () {
+        var form = layui.form;
+        form.on('submit(manager)', function (data) {
             var date = $('#date').val();
             var time = $('#time').val();
+            var workerId=$("#workerId").val();
             $.ajax({
-                url: '/employ',
+                url: '/employ/'+workerId,
                 method: "post",
                 data: {
                     'date': date,
@@ -224,8 +225,9 @@
             setTimeout(function () {
                 location.href = "/manager/employ";
             }, 2000);
-        })
-    })
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+    });
 </script>
 </body>
 </html>

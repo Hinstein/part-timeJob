@@ -194,20 +194,21 @@
 
                         <hr>
                     </div>
-                    <div th:if="${worker.checkCollect}==0">
-                        <button class="layui-btn  layui-btn-radius" id="pass" type="button">录用
+
+
+                        <button class="layui-btn  layui-btn-radius" id="save" th:if="${worker.checkCollect}==0">收藏
                         </button>
-                        <button class="layui-btn  layui-btn-radius" id="save">收藏
-                        </button>
-                    </div>
                     <button th:if="${worker.checkCollect}==1" class="layui-btn layui-btn-warm layui-btn-radius"
                             id="cancelSave">已收藏
                     </button>
-                    <input hidden="hidden" th:value="${worker.id}" id="workerDataId" name="id">
-                    <input hidden="hidden" th:value="${worker.workerId}" id="workerId" name="id">
+                    <button class="layui-btn  layui-btn-radius" id="pass" th:if="${evaluationHidden}==null" type="button">录用
+                    </button>
                     <button class="layui-btn  layui-btn-radius"
                             id="evaluation" th:if="${evaluations.size()!=0}">查看他的评价
                     </button>
+                    <input hidden="hidden" th:value="${worker.id}" id="workerDataId" name="id">
+                    <input hidden="hidden" th:value="${worker.workerId}" id="workerId" name="id">
+
                 </div>
             </div>
         </div>
@@ -220,7 +221,8 @@
     $(function () {
         $('#pass').click(function () {
             layer.confirm('是否录用该名职工么', function (index) {
-                location.href = "/manager/deliver/worker/setTime"
+                var id = $("#workerId").val();
+                location.href = "/manager/deliver/worker/setTime/"+id;
             });
         });
 

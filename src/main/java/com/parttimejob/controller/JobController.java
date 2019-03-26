@@ -215,14 +215,14 @@ public class JobController {
     /**
      * 取消收藏
      *
-     * @param map
+     * @param
      * @param session
      * @return
      */
     @ResponseBody
     @PostMapping(value = "/worker/job/cancelSave")
-    public String cancelSaveJob(@RequestParam HashMap<String, String> map, HttpSession session) {
-        int jobId = Integer.parseInt(map.get("id"));
+    public String cancelSaveJob(HttpServletRequest request, HttpSession session) {
+        int jobId = Integer.valueOf(request.getParameter("id"));
         Worker worker = (Worker) session.getAttribute("worker");
         collectService.delete(worker.getId(), jobId);
         jobService.collectionCancel(jobId);
