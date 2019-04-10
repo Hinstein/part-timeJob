@@ -90,32 +90,44 @@ public class ManagerController {
      */
     @ResponseBody
     @PostMapping("/manager/login")
-    public String managerLogin(Manager manager, HttpSession session) {
-        String username = manager.getUserName();
-        String password = manager.getPassword();
-        Manager manager1 = managerService.findByUserName(username);
-        if (manager1 != null) {
-            if (manager1.getPassword().equals(password)) {
-                if (manager1.getAudit() == 0) {
-                    return "该账号正在审核中，请等待的管理员审核";
+    public Map<String,String> managerLogin(Manager manager, HttpSession session, HttpServletRequest request) {
+        Map<String,String> map=new HashMap<>();
+        String rightCode = (String) request.getSession().getAttribute("rightCode");
+        String tryCode = request.getParameter("tryCode");
+        System.out.println(rightCode+tryCode);
+        if (tryCode.equals(rightCode)) {
+            System.out.println("111111");
+            String username = manager.getUserName();
+            String password = manager.getPassword();
+            Manager manager1 = managerService.findByUserName(username);
+            if (manager1 != null) {
+                if (manager1.getPassword().equals(password)) {
+                    if (manager1.getAudit() == 0) {
+                        map.put("error","该账号正在审核中，请等待的管理员审核");
+                        return map;
+                    }
+                    session.setAttribute("manager", manager1);
+                    session.setAttribute("username", manager1.getUserName());
+                    List<Employ> employs = employService.findByManagerId(manager1.getId());
+                    List<Job> jobs = jobService.findByManagerId(manager1.getId());
+                    List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByManagerId(manager1.getId());
+                    List<BBS> bbs = bbsService.findByManagerId(manager1.getId());
+                    managerService.active(manager1.getId());
+                    session.setAttribute("bbs", bbs.size());
+                    session.setAttribute("employs", employs.size());
+                    session.setAttribute("jobs", jobs.size());
+                    session.setAttribute("evaluations", evaluations.size());
+                    map.put("success","登录成功");
+                    return map;
                 }
-                session.setAttribute("manager", manager1);
-                session.setAttribute("username", manager1.getUserName());
-                List<Employ> employs = employService.findByManagerId(manager1.getId());
-                List<Job> jobs = jobService.findByManagerId(manager1.getId());
-                List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByManagerId(manager1.getId());
-                List<BBS> bbs = bbsService.findByManagerId(manager1.getId());
-                managerService.active(manager1.getId());
-                session.setAttribute("bbs", bbs.size());
-                session.setAttribute("employs", employs.size());
-                session.setAttribute("jobs", jobs.size());
-                session.setAttribute("evaluations", evaluations.size());
-                return "登录成功";
+                map.put("error","密码错误");
+                return map;
             }
-            return "密码错误";
+            map.put("error","不存在该用户");
+            return map;
         }
-
-        return "不存在该用户";
+        map.put("error","验证码错误");
+        return map;
     }
 
     @GetMapping("/manager/exit")
@@ -217,8 +229,8 @@ public class ManagerController {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
 //        session.setAttribute("workerId", id);
-        List<EvaluationToWorker> evaluation =evaluationToWorkerService.findByWorkerId(id);
-       model.addAttribute("evaluations",evaluation);
+        List<EvaluationToWorker> evaluation = evaluationToWorkerService.findByWorkerId(id);
+        model.addAttribute("evaluations", evaluation);
         return "/manager/worker";
     }
 
@@ -231,7 +243,7 @@ public class ManagerController {
      */
     @ResponseBody
     @PostMapping("/employ/{id}")
-    public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map,@PathVariable("id")int id) {
+    public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map, @PathVariable("id") int id) {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
         Manager manager = (Manager) session.getAttribute("manager");
         int workerId = id;
@@ -433,13 +445,13 @@ public class ManagerController {
     public String workerInformations(@PathVariable("id") int id, Model model, HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
         WorkerData workerData = workerDataService.findByWorkerId(id);
-        session.setAttribute("workerId",workerData.getWorkerId());
+        session.setAttribute("workerId", workerData.getWorkerId());
         if (collectWorkerService.findByWorkerIdAndManagerId(id, manager.getId()) != null) {
             workerData.setCheckCollect(1);
         }
         List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerIdAndUsed(id);
-        model.addAttribute("evaluationHidden",1);
-        model.addAttribute("evaluations",evaluations);
+        model.addAttribute("evaluationHidden", 1);
+        model.addAttribute("evaluations", evaluations);
         model.addAttribute("worker", workerData);
         return "/manager/worker";
     }
@@ -639,19 +651,19 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/message")
-    public String managerMessage(HttpSession session,Model model){
+    public String managerMessage(HttpSession session, Model model) {
         Manager manager = (Manager) session.getAttribute("manager");
-        List<Message> messages =messageService.findByManagerId(manager.getId());
-        model.addAttribute("messages",messages);
+        List<Message> messages = messageService.findByManagerId(manager.getId());
+        model.addAttribute("messages", messages);
         return "/manager/message";
     }
 
     @ResponseBody
     @PostMapping("/manager/deliver/cancel/{id}")
-    public String deliverCancel(@PathVariable("id")int workerId,HttpSession session){
+    public String deliverCancel(@PathVariable("id") int workerId, HttpSession session) {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
-        deliverService.delete(workerId,jobId);
-            return "已拒绝录用";
+        deliverService.delete(workerId, jobId);
+        return "已拒绝录用";
 
     }
 }

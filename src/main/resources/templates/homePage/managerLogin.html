@@ -31,14 +31,31 @@
                             <div class="layui-form-item">
                                 <label class="layadmin-user-login-icon layui-icon layui-icon-username"
                                 ></label>
-                                <input type="text" name="userName" lay-verify="required|userName" placeholder="用户名"
+                                <input type="text" name="userName" id="userName" lay-verify="required|userName"
+                                       placeholder="用户名"
                                        class="layui-input">
                             </div>
                             <div class="layui-form-item">
                                 <label class="layadmin-user-login-icon layui-icon layui-icon-password"
                                 ></label>
-                                <input type="password" name="password" lay-verify="required|password" placeholder="密码"
+                                <input type="password" name="password" id="password" lay-verify="required|password"
+                                       placeholder="密码"
                                        class="layui-input">
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-row">
+                                    <div class="layui-col-xs7">
+                                        <label class="layadmin-user-login-icon layui-icon layui-icon-vercode"></label>
+                                        <input type="text" name="vercode" id="tryCode" lay-verify="required"
+                                               placeholder="图形验证码" class="layui-input">
+                                    </div>
+                                    <div class="layui-col-xs5">
+                                        <div style="margin-left: 10px;">
+                                            <img onclick="this.src='/defaultKaptcha?d='+new Date()*1"
+                                                 th:src="@{/defaultKaptcha}" id="code">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="layui-form-item" style="margin-bottom: 20px;">
@@ -46,7 +63,7 @@
                                 <a href="" class="layadmin-user-jump-change layadmin-link" style="margin-top: 7px;">忘记密码？</a>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="manager">
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="worker">
                                     登 录
                                 </button>
                             </div>
@@ -55,8 +72,8 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-                                <a th:href="@{/managerRegister}"
-                                   class="layadmin-user-jump-change layadmin-link">注册帐号</a>
+
+                                <a th:href="@{/workerRegister}" class="layadmin-user-jump-change layadmin-link">注册帐号</a>
                             </div>
                         </form>
                     </div>
@@ -97,19 +114,27 @@
                 , '密码必须6到12位，且不能出现空格'
             ]
         });
-        form.on('submit(manager)', function (data) {
+        form.on('submit(worker)', function (data) {
+            var userName = $("#userName").val();
+            var password = $("#password").val();
+            var tryCode = $("#tryCode").val();
             $.ajax({
                 url: '/manager/login',
                 method: "post",
-                data: data.field,
-                dataType: "text",
+                data: {
+                    userName: userName,
+                    password: password,
+                    tryCode: tryCode
+                },
+                dataType: "json",
                 success: function (msg) {
                     // //清除表单内容
-                    var success = "登录成功";
-                    if (success === msg) {
-                        location.href = "/manager/index";
+                    if (msg.success) {
+                        location.href = "/worker/index";
+                    } else {
+                        layer.msg(msg.error, {time: 2000, icon: 5, shift: 6});
+                        $("#code").click();
                     }
-                    layer.msg(msg);
                 },
                 error: function () {
                     layer.msg("网络错误，注册失败");

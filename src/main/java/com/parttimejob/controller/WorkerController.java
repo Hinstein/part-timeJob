@@ -92,30 +92,40 @@ public class WorkerController {
      */
     @ResponseBody
     @PostMapping("/worker/login")
-    public String workerLogin(Worker worker, HttpSession session) {
-        String username = worker.getUserName();
-        String password = worker.getPassword();
-        Worker worker1 = workerService.findByUserName(username);
-        if (worker1 != null) {
-            if (worker1.getPassword().equals(password)) {
-                session.setAttribute("worker", worker1);
-                session.setAttribute("username", worker1.getUserName());
-                WorkerData workerData = workerDataService.findByWorkerId(worker1.getId());
-                session.setAttribute("workerData", workerData);
-                workerDataService.active(worker1.getId());
-                List<Collect> collectList = collectService.findByWorkerId(worker1.getId());
-                List<Deliver> delivers = deliverService.findByWorkerId(worker1.getId());
-                List<BBS> bbs = bbsService.findByWorkerId(worker1.getId());
-                List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerId(worker1.getId());
-                session.setAttribute("collectList", collectList.size());
-                session.setAttribute("delivers", delivers.size());
-                session.setAttribute("bbs", bbs.size());
-                session.setAttribute("evaluations", evaluations.size());
-                return "登录成功";
+    public Map<String,String> workerLogin(Worker worker, HttpSession session, HttpServletRequest request) {
+        Map<String,String> map=new HashMap<>();
+        String rightCode = (String) request.getSession().getAttribute("rightCode");
+        String tryCode = request.getParameter("tryCode");
+        if(tryCode.equals(rightCode)) {
+            String username = worker.getUserName();
+            String password = worker.getPassword();
+            Worker worker1 = workerService.findByUserName(username);
+            if (worker1 != null) {
+                if (worker1.getPassword().equals(password)) {
+                    session.setAttribute("worker", worker1);
+                    session.setAttribute("username", worker1.getUserName());
+                    WorkerData workerData = workerDataService.findByWorkerId(worker1.getId());
+                    session.setAttribute("workerData", workerData);
+                    workerDataService.active(worker1.getId());
+                    List<Collect> collectList = collectService.findByWorkerId(worker1.getId());
+                    List<Deliver> delivers = deliverService.findByWorkerId(worker1.getId());
+                    List<BBS> bbs = bbsService.findByWorkerId(worker1.getId());
+                    List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerId(worker1.getId());
+                    session.setAttribute("collectList", collectList.size());
+                    session.setAttribute("delivers", delivers.size());
+                    session.setAttribute("bbs", bbs.size());
+                    session.setAttribute("evaluations", evaluations.size());
+                    map.put("success","登录成功");
+                    return map;
+                }
+                map.put("error","密码错误");
+                return map;
             }
-            return "密码错误";
+            map.put("error","不存在该用户");
+            return map;
         }
-        return "不存在该用户";
+        map.put("error","验证码错误");
+        return map;
     }
 
 

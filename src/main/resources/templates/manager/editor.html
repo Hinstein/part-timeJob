@@ -165,15 +165,22 @@
                         <div class="layui-form-item">
                             <label class="layui-form-label">旧密码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="title" autocomplete="off" lay-verify="required|password" placeholder="请输入旧密码"
+                                <input type="password" name="title" autocomplete="off" lay-verify="required|password" placeholder="请输入旧密码"
                                        class="layui-input" id="oldPassword">
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <label class="layui-form-label">新密码</label>
                             <div class="layui-input-block">
-                                <input type="text" name="username" lay-verify="required|password" placeholder="请输入新密码"
+                                <input type="password" name="username" lay-verify="required|password" placeholder="请输入新密码"
                                        autocomplete="off" class="layui-input" id="newPassword">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">新密码</label>
+                            <div class="layui-input-block">
+                                <input type="password"  lay-verify="required|password" placeholder="请输入新密码"
+                                       autocomplete="off" class="layui-input" id="tryPassword">
                             </div>
                         </div>
 
@@ -203,12 +210,17 @@
             ]
         });
         form.on('submit(formDemo)', function (data) {
+            var oldPassword=$('#oldPassword').val();
+            var newPassword=$('#newPassword').val();
+            var tryPassword=$('#tryPassword').val();
+            if(tryPassword===newPassword)
+            {
             $.ajax({
                 url: '/manager/editor/save',
                 method: "post",
                 data: {
-                    "oldPassword": $('#oldPassword').val(),
-                    "newPassword": $('#newPassword').val()
+                    oldPassword: oldPassword,
+                    newPassword: newPassword
                 },
                 dataType: "text",
                 success: function (msg) {
@@ -220,7 +232,10 @@
                 error: function () {
                     layer.msg("网络错误，登录失败");
                 }
-            });
+            });}
+            else {
+                layer.msg("两次密码不一致，请重新输入！");
+            }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
     });
