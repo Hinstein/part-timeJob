@@ -92,11 +92,11 @@ public class WorkerController {
      */
     @ResponseBody
     @PostMapping("/worker/login")
-    public Map<String,String> workerLogin(Worker worker, HttpSession session, HttpServletRequest request) {
-        Map<String,String> map=new HashMap<>();
+    public Map<String, String> workerLogin(Worker worker, HttpSession session, HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
         String rightCode = (String) request.getSession().getAttribute("rightCode");
         String tryCode = request.getParameter("tryCode");
-        if(tryCode.equals(rightCode)) {
+        if (tryCode.equals(rightCode)) {
             String username = worker.getUserName();
             String password = worker.getPassword();
             Worker worker1 = workerService.findByUserName(username);
@@ -115,16 +115,16 @@ public class WorkerController {
                     session.setAttribute("delivers", delivers.size());
                     session.setAttribute("bbs", bbs.size());
                     session.setAttribute("evaluations", evaluations.size());
-                    map.put("success","登录成功");
+                    map.put("success", "登录成功");
                     return map;
                 }
-                map.put("error","密码错误");
+                map.put("error", "密码错误");
                 return map;
             }
-            map.put("error","不存在该用户");
+            map.put("error", "不存在该用户");
             return map;
         }
-        map.put("error","验证码错误");
+        map.put("error", "验证码错误");
         return map;
     }
 
@@ -457,9 +457,9 @@ public class WorkerController {
 
     @ResponseBody
     @PostMapping("/worker/sendMessage")
-    public String saveMessage(Message message,HttpSession session){
-        Worker worker =(Worker)session.getAttribute("worker");
-        WorkerData workerData= workerDataService.findByWorkerId(worker.getId());
+    public String saveMessage(Message message, HttpSession session) {
+        Worker worker = (Worker) session.getAttribute("worker");
+        WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
         message.setWorkerId(worker.getId());
         message.setWorkerName(workerData.getName());
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -470,7 +470,7 @@ public class WorkerController {
 
     @ResponseBody
     @PostMapping("/worker/evaluation/use/{id}")
-    public String evaluationUsed(@PathVariable("id") int id){
+    public String evaluationUsed(@PathVariable("id") int id) {
 
         evaluationToWorkerService.usedEvaluation(id);
         return "添加成功";
@@ -478,15 +478,14 @@ public class WorkerController {
 
     @ResponseBody
     @PostMapping("/worker/evaluation/cancel/{id}")
-    public String evaluationCancel(@PathVariable("id") int id)
-    {
+    public String evaluationCancel(@PathVariable("id") int id) {
         evaluationToWorkerService.cancelUsedEvaluation(id);
         return "取消成功！";
     }
 
     @ResponseBody
     @GetMapping("/worker/manager/active")
-    public Map<String, Object> managerActive(HttpServletRequest request){
+    public Map<String, Object> managerActive(HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Page<Manager> managers = managerService.findManagers(pageNumber, pageSize);
@@ -498,7 +497,6 @@ public class WorkerController {
         result.put("data", json);
         return result;
     }
-
 
 
 }

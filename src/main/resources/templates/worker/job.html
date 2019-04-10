@@ -276,34 +276,34 @@
         layer.msg("您以评价过该招聘者");
     });
     $("#message").click(function () {
-            $("#test").show();
-            layer.close(layer.index);
+        $("#test").show();
+        layer.close(layer.index);
     });
     $("#send").click(function () {
         layer.confirm('是否给招聘者留言', function (index) {
-        var managerId = $("#managerId").val();
-        var jobId = $("#jobId").val();
-        var content =$("#content").val();
-        $.ajax({
-            url: "/worker/sendMessage" ,
-            method: "post",
-            data: {
-                managerId: managerId,
-                jobId: jobId,
-                content:content
-            },
-            dataType: "text",
-            success: function (msg) {
-                layer.msg(msg);
-                setTimeout(function () {
-                    location.href = "/worker/job/" + jobId;
-                },2000);
+            var managerId = $("#managerId").val();
+            var jobId = $("#jobId").val();
+            var content = $("#content").val();
+            $.ajax({
+                url: "/worker/sendMessage",
+                method: "post",
+                data: {
+                    managerId: managerId,
+                    jobId: jobId,
+                    content: content
+                },
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                    setTimeout(function () {
+                        location.href = "/worker/job/" + jobId;
+                    }, 2000);
 
-            },
-            error: function () {
-                layer.msg("网络错误，登录失败");
-            }
-        });
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
         })
     });
 </script>

@@ -20,11 +20,11 @@ public class MessageService {
     @Autowired
     MessageRepository messageRepository;
 
-    public void save(Message message){
+    public void save(Message message) {
         messageRepository.save(message);
     }
 
-    public List<Message> findByManagerId(int id){
+    public List<Message> findByManagerId(int id) {
         return messageRepository.findByManagerId(id);
     }
 }

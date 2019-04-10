@@ -440,7 +440,7 @@ public class AdminController {
 
     @ResponseBody
     @GetMapping("/admin/worker/active")
-    public Map<String, Object> workerActive(HttpServletRequest request){
+    public Map<String, Object> workerActive(HttpServletRequest request) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Page<WorkerData> workerData = workerDataService.workerActive(pageNumber, pageSize);

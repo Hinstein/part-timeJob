@@ -12,7 +12,7 @@ import java.util.List;
  * @CreateTime: 2019-03-12 16:24
  * @Description:
  */
-public interface MessageRepository extends JpaRepository<Message,Integer> {
+public interface MessageRepository extends JpaRepository<Message, Integer> {
 
     List<Message> findByManagerId(int id);
 }

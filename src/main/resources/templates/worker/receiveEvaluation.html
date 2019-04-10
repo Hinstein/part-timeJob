@@ -165,8 +165,8 @@
                 success: function (msg) {
                     layer.msg(msg);
                     setTimeout(function () {
-                        location.href="/worker/receiveEvaluation/"+id;
-                    },1000)
+                        location.href = "/worker/receiveEvaluation/" + id;
+                    }, 1000)
                 }, error: function () {
                     layer.msg("网络错误，操作失败");
                 }
@@ -180,8 +180,8 @@
                 success: function (msg) {
                     layer.msg(msg);
                     setTimeout(function () {
-                        location.href="/worker/receiveEvaluation/"+id;
-                    },1000)
+                        location.href = "/worker/receiveEvaluation/" + id;
+                    }, 1000)
                 },
                 error: function () {
                     layer.msg("网络错误，操作失败");

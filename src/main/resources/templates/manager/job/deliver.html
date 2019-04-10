@@ -205,7 +205,7 @@
                 , {field: 'age', title: '年龄'}
                 , {field: 'jobIntension', title: '求职意向'}
                 , {field: 'expectation', title: '期望薪资', sort: true}
-                , {fixed: 'right', title: '操作', toolbar: '#action',width: 180}
+                , {fixed: 'right', title: '操作', toolbar: '#action', width: 180}
             ]]
         });
         table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
@@ -214,11 +214,11 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'see') { //通过
                 location.href = "/manager/deliver/worker/" + data.workerId;
-            }else if (layEvent === 'pass') { //通过
+            } else if (layEvent === 'pass') { //通过
                 layer.confirm('是否录用该员工', function (index) {
-                    location.href = "/manager/deliver/worker/setTime/"+data.workerId;
+                    location.href = "/manager/deliver/worker/setTime/" + data.workerId;
                 })
-            } else  if (layEvent === 'delete') { //通过
+            } else if (layEvent === 'delete') { //通过
                 layer.confirm('是否拒绝录用该员工', function (index) {
                     $.ajax({
                         url: '/manager/deliver/cancel/' + data.workerId,

@@ -90,11 +90,11 @@ public class ManagerController {
      */
     @ResponseBody
     @PostMapping("/manager/login")
-    public Map<String,String> managerLogin(Manager manager, HttpSession session, HttpServletRequest request) {
-        Map<String,String> map=new HashMap<>();
+    public Map<String, String> managerLogin(Manager manager, HttpSession session, HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
         String rightCode = (String) request.getSession().getAttribute("rightCode");
         String tryCode = request.getParameter("tryCode");
-        System.out.println(rightCode+tryCode);
+        System.out.println(rightCode + tryCode);
         if (tryCode.equals(rightCode)) {
             System.out.println("111111");
             String username = manager.getUserName();
@@ -103,7 +103,7 @@ public class ManagerController {
             if (manager1 != null) {
                 if (manager1.getPassword().equals(password)) {
                     if (manager1.getAudit() == 0) {
-                        map.put("error","该账号正在审核中，请等待的管理员审核");
+                        map.put("error", "该账号正在审核中，请等待的管理员审核");
                         return map;
                     }
                     session.setAttribute("manager", manager1);
@@ -117,16 +117,16 @@ public class ManagerController {
                     session.setAttribute("employs", employs.size());
                     session.setAttribute("jobs", jobs.size());
                     session.setAttribute("evaluations", evaluations.size());
-                    map.put("success","登录成功");
+                    map.put("success", "登录成功");
                     return map;
                 }
-                map.put("error","密码错误");
+                map.put("error", "密码错误");
                 return map;
             }
-            map.put("error","不存在该用户");
+            map.put("error", "不存在该用户");
             return map;
         }
-        map.put("error","验证码错误");
+        map.put("error", "验证码错误");
         return map;
     }
 

@@ -34,5 +34,5 @@ public interface EvaluationToWorkerRepository extends JpaRepository<EvaluationTo
     @Query(value = "update EvaluationToWorker a SET a.used = 0 where id =?1")
     void cancelUsedEvaluation(int id);
 
-    List<EvaluationToWorker> findByWorkerIdAndUsed(int id,int used);
+    List<EvaluationToWorker> findByWorkerIdAndUsed(int id, int used);
 }

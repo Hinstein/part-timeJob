@@ -174,7 +174,8 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">请选择时间</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" class="layui-input" id="time" placeholder="H点m分" lay-verify="required">
+                                    <input type="text" class="layui-input" id="time" placeholder="H点m分"
+                                           lay-verify="required">
                                 </div>
                             </div>
                         </div>
@@ -205,9 +206,9 @@
         form.on('submit(manager)', function (data) {
             var date = $('#date').val();
             var time = $('#time').val();
-            var workerId=$("#workerId").val();
+            var workerId = $("#workerId").val();
             $.ajax({
-                url: '/employ/'+workerId,
+                url: '/employ/' + workerId,
                 method: "post",
                 data: {
                     'date': date,
