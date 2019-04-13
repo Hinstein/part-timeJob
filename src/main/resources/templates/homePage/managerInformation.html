@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/login.css}">
+</head>
+<body>
+<div class="layui-card">
+    <div class="layui-card-body">
+        <div class="layui-row" id="popSearchRoleTest">
+            <div class="layui-col-md11">
+                <form class="layui-form" action="" lay-filter="example">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">商家名称</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="vendorName" lay-verify="required" autocomplete="off"
+                                   placeholder="请输入商家名称" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">详细地址</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="address" lay-verify="required|name" placeholder="请输入商家地址"
+                                   autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">注册时间</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="vendorTime" lay-verify="required|name" placeholder="请输入注册时间"
+                                   autocomplete="off" class="layui-input" id="test1">
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"><button type="button" class="layui-btn layui-btn-warm" id="put">许可证</button></label>
+                        <div class="layui-input-block">
+                            <div class="layui-upload-list">
+                                <img class="layui-upload-img" id="demo1" style="width: 160px">
+                                <p id="demoText"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <input name="id" hidden="hidden">
+                            <button class="layui-btn" lay-submit="" lay-filter="save">申请招聘者</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    layui.use('laydate', function () {
+        var laydate = layui.laydate, upload = layui.upload, form = layui.form;
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+        });
+        form.verify({
+            name: [
+                /^([\u4e00-\u9fa5]){2,7}$/
+                , '姓名只能是中文，长度为2-7位'
+            ],
+            money: [
+                /^(?:(?!0)\d{1,8}|10{8})$/
+                , '投保金额为1-100000000'
+            ],
+            relation: [
+                /^([\u4e00-\u9fa5]){2,7}$/
+                , '关系只能是中文，长度为2-7位'
+            ]
+        });
+        form.on('submit(save)', function (data) {
+            console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+            $.ajax({
+                url: "/update/insurance/save",
+                method: "post",
+                data: data.field,
+                dataType: "json",
+                success: function (msg) {
+                    // //清除表单内容
+                    layer.msg(msg.success);
+                },
+                error: function () {
+                    layer.msg("网络错误，注册失败");
+                }
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+        //各种基于事件的操作，下面会有进一步介绍
+
+        var uploadInst = upload.render({
+            elem: '#put'
+            , url: ''
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

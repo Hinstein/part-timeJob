@@ -61,12 +61,45 @@
                                        placeholder="邮箱" class="layui-input">
                             </div>
 
+<!--                            <div class="layui-form-item">-->
+<!--                                <label class="layadmin-user-login-icon layui-icon layui-icon-user"-->
+<!--                                ></label>-->
+<!--                                <input type="text" name="vendorName" lay-verify="required"-->
+<!--                                       placeholder="商家名称" class="layui-input">-->
+<!--                            </div>-->
+<!--                            <div class="layui-form-item">-->
+<!--                                <label class="layadmin-user-login-icon layui-icon layui-icon-location"-->
+<!--                                ></label>-->
+<!--                                <input type="text" name="address" lay-verify="required"-->
+<!--                                       placeholder="商家地址" class="layui-input">-->
+<!--                            </div>-->
+<!--                            <div class="layui-form-item">-->
+<!--                                <label class="layadmin-user-login-icon layui-icon layui-icon-date"-->
+<!--                                ></label>-->
+<!--                                <input type="text" name="vendorTime" lay-verify="required"-->
+<!--                                       placeholder="商家注册时间" class="layui-input">-->
+<!--                            </div>-->
+<!--                            <div class="layui-form-item">-->
+<!--                                <label class="layadmin-user-login-icon layui-icon layui-icon-survey"-->
+<!--                                ></label>-->
+<!--                                <input type="text" name="vendorPermission" lay-verify="required"-->
+<!--                                       placeholder="经营许可证" class="layui-input">-->
+<!--                            </div>-->
+<!--                            <div class="layui-form-item">-->
+<!--                                <div class="layui-upload">-->
+<!--                                    <button type="button" class="layui-btn" id="test1"><i class="layui-icon"></i>上传经营许可证-->
+<!--                                    </button>-->
+<!--                                    <div class="layui-upload-list">-->
+<!--                                        <img class="layui-upload-img" id="demo1" style="width: 160px">-->
+<!--                                        <p id="demoText"></p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="layui-form-item">
                                 <input type="checkbox" name="agreement" lay-skin="primary" title="同意用户协议" checked>
                             </div>
                             <div class="layui-form-item">
-                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="manager">注
-                                    册
+                                <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="manager">注 册
                                 </button>
                             </div>
                             <div class="layui-trans layui-form-item layadmin-user-login-other">
@@ -74,10 +107,8 @@
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-qq"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-wechat"></i></a>
                                 <a href="javascript:;"><i class="layui-icon layui-icon-login-weibo"></i></a>
-
                                 <a th:href="@{/managerLogin}"
                                    class="layadmin-user-jump-change layadmin-link layui-hide-xs">用已有帐号登入</a>
-
                             </div>
                         </form>
                     </div>
@@ -85,22 +116,13 @@
             </div>
         </div>
     </div>
-    <div class="layui-trans layadmin-user-login-footer">
-
-        <p>© 2018 <a href="http://www.layui.com/" target="_blank">layui.com</a></p>
-        <p>
-            <span><a href="http://www.layui.com/admin/#get" target="_blank">获取授权</a></span>
-            <span><a href="http://www.layui.com/admin/pro/" target="_blank">在线演示</a></span>
-            <span><a href="http://www.layui.com/admin/" target="_blank">前往官网</a></span>
-        </p>
-    </div>
-
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
     layui.use('form', function () {
-        var form = layui.form;
+        var form = layui.form
+            , upload = layui.upload;
         form.verify({
             userName: function (value, item) { //value：表单的值、item：表单的DOM对象
                 if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
@@ -129,16 +151,22 @@
                 url: '/manager/register',
                 method: "post",
                 data: data.field,
-
                 dataType: "text",
                 success: function (msg) {
                     layer.msg(msg);
                     // //清除表单内容
                     var success = "注册成功,等待管理员审核";
                     if (success === msg) {
-                        setTimeout(function () {
-                            location.href = "/managerLogin";
-                        }, 2000);
+                        // setTimeout(function () {
+                        //     location.href = "/managerLogin";
+                        // }, 2000);
+                        layer.open({
+                            type: 2
+                            , title: '完善商家信息'
+                            , content: ["/manager/information", 'yes']
+                            , maxmin: true
+                            , area: ['550px', '420px']
+                        });
                     }
                 },
                 error: function () {
@@ -147,8 +175,33 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
-    });
 
+        // var uploadInst = upload.render({
+        //     elem: '#test1'
+        //     , url: ''
+        //     , before: function (obj) {
+        //         //预读本地文件示例，不支持ie8
+        //         obj.preview(function (index, file, result) {
+        //             $('#demo1').attr('src', result); //图片链接（base64）
+        //         });
+        //     }
+        //     , done: function (res) {
+        //         //如果上传失败
+        //         if (res.code > 0) {
+        //             return layer.msg('上传失败');
+        //         }
+        //         //上传成功
+        //     }
+        //     , error: function () {
+        //         //演示失败状态，并实现重传
+        //         var demoText = $('#demoText');
+        //         demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+        //         demoText.find('.demo-reload').on('click', function () {
+        //             uploadInst.upload();
+        //         });
+        //     }
+        // });
+    });
 </script>
 </body>
 </html>
