@@ -44,6 +44,68 @@ public class Manager {
     @Column
     private int active;
 
+    @Column
+    private String vendorName;
+
+    @Column
+    private String address;
+
+    @Column
+    private String vendorTime;
+
+    /**
+     *  绝对路径
+     */
+    @Column
+    private String datePath;
+
+    /**
+     * 相对路径
+     * @return
+     */
+    @Column
+    private String relativePath;
+
+    public String getVendorName() {
+        return vendorName;
+    }
+
+    public void setVendorName(String vendorName) {
+        this.vendorName = vendorName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getVendorTime() {
+        return vendorTime;
+    }
+
+    public void setVendorTime(String vendorTime) {
+        this.vendorTime = vendorTime;
+    }
+
+    public String getDatePath() {
+        return datePath;
+    }
+
+    public void setDatePath(String datePath) {
+        this.datePath = datePath;
+    }
+
+    public String getRelativePath() {
+        return relativePath;
+    }
+
+    public void setRelativePath(String relativePath) {
+        this.relativePath = relativePath;
+    }
+
     public int getActive() {
         return active;
     }

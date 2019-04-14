@@ -3,6 +3,8 @@ package com.parttimejob.controller;
 import com.parttimejob.entity.Job;
 import com.parttimejob.entity.Manager;
 import com.parttimejob.service.JobService;
+import com.parttimejob.service.ManagerService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -38,6 +40,9 @@ public class MainController {
 
     @Autowired
     JobService jobService;
+
+    @Autowired
+    ManagerService managerService;
 
     /**
      * 兼职者登录页面
@@ -116,8 +121,8 @@ public class MainController {
     public Map<String, Object> addPhoto(@RequestParam("file") MultipartFile file, HttpSession session, HttpServletRequest request) {
         HashMap<String, Object> map = new HashMap<>();
         //通过session查看当前登录的用户信息
-        Manager manager= (Manager)session.getAttribute("registerManager");
-        User user = (User) session.getAttribute("user");
+        Manager manager = (Manager) session.getAttribute("registerManager");
+
         try {
             //如果文件不为空
             if (null != file) {
@@ -131,10 +136,10 @@ public class MainController {
                 String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/images/";
                 //根据日期来创建对应的文件夹
                 String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-                //根据id分类来创建对应的文件夹
-                String leagueIdPath = manager.getId() + "/";
+
+
                 //userId
-                String path = filePath + leagueIdPath;
+                String path = filePath;
                 //如果不存在，则创建新文件夹
                 File f = new File(path);
                 if (!f.exists()) {
@@ -145,37 +150,53 @@ public class MainController {
                 //图片保存的完整路径
                 String pathName = path + fileName;
                 //图片保存的相对路径
-                String relativePath = "/images/" + leagueIdPath + fileName;
+                String relativePath = "/images/" + fileName;
                 //将图片从源位置复制到目标位置
                 file.transferTo(new File(pathName));
 
-                //设置photo实体类的数据
-                Photo photo = new Photo();
-                photo.setUserId(user.getId());
-                photo.setDatePath(datePath);
-                photo.setFileName(fileName);
-                photo.setRelativePath(relativePath);
+                //设置manager实体类的数据
 
-                //如果用户有头像
-                if (photoService.findByUserId(user.getId()) != null) {
-                    //更新头像路径
-                    photoService.update(photo);
-                }
-                //如果用户没有头像
-                else {
-                    //新建路径
-                    photoService.save(photo);
-                }
-                //返回json数据
+                manager.setDatePath(pathName);
+
+                manager.setRelativePath(relativePath);
+                session.setAttribute("registerManager", manager);
+                //新建路径
                 map.put("code", 0);
                 map.put("msg", "上传成功！");
                 map.put("relativePath", relativePath);
                 map.put("data", pathName);
-            } else {
+
+            }
+            //返回json数据
+            else {
                 System.out.println("文件为空");
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        return map;
+    }
+
+
+    @ResponseBody
+    @PostMapping("/manager/register/vendor")
+    public Map<String, String> vendorInformation(Manager manager, HttpSession session) {
+        Manager registerManager = (Manager) session.getAttribute("registerManager");
+        HashMap<String, String> map = new HashMap<>();
+        if (registerManager != null) {
+            if (registerManager.getDatePath() == null) {
+                map.put("error", "请先上传商家许可证");
+            } else {
+                registerManager.setVendorName(manager.getVendorName());
+                registerManager.setAddress(manager.getAddress());
+                registerManager.setVendorTime(manager.getVendorTime());
+                session.removeAttribute("registerManager");
+                managerService.save(registerManager);
+                map.put("success", "添加成功，请等待管理员审批");
+            }
+
+        } else {
+            map.put("error", "您以注册，请等待管理员审批");
         }
         return map;
     }

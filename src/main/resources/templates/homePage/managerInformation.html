@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/login.css}">
 </head>
-<body>
+<body style="background-color: #fff">
 <div class="layui-card">
     <div class="layui-card-body">
         <div class="layui-row" id="popSearchRoleTest">
@@ -30,7 +30,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">注册时间</label>
                         <div class="layui-input-block">
-                            <input type="text" name="vendorTime" lay-verify="required|name" placeholder="请输入注册时间"
+                            <input type="text" name="vendorTime" lay-verify="required" placeholder="请输入注册时间"
                                    autocomplete="off" class="layui-input" id="test1">
                         </div>
                     </div>
@@ -60,7 +60,8 @@
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
     layui.use('laydate', function () {
-        var laydate = layui.laydate, upload = layui.upload, form = layui.form;
+        var laydate = layui.laydate;
+        var  upload = layui.upload, form = layui.form;
         //执行一个laydate实例
         laydate.render({
             elem: '#test1' //指定元素
@@ -84,13 +85,17 @@
             console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
             console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
             $.ajax({
-                url: "/update/insurance/save",
+                url: "/manager/register/vendor",
                 method: "post",
                 data: data.field,
                 dataType: "json",
                 success: function (msg) {
                     // //清除表单内容
-                    layer.msg(msg.success);
+                    if (msg.success) {
+                        layer.msg(msg.success);
+                    }
+                    else
+                        layer.msg(msg.error);
                 },
                 error: function () {
                     layer.msg("网络错误，注册失败");
@@ -102,7 +107,7 @@
 
         var uploadInst = upload.render({
             elem: '#put'
-            , url: ''
+            , url: '/addPhoto'
             , before: function (obj) {
                 //预读本地文件示例，不支持ie8
                 obj.preview(function (index, file, result) {
