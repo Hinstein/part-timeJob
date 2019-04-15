@@ -19,7 +19,7 @@
             <!-- 头部区域 -->
             <ul class="layui-nav layui-layout-left">
                 <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                    <a th:href="@{/admin/index}" layadmin-event="flexible" title="侧边伸缩">
+                    <a th:href="@{/admin/index}" layadmin-event="flexible" title="主页">
                         <i class="layui-icon layui-icon-home"></i>
                     </a>
                 </li>
@@ -172,11 +172,14 @@
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID', sort: true, fixed: 'left'}
+                {field: 'id', title: 'ID', sort: true}
                 , {field: 'userName', title: '用户名'}
                 , {field: 'name', title: '姓名'}
                 , {field: 'phoneNumber', title: '手机号'}
                 , {field: 'email', title: '邮箱'}
+                , {field: 'vendorName', title: '商家名称'}
+                , {field: 'address', title: '商家地址'}
+                , {field: 'vendorTime', title: '注册时间'}
                 , {field: 'date', title: '注册时间', sort: true}
                 , {
                     field: 'audit', title: '审核状态', templet: function (d) {

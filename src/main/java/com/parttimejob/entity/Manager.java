@@ -54,13 +54,14 @@ public class Manager {
     private String vendorTime;
 
     /**
-     *  绝对路径
+     * 绝对路径
      */
     @Column
     private String datePath;
 
     /**
      * 相对路径
+     *
      * @return
      */
     @Column

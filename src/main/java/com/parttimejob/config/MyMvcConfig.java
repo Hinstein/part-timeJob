@@ -36,7 +36,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
         String[] excludeUrl = new String[]{"/index", "/assets/**", "/webjars/**", "/blog/**"
                 , "/workerLogin", "/managerLogin", "/workerRegister", "/managerRegister",
                 "/admin/login", "/manager/register", "/manager/login", "/worker/register",
-                "/worker/login", "/webjars/**", "/defaultKaptcha","/manager/information","/addPhoto","/manager/register/vendor"};
+                "/worker/login", "/webjars/**", "/defaultKaptcha", "/manager/information", "/addPhoto", "/manager/register/vendor"};
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excludeUrl);
     }
 }

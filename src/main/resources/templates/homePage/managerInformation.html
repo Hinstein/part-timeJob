@@ -36,7 +36,9 @@
                     </div>
 
                     <div class="layui-form-item">
-                        <label class="layui-form-label"><button type="button" class="layui-btn layui-btn-warm" id="put">许可证</button></label>
+                        <label class="layui-form-label">
+                            <button type="button" class="layui-btn layui-btn-warm" id="put">许可证</button>
+                        </label>
                         <div class="layui-input-block">
                             <div class="layui-upload-list">
                                 <img class="layui-upload-img" id="demo1" style="width: 160px">
@@ -61,7 +63,7 @@
 <script>
     layui.use('laydate', function () {
         var laydate = layui.laydate;
-        var  upload = layui.upload, form = layui.form;
+        var upload = layui.upload, form = layui.form;
         //执行一个laydate实例
         laydate.render({
             elem: '#test1' //指定元素
@@ -93,8 +95,7 @@
                     // //清除表单内容
                     if (msg.success) {
                         layer.msg(msg.success);
-                    }
-                    else
+                    } else
                         layer.msg(msg.error);
                 },
                 error: function () {

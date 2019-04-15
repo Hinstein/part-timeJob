@@ -122,7 +122,7 @@
                 success: function (msg) {
                     // //清除表单内容
                     if (msg.success) {
-                        location.href = "/worker/index";
+                        location.href = "/manager/index";
                     } else {
                         layer.msg(msg.error, {time: 2000, icon: 5, shift: 6});
                         $("#code").click();

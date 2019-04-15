@@ -70,14 +70,14 @@ public class ManagerController {
      */
     @ResponseBody
     @PostMapping("/manager/register")
-    public String registerWorker(Manager manager,HttpSession session) {
+    public String registerWorker(Manager manager, HttpSession session) {
         Manager manager1 = managerService.findByUserName(manager.getUserName());
         if (manager1 != null) {
             return "注册失败，存在该用户";
         }
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         manager.setDate(df.format(new Date()));
-        session.setAttribute("registerManager",manager);
+        session.setAttribute("registerManager", manager);
 //        managerService.save(manager);
         return "注册成功,等待管理员审核";
     }
