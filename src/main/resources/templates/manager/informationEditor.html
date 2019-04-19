@@ -199,6 +199,48 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">商家地址</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="address" required lay-verify="required"
+                                           placeholder="请输入商家地址"
+                                           autocomplete="off" class="layui-input" th:value="${session.manager.address}">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">商家名称</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="vendorName" required lay-verify="required"
+                                           placeholder="请输入商家名称" autocomplete="off" class="layui-input"
+                                           th:value="${session.manager.vendorName}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">注册时间</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="vendorTime" required lay-verify="required" id="test1"
+                                           placeholder="请输入商家注册时间"
+                                           autocomplete="off" class="layui-input"
+                                           th:value="${session.manager.vendorTime}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">
+                                    <button type="button" class="layui-btn layui-btn-warm" id="put">许可证</button>
+                                </label>
+                                <div class="layui-input-block">
+                                    <div class="layui-upload-list">
+                                        <img class="layui-upload-img" id="demo1" style="width: 160px" th:src="${session.manager.relativePath}">
+                                        <p id="demoText"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <input th:value="${session.manager.id}" hidden="hidden" name="id">
                         <div class="layui-form-item">
                             <div class="layui-input-block">
@@ -219,6 +261,20 @@
 <script>
     layui.use('form', function () {
         var form = layui.form;
+        var laydate = layui.laydate;
+        var upload = layui.upload;
+        var myDate = new Date();
+        //获取当前年
+        var year = myDate.getFullYear();
+        //获取当前月
+        var month = myDate.getMonth() + 1;
+        //获取当前日
+        var date = myDate.getDate();
+        laydate.render({
+            elem: '#test1'//指定元素
+            , format: 'yyyy年MM月dd日'
+            , max: 'year-month-date'
+        });
         form.verify({
             userName: function (value, item) { //value：表单的值、item：表单的DOM对象
                 if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
@@ -256,6 +312,31 @@
                 }
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+        var uploadInst = upload.render({
+            elem: '#put'
+            , url: '/manager/information/addPhoto'
+            , before: function (obj) {
+                //预读本地文件示例，不支持ie8
+                obj.preview(function (index, file, result) {
+                    $('#demo1').attr('src', result); //图片链接（base64）
+                });
+            }
+            , done: function (res) {
+                //如果上传失败
+                if (res.code > 0) {
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            , error: function () {
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText');
+                demoText.html('<span style="color: #FF5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function () {
+                    uploadInst.upload();
+                });
+            }
         });
     });
 </script>

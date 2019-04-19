@@ -91,6 +91,11 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     @Query(value = "UPDATE Manager m  SET m.userName= :#{#manager.userName}," +
             "m.name= :#{#manager.name}," +
             "m.email= :#{#manager.email}," +
+            "m.address= :#{#manager.address}," +
+            "m.vendorName= :#{#manager.vendorName}," +
+            "m.vendorTime= :#{#manager.vendorTime}," +
+            "m.datePath= :#{#manager.datePath}," +
+            "m.relativePath= :#{#manager.relativePath}," +
             "m.phoneNumber= :#{#manager.phoneNumber} " +
             "WHERE m.id = :#{#manager.id}")
     void informationSave(Manager manager);

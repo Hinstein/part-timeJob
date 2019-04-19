@@ -64,9 +64,20 @@
     layui.use('laydate', function () {
         var laydate = layui.laydate;
         var upload = layui.upload, form = layui.form;
+
+        var myDate = new Date();
+        //获取当前年
+        var year = myDate.getFullYear();
+        //获取当前月
+        var month = myDate.getMonth() + 1;
+        //获取当前日
+        var date = myDate.getDate();
+
         //执行一个laydate实例
         laydate.render({
-            elem: '#test1' //指定元素
+            elem: '#test1'//指定元素
+            ,format: 'yyyy年MM月dd日'
+            ,max:'year-month-date'
         });
         form.verify({
             name: [
