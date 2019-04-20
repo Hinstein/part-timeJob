@@ -23,7 +23,7 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">详细地址</label>
                         <div class="layui-input-block">
-                            <input type="text" name="address" lay-verify="required|name" placeholder="请输入商家地址"
+                            <input type="text" name="address" lay-verify="required" placeholder="请输入商家地址"
                                    autocomplete="off" class="layui-input">
                         </div>
                     </div>
@@ -80,10 +80,6 @@
             ,max:'year-month-date'
         });
         form.verify({
-            name: [
-                /^([\u4e00-\u9fa5]){2,7}$/
-                , '姓名只能是中文，长度为2-7位'
-            ],
             money: [
                 /^(?:(?!0)\d{1,8}|10{8})$/
                 , '投保金额为1-100000000'
@@ -142,6 +138,7 @@
                 });
             }
         });
+
     });
 </script>
 </body>

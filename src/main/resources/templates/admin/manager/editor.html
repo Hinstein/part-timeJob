@@ -193,6 +193,34 @@
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
+                                        <label class="layui-form-label">商家地址</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="address" required lay-verify="required"
+                                                   placeholder="请输入商家地址"
+                                                   autocomplete="off" class="layui-input" th:value="${manager.address}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">商家名称</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="vendorName" required lay-verify="required"
+                                                   placeholder="请输入商家名称" autocomplete="off" class="layui-input"
+                                                   th:value="${manager.vendorName}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label">注册时间</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="vendorTime" required lay-verify="required"
+                                                   id="test1"
+                                                   placeholder="请输入商家注册时间"
+                                                   autocomplete="off" class="layui-input"
+                                                   th:value="${manager.vendorTime}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-inline">
                                         <label class="layui-form-label">审核状态</label>
                                         <div class="layui-input-inline">
                                             <select name="audit" lay-verify="required" lay-search="">
@@ -203,12 +231,16 @@
                                             </select>
                                         </div>
                                     </div>
-
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">营业执照</label>
+                                    <div class="layui-input-inline">
+                                        <img class="layui-upload-img" id="demo1" style="width: 300px" th:src="${manager.relativePath}">
+                                    </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit="" lay-filter="go"
-                                        >修改
+                                        <button class="layui-btn" lay-submit="" lay-filter="go">修改
                                         </button>
                                     </div>
                                 </div>
@@ -225,6 +257,20 @@
 <script>
     layui.use('form', function () {
         var form = layui.form;
+        var laydate = layui.laydate;
+        var myDate = new Date();
+        //获取当前年
+        var year = myDate.getFullYear();
+        //获取当前月
+        var month = myDate.getMonth() + 1;
+        //获取当前日
+        var date = myDate.getDate();
+        var srcResult;
+        laydate.render({
+            elem: '#test1'//指定元素
+            , format: 'yyyy年MM月dd日'
+            , max: 'year-month-date'
+        });
         form.verify({
             userName: function (value, item) { //value：表单的值、item：表单的DOM对象
                 if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
@@ -260,6 +306,19 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
+        $("#demo1").click(function () {
+            var id=[[${manager.id}]];
+            layer.open({
+                type: 2
+                , title: false
+                , closeBtn: 0
+                , content: ["/admin/photo/"+id, 'no']
+                , maxmin: true
+                , shadeClose: true
+                , skin: 'layui-layer-nobg'
+                , area: ['800px', '600px']
+            });
+        })
     });
 </script>
 </body>

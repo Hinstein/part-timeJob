@@ -112,6 +112,7 @@ public class ManagerController {
                         return map;
                     }
                     session.setAttribute("manager", manager1);
+                    session.setAttribute("photoSrc",manager1.getRelativePath());
                     session.setAttribute("username", manager1.getUserName());
                     List<Employ> employs = employService.findByManagerId(manager1.getId());
                     List<Job> jobs = jobService.findByManagerId(manager1.getId());
@@ -479,6 +480,7 @@ public class ManagerController {
             file.delete();
             manager.setRelativePath(registerManager.getRelativePath());
             manager.setDatePath(registerManager.getDatePath());
+            session.setAttribute("photoSrc",registerManager.getRelativePath());
             session.removeAttribute("registerManager");
         }
         managerService.informationSave(manager);
@@ -492,7 +494,6 @@ public class ManagerController {
         HashMap<String, Object> map = new HashMap<>();
         //通过session查看当前登录的用户信息
         Manager manager = new Manager();
-
         try {
             //如果文件不为空
             if (null != file) {
@@ -504,9 +505,8 @@ public class ManagerController {
                 String imageName = contentType.substring(contentType.indexOf("/") + 1);
                 //获取文件的项目路径
                 String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/images/";
-                //根据日期来创建对应的文件夹
+                //根据日期来创建对应的文件夹manager
                 String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-
 
                 //userId
                 String path = filePath;
@@ -530,6 +530,7 @@ public class ManagerController {
 
                 manager.setRelativePath(relativePath);
                 session.setAttribute("registerManager", manager);
+                session.setAttribute("photoSrc",relativePath);
                 //新建路径
                 map.put("code", 0);
                 map.put("msg", "上传成功！");
@@ -547,7 +548,12 @@ public class ManagerController {
         return map;
     }
 
-
+    @GetMapping("/photo")
+    public String photo(HttpSession session ,Model model){
+        String src =session.getAttribute("photoSrc").toString();
+        model.addAttribute("src",src);
+        return "/manager/photo";
+    }
 
     @GetMapping("/manager/BBS/index")
     public String managerBBSIndex() {

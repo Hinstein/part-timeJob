@@ -13,6 +13,26 @@
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
 
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+    <style>
+        .thumb {
+            margin-left: 5px;
+            margin-top: 15px;
+            height: 128px
+        }
+
+        #prevModal {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            display: none;
+        }
+
+        #img_prev {
+            max-width: 98%;
+            max-height: 98%;
+            margin: 10px auto
+        }
+    </style>
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -235,8 +255,10 @@
                                 </label>
                                 <div class="layui-input-block">
                                     <div class="layui-upload-list">
-                                        <img class="layui-upload-img" id="demo1" style="width: 160px" th:src="${session.manager.relativePath}">
+                                        <img class="layui-upload-img" id="demo1" style="width: 300px"
+                                             th:src="${session.manager.relativePath}">
                                         <p id="demoText"></p>
+                                        <!--                                        <div class='layui-input-block' id='div_prev' title=''></div>-->
                                     </div>
                                 </div>
                             </div>
@@ -244,8 +266,7 @@
                         <input th:value="${session.manager.id}" hidden="hidden" name="id">
                         <div class="layui-form-item">
                             <div class="layui-input-block">
-                                <button class="layui-btn" lay-submit="" lay-filter="go"
-                                >修改
+                                <button class="layui-btn" lay-submit="" lay-filter="go" id="post">修改
                                 </button>
                             </div>
                         </div>
@@ -255,7 +276,6 @@
         </div>
     </div>
 </div>
-
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
@@ -270,6 +290,7 @@
         var month = myDate.getMonth() + 1;
         //获取当前日
         var date = myDate.getDate();
+        var srcResult;
         laydate.render({
             elem: '#test1'//指定元素
             , format: 'yyyy年MM月dd日'
@@ -327,6 +348,7 @@
                 if (res.code > 0) {
                     return layer.msg('上传失败');
                 }
+                srcResult = res.relativePath;
                 //上传成功
             }
             , error: function () {
@@ -338,6 +360,20 @@
                 });
             }
         });
+
+        $("#demo1").click(function () {
+            // srcResult=[[${session.manager.RelativePath}]];
+            layer.open({
+                type: 2
+                , title: false
+                , closeBtn: 0
+                , content: ["/photo", 'no']
+                , maxmin: true
+                , shadeClose: true
+                , skin: 'layui-layer-nobg'
+                , area: ['800px', '600px']
+            });
+        })
     });
 </script>
 </body>

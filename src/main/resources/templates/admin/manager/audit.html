@@ -145,6 +145,8 @@
                             <script type="text/html" id="action">
                                 <div class="layui-btn-container">
                                     <button class="layui-btn layui-btn-sm" lay-event="pass">通过</button>
+                                    <button class="layui-btn layui-btn-sm layui-btn-warm" lay-event="check">查看执照
+                                    </button>
                                     <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除
                                     </button>
                                 </div>
@@ -171,22 +173,19 @@
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                {type: 'checkbox', fixed: 'left'},
-                {field: 'id', title: 'ID', sort: true}
-                , {field: 'userName', title: '用户名'}
-                , {field: 'name', title: '姓名'}
-                , {field: 'phoneNumber', title: '手机号'}
-                , {field: 'email', title: '邮箱'}
-                , {field: 'vendorName', title: '商家名称'}
-                , {field: 'address', title: '商家地址'}
-                , {field: 'vendorTime', title: '注册时间'}
-                , {field: 'date', title: '注册时间', sort: true}
+                {type: 'checkbox', fixed: 'left',width:'3%'}
+                , {field: 'name', title: '姓名',width:'7%'}
+                , {field: 'phoneNumber', title: '手机号',width:'10%'}
+                , {field: 'email', title: '邮箱',width:'15%'}
+                , {field: 'vendorName', title: '商家名称',width:'10%'}
+                , {field: 'address', title: '商家地址',width:'15%'}
+                , {field: 'vendorTime', title: '商家注册时间',width:'15%'}
                 , {
                     field: 'audit', title: '审核状态', templet: function (d) {
                         return d.audit === 0 ? "<span style=\"color: #FF5722;\">等待审核</span>" : "通过审核";
-                    }
+                    },width:'8%'
                 }
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action' ,width:'17%'}
             ]]
         });
         //监听事件
@@ -196,7 +195,6 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
 
             if (layEvent === 'pass') { //通过
-                layer.msg(data.id);
                 layer.confirm('通过用户名为' + data.userName + '账号么', function (index) {
                     //向服务端发送删除指令
                     $.ajax({
@@ -216,7 +214,7 @@
             } else if (layEvent === 'delete') { //删除
                 layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
                     $.ajax({
-                        url: '/admin/manager/audit/delete' + data.id,
+                        url: '/admin/manager/audit/delete/' + data.id,
                         method: "post",
                         dataType: "text",
                         success: function (msg) {
@@ -228,6 +226,17 @@
                             layer.msg("网络错误，通过失败");
                         }
                     });
+                });
+            } else if (layEvent === 'check') { //删除
+                layer.open({
+                    type: 2
+                    , title: false
+                    , closeBtn: 0
+                    , content: ['/admin/photo/'+data.id, 'no']
+                    , maxmin: true
+                    , shadeClose: true
+                    , skin: 'layui-layer-nobg'
+                    , area: ['800px', '600px']
                 });
             }
         });

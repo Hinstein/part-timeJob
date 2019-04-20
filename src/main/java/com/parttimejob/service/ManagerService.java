@@ -138,6 +138,10 @@ public class ManagerService {
         managerRepository.informationSave(manager);
     }
 
+    public void adminSave(Manager manager) {
+        managerRepository.adminSave(manager);
+    }
+
     public List<Manager> findAll() {
         return managerRepository.findAll();
     }

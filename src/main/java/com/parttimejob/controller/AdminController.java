@@ -336,7 +336,7 @@ public class AdminController {
     @ResponseBody
     @PostMapping("/admin/manager/save")
     public String managerSave(Manager manager) {
-        managerService.save(manager);
+        managerService.adminSave(manager);
         return "修改成功！";
     }
 
@@ -451,5 +451,12 @@ public class AdminController {
         JSONArray json = JSONArray.fromObject(workerData.getContent());
         result.put("data", json);
         return result;
+    }
+
+    @GetMapping("/admin/photo/{id}")
+    public String photo(@PathVariable("id")int id,Model model){
+        Manager manager = managerService.findById(id);
+        model.addAttribute("src",manager.getRelativePath());
+        return "/manager/photo";
     }
 }
