@@ -17,13 +17,14 @@ import java.util.List;
  */
 public interface EmployRepository extends JpaRepository<Employ, Integer> {
     /**
-     * 通过兼职者id，工作id和招聘者id找到雇佣信息
+     * 通过兼职者id和招聘者id找到雇佣信息
      *
      * @param workerId
      * @param managerId
      * @return
      */
     Employ findByWorkerIdAndManagerId(int workerId, int managerId);
+
 
     /**
      * 通过招聘者id找到所有雇佣信息

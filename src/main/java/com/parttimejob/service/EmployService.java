@@ -31,7 +31,7 @@ public class EmployService {
     }
 
     /**
-     * 通过兼职者的id，工作的id，招聘者的id找到雇佣信息
+     * 通过兼职者的id和招聘者的id找到雇佣信息
      *
      * @param workerId
      * @param managerId
@@ -103,7 +103,14 @@ public class EmployService {
         employRepository.evaluated(workerId, managerId);
     }
 
+    /**
+     * 通过兼职者的id和工作的id找到雇佣信息
+     *
+     * @param workerId
+     * @param jobId
+     * @return
+     */
     public Employ findByWorkerIdAndJobId(int workerId, int jobId) {
-        return employRepository.findByWorkerIdAndManagerId(workerId, jobId);
+        return employRepository.findByWorkerIdAndJobId(workerId, jobId);
     }
 }

@@ -99,9 +99,7 @@ public class ManagerController {
         Map<String, String> map = new HashMap<>();
         String rightCode = (String) request.getSession().getAttribute("rightCode");
         String tryCode = request.getParameter("tryCode");
-        System.out.println(rightCode + tryCode);
         if (tryCode.equals(rightCode)) {
-            System.out.println("111111");
             String username = manager.getUserName();
             String password = manager.getPassword();
             Manager manager1 = managerService.findByUserName(username);
@@ -256,6 +254,7 @@ public class ManagerController {
         Employ employ = employService.findByWorkerIdAndManagerId(workerId, manager.getId());
         String date = map.get("date");
         String time = map.get("time");
+        String address = map.get("address");
         String dateTime = date + " " + time;
         if (employ == null) {
             Employ employ1 = new Employ();
@@ -263,6 +262,7 @@ public class ManagerController {
             employ1.setDate(dateTime);
             employ1.setManagerId(manager.getId());
             employ1.setJobId(jobId);
+            employ1.setAddress(address);
             employService.save(employ1);
             deliverService.delete(workerId, jobId);
             return "录用成功";

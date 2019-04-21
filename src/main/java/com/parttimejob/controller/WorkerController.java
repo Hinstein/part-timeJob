@@ -2,6 +2,7 @@ package com.parttimejob.controller;
 
 import com.parttimejob.entity.*;
 import com.parttimejob.service.*;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONArray;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -498,6 +500,13 @@ public class WorkerController {
         return result;
     }
 
+    @GetMapping("/worker/employ/time/{id}")
+    public String employTime(@PathVariable("id")int jobId, HttpSession session, Model model){
+        Worker worker = (Worker)session.getAttribute("worker");
+        Employ employ=employService.findByWorkerIdAndJobId(worker.getId(),jobId);
+        model.addAttribute("employ",employ);
+        return "/manager/employTime";
+    }
 
 }
 
