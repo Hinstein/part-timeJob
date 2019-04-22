@@ -58,6 +58,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/resume/index}">查看简历</a></dd>
                     <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
                     <dd><a th:href="@{/worker/exit}">退出</a></dd>
                 </dl>
@@ -92,6 +93,11 @@
                     <div style="text-align: center;">
                         <a th:href="@{/worker/resume}">
                             填写简历
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px;text-align: center;">
+                        <a th:href="@{/worker/resume/index}">
+                            查看简历
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
@@ -136,156 +142,89 @@
 
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header">我的简历</div>
+                <div class="layui-card-header">我的简历 &nbsp;&nbsp;
+                    <a href="javascript:void(0)" class="layui-btn layui-btn-radius layui-btn-sm" onclick="exportWord()">导出</a>
+                </div>
                 <div class="layui-card-body">
-                    <div>
+                    <div id="export_word">
                         <p style="line-height:20.5pt; margin:0pt 1pt 0pt 0pt; text-align:center"><a name="page1"></a>
                             <span style="font-family:微软雅黑; font-size:15.5pt; font-weight:bold">[[${worker.name}]]</span>
                         </p>
-                        <p style="line-height:5.45pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:11.9pt; margin:0pt; text-align:center"><span
-                                style="font-family:微软雅黑; font-size:9pt">[[${worker.phoneNumber}]] | [[${worker.email}]] </span>
+
+                        <p style="line-height:11.9pt; margin:0pt; text-align:center">
+                            <span style="font-family:微软雅黑; font-size:9pt">[[${worker.phoneNumber}]] | [[${worker.email}]] </span>
                         </p>
-                        <p style="line-height:1.95pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:11.9pt; margin:0pt 2pt 0pt 0pt; text-align:center"><span
-                                style="font-family:微软雅黑; font-size:9pt">求职意向：</span>
-                            <span style="font-family:微软雅黑; font-size:9pt">[[${worker.jobIntension}]]</span>
-                            <span style="font-family:微软雅黑; font-size:9pt"></span>
+
+                        <p style="line-height:11.9pt; margin:0pt 2pt 0pt 0pt; text-align:center">
+                            <span style="font-family:微软雅黑; font-size:9pt">求职意向：[[${worker.jobIntension}]] | 期望薪资：[[${worker.expectation}]]</span>
                         </p>
+
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">性别</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span>
-                        </p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.sex}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">年龄</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span>
-                        </p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.age}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-
-                        <p style="line-height:14.55pt; margin:0pt"><span
-                                style="font-family:微软雅黑; font-size:14pt; font-weight:bold">期望薪资</span></p>
-                        <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.expectation}]]</span>
-                        </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-
-                        <p style="line-height:14.55pt; margin:0pt"><span
-                                style="font-family:微软雅黑; font-size:14pt; font-weight:bold">求职意向</span></p>
-                        <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.jobIntension}]]</span>
-                        </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">学历</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.educationBackground}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">工作时间</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.workerTime}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">工作经历</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.workerExperience}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">期望薪资</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.expectation}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">自我评价</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
                         <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.introduce}]]</span>
                         </p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
-                        <p style="line-height:10pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:14pt; font-weight:bold">商家评价</span></p>
                         <hr>
-                        <p style="line-height:1pt; margin:0pt"><span
-                                style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
                         <p style="line-height:11.9pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:9pt; font-weight:bold">商家名称：</span>[[${worker.age}]]
                         </p>
-                        <p style="line-height:11.9pt; margin:0pt"><span
-                                style="font-family:微软雅黑; font-size:9pt; font-weight:bold">&#xa0;</span></p>
+                        <br>
 
                         <p style="line-height:11.9pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:9pt; font-weight:bold">评分：</span>[[${worker.age}]]
                         </p>
-                        <p style="line-height:11.9pt; margin:0pt"><span
-                                style="font-family:微软雅黑; font-size:9pt; font-weight:bold">&#xa0;</span></p>
+                        <br>
 
                         <p style="line-height:11.9pt; margin:0pt"><span
                                 style="font-family:微软雅黑; font-size:9pt; font-weight:bold">评价：</span>[[${worker.age}]]
                         </p>
-                        <p style="line-height:11.9pt; margin:0pt"><span
-                                style="font-family:微软雅黑; font-size:9pt; font-weight:bold">&#xa0;</span></p>
+                        <br>
 
                     </div>
                 </div>
@@ -293,65 +232,273 @@
         </div>
     </div>
 </div>
-
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<!--<script th:inline="none">-->
-<!--    layui.use(['table'], function () {-->
-<!--        var table = layui.table;-->
-<!--        //第一个实例-->
-<!--        var tableIns = table.render({-->
-<!--            elem: '#demo'-->
-<!--            , url: '/worker/search/allJobs' //数据接口-->
-<!--            , page: true //开启分页-->
-<!--            , skin: 'line'-->
-<!--            , size: 'lg'-->
-<!--            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。-->
-<!--            , limit: 10 //每页默认显示的数量-->
-<!--            , cols: [[ //表头-->
-<!--                {field: 'title', title: '信息', width: '40%'}-->
-<!--                , {field: 'lowPay', title: '最低工资'}-->
-<!--                , {field: 'hightPay', title: '最高工资'}-->
-<!--                , {field: 'date', title: '发布时间', sort: true, width: '20%'}-->
-<!--                , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}-->
-<!--            ]]-->
-<!--        });-->
-<!--        table.render({-->
-<!--            elem: '#manager'-->
-<!--            , url: '/worker/manager/active' //数据接口-->
-<!--            , page: false //开启分页-->
-<!--            , skin: 'line'-->
-<!--            , size: 'lg'-->
-<!--            , limit: 10 //每页默认显示的数量-->
-<!--            , cols: [[ //表头-->
-<!--                {field: 'name', title: '姓名'}-->
-<!--                , {field: 'email', title: '邮箱'}-->
-<!--                , {field: 'phoneNumber', title: '电话号码'}-->
-<!--            ]]-->
-<!--        });-->
-<!--        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"-->
-<!--            var data = obj.data; //获得当前行数据-->
-<!--            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）-->
-<!--            var tr = obj.tr; //获得当前行 tr 的DOM对象-->
-<!--            if (layEvent === 'pass') { //通过-->
-<!--                location.href = "/worker/job/" + data.id;-->
-<!--            }-->
-<!--        });-->
-<!--        $(function () {-->
-<!--            $("#search").click(function () {-->
-<!--                var content = $('#content').val();-->
-<!--                tableIns.reload({-->
-<!--                    where: { //设定异步数据接口的额外参数，任意设-->
-<!--                        content: content-->
-<!--                        //…-->
-<!--                    }-->
-<!--                    , page: {-->
-<!--                        curr: 1 //重新从第 1 页开始-->
-<!--                    }-->
-<!--                });-->
-<!--            })-->
-<!--        });-->
-<!--    });-->
-<!--</script>-->
+<script>
+    var saveAs = saveAs || (function (view) {
+        "use strict";
+        // IE <10 is explicitly unsupported
+        if (typeof view === "undefined" || typeof navigator !== "undefined" && /MSIE [1-9]\./.test(navigator.userAgent)) {
+            return;
+        }
+        var
+            doc = view.document
+            // only get URL when necessary in case Blob.js hasn't overridden it yet
+            , get_URL = function () {
+                return view.URL || view.webkitURL || view;
+            }
+            , save_link = doc.createElementNS("http://www.w3.org/1999/xhtml", "a")
+            , can_use_save_link = "download" in save_link
+            , click = function (node) {
+                var event = new MouseEvent("click");
+                node.dispatchEvent(event);
+            }
+            , is_safari = /constructor/i.test(view.HTMLElement)
+            , is_chrome_ios = /CriOS\/[\d]+/.test(navigator.userAgent)
+            , throw_outside = function (ex) {
+                (view.setImmediate || view.setTimeout)(function () {
+                    throw ex;
+                }, 0);
+            }
+            , force_saveable_type = "application/octet-stream"
+            // the Blob API is fundamentally broken as there is no "downloadfinished" event to subscribe to
+            , arbitrary_revoke_timeout = 1000 * 40 // in ms
+            , revoke = function (file) {
+                var revoker = function () {
+                    if (typeof file === "string") { // file is an object URL
+                        get_URL().revokeObjectURL(file);
+                    } else { // file is a File
+                        file.remove();
+                    }
+                };
+                setTimeout(revoker, arbitrary_revoke_timeout);
+            }
+            , dispatch = function (filesaver, event_types, event) {
+                event_types = [].concat(event_types);
+                var i = event_types.length;
+                while (i--) {
+                    var listener = filesaver["on" + event_types[i]];
+                    if (typeof listener === "function") {
+                        try {
+                            listener.call(filesaver, event || filesaver);
+                        } catch (ex) {
+                            throw_outside(ex);
+                        }
+                    }
+                }
+            }
+            , auto_bom = function (blob) {
+                // prepend BOM for UTF-8 XML and text/* types (including HTML)
+                // note: your browser will automatically convert UTF-16 U+FEFF to EF BB BF
+                if (/^\s*(?:text\/\S*|application\/xml|\S*\/\S*\+xml)\s*;.*charset\s*=\s*utf-8/i.test(blob.type)) {
+                    return new Blob([String.fromCharCode(0xFEFF), blob], {type: blob.type});
+                }
+                return blob;
+            }
+            , FileSaver = function (blob, name, no_auto_bom) {
+                if (!no_auto_bom) {
+                    blob = auto_bom(blob);
+                }
+                // First try a.download, then web filesystem, then object URLs
+                var
+                    filesaver = this
+                    , type = blob.type
+                    , force = type === force_saveable_type
+                    , object_url
+                    , dispatch_all = function () {
+                        dispatch(filesaver, "writestart progress write writeend".split(" "));
+                    }
+                    // on any filesys errors revert to saving with object URLs
+                    , fs_error = function () {
+                        if ((is_chrome_ios || (force && is_safari)) && view.FileReader) {
+                            // Safari doesn't allow downloading of blob urls
+                            var reader = new FileReader();
+                            reader.onloadend = function () {
+                                var url = is_chrome_ios ? reader.result : reader.result.replace(/^data:[^;]*;/, 'data:attachment/file;');
+                                var popup = view.open(url, '_blank');
+                                if (!popup) view.location.href = url;
+                                url = undefined; // release reference before dispatching
+                                filesaver.readyState = filesaver.DONE;
+                                dispatch_all();
+                            };
+                            reader.readAsDataURL(blob);
+                            filesaver.readyState = filesaver.INIT;
+                            return;
+                        }
+                        // don't create more object URLs than needed
+                        if (!object_url) {
+                            object_url = get_URL().createObjectURL(blob);
+                        }
+                        if (force) {
+                            view.location.href = object_url;
+                        } else {
+                            var opened = view.open(object_url, "_blank");
+                            if (!opened) {
+                                // Apple does not allow window.open, see https://developer.apple.com/library/safari/documentation/Tools/Conceptual/SafariExtensionGuide/WorkingwithWindowsandTabs/WorkingwithWindowsandTabs.html
+                                view.location.href = object_url;
+                            }
+                        }
+                        filesaver.readyState = filesaver.DONE;
+                        dispatch_all();
+                        revoke(object_url);
+                    }
+                ;
+                filesaver.readyState = filesaver.INIT;
+
+                if (can_use_save_link) {
+                    object_url = get_URL().createObjectURL(blob);
+                    setTimeout(function () {
+                        save_link.href = object_url;
+                        save_link.download = name;
+                        click(save_link);
+                        dispatch_all();
+                        revoke(object_url);
+                        filesaver.readyState = filesaver.DONE;
+                    });
+                    return;
+                }
+
+                fs_error();
+            }
+            , FS_proto = FileSaver.prototype
+            , saveAs = function (blob, name, no_auto_bom) {
+                return new FileSaver(blob, name || blob.name || "download", no_auto_bom);
+            }
+        ;
+        // IE 10+ (native saveAs)
+        if (typeof navigator !== "undefined" && navigator.msSaveOrOpenBlob) {
+            return function (blob, name, no_auto_bom) {
+                name = name || blob.name || "download";
+
+                if (!no_auto_bom) {
+                    blob = auto_bom(blob);
+                }
+                return navigator.msSaveOrOpenBlob(blob, name);
+            };
+        }
+
+        FS_proto.abort = function () {
+        };
+        FS_proto.readyState = FS_proto.INIT = 0;
+        FS_proto.WRITING = 1;
+        FS_proto.DONE = 2;
+
+        FS_proto.error =
+            FS_proto.onwritestart =
+                FS_proto.onprogress =
+                    FS_proto.onwrite =
+                        FS_proto.onabort =
+                            FS_proto.onerror =
+                                FS_proto.onwriteend =
+                                    null;
+
+        return saveAs;
+    }(
+        typeof self !== "undefined" && self
+        || typeof window !== "undefined" && window
+        || this.content
+    ));
+    // `self` is undefined in Firefox for Android content script context
+    // while `this` is nsIContentFrameMessageManager
+    // with an attribute `content` that corresponds to the window
+
+    if (typeof module !== "undefined" && module.exports) {
+        module.exports.saveAs = saveAs;
+    } else if ((typeof define !== "undefined" && define !== null) && (define.amd !== null)) {
+        define([], function () {
+            return saveAs;
+        });
+    }
+
+    if (typeof jQuery !== "undefined" && typeof saveAs !== "undefined") {
+        (function ($) {
+            $.fn.wordExport = function (fileName) {
+                fileName = typeof fileName !== 'undefined' ? fileName : "jQuery-Word-Export";
+                var static = {
+                    mhtml: {
+                        top: "Mime-Version: 1.0\nContent-Base: " + location.href + "\nContent-Type: Multipart/related; boundary=\"NEXT.ITEM-BOUNDARY\";type=\"text/html\"\n\n--NEXT.ITEM-BOUNDARY\nContent-Type: text/html; charset=\"utf-8\"\nContent-Location: " + location.href + "\n\n<!DOCTYPE html>\n<html>\n_html_</html>",
+                        head: "<head>\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\">\n<style>\n_styles_\n</style>\n</head>\n",
+                        body: "<body>_body_</body>"
+                    }
+                };
+                var options = {
+                    maxWidth: 624
+                };
+                // Clone selected element before manipulating it
+                var markup = $(this).clone();
+
+                // Remove hidden elements from the output
+                markup.each(function () {
+                    var self = $(this);
+                    if (self.is(':hidden'))
+                        self.remove();
+                });
+
+                // Embed all images using Data URLs
+                var images = Array();
+                var img = markup.find('img');
+                for (var i = 0; i < img.length; i++) {
+                    // Calculate dimensions of output image
+                    var w = Math.min(img[i].width, options.maxWidth);
+                    var h = img[i].height * (w / img[i].width);
+                    // Create canvas for converting image to data URL
+                    var canvas = document.createElement("CANVAS");
+                    canvas.width = w;
+                    canvas.height = h;
+                    // Draw image to canvas
+                    var context = canvas.getContext('2d');
+                    context.drawImage(img[i], 0, 0, w, h);
+                    // Get data URL encoding of image
+                    var uri = canvas.toDataURL("image/png");
+                    $(img[i]).attr("src", img[i].src);
+                    img[i].width = w;
+                    img[i].height = h;
+                    // Save encoded image to array
+                    images[i] = {
+                        type: uri.substring(uri.indexOf(":") + 1, uri.indexOf(";")),
+                        encoding: uri.substring(uri.indexOf(";") + 1, uri.indexOf(",")),
+                        location: $(img[i]).attr("src"),
+                        data: uri.substring(uri.indexOf(",") + 1)
+                    };
+                }
+
+                // Prepare bottom of mhtml file with image data
+                var mhtmlBottom = "\n";
+                for (var i = 0; i < images.length; i++) {
+                    mhtmlBottom += "--NEXT.ITEM-BOUNDARY\n";
+                    mhtmlBottom += "Content-Location: " + images[i].location + "\n";
+                    mhtmlBottom += "Content-Type: " + images[i].type + "\n";
+                    mhtmlBottom += "Content-Transfer-Encoding: " + images[i].encoding + "\n\n";
+                    mhtmlBottom += images[i].data + "\n\n";
+                }
+                mhtmlBottom += "--NEXT.ITEM-BOUNDARY--";
+
+                //TODO: load css from included stylesheet
+                var styles = "";
+
+                // Aggregate parts of the file together
+                var fileContent = static.mhtml.top.replace("_html_", static.mhtml.head.replace("_styles_", styles) + static.mhtml.body.replace("_body_", markup.html())) + mhtmlBottom;
+
+                // Create a Blob with the file contents
+                var blob = new Blob([fileContent], {
+                    type: "application/msword;charset=utf-8"
+                });
+                saveAs(blob, fileName + ".doc");
+            };
+        })(jQuery);
+    } else {
+        if (typeof jQuery === "undefined") {
+            console.error("jQuery Word Export: missing dependency (jQuery)");
+        }
+        if (typeof saveAs === "undefined") {
+            console.error("jQuery Word Export: missing dependency (FileSaver.js)");
+        }
+    }
+
+
+    function exportWord() {
+        $("#export_word").wordExport();
+    }
+</script>
 </body>
 </html>
