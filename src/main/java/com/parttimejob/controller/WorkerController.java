@@ -508,6 +508,14 @@ public class WorkerController {
         return "/manager/employTime";
     }
 
+    @GetMapping("/worker/resume/index")
+    public String resumeIndex(HttpSession session,Model model){
+        Worker worker = (Worker)session.getAttribute("worker");
+        WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
+        model.addAttribute("worker",workerData);
+        return "/worker/resume/index";
+    }
+
 }
 
 

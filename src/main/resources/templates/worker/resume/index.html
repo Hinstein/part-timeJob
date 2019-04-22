@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>兼职者页面</title>
+
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a th:href="@{/index}" layadmin-event="flexible" title="logo">
+                    兼职网
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/index}" target="_blank" title="首页">
+                    首页
+                </a>
+            </li>
+
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/BBS/index}" target="_blank" title="首页">
+                    BBS论坛
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/index}">职位管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/BBS/index}">论坛管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/BBS/publish}">发布帖子</a></dd>
+                    <dd><a th:href="@{/worker/BBS/editor}">管理帖子</a></dd>
+                    <dd><a th:href="@{/worker/BBS/search}">搜索帖子</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    [[${session.worker.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
+                    <dd><a th:href="@{/worker/exit}">退出</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md2">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <div style="text-align: center;">
+                        <img th:src="@{/assets/picture/head.png}">
+                    </div>
+                    <br>
+                    <div style="text-align: center;">
+                        <h2> [[${session.workerData.name}]]</h2>
+                    </div>
+                    <hr>
+                    <div style="text-align: center;">
+                        <a th:href="@{/worker/resume}">
+                            填写简历
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/editor}">
+                            安全设置
+                        </a>
+                    </div>
+                    <hr>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/search}">
+                            搜索职位
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/collect}">
+                            收藏的职位
+                        </a></div>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/deliver}">
+                            投递的职位
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/employ}">
+                            被录用的职位
+                        </a>
+                    </div>
+                    <hr>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/evaluate}">
+                            给予的评价
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px;text-align: center">
+                        <a th:href="@{/worker/evaluated}">
+                            收到的评价
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md10">
+            <div class="layui-card">
+                <div class="layui-card-header">我的简历</div>
+                <div class="layui-card-body">
+                    <div>
+                        <p style="line-height:20.5pt; margin:0pt 1pt 0pt 0pt; text-align:center"><a name="page1"></a>
+                            <span style="font-family:微软雅黑; font-size:15.5pt; font-weight:bold">[[${worker.name}]]</span>
+                        </p>
+                        <p style="line-height:5.45pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt; text-align:center"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.phoneNumber}]] | [[${worker.email}]] </span>
+                        </p>
+                        <p style="line-height:1.95pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt 2pt 0pt 0pt; text-align:center"><span style="font-family:微软雅黑; font-size:9pt">求职意向：</span>
+                            <span style="font-family:微软雅黑; font-size:9pt">[[${worker.jobIntension}]]</span>
+                            <span style="font-family:微软雅黑; font-size:9pt"></span>
+                        </p>
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">性别</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span>
+                        </p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.sex}]]</span>
+                        </p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">年龄</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span>
+                        </p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.age}]]</span>
+                        </p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">期望薪资</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.expectation}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">求职意向</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.jobIntension}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">学历</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.educationBackground}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">工作时间</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.workerTime}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">工作经历</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.workerExperience}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">期望薪资</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.expectation}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">自我评价</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt">[[${worker.introduce}]]</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:10pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+
+                        <p style="line-height:14.55pt; margin:0pt"><span style="font-family:微软雅黑; font-size:14pt; font-weight:bold">商家评价</span></p>
+                        <hr>
+                        <p style="line-height:1pt; margin:0pt"><span style="font-family:'Times New Roman'; font-size:12pt">&#xa0;</span></p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt; font-weight:bold">商家名称：</span>[[${worker.age}]]</p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt; font-weight:bold">&#xa0;</span></p>
+
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt; font-weight:bold">评分：</span>[[${worker.age}]]</p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt; font-weight:bold">&#xa0;</span></p>
+
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt; font-weight:bold">评价：</span>[[${worker.age}]]</p>
+                        <p style="line-height:11.9pt; margin:0pt"><span style="font-family:微软雅黑; font-size:9pt; font-weight:bold">&#xa0;</span></p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<!--<script th:inline="none">-->
+<!--    layui.use(['table'], function () {-->
+<!--        var table = layui.table;-->
+<!--        //第一个实例-->
+<!--        var tableIns = table.render({-->
+<!--            elem: '#demo'-->
+<!--            , url: '/worker/search/allJobs' //数据接口-->
+<!--            , page: true //开启分页-->
+<!--            , skin: 'line'-->
+<!--            , size: 'lg'-->
+<!--            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。-->
+<!--            , limit: 10 //每页默认显示的数量-->
+<!--            , cols: [[ //表头-->
+<!--                {field: 'title', title: '信息', width: '40%'}-->
+<!--                , {field: 'lowPay', title: '最低工资'}-->
+<!--                , {field: 'hightPay', title: '最高工资'}-->
+<!--                , {field: 'date', title: '发布时间', sort: true, width: '20%'}-->
+<!--                , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}-->
+<!--            ]]-->
+<!--        });-->
+<!--        table.render({-->
+<!--            elem: '#manager'-->
+<!--            , url: '/worker/manager/active' //数据接口-->
+<!--            , page: false //开启分页-->
+<!--            , skin: 'line'-->
+<!--            , size: 'lg'-->
+<!--            , limit: 10 //每页默认显示的数量-->
+<!--            , cols: [[ //表头-->
+<!--                {field: 'name', title: '姓名'}-->
+<!--                , {field: 'email', title: '邮箱'}-->
+<!--                , {field: 'phoneNumber', title: '电话号码'}-->
+<!--            ]]-->
+<!--        });-->
+<!--        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"-->
+<!--            var data = obj.data; //获得当前行数据-->
+<!--            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）-->
+<!--            var tr = obj.tr; //获得当前行 tr 的DOM对象-->
+<!--            if (layEvent === 'pass') { //通过-->
+<!--                location.href = "/worker/job/" + data.id;-->
+<!--            }-->
+<!--        });-->
+<!--        $(function () {-->
+<!--            $("#search").click(function () {-->
+<!--                var content = $('#content').val();-->
+<!--                tableIns.reload({-->
+<!--                    where: { //设定异步数据接口的额外参数，任意设-->
+<!--                        content: content-->
+<!--                        //…-->
+<!--                    }-->
+<!--                    , page: {-->
+<!--                        curr: 1 //重新从第 1 页开始-->
+<!--                    }-->
+<!--                });-->
+<!--            })-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+</body>
+</html>

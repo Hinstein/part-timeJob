@@ -20,7 +20,6 @@ public class WorkerData {
     @Column
     private String name;
 
-
     @Column
     private String phoneNumber;
 
