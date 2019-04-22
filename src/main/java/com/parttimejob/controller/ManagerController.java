@@ -110,7 +110,7 @@ public class ManagerController {
                         return map;
                     }
                     session.setAttribute("manager", manager1);
-                    session.setAttribute("photoSrc",manager1.getRelativePath());
+                    session.setAttribute("photoSrc", manager1.getRelativePath());
                     session.setAttribute("username", manager1.getUserName());
                     List<Employ> employs = employService.findByManagerId(manager1.getId());
                     List<Job> jobs = jobService.findByManagerId(manager1.getId());
@@ -472,15 +472,15 @@ public class ManagerController {
     public String managerInformationSave(Manager manager, HttpSession session) {
         Manager manager1 = (Manager) session.getAttribute("manager");
         Manager registerManager = (Manager) session.getAttribute("registerManager");
-        if(registerManager==null){
+        if (registerManager == null) {
             manager.setRelativePath(manager1.getRelativePath());
             manager.setDatePath(manager1.getDatePath());
-        }else{
+        } else {
             File file = new File(manager1.getDatePath());
             file.delete();
             manager.setRelativePath(registerManager.getRelativePath());
             manager.setDatePath(registerManager.getDatePath());
-            session.setAttribute("photoSrc",registerManager.getRelativePath());
+            session.setAttribute("photoSrc", registerManager.getRelativePath());
             session.removeAttribute("registerManager");
         }
         managerService.informationSave(manager);
@@ -530,7 +530,7 @@ public class ManagerController {
 
                 manager.setRelativePath(relativePath);
                 session.setAttribute("registerManager", manager);
-                session.setAttribute("photoSrc",relativePath);
+                session.setAttribute("photoSrc", relativePath);
                 //新建路径
                 map.put("code", 0);
                 map.put("msg", "上传成功！");
@@ -549,9 +549,9 @@ public class ManagerController {
     }
 
     @GetMapping("/photo")
-    public String photo(HttpSession session ,Model model){
-        String src =session.getAttribute("photoSrc").toString();
-        model.addAttribute("src",src);
+    public String photo(HttpSession session, Model model) {
+        String src = session.getAttribute("photoSrc").toString();
+        model.addAttribute("src", src);
         return "/manager/photo";
     }
 

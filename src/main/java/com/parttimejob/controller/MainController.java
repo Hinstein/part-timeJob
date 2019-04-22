@@ -160,7 +160,7 @@ public class MainController {
 
                 manager.setRelativePath(relativePath);
                 session.setAttribute("registerManager", manager);
-                session.setAttribute("photoSrc",relativePath);
+                session.setAttribute("photoSrc", relativePath);
                 //新建路径
                 map.put("code", 0);
                 map.put("msg", "上传成功！");

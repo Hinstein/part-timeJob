@@ -501,18 +501,18 @@ public class WorkerController {
     }
 
     @GetMapping("/worker/employ/time/{id}")
-    public String employTime(@PathVariable("id")int jobId, HttpSession session, Model model){
-        Worker worker = (Worker)session.getAttribute("worker");
-        Employ employ=employService.findByWorkerIdAndJobId(worker.getId(),jobId);
-        model.addAttribute("employ",employ);
+    public String employTime(@PathVariable("id") int jobId, HttpSession session, Model model) {
+        Worker worker = (Worker) session.getAttribute("worker");
+        Employ employ = employService.findByWorkerIdAndJobId(worker.getId(), jobId);
+        model.addAttribute("employ", employ);
         return "/manager/employTime";
     }
 
     @GetMapping("/worker/resume/index")
-    public String resumeIndex(HttpSession session,Model model){
-        Worker worker = (Worker)session.getAttribute("worker");
+    public String resumeIndex(HttpSession session, Model model) {
+        Worker worker = (Worker) session.getAttribute("worker");
         WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
-        model.addAttribute("worker",workerData);
+        model.addAttribute("worker", workerData);
         return "/worker/resume/index";
     }
 

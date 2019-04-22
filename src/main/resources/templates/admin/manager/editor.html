@@ -235,7 +235,8 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">营业执照</label>
                                     <div class="layui-input-inline">
-                                        <img class="layui-upload-img" id="demo1" style="width: 300px" th:src="${manager.relativePath}">
+                                        <img class="layui-upload-img" id="demo1" style="width: 300px"
+                                             th:src="${manager.relativePath}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -307,12 +308,12 @@
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
         $("#demo1").click(function () {
-            var id=[[${manager.id}]];
+            var id = [[${manager.id}]];
             layer.open({
                 type: 2
                 , title: false
                 , closeBtn: 0
-                , content: ["/admin/photo/"+id, 'no']
+                , content: ["/admin/photo/" + id, 'no']
                 , maxmin: true
                 , shadeClose: true
                 , skin: 'layui-layer-nobg'

@@ -454,9 +454,9 @@ public class AdminController {
     }
 
     @GetMapping("/admin/photo/{id}")
-    public String photo(@PathVariable("id")int id,Model model){
+    public String photo(@PathVariable("id") int id, Model model) {
         Manager manager = managerService.findById(id);
-        model.addAttribute("src",manager.getRelativePath());
+        model.addAttribute("src", manager.getRelativePath());
         return "/manager/photo";
     }
 }

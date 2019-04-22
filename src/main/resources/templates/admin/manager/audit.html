@@ -173,19 +173,19 @@
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                {type: 'checkbox', fixed: 'left',width:'3%'}
-                , {field: 'name', title: '姓名',width:'7%'}
-                , {field: 'phoneNumber', title: '手机号',width:'10%'}
-                , {field: 'email', title: '邮箱',width:'15%'}
-                , {field: 'vendorName', title: '商家名称',width:'10%'}
-                , {field: 'address', title: '商家地址',width:'15%'}
-                , {field: 'vendorTime', title: '商家注册时间',width:'15%'}
+                {type: 'checkbox', fixed: 'left', width: '3%'}
+                , {field: 'name', title: '姓名', width: '7%'}
+                , {field: 'phoneNumber', title: '手机号', width: '10%'}
+                , {field: 'email', title: '邮箱', width: '15%'}
+                , {field: 'vendorName', title: '商家名称', width: '10%'}
+                , {field: 'address', title: '商家地址', width: '15%'}
+                , {field: 'vendorTime', title: '商家注册时间', width: '15%'}
                 , {
                     field: 'audit', title: '审核状态', templet: function (d) {
                         return d.audit === 0 ? "<span style=\"color: #FF5722;\">等待审核</span>" : "通过审核";
-                    },width:'8%'
+                    }, width: '8%'
                 }
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action' ,width:'17%'}
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action', width: '17%'}
             ]]
         });
         //监听事件
@@ -232,7 +232,7 @@
                     type: 2
                     , title: false
                     , closeBtn: 0
-                    , content: ['/admin/photo/'+data.id, 'no']
+                    , content: ['/admin/photo/' + data.id, 'no']
                     , maxmin: true
                     , shadeClose: true
                     , skin: 'layui-layer-nobg'
