@@ -232,7 +232,6 @@ public class ManagerController {
     public String workerInformation(@PathVariable("id") int id, Model model, HttpSession session) {
         WorkerData workerData = workerDataService.findByWorkerId(id);
         model.addAttribute("worker", workerData);
-//        session.setAttribute("workerId", id);
         List<EvaluationToWorker> evaluation = evaluationToWorkerService.findByWorkerId(id);
         model.addAttribute("evaluations", evaluation);
         return "/manager/worker";
@@ -455,9 +454,9 @@ public class ManagerController {
         if (collectWorkerService.findByWorkerIdAndManagerId(id, manager.getId()) != null) {
             workerData.setCheckCollect(1);
         }
-        List<EvaluationToWorker> evaluations = evaluationToWorkerService.findByWorkerIdAndUsed(id);
+        EvaluationToWorker evaluation = evaluationToWorkerService.findByWorkerIdAndUsed(id);
         model.addAttribute("evaluationHidden", 1);
-        model.addAttribute("evaluations", evaluations);
+        model.addAttribute("evaluation", evaluation);
         model.addAttribute("worker", workerData);
         return "/manager/worker";
     }
@@ -749,6 +748,18 @@ public class ManagerController {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
         deliverService.delete(workerId, jobId);
         return "已拒绝录用";
+    }
 
+    @GetMapping("/manager/worker/resume/{id}")
+    public String workerResume(@PathVariable("id")int id,Model model){
+        WorkerData worker = workerDataService.findByWorkerId(id);
+        model.addAttribute("worker",worker);
+        EvaluationToWorker evaluation = evaluationToWorkerService.findByWorkerIdAndUsed(id);
+        if(evaluation!=null){
+            model.addAttribute("evaluation",evaluation);
+            Manager manager = managerService.findById(evaluation.getManagerId());
+            model.addAttribute("vendorName",manager.getVendorName());
+        }
+        return "/manager/resume/index";
     }
 }

@@ -184,10 +184,10 @@
                     工作时间：[[${worker.workerTime}]]<br>
                     工作经历：[[${worker.workerExperience}]]
                     <hr>
-                    <div th:if="${evaluations.size()==0}">暂无评价
+                    <div th:if="${evaluation}==null">暂无评价
                         <hr>
                     </div>
-                    <div th:each="evaluation:${evaluations}" id="message" hidden="hidden">
+                    <div id="message" hidden="hidden" th:if="${evaluation}!=null">
                         <p>评分：[[${evaluation.star}]]星</p>
                         <p>评价人:[[${evaluation.managerName}]]</p>
                         <p>评价：[[${evaluation.content}]]</p>
@@ -205,7 +205,10 @@
                             type="button">录用
                     </button>
                     <button class="layui-btn  layui-btn-radius"
-                            id="evaluation" th:if="${evaluations.size()!=0}">查看他的评价
+                            id="evaluation" th:if="${evaluation}!=null">查看他的评价
+                    </button>
+                    <button class="layui-btn  layui-btn-radius"
+                            id="resume">查看简历
                     </button>
                     <input hidden="hidden" th:value="${worker.id}" id="workerDataId" name="id">
                     <input hidden="hidden" th:value="${worker.workerId}" id="workerId" name="id">
@@ -272,7 +275,11 @@
         });
         $("#evaluation").click(function () {
             $("#message").show();
-        })
+        });
+        $("#resume").click(function () {
+            var workerId = $("#workerId").val();
+            location.href = "/manager/worker/resume/" + workerId;
+        });
     })
 </script>
 </body>

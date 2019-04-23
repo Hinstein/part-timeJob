@@ -436,7 +436,7 @@ public class WorkerController {
     }
 
     @GetMapping("/worker/evaluation/{id}")
-    public String evaluation(@PathVariable("id") int id, Model model, HttpSession session) {
+    public String evaluation(@PathVariable("id") int id, Model model) {
         EvaluationToManager evaluation = evaluationToManagerService.findById(id);
         model.addAttribute("evaluation", evaluation);
         return "/worker/evaluation";
@@ -472,10 +472,18 @@ public class WorkerController {
 
     @ResponseBody
     @PostMapping("/worker/evaluation/use/{id}")
-    public String evaluationUsed(@PathVariable("id") int id) {
-
-        evaluationToWorkerService.usedEvaluation(id);
-        return "添加成功";
+    public Map<String,String> evaluationUsed(@PathVariable("id") int id,HttpSession session) {
+        Map<String,String> map=new HashMap<>();
+        Worker worker = (Worker)session.getAttribute("worker");
+        EvaluationToWorker evaluationToWorker = evaluationToWorkerService.findByWorkerIdAndUsed(worker.getId());
+        if (evaluationToWorker!=null){
+            map.put("error","填加失败，已添加有评论到简历中。请取消后重试！");
+        }
+        else {
+            evaluationToWorkerService.usedEvaluation(id);
+            map.put("success","填加成功！");
+        }
+        return map;
     }
 
     @ResponseBody
@@ -513,6 +521,12 @@ public class WorkerController {
         Worker worker = (Worker) session.getAttribute("worker");
         WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
         model.addAttribute("worker", workerData);
+        EvaluationToWorker evaluation = evaluationToWorkerService.findByWorkerIdAndUsed(worker.getId());
+        if(evaluation!=null) {
+            model.addAttribute("evaluation", evaluation);
+            Manager manager = managerService.findById(evaluation.getManagerId());
+            model.addAttribute("vendorName", manager.getVendorName());
+        }
         return "/worker/resume/index";
     }
 

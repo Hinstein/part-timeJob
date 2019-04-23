@@ -48,7 +48,7 @@ public class EvaluationToWorkerService {
         evaluationToWorkerRepository.cancelUsedEvaluation(id);
     }
 
-    public List<EvaluationToWorker> findByWorkerIdAndUsed(int id) {
+    public EvaluationToWorker findByWorkerIdAndUsed(int id) {
         return evaluationToWorkerRepository.findByWorkerIdAndUsed(id, 1);
     }
 }

@@ -144,6 +144,7 @@
                 <div class="layui-card-body">
                     <text th:utext="${job.content}"></text>
                     <br>
+                    <br>
                     浏览量：[[${job.views}]] 收藏量：[[${job.collection}]] 投递量：[[${job.deliver}]]
                     <hr>
                     <span th:if="${job.checkEmploy!=1&&job.checkEmploy!=2}">
@@ -204,7 +205,6 @@
                     dataType: "text",
                     success: function (msg) {
                         location.href = "/worker/job/" + id;
-
                     },
                     error: function () {
                         layer.msg("网络错误，登录失败");
@@ -222,9 +222,7 @@
                     data: params,
                     dataType: "text",
                     success: function (msg) {
-
                         location.href = "/worker/job/" + id;
-
                     },
                     error: function () {
                         layer.msg("网络错误，登录失败");

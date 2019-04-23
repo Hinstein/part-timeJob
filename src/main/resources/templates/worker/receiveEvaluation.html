@@ -167,13 +167,18 @@
         $("#used").click(function () {
             $.ajax({
                 url: "/worker/evaluation/use/" + id,
-                dataType: "Text",
+                dataType: "json",
                 method: "post",
                 success: function (msg) {
-                    layer.msg(msg);
-                    setTimeout(function () {
-                        location.href = "/worker/receiveEvaluation/" + id;
-                    }, 1000)
+                    if(msg.success){
+                        layer.msg(msg.success);
+                        setTimeout(function () {
+                            location.href = "/worker/evaluated";
+                        }, 1000)
+                    }else
+                    {
+                        layer.msg(msg.error);
+                    }
                 }, error: function () {
                     layer.msg("网络错误，操作失败");
                 }
