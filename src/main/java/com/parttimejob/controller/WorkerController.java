@@ -356,9 +356,10 @@ public class WorkerController {
     @ResponseBody
     @GetMapping("/worker/BBS/findAll")
     public Map<String, Object> managerBBSArticleFindAll(HttpSession session, HttpServletRequest request) {
+        Worker worker = (Worker) session.getAttribute("worker");
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
-        Page<BBS> bbs = bbsService.findAll(pageNumber, pageSize);
+        Page<BBS> bbs = bbsService.findAll( pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
@@ -472,16 +473,15 @@ public class WorkerController {
 
     @ResponseBody
     @PostMapping("/worker/evaluation/use/{id}")
-    public Map<String,String> evaluationUsed(@PathVariable("id") int id,HttpSession session) {
-        Map<String,String> map=new HashMap<>();
-        Worker worker = (Worker)session.getAttribute("worker");
+    public Map<String, String> evaluationUsed(@PathVariable("id") int id, HttpSession session) {
+        Map<String, String> map = new HashMap<>();
+        Worker worker = (Worker) session.getAttribute("worker");
         EvaluationToWorker evaluationToWorker = evaluationToWorkerService.findByWorkerIdAndUsed(worker.getId());
-        if (evaluationToWorker!=null){
-            map.put("error","填加失败，已添加有评论到简历中。请取消后重试！");
-        }
-        else {
+        if (evaluationToWorker != null) {
+            map.put("error", "填加失败，已添加有评论到简历中。请取消后重试！");
+        } else {
             evaluationToWorkerService.usedEvaluation(id);
-            map.put("success","填加成功！");
+            map.put("success", "填加成功！");
         }
         return map;
     }
@@ -522,7 +522,7 @@ public class WorkerController {
         WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
         model.addAttribute("worker", workerData);
         EvaluationToWorker evaluation = evaluationToWorkerService.findByWorkerIdAndUsed(worker.getId());
-        if(evaluation!=null) {
+        if (evaluation != null) {
             model.addAttribute("evaluation", evaluation);
             Manager manager = managerService.findById(evaluation.getManagerId());
             model.addAttribute("vendorName", manager.getVendorName());

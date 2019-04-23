@@ -18,15 +18,16 @@ import java.util.List;
  * @Description:
  */
 public interface BBSRepository extends JpaRepository<BBS, Integer> {
-    Page<BBS> findByManagerId(int id, Pageable pageable);
+    Page<BBS> findByManagerIdAndStatus(int id, int status, Pageable pageable);
 
-    List<BBS> findByManagerId(int id);
+    List<BBS> findByManagerIdAndStatus(int id, int status);
 
+    @Override
     List<BBS> findAll();
 
-    Page<BBS> findByWorkerId(int id, Pageable pageable);
+    Page<BBS> findByWorkerIdAndStatus(int id, int status, Pageable pageable);
 
-    List<BBS> findByWorkerId(int id);
+    List<BBS> findByWorkerIdAndStatus(int id, int status);
 
     BBS findById(int id);
 

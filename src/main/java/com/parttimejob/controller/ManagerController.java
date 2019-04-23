@@ -751,14 +751,14 @@ public class ManagerController {
     }
 
     @GetMapping("/manager/worker/resume/{id}")
-    public String workerResume(@PathVariable("id")int id,Model model){
+    public String workerResume(@PathVariable("id") int id, Model model) {
         WorkerData worker = workerDataService.findByWorkerId(id);
-        model.addAttribute("worker",worker);
+        model.addAttribute("worker", worker);
         EvaluationToWorker evaluation = evaluationToWorkerService.findByWorkerIdAndUsed(id);
-        if(evaluation!=null){
-            model.addAttribute("evaluation",evaluation);
+        if (evaluation != null) {
+            model.addAttribute("evaluation", evaluation);
             Manager manager = managerService.findById(evaluation.getManagerId());
-            model.addAttribute("vendorName",manager.getVendorName());
+            model.addAttribute("vendorName", manager.getVendorName());
         }
         return "/manager/resume/index";
     }

@@ -33,7 +33,7 @@ public class BBSService {
             pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return bbsRepository.findByManagerId(managerId, pageable);
+        return bbsRepository.findByManagerIdAndStatus(managerId, 2, pageable);
     }
 
     public BBS findById(int id) {
@@ -63,7 +63,7 @@ public class BBSService {
             pageNo = 1;
         }
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
-        return bbsRepository.findByWorkerId(managerId, pageable);
+        return bbsRepository.findByWorkerIdAndStatus(managerId, 1, pageable);
     }
 
     public void views(int id) {
@@ -71,11 +71,11 @@ public class BBSService {
     }
 
     public List<BBS> findByWorkerId(int id) {
-        return bbsRepository.findByWorkerId(id);
+        return bbsRepository.findByWorkerIdAndStatus(id, 1);
     }
 
     public List<BBS> findByManagerId(int id) {
-        return bbsRepository.findByManagerId(id);
+        return bbsRepository.findByManagerIdAndStatus(id, 2);
     }
 
     public List<BBS> findAll() {
