@@ -110,6 +110,9 @@
 		<level name="Maven: org.dom4j:dom4j:2.1.1" value="project"/>
 		<level name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.4.Final" value="project"/>
 		<level name="Maven: org.springframework:spring-aspects:5.1.4.RELEASE" value="project"/>
+		<level name="Maven: com.github.penggle:kaptcha:2.3.2" value="project"/>
+		<level name="Maven: javax.servlet:javax.servlet-api:4.0.1" value="project"/>
+		<level name="Maven: com.jhlabs:filters:2.0.235-1" value="project"/>
 		<level name="Maven: org.webjars:jquery:3.3.1-1" value="project"/>
 		<level name="Maven: net.sf.json-lib:json-lib:jdk15:2.4" value="project"/>
 		<level name="Maven: commons-beanutils:commons-beanutils:1.8.0" value="project"/>

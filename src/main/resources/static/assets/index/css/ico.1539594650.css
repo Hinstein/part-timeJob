@@ -1,0 +1,175 @@
+@charset "utf-8";
+.db-icon,
+.cg-icon,
+.db-min-ico,
+.cg-min-ico,
+.word-you-ico,
+.word-zhi-ico,
+.word-jing-ico,
+.word-re-ico,
+.word-jiang-ico,
+.word-ji-ico,
+.word-huo-ico,
+.jz-jubao-ico,
+.gzbz-icon,
+.jz-welfare li i {
+    background: url("../../../../image/jianzhi/web/c/jz_db_ico1.png?v=180926") no-repeat;
+}
+
+.db-icon,
+.cg-icon,
+.db-min-ico,
+.cg-min-ico,
+.word-you-ico,
+.word-zhi-ico,
+.word-jing-ico,
+.word-re-ico,
+.word-jiang-ico,
+.word-ji-ico,
+.word-huo-ico {
+    display: inline-block;
+    width: 30px;
+    height: 16px;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+    overflow: hidden;
+}
+
+.db-icon,
+.cg-icon {
+    width: 90px;
+    height: 24px;
+    background-position: 0 -26px;
+}
+
+.cg-icon {
+    background-position: 0 -90px;
+}
+
+.db-min-ico,
+.cg-min-ico {
+    width: 64px;
+    background-position: -128px -32px;
+}
+
+.cg-min-ico {
+    background-position: -100px -90px;
+}
+
+.word-jing-ico {
+    background-position: 0 0;
+}
+
+.word-re-ico {
+    background-position: -32px 0;
+}
+
+.word-jiang-ico {
+    background-position: -64px 0;
+}
+
+.word-ji-ico {
+    background-position: -128px 0;
+}
+.word-zhi-ico {
+    background-position: -160px 0;
+}
+.word-you-ico{
+    background-position: 0 -158px;
+}
+.word-huo-ico{
+    background-position: -170px -90px;
+}
+.word-ti-ico {
+    display: none;
+}
+
+.word-ico1,
+.word-ico2,
+.word-ico3,
+.word-ico4 {
+    display: inline-block;
+    height: 16px;
+    background-color: #a9c365;
+    color: #fff;
+    font-size: 12px;
+    line-height: 16px;
+    vertical-align: middle;
+    padding-left: 2px;
+    padding-right: 2px;
+    overflow: hidden;
+}
+.word-ico2 {
+    background-color: #88b9b9;
+}
+
+.word-ico3 {
+    background-color: #de958f;
+}
+
+.word-ico4 {
+    background-color: #99b3dd;
+}
+
+.jz-jubao-ico {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    background-position: -142px -124px;
+    margin-right: 5px;
+}
+
+.gzbz-icon {
+    position: absolute;
+    display: inline-block;
+    width: 30px;
+    height: 93px;
+    text-indent: -9999em;
+    background-position: -202px 0;
+    top: -5px;
+    right: 40px;
+}
+
+.jz-welfare li i {
+    display: inline-block;
+    width: 32px;
+    height: 32px;
+    font-size: 0;
+    line-height: 0;
+    vertical-align: middle;
+    overflow: hidden;
+    margin-right: 8px;
+}
+
+.jz-welfare .welfare-ytc i {
+    background-position: 0 -124px;
+}
+
+.jz-welfare .welfare-bcz i {
+    background-position: -32px -124px;
+}
+
+.jz-welfare .welfare-gzc i {
+    background-position: -64px -124px;
+}
+
+.jz-welfare .welfare-jtbz i {
+    background-position: -96px -124px;
+}
+
+.jz-welfare .welfare-dxnj i {
+    background-position: -180px -123px;
+}
+
+.jz-welfare .welfare-jbbz i {
+    background-position: -30px -156px;
+}
+
+.jz-welfare .welfare-wx i {
+    background-position: -60px -156px;
+}
