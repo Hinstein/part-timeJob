@@ -53,6 +53,50 @@ public class Job {
     @Column
     private int checkEmploy;
 
+    @Column
+    private String type;
+
+    @Column
+    private String workerLimit;
+
+    @Column
+    private int workerNumber;
+
+    @Column
+    private int employNumber;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getWorkerLimit() {
+        return workerLimit;
+    }
+
+    public void setWorkerLimit(String workerLimit) {
+        this.workerLimit = workerLimit;
+    }
+
+    public int getWorkerNumber() {
+        return workerNumber;
+    }
+
+    public void setWorkerNumber(int workerNumber) {
+        this.workerNumber = workerNumber;
+    }
+
+    public int getEmployNumber() {
+        return employNumber;
+    }
+
+    public void setEmployNumber(int employNumber) {
+        this.employNumber = employNumber;
+    }
+
     public int getCheckEmploy() {
         return checkEmploy;
     }

@@ -158,12 +158,16 @@
         </div>
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header"><h1>[[${job.title}]]</h1></div>
+                <div class="layui-card-header"><h2>[[${job.title}]]</h2></div>
                 <div class="layui-card-body">
-                    <h2>职位信息：</h2>
+                    <h3>职位信息：</h3>
                     <hr>
                     <text th:utext="${job.content}"></text>
-
+                    <hr>
+                    职位种类：[[${job.type}]] &nbsp; 职位要求：[[${job.workerLimit}]] &nbsp;
+                    <hr>
+                    浏览量：[[${job.views}]] &nbsp; 收藏量：[[${job.collection}]] &nbsp; 投递量：[[${job.deliver}]] &nbsp;
+                    招聘数：[[${job.workerNumber}]] &nbsp; 已招聘：[[${job.employNumber}]] &nbsp; 剩余量：[[${job.workerNumber}-${job.employNumber}]]
                 </div>
             </div>
         </div>

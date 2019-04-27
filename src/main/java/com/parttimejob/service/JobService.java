@@ -172,4 +172,9 @@ public class JobService {
     public List<Job> findAll() {
         return jobRepository.findAll();
     }
+
+    public void employ(int id) {
+        jobRepository.employ(id);
+    }
+
 }

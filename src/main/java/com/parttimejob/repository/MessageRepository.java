@@ -15,4 +15,6 @@ import java.util.List;
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 
     List<Message> findByManagerId(int id);
+
+    void  deleteById(int id);
 }

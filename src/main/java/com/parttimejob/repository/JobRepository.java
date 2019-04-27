@@ -27,6 +27,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      */
     List<Job> findByManagerId(int id);
 
+    @Override
     List<Job> findAll();
 
     /**
@@ -102,4 +103,9 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Modifying
     @Query(value = "update Job a SET a.deliver = a.deliver-1 where a.id =?1")
     void deliverCancel(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update Job a SET a.employNumber = a.employNumber+1 where a.id =?1")
+    void employ(int id);
 }

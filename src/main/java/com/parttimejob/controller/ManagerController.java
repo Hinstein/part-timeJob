@@ -5,6 +5,7 @@ import com.parttimejob.service.*;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
@@ -256,6 +257,7 @@ public class ManagerController {
         String address = map.get("address");
         String dateTime = date + " " + time;
         if (employ == null) {
+            jobService.employ(jobId);
             Employ employ1 = new Employ();
             employ1.setWorkerId(workerId);
             employ1.setDate(dateTime);
@@ -740,6 +742,15 @@ public class ManagerController {
         List<Message> messages = messageService.findByManagerId(manager.getId());
         model.addAttribute("messages", messages);
         return "/manager/message";
+    }
+
+    @ResponseBody
+    @DeleteMapping("/manager/message/delete/{id}")
+    public Map<String,String> deleteMessage(@PathVariable("id")int id){
+        HashMap<String, String> map = new HashMap<>();
+        messageService.deleteById(id);
+        map.put("success","删除成功！");
+        return  map;
     }
 
     @ResponseBody

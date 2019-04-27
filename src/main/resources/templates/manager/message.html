@@ -171,10 +171,12 @@
                                     <strong>[[${message.workerName}]]</strong></a>
                             </div>
                             <div class="layui-card-body">
-                                <p> 评价时间:
-                                    <span th:text="${message.date}"></span>
-                                </p>
-                                留言内容:<span th:text="${message.content}"></span>
+                                <p>留言内容:<span th:text="${message.content}"></span></p>
+                                留言时间:<span th:text="${message.date}"></span>
+                                <hr>
+                                <button class="layui-btn layui-btn-danger layui-btn-radius cancel layui-btn-sm" th:attr="ss=${message.id}">
+                                    删除留言
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -185,5 +187,43 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        $(".cancel").click(function () {
+            var id = $(this).attr("ss");
+            layer.confirm('确定删除该留言么', function (index) {
+                $.ajax({
+                    url: '/manager/message/delete/'+id,
+                    method: "delete",
+                    dataType: "json",
+                    success: function (msg) {
+                        if(msg.success)
+                        {
+                            location.href = "/manager/message";
+                        }
+                    },
+                    error: function () {
+                        layer.msg("网络错误，登录失败");
+                    }
+                });
+            })
+        })
+    })
+    // layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
+    // $.ajax({
+    //     url: '/admin/manager/audit/delete' + data.id,
+    //     method: "post",
+    //     dataType: "text",
+    //     success: function (msg) {
+    //         layer.msg(msg);
+    //         // //清除表单内容
+    //         tableIns.reload();
+    //     },
+    //     error: function () {
+    //         layer.msg("网络错误，通过失败");
+    //     }
+    // });
+    // });
+</script>
 </body>
 </html>
