@@ -147,7 +147,8 @@
                     职位种类：[[${job.type}]] &nbsp; 职位要求：[[${job.workerLimit}]] &nbsp;
                     <hr>
                     浏览量：[[${job.views}]] &nbsp; 收藏量：[[${job.collection}]] &nbsp; 投递量：[[${job.deliver}]] &nbsp;
-                    招聘数：[[${job.workerNumber}]] &nbsp; 已招聘：[[${job.employNumber}]] &nbsp; 剩余量：[[${job.workerNumber}-${job.employNumber}]]
+                    招聘数：[[${job.workerNumber}]] &nbsp; 已招聘：[[${job.employNumber}]] &nbsp;
+                    剩余量：[[${job.workerNumber}-${job.employNumber}]]
                     <hr>
                     <span th:if="${job.checkEmploy!=1&&job.checkEmploy!=2}">
                         <button th:if="${job.checkCollection}==0" class="layui-btn  layui-btn-radius" id="save"
@@ -301,7 +302,7 @@
                 },
                 dataType: "text",
                 success: function (msg) {
-                        location.href = "/worker/job/" + jobId;
+                    location.href = "/worker/job/" + jobId;
 
                 },
                 error: function () {

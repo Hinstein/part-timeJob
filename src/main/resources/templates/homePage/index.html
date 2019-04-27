@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 
-<!--    <link rel="stylesheet" th:href="@{/assets/index/css/global.1512563581.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/assets/index/css/global.1512563581.css}">-->
 
     <link rel="stylesheet" th:href="@{/assets/index/css/ico.1539594650.css}">
 
@@ -143,7 +143,7 @@
 
 </div>
 <br>
-<div class="layui-container" >
+<div class="layui-container">
     <div class="layui-inline">
         <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的职位">
     </div>
@@ -252,7 +252,7 @@
                                 <div class="layui-card layui-col-md4" th:each="job:${jobs}">
                                     <div class="layui-card-header">
                                         <a th:href="@{/worker/job/}+${job.id}">
-                                            <strong th:text="${job.title}" >title</strong>
+                                            <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
                                     <div class="layui-card-body">
@@ -386,17 +386,17 @@
                 <li>
                     关于我们
                     <ul class="sub-nav">
-                        <li><a >公司简介</a></li>
-                        <li><a >公司历程</a></li>
-                        <li><a >加入我们</a></li>
+                        <li><a>公司简介</a></li>
+                        <li><a>公司历程</a></li>
+                        <li><a>加入我们</a></li>
                         <li><a>联系我们</a></li>
-                        <li><a >渠道招商</a></li>
+                        <li><a>渠道招商</a></li>
                     </ul>
                 </li>
                 <li>招聘资讯
                     <ul class="sub-nav">
-                        <li><a >招聘新闻</a></li>
-                        <li><a >工作技巧</a></li>
+                        <li><a>招聘新闻</a></li>
+                        <li><a>工作技巧</a></li>
                     </ul>
                 </li>
                 <li>帮助中心
@@ -404,12 +404,12 @@
                         <li><a>有偿服务</a></li>
                     </ul>
                 </li>
-                <li><a >网站地图</a></li>
+                <li><a>网站地图</a></li>
             </ul>
         </div>
     </div>
     <p class="copyright">&copy;2018-2019 桂电兼职招聘网 地址：中国广西桂林金鸡路1号 邮编：541004　传真：0773-2290083 </p>
-    <p class="copyright">桂ICP备05000961号    桂公网安备45030502000232号</p>
+    <p class="copyright">桂ICP备05000961号 桂公网安备45030502000232号</p>
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
@@ -427,8 +427,8 @@
         //执行
         util.fixbar({
             bar1: true
-            ,click: function(type){
-                if(type === 'bar1'){
+            , click: function (type) {
+                if (type === 'bar1') {
                     layer.msg("欢迎来到桂电兼职网！")
                 }
             }

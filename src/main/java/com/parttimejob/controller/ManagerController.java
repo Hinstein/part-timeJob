@@ -746,11 +746,11 @@ public class ManagerController {
 
     @ResponseBody
     @DeleteMapping("/manager/message/delete/{id}")
-    public Map<String,String> deleteMessage(@PathVariable("id")int id){
+    public Map<String, String> deleteMessage(@PathVariable("id") int id) {
         HashMap<String, String> map = new HashMap<>();
         messageService.deleteById(id);
-        map.put("success","删除成功！");
-        return  map;
+        map.put("success", "删除成功！");
+        return map;
     }
 
     @ResponseBody

@@ -174,7 +174,8 @@
                                 <p>留言内容:<span th:text="${message.content}"></span></p>
                                 留言时间:<span th:text="${message.date}"></span>
                                 <hr>
-                                <button class="layui-btn layui-btn-danger layui-btn-radius cancel layui-btn-sm" th:attr="ss=${message.id}">
+                                <button class="layui-btn layui-btn-danger layui-btn-radius cancel layui-btn-sm"
+                                        th:attr="ss=${message.id}">
                                     删除留言
                                 </button>
                             </div>
@@ -193,12 +194,11 @@
             var id = $(this).attr("ss");
             layer.confirm('确定删除该留言么', function (index) {
                 $.ajax({
-                    url: '/manager/message/delete/'+id,
+                    url: '/manager/message/delete/' + id,
                     method: "delete",
                     dataType: "json",
                     success: function (msg) {
-                        if(msg.success)
-                        {
+                        if (msg.success) {
                             location.href = "/manager/message";
                         }
                     },

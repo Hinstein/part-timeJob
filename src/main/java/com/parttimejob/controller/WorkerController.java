@@ -359,7 +359,7 @@ public class WorkerController {
         Worker worker = (Worker) session.getAttribute("worker");
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
-        Page<BBS> bbs = bbsService.findAll( pageNumber, pageSize);
+        Page<BBS> bbs = bbsService.findAll(pageNumber, pageSize);
         Map<String, Object> result = new HashMap<String, Object>();
         result.put("code", 0);
         result.put("msg", "");
