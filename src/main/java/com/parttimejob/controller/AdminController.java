@@ -53,27 +53,36 @@ public class AdminController {
      */
     @PostMapping("/admin/login")
     @ResponseBody
-    public String adminLogin(Admin admin, HttpSession session) {
-        String username = admin.getUserName();
-        String password = admin.getPassword();
-        Admin admin1 = adminService.findByUserName(username);
-        if (admin1 != null) {
-            if (admin1.getPassword().equals(password)) {
-                session.setAttribute("username", admin1.getUserName());
-                session.setAttribute("adminUserName", admin1.getUserName());
-                List<Worker> workers = workerService.findAll();
-                List<Manager> managers = managerService.findAll();
-                List<Job> jobs = jobService.findAll();
-                List<BBS> bbs = bbsService.findAll();
-                session.setAttribute("workers", workers.size());
-                session.setAttribute("managers", managers.size());
-                session.setAttribute("bbs", bbs.size());
-                session.setAttribute("jobs", jobs.size());
-                return "登录成功,正在跳转";
+    public Map<String, String> adminLogin(Admin admin, HttpSession session, HttpServletRequest request) {
+        Map<String, String> map = new HashMap<>();
+        String rightCode = (String) request.getSession().getAttribute("rightCode");
+        String tryCode = request.getParameter("tryCode");
+        if (tryCode.equals(rightCode)) {
+            String username = admin.getUserName();
+            String password = admin.getPassword();
+            Admin admin1 = adminService.findByUserName(username);
+            if (admin1 != null) {
+                if (admin1.getPassword().equals(password)) {
+                    session.setAttribute("username", admin1.getUserName());
+                    session.setAttribute("adminUserName", admin1.getUserName());
+                    List<Worker> workers = workerService.findAll();
+                    List<Manager> managers = managerService.findAll();
+                    List<Job> jobs = jobService.findAll();
+                    List<BBS> bbs = bbsService.findAll();
+                    session.setAttribute("workers", workers.size());
+                    session.setAttribute("managers", managers.size());
+                    session.setAttribute("bbs", bbs.size());
+                    session.setAttribute("jobs", jobs.size());
+                    map.put("success", "登录成功");
+                }
+                map.put("error", "密码错误");
+            } else {
+                map.put("error", "不存在该用户");
             }
-            return "密码错误";
+        } else {
+            map.put("error", "验证码错误");
         }
-        return "不存在该用户";
+        return map;
     }
 
     @GetMapping("/admin/exit")

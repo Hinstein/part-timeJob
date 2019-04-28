@@ -16,13 +16,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class MyMvcConfig implements WebMvcConfigurer {
-//
-//    @Override
-//    public void addViewControllers(ViewControllerRegistry registry) {
-//        registry.addViewController("/").setViewName("/index");
-//    }
-//
-
     /**
      * 注册拦截器
      *
@@ -35,7 +28,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 , "/workerLogin", "/managerLogin", "/workerRegister", "/managerRegister",
                 "/admin/login", "/manager/register", "/manager/login", "/worker/register",
                 "/worker/login", "/webjars/**", "/defaultKaptcha", "/manager/information",
-                "/addPhoto", "/manager/register/vendor", "/photo"};
+                "/addPhoto", "/manager/register/vendor", "/photo", "/css/**"};
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excludeUrl);
     }
 }

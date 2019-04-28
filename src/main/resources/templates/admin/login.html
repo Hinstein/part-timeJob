@@ -2,58 +2,75 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>登陆</title>
-
-    <link rel="stylesheet" href="/static/assets/layui/css/layui.css"
-          th:href="@{/assets/layui/css/layui.css}">
-    <link rel="stylesheet" href="../frame/static/css/style.css"
-          th:href="@{/assets/css/adminLogin/style.css}">
+    <title>后台登录</title>
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/css/login/login.css}">
 </head>
 <body>
-<div class="login-main">
-    <header class="layui-elip">后台登录</header>
-    <form class="layui-form" id="adminForm">
-        <div class="layui-input-inline">
-            <input type="text" name="userName" required lay-verify="required" placeholder="用户名" autocomplete="off"
-                   class="layui-input">
+<div class="login-back"></div>
+<div class="layui-container">
+    <br>
+    <br>
+    <div class="logo-title">桂电兼职网后台管理系统</div>
+    <div class="logo-txt">GUET Part-Time Job background management system</div>
+    <div class="layui-row login-box">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+            <div class="login-img"><img th:src="@{/css/images/login-left.png}"></div>
         </div>
-        <div class="layui-input-inline">
-            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
-                   class="layui-input">
+        <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+            <div class="login-tt">账户登录</div>
+            <form class="layui-form">
+                <div class="login-form">
+                    <input type="text" placeholder="请输入账号" lay-verify="required" class="layui-input login01"
+                           name="userName" id="userName">
+                    <input type="password" placeholder="请输入密码" lay-verify="required"
+                           class="layui-input login02" id="password" name="password">
+                    <div class="relative">
+                        <input type="text" placeholder="请输入验证码" lay-verify="required" class="layui-input login03"
+                               id="tryCode">
+                        <div class="yzm"><img onclick="this.src='/defaultKaptcha?d='+new Date()*1"
+                                              th:src="@{/defaultKaptcha}" id="code"></div>
+                    </div>
+                    <button class="layui-btn login-btn" lay-submit="" lay-filter="save">登录</button>
+                </div>
+            </form>
         </div>
-        <div class="layui-input-inline login-btn">
-            <button lay-submit lay-filter="login" class="layui-btn" id="admin" type="button">登录</button>
-        </div>
-        <hr/>
-        <p><a class="fl">立即注册</a><a href="javascript:;" class="fr">忘记密码？</a></p>
-    </form>
+    </div>
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
-    $(function () {
-        $("#admin").click(function () {
+    layui.use(['form', 'layer'], function () {
+        var form = layui.form;
+        //执行一个laydate实例
+        form.on('submit(save)', function (data) {
+            var userName = $("#userName").val();
+            var password = $("#password").val();
+            var tryCode = $("#tryCode").val();
             $.ajax({
-                url: 'login',
-                method: "post",
-                data: $('#adminForm').serialize(),
-                dataType: "text",
-                success: function (msg) {
-                    var success = "登录成功,正在跳转";
-                    layer.msg(msg);
-                    if (success === msg) {
-                        $('#adminForm')[0].reset();
-                        setTimeout(function () {
-                            location.href = "/admin/index";
-                        }, 2000);
-                    }
+                url: "/admin/login",
+                data: {
+                    userName: userName,
+                    password: password,
+                    tryCode: tryCode
                 },
-                error: function () {
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    if (data.success) {
+                        location.href = "/admin/index";
+                    } else {
+                        layer.msg(data.error, {time: 2000, icon: 5, shift: 6});
+                        $("#code").click();
+                    }
+                }, error: function () {
                     layer.msg("网络错误，登录失败");
                 }
-            })
-        })
-    })
+            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
+        //各种基于事件的操作，下面会有进一步介绍
+    });
 </script>
 </body>
 </html>
