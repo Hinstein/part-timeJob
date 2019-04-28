@@ -4,8 +4,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.event.HierarchyBoundsListener;
-import java.awt.event.HierarchyEvent;
 
 /**
  * @BelongsProject: part-timeJob

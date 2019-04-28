@@ -178,7 +178,6 @@
         $(".cancel").click(function () {
             var id = $(this).attr("ss");
             layer.confirm('确定取消该收藏么', function (index) {
-
                 var params = {};
                 params.id = id;
                 $.ajax({
@@ -187,9 +186,7 @@
                     data: params,
                     dataType: "text",
                     success: function (msg) {
-
                         location.href = "/worker/collect";
-
                     },
                     error: function () {
                         layer.msg("网络错误，登录失败");
@@ -198,21 +195,6 @@
             })
         })
     })
-    // layer.confirm('删除用户名为' + data.userName + '账号么', function (index) {
-    // $.ajax({
-    //     url: '/admin/manager/audit/delete' + data.id,
-    //     method: "post",
-    //     dataType: "text",
-    //     success: function (msg) {
-    //         layer.msg(msg);
-    //         // //清除表单内容
-    //         tableIns.reload();
-    //     },
-    //     error: function () {
-    //         layer.msg("网络错误，通过失败");
-    //     }
-    // });
-    // });
 </script>
 </body>
 </html>

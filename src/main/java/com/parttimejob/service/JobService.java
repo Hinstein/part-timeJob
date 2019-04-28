@@ -102,6 +102,25 @@ public class JobService {
         return jobRepository.findByTitleLike(content, pageable);
     }
 
+    @Transactional
+    public Page<Job> findByType(String type, int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return jobRepository.findByType(type, pageable);
+    }
+
+    @Transactional
+    public Page<Job> findByWorkerLimit(String limit, int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return jobRepository.findByWorkerLimit(limit, pageable);
+    }
+
+
     /**
      * 分页得到所有工作
      *

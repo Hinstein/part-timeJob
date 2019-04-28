@@ -194,6 +194,11 @@
                                 意向职位：[[${worker.jobIntension}]]<br>
                                 工作时间：[[${worker.workerTime}]]<br>
                                 工作经历：[[${worker.workerExperience}]]
+                                <hr>
+                                <button class="layui-btn layui-btn-warm layui-btn-radius cancel layui-btn-sm"
+                                        th:attr="workerId=${worker.workerId}">
+                                    取消收藏
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -204,5 +209,26 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(".cancel").click(function () {
+        var workerId = $(this).attr("workerId");
+        layer.confirm('是否取消收藏该简历么', function (index) {
+            $.ajax({
+                url: '/manager/workerData/cancelSave',
+                method: "post",
+                data: {
+                    workerId: workerId
+                },
+                dataType: "text",
+                success: function (msg) {
+                    location.href = "/manager/collect";
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
+                }
+            });
+        });
+    });
+</script>
 </body>
 </html>

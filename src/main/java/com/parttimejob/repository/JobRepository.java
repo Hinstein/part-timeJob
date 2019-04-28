@@ -49,6 +49,9 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Query(value = "UPDATE Job job  SET job.content= :#{#job.content}," +
             "job.title= :#{#job.title}," +
             "job.lowPay= :#{#job.lowPay}," +
+            "job.type= :#{#job.type}," +
+            "job.workerLimit= :#{#job.workerLimit}," +
+            "job.workerNumber= :#{#job.workerNumber}," +
             "job.hightPay= :#{#job.hightPay} " +
             "WHERE job.id = :#{#job.id}")
     int updateEditor(Job job);
@@ -60,7 +63,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      * @param pageable
      * @return
      */
-    @Query(value = "select job from Job job where job.title like CONCAT('%',?1,'%')")
+    @Query(value = "select job from Job job where job.title like CONCAT('%',?1,'%')  or job.content like CONCAT('%',?1,'%')")
     Page<Job> findByTitleLike(String content, Pageable pageable);
 
     /**
@@ -71,6 +74,10 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      */
     @Override
     Page<Job> findAll(Pageable pageable);
+
+    Page<Job> findByType(String type, Pageable pageable);
+
+    Page<Job> findByWorkerLimit(String limit, Pageable pageable);
 
     /**
      * 通过招聘者id删除所有工作

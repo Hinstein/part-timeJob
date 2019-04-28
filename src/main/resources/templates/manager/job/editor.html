@@ -172,6 +172,14 @@
                         <input hidden="hidden" name="id" th:value="${job.id}">
                         <div class="layui-form-item">
                             <div class="layui-inline">
+                                <label class="layui-form-label">招聘人数</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="workerNumber" placeholder="招聘人数" autocomplete="off"
+                                           class="layui-input" lay-verify="required|number"
+                                           th:value="${job.workerNumber}">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
                                 <label class="layui-form-label">薪资范围</label>
                                 <div class="layui-input-inline" style="width: 100px;">
                                     <input type="text" name="lowPay" placeholder="￥" autocomplete="off"
@@ -186,7 +194,31 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">招聘种类</label>
+                                <div class="layui-input-inline">
+                                    <select name="type" lay-verify="required">
+                                        <option value="" selected="">请选择</option>
+                                        <option value="普通工作" th:selected="${job.type}eq'普通工作'">普通工作</option>
+                                        <option value="教辅机构兼职" th:selected="${job.type}eq'教辅机构兼职'">教辅机构兼职</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">招聘条件</label>
+                                <div class="layui-input-inline">
+                                    <select name="workerLimit" lay-verify="required">
+                                        <option value="" selected="">请选择</option>
+                                        <option value="无限制" th:selected="${job.workerLimit}eq'无限制'">无限制</option>
+                                        <option value="大一" th:selected="${job.workerLimit}eq'大一'">大一</option>
+                                        <option value="大二" th:selected="${job.workerLimit}eq'大二'">大二</option>
+                                        <option value="大三" th:selected="${job.workerLimit}eq'大三'">大三</option>
+                                        <option value="大四" th:selected="${job.workerLimit}eq'大四'">大四</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
                         <div class="layui-form-item layui-form-text">
                             <label class="layui-form-label">兼职介绍</label>
                             <div class="layui-input-block">

@@ -196,18 +196,20 @@
                     </div>
 
 
-                    <button class="layui-btn  layui-btn-radius" id="save" th:if="${worker.checkCollect}==0">收藏
+                    <button class="layui-btn  layui-btn-radius layui-btn-sm" id="save"
+                            th:if="${worker.checkCollect}==0">收藏
                     </button>
-                    <button th:if="${worker.checkCollect}==1" class="layui-btn layui-btn-warm layui-btn-radius"
+                    <button th:if="${worker.checkCollect}==1"
+                            class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm"
                             id="cancelSave">已收藏
                     </button>
-                    <button class="layui-btn  layui-btn-radius" id="pass" th:if="${evaluationHidden}==null"
+                    <button class="layui-btn  layui-btn-radius layui-btn-sm" id="pass" th:if="${evaluationHidden}==null"
                             type="button">录用
                     </button>
-                    <button class="layui-btn  layui-btn-radius"
+                    <button class="layui-btn  layui-btn-radius layui-btn-sm"
                             id="evaluation" th:if="${evaluation}!=null">查看他的评价
                     </button>
-                    <button class="layui-btn  layui-btn-radius"
+                    <button class="layui-btn  layui-btn-radius layui-btn-sm"
                             id="resume">查看简历
                     </button>
                     <input hidden="hidden" th:value="${worker.id}" id="workerDataId" name="id">

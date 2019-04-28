@@ -142,15 +142,32 @@ public class JobController {
     @ResponseBody
     @GetMapping("/worker/search/allJobs")
     public Map<String, Object> managerAudit(HttpServletRequest request,
-                                            @RequestParam(value = "content", required = false) String content) {
+                                            @RequestParam(value = "content", required = false) String content,
+                                            @RequestParam(value = "type", required = false) String type,
+                                            @RequestParam(value = "workerLimit", required = false) String workerLimit) {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Map<String, Object> result = new HashMap<String, Object>();
-        if (content != null) {
-            Page<Job> jobs = jobService.findByTitleLike(content, pageNumber, pageSize);
-            result.put("count", jobs.getTotalElements());
-            JSONArray json = JSONArray.fromObject(jobs.getContent());
-            result.put("data", json);
+        System.out.println(workerLimit);
+        System.out.println(type);
+        System.out.println(content);
+        if (content != null || type != null || workerLimit != null) {
+            if (content != null) {
+                Page<Job> jobs = jobService.findByTitleLike(content, pageNumber, pageSize);
+                result.put("count", jobs.getTotalElements());
+                JSONArray json = JSONArray.fromObject(jobs.getContent());
+                result.put("data", json);
+            } else if (type != null) {
+                Page<Job> jobs = jobService.findByType(type, pageNumber, pageSize);
+                result.put("count", jobs.getTotalElements());
+                JSONArray json = JSONArray.fromObject(jobs.getContent());
+                result.put("data", json);
+            } else {
+                Page<Job> jobs = jobService.findByWorkerLimit(workerLimit, pageNumber, pageSize);
+                result.put("count", jobs.getTotalElements());
+                JSONArray json = JSONArray.fromObject(jobs.getContent());
+                result.put("data", json);
+            }
         } else {
             Page<Job> jobs = jobService.getJobs(pageNumber, pageSize);
             result.put("count", jobs.getTotalElements());

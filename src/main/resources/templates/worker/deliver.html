@@ -160,6 +160,11 @@
                                     <span th:text="${job.hightPay}"></span></p>
                                 发布时间:
                                 <text th:text="${job.date}"></text>
+                                <hr>
+                                <button class="layui-btn layui-btn-warm layui-btn-radius cancel layui-btn-sm"
+                                        th:attr="ss=${job.id}">
+                                    取消投递
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -170,5 +175,28 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        $(".cancel").click(function () {
+            var id = $(this).attr("ss");
+            layer.confirm('是否取消投递该职位么', function (index) {
+                var params = {};
+                params.id = id;
+                $.ajax({
+                    url: '/worker/job/cancelDeliver',
+                    method: "post",
+                    data: params,
+                    dataType: "text",
+                    success: function (msg) {
+                        location.href = "/worker/deliver";
+                    },
+                    error: function () {
+                        layer.msg("网络错误，登录失败");
+                    }
+                });
+            })
+        })
+    })
+</script>
 </body>
 </html>

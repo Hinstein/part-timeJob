@@ -2,20 +2,13 @@ package com.parttimejob.controller;
 
 import com.parttimejob.entity.*;
 import com.parttimejob.service.*;
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONArray;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
@@ -478,7 +471,7 @@ public class WorkerController {
         Worker worker = (Worker) session.getAttribute("worker");
         EvaluationToWorker evaluationToWorker = evaluationToWorkerService.findByWorkerIdAndUsed(worker.getId());
         if (evaluationToWorker != null) {
-            map.put("error", "填加失败，已添加有评论到简历中。请取消后重试！");
+            map.put("error", "填加失败，已添加有评论到简历中。<br>请取消后重试！");
         } else {
             evaluationToWorkerService.usedEvaluation(id);
             map.put("success", "填加成功！");

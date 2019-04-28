@@ -4,7 +4,6 @@ import com.parttimejob.entity.Job;
 import com.parttimejob.entity.Manager;
 import com.parttimejob.service.JobService;
 import com.parttimejob.service.ManagerService;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;

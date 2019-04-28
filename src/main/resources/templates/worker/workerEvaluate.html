@@ -159,11 +159,12 @@
                                 评价时间:
                                 <text th:text="${evaluation.date}"></text>
                                 <hr>
-                                <button class="layui-btn-warm layui-btn layui-btn-radius cancel"
+                                <button class="layui-btn-warm layui-btn layui-btn-radius cancel layui-btn-sm"
                                         th:if="${evaluation.used==1}" th:attr="ss=${evaluation.id}">
                                     取消添加到简历
                                 </button>
-                                <button class="layui-btn layui-btn-radius used" th:if="${evaluation.used==0}"
+                                <button class="layui-btn layui-btn-radius used layui-btn-sm"
+                                        th:if="${evaluation.used==0}"
                                         th:attr="ss=${evaluation.id}">添加到简历
                                 </button>
                             </div>
