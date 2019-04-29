@@ -289,7 +289,7 @@
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
 
-                 {field: 'title', title: '标题'}
+                {field: 'title', title: '标题'}
                 , {field: 'lowPay', title: '最低工资'}
                 , {field: 'hightPay', title: '最高工资'}
                 , {field: 'date', title: '发布时间', sort: true}
@@ -304,7 +304,7 @@
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
 
-                 {field: 'title', title: '标题'}
+                {field: 'title', title: '标题'}
                 , {field: 'lowPay', title: '最低工资'}
                 , {field: 'hightPay', title: '最高工资'}
                 , {field: 'views', title: '热度', sort: true}
@@ -342,7 +342,7 @@
         legend: {
             orient: 'vertical',
             left: 'left',
-            data: ['无限制', '大一', '大二', '大三','大四']
+            data: ['无限制', '大一', '大二', '大三', '大四']
         },
         series: [{
             name: '种类数目',
@@ -382,10 +382,10 @@
     };
     var number = {
         color: ['#3398DB'],
-        tooltip : {
+        tooltip: {
             trigger: 'axis',
-            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
-                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+                type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
             }
         },
         grid: {
@@ -394,26 +394,26 @@
             bottom: '3%',
             containLabel: true
         },
-        xAxis : [
+        xAxis: [
             {
-                type : 'category',
-                data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
                 axisTick: {
                     alignWithLabel: true
                 }
             }
         ],
-        yAxis : [
+        yAxis: [
             {
-                type : 'value'
+                type: 'value'
             }
         ],
-        series : [
+        series: [
             {
-                name:'直接访问',
-                type:'bar',
+                name: '直接访问',
+                type: 'bar',
                 barWidth: '60%',
-                data:[10, 52, 200, 334, 390]
+                data: [10, 52, 200, 334, 390]
             }
         ]
     };
