@@ -190,19 +190,23 @@
                                     </div>
                                 </div>
                                 <div class="layui-card">
-                                    <div class="layui-card-header">招聘者活跃排名</div>
-                                    <div class="layui-card-body">
-                                        <table class="layui-table" id="manager" lay-filter="test"
-                                               lay-skin="line">
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="layui-card">
-                                    <div class="layui-card-header">兼职者活跃排名</div>
-                                    <div class="layui-card-body">
-                                        <table class="layui-table" id="worker" lay-filter="test"
-                                               lay-skin="line">
-                                        </table>
+                                    <div class="layui-tab layui-tab-brief layadmin-latestData">
+                                        <ul class="layui-tab-title">
+                                            <li class="layui-this">招聘者活跃排名</li>
+                                            <li>兼职者活跃排名</li>
+                                        </ul>
+                                        <div class="layui-tab-content">
+                                            <div class="layui-tab-item layui-show">
+                                                <table class="layui-table" id="manager" lay-filter="test"
+                                                       lay-skin="line">
+                                                </table>
+                                            </div>
+                                            <div class="layui-tab-item">
+                                                <table class="layui-table" id="worker" lay-filter="test"
+                                                       lay-skin="line">
+                                                </table>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -237,45 +241,19 @@
                         </div>
 
                         <div class="layui-card">
-                            <div class="layui-card-header">效果报告</div>
-                            <div class="layui-card-body layadmin-takerates">
-                                <div class="layui-progress" lay-showPercent="yes">
-                                    <h3>招聘率（日同比 28% <span class="layui-edge layui-edge-top" lay-tips="增长"
-                                                          lay-offset="-15"></span>）</h3>
-                                    <div class="layui-progress-bar" lay-percent="65%"></div>
-                                </div>
-                                <div class="layui-progress" lay-showPercent="yes">
-                                    <h3>发帖率（日同比 11% <span class="layui-edge layui-edge-bottom" lay-tips="下降"
-                                                          lay-offset="-15"></span>）</h3>
-                                    <div class="layui-progress-bar" lay-percent="32%"></div>
-                                </div>
+                            <div class="layui-card-header">招聘种类</div>
+                            <div class="layui-card-body ">
+                                <div id="type" style="width: 410px;height:400px;"></div>
                             </div>
                         </div>
 
                         <div class="layui-card">
                             <div class="layui-card-header">实时监控</div>
-                            <div class="layui-card-body layadmin-takerates">
-                                <div class="layui-progress" lay-showPercent="yes">
-                                    <h3>CPU使用率</h3>
-                                    <div class="layui-progress-bar" lay-percent="58%"></div>
-                                </div>
-                                <div class="layui-progress" lay-showPercent="yes">
-                                    <h3>内存占用率</h3>
-                                    <div class="layui-progress-bar layui-bg-red" lay-percent="90%"></div>
-                                </div>
+                            <div class="layui-card-body ">
+                                <div id="number" style="width: 410px;height:400px;"></div>
                             </div>
                         </div>
 
-
-                        <div class="layui-card">
-                            <div class="layui-card-header">
-                                作者心语
-                                <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
-                            </div>
-                            <div class="layui-card-body layui-text layadmin-text">
-
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -283,6 +261,7 @@
     </div>
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/js/echarts.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script th:inline="none">
     layui.use(['table'], function () {
@@ -309,8 +288,8 @@
             , size: 'lg'
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                {field: 'id', title: 'ID', sort: true}
-                , {field: 'title', title: '标题'}
+
+                 {field: 'title', title: '标题'}
                 , {field: 'lowPay', title: '最低工资'}
                 , {field: 'hightPay', title: '最高工资'}
                 , {field: 'date', title: '发布时间', sort: true}
@@ -324,8 +303,8 @@
             , size: 'lg'
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                {field: 'id', title: 'ID', sort: true}
-                , {field: 'title', title: '标题'}
+
+                 {field: 'title', title: '标题'}
                 , {field: 'lowPay', title: '最低工资'}
                 , {field: 'hightPay', title: '最高工资'}
                 , {field: 'views', title: '热度', sort: true}
@@ -346,6 +325,100 @@
             ]]
         });
     })
+</script>
+<script>
+    var myChart = echarts.init(document.getElementById('type'));
+    var myChart1 = echarts.init(document.getElementById('number'));
+    var type = {
+        title: {
+            text: '招聘种类分布',
+            subtext: '',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: ['无限制', '大一', '大二', '大三','大四']
+        },
+        series: [{
+            name: '种类数目',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+                {
+                    value: 2,
+                    name: '无限制'
+                },
+                {
+                    value: 1,
+                    name: '大一'
+                },
+                {
+                    value: 3,
+                    name: '大二'
+                },
+                {
+                    value: 4,
+                    name: '大三'
+                },
+                {
+                    value: 4,
+                    name: '大四'
+                }
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };
+    var number = {
+        color: ['#3398DB'],
+        tooltip : {
+            trigger: 'axis',
+            axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis : [
+            {
+                type : 'category',
+                data : ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                axisTick: {
+                    alignWithLabel: true
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'value'
+            }
+        ],
+        series : [
+            {
+                name:'直接访问',
+                type:'bar',
+                barWidth: '60%',
+                data:[10, 52, 200, 334, 390]
+            }
+        ]
+    };
+    myChart.setOption(type);
+    myChart1.setOption(number);
 </script>
 </body>
 </html>

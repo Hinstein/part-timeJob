@@ -121,7 +121,6 @@ public class MainController {
         HashMap<String, Object> map = new HashMap<>();
         //通过session查看当前登录的用户信息
         Manager manager = (Manager) session.getAttribute("registerManager");
-
         try {
             //如果文件不为空
             if (null != file) {
@@ -135,8 +134,6 @@ public class MainController {
                 String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/images/";
                 //根据日期来创建对应的文件夹
                 String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
-
-
                 //userId
                 String path = filePath;
                 //如果不存在，则创建新文件夹
@@ -165,7 +162,6 @@ public class MainController {
                 map.put("msg", "上传成功！");
                 map.put("relativePath", relativePath);
                 map.put("data", pathName);
-
             }
             //返回json数据
             else {

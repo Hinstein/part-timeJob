@@ -184,11 +184,11 @@
                                         <div class="layui-input-inline">
                                             <select name="workerLimit" lay-verify="required">
                                                 <option value="" selected="">请选择</option>
-                                                <option value="无限制">无限制</option>
-                                                <option value="大一">大一</option>
-                                                <option value="大二">大二</option>
-                                                <option value="大三">大三</option>
-                                                <option value="大四">大四</option>
+                                                <option value="无限制" th:selected="${job.workerLimit}eq'无限制'">无限制</option>
+                                                <option value="大一" th:selected="${job.workerLimit}eq'大一'">大一</option>
+                                                <option value="大二" th:selected="${job.workerLimit}eq'大二'">大二</option>
+                                                <option value="大三" th:selected="${job.workerLimit}eq'大三'">大三</option>
+                                                <option value="大四" th:selected="${job.workerLimit}eq'大四'">大四</option>
                                             </select>
                                         </div>
                                     </div>
@@ -210,34 +210,35 @@
             </div>
         </div>
     </div>
-    <script th:src="@{/assets/js/jquery.js}"></script>
-    <script th:src="@{/assets/layui/layui.all.js}"></script>
-    <script>
-        layui.use(['form', 'layedit'], function () {
-            var form = layui.form;
-            var layedit = layui.layedit;
-            var index = layedit.build('demo'); //建立编辑器
-            form.verify({
-                content: function (value) {
-                    layedit.sync(index);
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    layui.use(['form', 'layedit'], function () {
+        var form = layui.form;
+        var layedit = layui.layedit;
+        var index = layedit.build('demo'); //建立编辑器
+        form.verify({
+            content: function (value) {
+                layedit.sync(index);
+            }
+        });
+        form.on('submit(go)', function (data) {
+            $.ajax({
+                url: '/manager/job/editor/save',
+                method: "post",
+                data: data.field,
+                dataType: "text",
+                success: function (msg) {
+                    layer.msg(msg);
+                },
+                error: function () {
+                    layer.msg("网络错误，登录失败");
                 }
             });
-            form.on('submit(go)', function (data) {
-                $.ajax({
-                    url: '/manager/job/editor/save',
-                    method: "post",
-                    data: data.field,
-                    dataType: "text",
-                    success: function (msg) {
-                        layer.msg(msg);
-                    },
-                    error: function () {
-                        layer.msg("网络错误，登录失败");
-                    }
-                });
-                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
-            });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
-    </script>
+    });
+</script>
 </body>
 </html>
