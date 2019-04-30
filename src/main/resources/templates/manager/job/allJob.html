@@ -190,9 +190,11 @@
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
                 {field: 'title', title: '信息'}
-                , {field: 'lowPay', title: '最低工资', width: '10%'}
-                , {field: 'hightPay', title: '最高工资', width: '10%'}
-                , {field: 'date', title: '发布时间', sort: true, width: '20%'}
+                , {field: 'type', title: '工作类别'}
+                , {field: 'workerLimit', title: '员工限制'}
+                , {field: 'workerNumber', title: '招聘人数'}
+                , {field: 'employNumber', title: '已招聘人数'}
+                , {field: 'date', title: '发布时间', sort: true}
                 , {fixed: 'right', title: '操作', toolbar: '#action', width: '25%'}
             ]]
         });

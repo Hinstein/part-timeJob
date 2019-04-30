@@ -202,8 +202,34 @@
             , cols: [[ //表头
                 {type: 'checkbox', fixed: 'left'},
                 {field: 'name', title: '姓名'}
+                , {
+                    field: 'sex', title: '性别', templet: function (d) {
+                        return d.sex === 0 ? "女" : "男";
+                    }
+                }
                 , {field: 'age', title: '年龄'}
-                , {field: 'jobIntension', title: '求职意向'}
+                , {field: 'phoneNumber', title: '电话号码'}
+                , {field: 'email', title: '邮箱'}
+                , {
+                    field: 'educationBackground', title: '教育背景', templet: function (d) {
+                        if (d.educationBackground === 1)
+                            return "小学";
+                        else if (d.educationBackground === 2)
+                            return "初中";
+                        else if (d.educationBackground === 3)
+                            return "高中";
+                        else if (d.educationBackground === 4)
+                            return "中专";
+                        else if (d.educationBackground === 5)
+                            return "大专";
+                        else if (d.educationBackground === 6)
+                            return "本科";
+                        else if (d.educationBackground === 7)
+                            return "研究生";
+                        else if (d.educationBackground === 0)
+                            return "未填写";
+                    }
+                }
                 , {field: 'expectation', title: '期望薪资', sort: true}
                 , {fixed: 'right', title: '操作', toolbar: '#action', width: 180}
             ]]

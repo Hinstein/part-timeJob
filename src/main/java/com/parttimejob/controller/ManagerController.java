@@ -248,6 +248,7 @@ public class ManagerController {
     @PostMapping("/employ/{id}")
     public String employWorker(HttpSession session, @RequestParam HashMap<String, String> map, @PathVariable("id") int id) {
         int jobId = Integer.parseInt(session.getAttribute("jobId").toString());
+        Job job = jobService.findById(jobId);
         Manager manager = (Manager) session.getAttribute("manager");
         int workerId = id;
         Employ employ = employService.findByWorkerIdAndManagerId(workerId, manager.getId());
@@ -256,16 +257,20 @@ public class ManagerController {
         String address = map.get("address");
         String dateTime = date + " " + time;
         if (employ == null) {
-            jobService.employ(jobId);
-            Employ employ1 = new Employ();
-            employ1.setWorkerId(workerId);
-            employ1.setDate(dateTime);
-            employ1.setManagerId(manager.getId());
-            employ1.setJobId(jobId);
-            employ1.setAddress(address);
-            employService.save(employ1);
-            deliverService.delete(workerId, jobId);
-            return "录用成功";
+            if (job.getEmployNumber() >= job.getWorkerNumber()) {
+                return "录用失败，该工作已达上限";
+            } else {
+                jobService.employ(jobId);
+                Employ employ1 = new Employ();
+                employ1.setWorkerId(workerId);
+                employ1.setDate(dateTime);
+                employ1.setManagerId(manager.getId());
+                employ1.setJobId(jobId);
+                employ1.setAddress(address);
+                employService.save(employ1);
+                deliverService.delete(workerId, jobId);
+                return "录用成功";
+            }
         } else {
             return "你已经录用过该名员工";
         }
