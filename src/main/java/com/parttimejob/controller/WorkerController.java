@@ -62,6 +62,9 @@ public class WorkerController {
     @Autowired
     MessageService messageService;
 
+    @Autowired
+    DiscussService discussService;
+
     /**
      * 兼职者注册
      *
@@ -281,7 +284,6 @@ public class WorkerController {
         return "redirect:/index";
     }
 
-
     @GetMapping("/worker/BBS/index")
     public String managerBBSIndex() {
         return "/worker/bbs/index";
@@ -373,15 +375,16 @@ public class WorkerController {
         if (bbs.getStatus() == 1) {
             model.addAttribute("status", "招聘者");
             WorkerData workerData = workerDataService.findByWorkerId(bbs.getWorkerId());
-            model.addAttribute("username", workerData.getName());
+            model.addAttribute("data", workerData);
         } else if (bbs.getStatus() == 2) {
             model.addAttribute("status", "兼职者");
-
             Manager manager = managerService.findById(bbs.getManagerId());
-            model.addAttribute("username", manager.getName());
+            model.addAttribute("data", manager);
         }
         bbsService.views(id);
+        List<Discuss> discussList = discussService.findByBbsId(id);
         model.addAttribute("bbs", bbs);
+        model.addAttribute("discussList",discussList);
         return "/worker/BBS/look";
     }
 
@@ -527,6 +530,7 @@ public class WorkerController {
         }
         return "/worker/resume/index";
     }
+
     @GetMapping("/worker/editor/headPhoto")
     public String headPhotoEditor() {
         return "/worker/editor/headPhotoEditor";
@@ -591,6 +595,41 @@ public class WorkerController {
         return map;
     }
 
+    @ResponseBody
+    @PostMapping("/worker/BBS/discuss/{id}")
+    public Map<String,String> discuss(@PathVariable("id") int bbsId,HttpServletRequest request,HttpSession session){
+        WorkerData workerData = (WorkerData) session.getAttribute("workerData");
+        String content=request.getParameter("content");
+        Discuss discuss = new Discuss();
+        discuss.setBbsId(bbsId);
+        discuss.setContent(content);
+        discuss.setHeadPhoto(workerData.getHeadPhoto());
+        discuss.setAuthor(workerData.getName());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        discuss.setTime(df.format(new Date()));
+        discussService.save(discuss);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("success","评论成功！");
+        return  map;
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/BBS/good/{id}")
+    public Map<String,String> good(@PathVariable("id") int discussId){
+        int good = discussService.good(discussId);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("good",good+"");
+        return  map;
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/BBS/cancelGood/{id}")
+    public Map<String,String> cancelGood(@PathVariable("id") int discussId){
+        int good = discussService.cancelGood(discussId);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("good",good+"");
+        return  map;
+    }
 }
 
 

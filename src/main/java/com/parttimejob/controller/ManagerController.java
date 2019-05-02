@@ -646,7 +646,7 @@ public class ManagerController {
         return result;
     }
 
-    @GetMapping("/manager/BBS/look/{id}")
+    @GetMapping("/manager/k/{id}")
     public String look(@PathVariable("id") int id, Model model) {
         BBS bbs = bbsService.findById(id);
         if (bbs.getStatus() == 1) {

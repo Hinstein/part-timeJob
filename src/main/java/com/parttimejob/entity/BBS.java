@@ -42,6 +42,7 @@ public class BBS {
     @Column
     private int views;
 
+
     public int getViews() {
         return views;
     }

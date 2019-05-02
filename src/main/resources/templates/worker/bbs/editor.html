@@ -82,7 +82,8 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div style="text-align: center;">
-                        <img th:src="@{/assets/picture/head.png}">
+                        <img th:src="${session.workerData.headPhoto}" id="headPhoto"
+                             style="width:150px; height:150px; border-radius:50%; ">
                     </div>
                     <br>
                     <div style="text-align: center;">

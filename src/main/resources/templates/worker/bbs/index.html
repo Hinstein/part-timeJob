@@ -81,7 +81,8 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div style="text-align: center;">
-                        <img th:src="@{/assets/picture/head.png}">
+                        <img th:src="${session.workerData.headPhoto}" id="headPhoto"
+                             style="width:150px; height:150px; border-radius:50%; ">
                     </div>
                     <br>
                     <div style="text-align: center;">
@@ -187,7 +188,7 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'look') { //通过
-                location.href = "/worker/BBS/look/" + data.id;
+                window.open("/worker/BBS/look/" + data.id);
             }
         });
     });
