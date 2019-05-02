@@ -8,11 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>搜索简历</title>
+    <title>招聘者页面</title>
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
-
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+    <link rel="stylesheet" th:href="@{/cropper/cropper.css}">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -163,97 +163,60 @@
                 </div>
             </div>
         </div>
+
         <div class="layui-col-md10">
             <div class="layui-card">
-                <div class="layui-card-header">搜索简历</div>
+                <div class="layui-card-header">修改头像</div>
                 <div class="layui-card-body">
-                    <div class="demoTable">
-                        <div class="layui-inline">
-                            <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的简历">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">头像</label>
+                        <div>
+                            <div class="layui-upload-list" style="margin:0">
+                                <img id="srcimgurl" th:src="${session.manager.headPhoto}" class="layui-upload-img">
+                            </div>
                         </div>
-                        <button class="layui-btn" id="search" type="button">搜索</button>
                     </div>
-                    <br>
-                    <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
-                    <script type="text/html" id="action">
-                        <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn " id="editimg">修改头像</button>
                         </div>
-                    </script>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <div class="layui-form-mid layui-word-aux">头像的尺寸限定150x150px,大小在50kb以内</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-<script th:inline="none">
-    layui.use(['table'], function () {
-        var table = layui.table;
-        //第一个实例
-        var tableIns = table.render({
-            elem: '#demo'
-            , url: '/manager/workers/information/data' //数据接口
-            , page: true //开启分页
-            , skin: 'line'
-            , size: 'lg'
-            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-            , limit: 10 //每页默认显示的数量
-            , cols: [[ //表头
-                {field: 'name', title: '名字'}
-                , {
-                    field: 'sex', title: '性别', templet: function (d) {
-                        return d.sex == '0' ? "女" : "男";
-                    }
-                }
-                , {field: 'age', title: '年龄'}
-                , {field: 'phoneNumber', title: '电话号码'}
-                , {field: 'email', title: '邮箱'}
-                , {
-                    field: 'educationBackground', title: '教育背景', templet: function (d) {
-                        if (d.educationBackground === 1)
-                            return "小学";
-                        else if (d.educationBackground === 2)
-                            return "初中";
-                        else if (d.educationBackground === 3)
-                            return "高中";
-                        else if (d.educationBackground === 4)
-                            return "中专";
-                        else if (d.educationBackground === 5)
-                            return "大专";
-                        else if (d.educationBackground === 6)
-                            return "本科";
-                        else if (d.educationBackground === 7)
-                            return "研究生";
-                        else if (d.educationBackground === 0)
-                            return "未填写";
-                    }
-                }
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action'}
-            ]]
-        });
-        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-            if (layEvent === 'pass') { //通过
-                location.href = "/manager/workerInformation/" + data.workerId;
+<script th:src="@{/cropper/cropper.js}"></script>
+<script th:src="@{/cropper/croppers.js}"></script>
+<script>
+    layui.config({
+        base: '/cropper/' //layui自定义layui组件目录
+    }).use(['form', 'croppers'], function () {
+        var $ = layui.jquery
+            , form = layui.form
+            , croppers = layui.croppers
+            , layer = layui.layer;
+        var src = $("#src").val();
+        $('#demo1').attr('src', src);
+        //创建一个头像上传组件
+        croppers.render({
+            elem: '#editimg'
+            , saveW: 150     //保存宽度
+            , saveH: 150
+            , mark: 1 / 1    //选取比例
+            , area: '900px'  //弹窗宽度
+            , url: '/manager/editor/headPhoto'  //图片上传接口返回和（layui 的upload 模块）返回的JOSN一样
+            , done: function () { //上传完毕回调
+                setTimeout(function () {
+                    location.href = "/manager/editor/headPhoto";
+                }, 100)
             }
-        });
-        $(function () {
-            $("#search").click(function () {
-                var content = $('#content').val();
-                tableIns.reload({
-                    where: { //设定异步数据接口的额外参数，任意设
-                        content: content
-                        //…
-                    }
-                    , page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-            })
         });
     });
     $(function () {

@@ -53,6 +53,10 @@ public class Manager {
     @Column
     private String vendorTime;
 
+    @Column
+    private String headPhoto;
+
+
     /**
      * 绝对路径
      */
@@ -66,6 +70,14 @@ public class Manager {
      */
     @Column
     private String relativePath;
+
+    public String getHeadPhoto() {
+        return headPhoto;
+    }
+
+    public void setHeadPhoto(String headPhoto) {
+        this.headPhoto = headPhoto;
+    }
 
     public String getVendorName() {
         return vendorName;

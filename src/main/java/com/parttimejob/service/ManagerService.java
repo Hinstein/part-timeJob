@@ -159,4 +159,9 @@ public class ManagerService {
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return managerRepository.findAll(pageable);
     }
+
+
+    public void headPhotoEditor(String src, int id) {
+        managerRepository.headPhotoEditor(src, id);
+    }
 }

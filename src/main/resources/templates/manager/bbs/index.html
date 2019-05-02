@@ -160,7 +160,7 @@
                     <table class="layui-hide" id="demo" lay-filter="test" lay-skin="line"></table>
                     <script type="text/html" id="action">
                         <div class="layui-btn-container">
-                            <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                            <button class="layui-btn layui-btn-sm" lay-event="look">查看</button>
                         </div>
                     </script>
                 </div>
@@ -194,7 +194,7 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'look') { //通过
-                location.href = "/manager/BBS/look/" + data.id;
+                window.open("/manager/BBS/look/" + data.id);
             }
         });
     });

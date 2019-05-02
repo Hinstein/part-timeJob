@@ -117,5 +117,8 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     @Query(value = "update Manager a SET a.active = a.active+1 where a.id =?1")
     void active(int id);
 
-
+    @Transactional
+    @Modifying
+    @Query(value = "update Manager a SET a.headPhoto =?1  where id =?2")
+    void headPhotoEditor(String src, int id);
 }

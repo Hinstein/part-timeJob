@@ -88,7 +88,8 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div style="text-align: center;">
-                        <img th:src="@{/assets/picture/head.png}">
+                        <img th:src="${session.manager.headPhoto}" id="headPhoto"
+                             style="width:150px; height:150px; border-radius:50%; ">
                     </div>
                     <br>
                     <div style="text-align: center;">
@@ -104,6 +105,11 @@
                     <div style="padding-top: 5px;text-align: center">
                         <a th:href="@{/manager/informationEditor}">
                             资料管理
+                        </a>
+                    </div>
+                    <div style="text-align: center">
+                        <a th:href="@{/manager/editor/headPhoto}">
+                            修改头像
                         </a>
                     </div>
                     <div style="text-align: center">
@@ -205,6 +211,11 @@
                 location.href = "/manager/workerDeliver/" + data.workerId;
             }
         });
+    });
+    $(function () {
+        $("#headPhoto").click(function () {
+            location.href = "/manager/editor/headPhoto";
+        })
     })
 </script>
 </body>

@@ -62,9 +62,19 @@ public class WorkerData {
     @Column
     private int checkCollect;
 
+    @Column
+    private String headPhoto;
 
     @Column
     private int active;
+
+    public String getHeadPhoto() {
+        return headPhoto;
+    }
+
+    public void setHeadPhoto(String headPhoto) {
+        this.headPhoto = headPhoto;
+    }
 
     public int getActive() {
         return active;

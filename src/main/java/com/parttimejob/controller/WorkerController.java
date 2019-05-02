@@ -73,6 +73,7 @@ public class WorkerController {
         }
         workerService.save(worker);
         WorkerData workerData = new WorkerData();
+        workerData.setHeadPhoto("/assets/picture/head.png");
         workerData.setWorkerId(worker.getId());
         workerDataService.save(workerData);
         return "注册成功";
