@@ -75,4 +75,9 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
     @Modifying
     @Query(value = "update WorkerData a SET a.active = a.active+1 where a.workerId =?1")
     void active(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update WorkerData a SET a.headPhoto =?1 ,a.pathName=?2 where a.id =?3")
+    void headPhotoEditor(String src, String pathName,int id);
 }

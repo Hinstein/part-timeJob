@@ -8,11 +8,12 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>招聘者页面</title>
+    <title>兼职者页面</title>
+
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
-
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+    <link rel="stylesheet" th:href="@{/cropper/cropper.css}">
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -146,33 +147,27 @@
             </div>
         </div>
 
+
         <div class="layui-col-md10">
-            <div class="layui-card" th:if="${jobs.size()==0}">
-                <div class="layui-card-header">
-                    你还没有投递简历哦！
-                </div>
-            </div>
-            <div class="layui-row">
-                <div class="layui-row layui-col-space15">
-                    <div class="layui-col-md4" th:each="job:${jobs}">
-                        <div class="layui-card">
-                            <div class="layui-card-header">
-                                <a th:href="@{/worker/job/}+${job.id}">
-                                    <strong th:text="${job.title}">title</strong></a>
+            <div class="layui-card">
+                <div class="layui-card-header">修改头像</div>
+                <div class="layui-card-body">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">头像</label>
+                        <div>
+                            <div class="layui-upload-list" style="margin:0">
+                                <img id="srcimgurl" th:src="${session.workerData.headPhoto}" class="layui-upload-img">
                             </div>
-                            <div class="layui-card-body">
-                                <p><span>薪资:</span>
-                                    <span th:text="${job.lowPay}"></span>
-                                    <span class="layui-red">-</span>
-                                    <span th:text="${job.hightPay}"></span></p>
-                                发布时间:
-                                <text th:text="${job.date}"></text>
-                                <hr>
-                                <button class="layui-btn layui-btn-warm layui-btn-radius cancel layui-btn-sm"
-                                        th:attr="ss=${job.id}">
-                                    取消投递
-                                </button>
-                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <button class="layui-btn " id="editimg">修改头像</button>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-input-block">
+                            <div class="layui-form-mid layui-word-aux">头像的尺寸限定150x150px,大小在50kb以内</div>
                         </div>
                     </div>
                 </div>
@@ -180,35 +175,34 @@
         </div>
     </div>
 </div>
-<script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+<script th:src="@{/cropper/cropper.js}"></script>
+<script th:src="@{/cropper/croppers.js}"></script>
 <script>
-    $(function () {
-        $(".cancel").click(function () {
-            var id = $(this).attr("ss");
-            layer.confirm('是否取消投递该职位么', function (index) {
-                var params = {};
-                params.id = id;
-                $.ajax({
-                    url: '/worker/job/cancelDeliver',
-                    method: "post",
-                    data: params,
-                    dataType: "text",
-                    success: function (msg) {
-                        location.href = "/worker/deliver";
-                    },
-                    error: function () {
-                        layer.msg("网络错误，登录失败");
-                    }
-                });
-            })
-        })
-
-        $("#headPhoto").click(function () {
-            location.href = "/worker/editor/headPhoto";
-        })
-
-    })
+    layui.config({
+        base: '/cropper/' //layui自定义layui组件目录
+    }).use(['form', 'croppers'], function () {
+        var $ = layui.jquery
+            , form = layui.form
+            , croppers = layui.croppers
+            , layer = layui.layer;
+        var src = $("#src").val();
+        $('#demo1').attr('src', src);
+        //创建一个头像上传组件
+        croppers.render({
+            elem: '#editimg'
+            , saveW: 150     //保存宽度
+            , saveH: 150
+            , mark: 1 / 1    //选取比例
+            , area: '900px'  //弹窗宽度
+            , url: '/worker/editor/headPhoto'  //图片上传接口返回和（layui 的upload 模块）返回的JOSN一样
+            , done: function () { //上传完毕回调
+                setTimeout(function () {
+                    location.href = "/worker/editor/headPhoto";
+                }, 100)
+            }
+        });
+    });
 </script>
 </body>
 </html>

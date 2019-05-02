@@ -7,10 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -522,6 +526,69 @@ public class WorkerController {
             model.addAttribute("vendorName", manager.getVendorName());
         }
         return "/worker/resume/index";
+    }
+    @GetMapping("/worker/editor/headPhoto")
+    public String headPhotoEditor() {
+        return "/worker/editor/headPhotoEditor";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/editor/headPhoto")
+    public Map<String, Object> editorHeadPhoto(@RequestParam("file") MultipartFile file, HttpSession session, HttpServletRequest request) {
+        HashMap<String, Object> map = new HashMap<>();
+        //通过session查看当前登录的用户信息
+        WorkerData workerData = (WorkerData) session.getAttribute("workerData");
+        try {
+            //如果文件不为空
+            if (null != file) {
+                //生成uuid作为文件名称
+                String uuid = UUID.randomUUID().toString().replaceAll("-", "");
+                //获得文件类型（判断如果不是图片文件类型，则禁止上传）
+                String contentType = file.getContentType();
+                //获得文件后缀名称
+                String imageName = contentType.substring(contentType.indexOf("/") + 1);
+                //获取文件的项目路径
+                String filePath = ClassUtils.getDefaultClassLoader().getResource("").getPath() + "static/images/";
+                //根据日期来创建对应的文件夹
+                String datePath = new SimpleDateFormat("yyyy/MM/dd").format(new Date());
+                //根据id分类来创建对应的文件夹
+                String leagueIdPath = workerData.getId() + "/";
+                //userId
+                String path = filePath + leagueIdPath;
+                //如果不存在，则创建新文件夹
+                File f = new File(path);
+                if (!f.exists()) {
+                    f.mkdirs();
+                }
+                //新生成的文件名称
+                String fileName = uuid + "." + imageName;
+                //图片保存的完整路径
+                String pathName = path + fileName;
+                //图片保存的相对路径
+                String relativePath = "/images/" + leagueIdPath + fileName;
+                //将图片从源位置复制到目标位置
+                file.transferTo(new File(pathName));
+
+                //设置photo实体类的数据
+                if(workerData.getPathName()!=null){
+                    File file1 = new File(workerData.getPathName());
+                    file1.delete();
+                }
+                workerDataService.headPhotoEditor(relativePath, pathName,workerData.getId());
+                WorkerData workerData1 = workerDataService.findByWorkerId(workerData.getWorkerId());
+                session.setAttribute("workerData", workerData1);
+                //返回json数据
+                map.put("code", 0);
+                map.put("msg", "上传成功！");
+                map.put("relativePath", relativePath);
+                map.put("data", pathName);
+            } else {
+                System.out.println("文件为空");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return map;
     }
 
 }

@@ -66,7 +66,18 @@ public class WorkerData {
     private String headPhoto;
 
     @Column
+    private String pathName;
+
+    @Column
     private int active;
+
+    public String getPathName() {
+        return pathName;
+    }
+
+    public void setPathName(String pathName) {
+        this.pathName = pathName;
+    }
 
     public String getHeadPhoto() {
         return headPhoto;

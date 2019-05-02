@@ -161,7 +161,7 @@ public class ManagerService {
     }
 
 
-    public void headPhotoEditor(String src, int id) {
-        managerRepository.headPhotoEditor(src, id);
+    public void headPhotoEditor(String src, String pathName,int id) {
+        managerRepository.headPhotoEditor(src, pathName,id);
     }
 }

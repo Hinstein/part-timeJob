@@ -490,7 +490,8 @@ public class ManagerController {
             session.removeAttribute("registerManager");
         }
         managerService.informationSave(manager);
-        session.setAttribute("manager", manager);
+        Manager manager2 = managerService.findById(manager.getId());
+        session.setAttribute("manager", manager2);
         return "修改成功！";
     }
 
@@ -822,8 +823,11 @@ public class ManagerController {
                 file.transferTo(new File(pathName));
 
                 //设置photo实体类的数据
-
-                managerService.headPhotoEditor(relativePath, manager.getId());
+                if(manager.getPathName()!=null){
+                    File file1 = new File(manager.getPathName());
+                    file1.delete();
+                }
+                managerService.headPhotoEditor(relativePath, pathName,manager.getId());
                 Manager manager1 = managerService.findById(manager.getId());
                 session.setAttribute("manager", manager1);
                 //返回json数据

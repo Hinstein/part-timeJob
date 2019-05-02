@@ -103,4 +103,8 @@ public class WorkerDataService {
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return workerDataRepository.findAll(pageable);
     }
+
+    public void headPhotoEditor(String src, String pathName,int id) {
+        workerDataRepository.headPhotoEditor(src, pathName,id);
+    }
 }

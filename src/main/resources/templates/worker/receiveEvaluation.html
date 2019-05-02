@@ -83,7 +83,8 @@
             <div class="layui-card">
                 <div class="layui-card-body">
                     <div style="text-align: center;">
-                        <img th:src="@{/assets/picture/head.png}">
+                        <img th:src="${session.workerData.headPhoto}" id="headPhoto"
+                             style="width:150px; height:150px; border-radius:50%; ">
                     </div>
                     <br>
                     <div style="text-align: center;">
@@ -98,6 +99,11 @@
                     <div style="padding-top: 5px;text-align: center;">
                         <a th:href="@{/worker/resume/index}">
                             查看简历
+                        </a>
+                    </div>
+                    <div style="padding-top: 5px;text-align: center;">
+                        <a th:href="@{/worker/editor/headPhoto}">
+                            修改头像
                         </a>
                     </div>
                     <div style="padding-top: 5px;text-align: center">
@@ -198,7 +204,10 @@
                     layer.msg("网络错误，操作失败");
                 }
             })
-        })
+        });
+            $("#headPhoto").click(function () {
+                location.href = "/worker/editor/headPhoto";
+            })
     })
 </script>
 </body>
