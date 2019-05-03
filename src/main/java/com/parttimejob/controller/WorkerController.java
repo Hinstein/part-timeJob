@@ -381,10 +381,14 @@ public class WorkerController {
             Manager manager = managerService.findById(bbs.getManagerId());
             model.addAttribute("data", manager);
         }
+        Page<BBS> view = bbsService.view(1, 5);
+        Page<BBS> hot = bbsService.hot(1, 5);
         bbsService.views(id);
         List<Discuss> discussList = discussService.findByBbsId(id);
         model.addAttribute("bbs", bbs);
         model.addAttribute("discussList",discussList);
+        model.addAttribute("view",view.getContent());
+        model.addAttribute("hot",hot.getContent());
         return "/worker/BBS/look";
     }
 

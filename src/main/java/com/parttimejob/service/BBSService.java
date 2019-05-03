@@ -5,6 +5,7 @@ import com.parttimejob.repository.BBSRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -80,6 +81,30 @@ public class BBSService {
 
     public List<BBS> findAll() {
         return bbsRepository.findAll();
+    }
+
+    public void discuss(int id){
+        bbsRepository.discuss(id);
+    }
+
+    @Transactional
+    public Page<BBS> hot(int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "discuss");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        return bbsRepository.findAll(pageable);
+    }
+
+    @Transactional
+    public Page<BBS> view(int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "views");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        return bbsRepository.findAll(pageable);
     }
 
 }

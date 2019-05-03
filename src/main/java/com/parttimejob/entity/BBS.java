@@ -42,6 +42,16 @@ public class BBS {
     @Column
     private int views;
 
+    @Column
+    private int discuss;
+
+    public int getDiscuss() {
+        return discuss;
+    }
+
+    public void setDiscuss(int discuss) {
+        this.discuss = discuss;
+    }
 
     public int getViews() {
         return views;

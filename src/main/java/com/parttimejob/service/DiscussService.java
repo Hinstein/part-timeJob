@@ -20,8 +20,12 @@ public class DiscussService {
     @Autowired
     DiscussRepository discussRepository;
 
+    @Autowired
+    BBSService bbsService;
+
     public void save(Discuss discuss)
     {
+        bbsService.discuss(discuss.getBbsId());
         discussRepository.save(discuss);
     }
 

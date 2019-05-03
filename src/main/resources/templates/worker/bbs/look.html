@@ -80,7 +80,7 @@
                 <div class="fly-detail-info">
                     <span class="layui-badge layui-bg-red">精帖</span>
                     <span class="fly-list-nums">
-               <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i> 66</a>
+               <a href="#comment"><i class="iconfont" title="回答">&#xe60c;</i>[[${discussList.size()}]]</a>
                <i class="iconfont" title="人气">&#xe60b;</i> [[${bbs.views}]]
              </span>
                 </div>
@@ -144,8 +144,8 @@
                         </div>
                     </li>
 
-                    <!--                     无数据时-->
-                    <!--                     <li class="fly-none">消灭零回复</li>-->
+
+                    <li class="fly-none" th:if="${discussList.size()} eq 0">消灭零回复</li>
                 </ul>
 
                 <div class="layui-form layui-form-pane">
@@ -167,14 +167,18 @@
         </div>
         <div class="layui-col-md4">
             <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title">本周热议</dt>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
+                <dt class="fly-panel-title" >评论最多</dt>
+                <dd th:each="e:${hot}">
+                    <a th:href="@{/worker/BBS/look/}+${e.id}">[[${e.content}]]</a>
+                    <span><i class="iconfont icon-pinglun1"></i>[[${e.discuss}]]</span>
                 </dd>
-                <dd>
-                    <a href="">基于 layui 的极简社区页面模版</a>
-                    <span><i class="iconfont icon-pinglun1"></i> 16</span>
+            </dl>
+
+            <dl class="fly-panel fly-list-one">
+                <dt class="fly-panel-title">观看最多</dt>
+                <dd th:each="e:${view}">
+                    <a th:href="@{/worker/BBS/look/}+${e.id}">[[${e.title}]]</a>
+                    <span> <i class="iconfont" title="人气">&#xe60b;</i>[[${e.views}]]</span>
                 </dd>
             </dl>
 
@@ -218,23 +222,23 @@
     $(function () {
         $(".reply").click(function () {
             var name = $(this).attr("name");
-            layer.msg(name);
+            layer.msg("您@了" + name);
             var obj = document.getElementById("content"); // textarea对象
             obj.append("@" + name + " "); // 在对象末尾处加入内容
         });
         $(".zan").click(function () {
-            var id =$(this).attr("pid");
+            var id = $(this).attr("pid");
             var D = $(this).attr("rel");
             if (D === 'like') {
                 $(this).removeClass("zanok").attr("rel", "unlike");
                 $.ajax({
-                    url: '/worker/BBS/cancelGood/'+id,
+                    url: '/worker/BBS/cancelGood/' + id,
                     method: "post",
                     dataType: "json",
                     success: function (msg) {
                         //applying animation class
                         layer.msg("取消点赞");
-                        $("#num"+id).html(msg.good);
+                        $("#num" + id).html(msg.good);
                     },
                     error: function () {
                         layer.msg("网络错误，点赞数百");
@@ -243,16 +247,15 @@
             } else {
                 $(this).addClass("zanok").attr("rel", "like");
                 $.ajax({
-                    url: '/worker/BBS/good/'+id,
+                    url: '/worker/BBS/good/' + id,
                     method: "post",
                     dataType: "json",
                     success: function (msg) {
                         layer.msg("点赞成功");
-
-                        $("#num"+id).html(msg.good);
+                        $("#num" + id).html(msg.good);
                     },
                     error: function () {
-                        layer.msg("网络错误，点赞数百");
+                        layer.msg("网络错误，点赞失败");
                     }
                 });
 

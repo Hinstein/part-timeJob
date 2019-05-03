@@ -66,6 +66,9 @@ public class ManagerController {
     @Autowired
     MessageService messageService;
 
+    @Autowired
+    DiscussService discussService;
+
     /**
      * 招聘者注册
      *
@@ -646,16 +649,26 @@ public class ManagerController {
         return result;
     }
 
-    @GetMapping("/manager/k/{id}")
+    @GetMapping("/manager/BBS/look/{id}")
     public String look(@PathVariable("id") int id, Model model) {
         BBS bbs = bbsService.findById(id);
         if (bbs.getStatus() == 1) {
             model.addAttribute("status", "招聘者");
+            WorkerData workerData = workerDataService.findByWorkerId(bbs.getWorkerId());
+            model.addAttribute("data", workerData);
         } else if (bbs.getStatus() == 2) {
             model.addAttribute("status", "兼职者");
+            Manager manager = managerService.findById(bbs.getManagerId());
+            model.addAttribute("data", manager);
         }
+        Page<BBS> view = bbsService.view(1, 5);
+        Page<BBS> hot = bbsService.hot(1, 5);
         bbsService.views(id);
+        List<Discuss> discussList = discussService.findByBbsId(id);
         model.addAttribute("bbs", bbs);
+        model.addAttribute("discussList",discussList);
+        model.addAttribute("view",view.getContent());
+        model.addAttribute("hot",hot.getContent());
         return "manager/BBS/look";
     }
 
@@ -842,6 +855,42 @@ public class ManagerController {
             e.printStackTrace();
         }
         return map;
+    }
+
+    @ResponseBody
+    @PostMapping("/manager/BBS/discuss/{id}")
+    public Map<String,String> discuss(@PathVariable("id") int bbsId,HttpServletRequest request,HttpSession session){
+        Manager manager = (Manager) session.getAttribute("manager");
+        String content=request.getParameter("content");
+        Discuss discuss = new Discuss();
+        discuss.setBbsId(bbsId);
+        discuss.setContent(content);
+        discuss.setHeadPhoto(manager.getHeadPhoto());
+        discuss.setAuthor(manager.getName());
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        discuss.setTime(df.format(new Date()));
+        discussService.save(discuss);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("success","评论成功！");
+        return  map;
+    }
+
+    @ResponseBody
+    @PostMapping("/manager/BBS/good/{id}")
+    public Map<String,String> good(@PathVariable("id") int discussId){
+        int good = discussService.good(discussId);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("good",good+"");
+        return  map;
+    }
+
+    @ResponseBody
+    @PostMapping("/manager/BBS/cancelGood/{id}")
+    public Map<String,String> cancelGood(@PathVariable("id") int discussId){
+        int good = discussService.cancelGood(discussId);
+        HashMap<String, String> map = new HashMap<>();
+        map.put("good",good+"");
+        return  map;
     }
 
 }

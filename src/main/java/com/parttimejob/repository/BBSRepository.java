@@ -47,4 +47,9 @@ public interface BBSRepository extends JpaRepository<BBS, Integer> {
     @Modifying
     @Query(value = "update BBS a SET a.views = a.views+1 where a.id =?1")
     void views(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "update BBS a SET a.discuss = a.discuss+1 where a.id =?1")
+    void discuss(int id);
 }
