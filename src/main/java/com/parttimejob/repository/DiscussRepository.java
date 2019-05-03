@@ -30,4 +30,9 @@ public interface DiscussRepository extends JpaRepository< Discuss,Integer> {
     @Modifying
     @Query(value = "update Discuss a SET a.good = a.good-1 where a.id =?1")
     void cancelGood(int id);
+
+    @Transactional
+    @Modifying
+    @Query(value = "delete from Discuss a where a.bbsId = ?1 ")
+    void deleteByBbsId(int id);
 }

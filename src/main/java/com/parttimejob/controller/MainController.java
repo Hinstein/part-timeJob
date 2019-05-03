@@ -165,7 +165,7 @@ public class MainController {
             }
             //返回json数据
             else {
-                System.out.println("文件为空");
+                map.put("msg", "文件为空！");
             }
         } catch (IOException e) {
             e.printStackTrace();

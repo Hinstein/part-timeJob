@@ -148,9 +148,6 @@ public class JobController {
         int pageSize = Integer.parseInt(request.getParameter("limit"));
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Map<String, Object> result = new HashMap<String, Object>();
-        System.out.println(workerLimit);
-        System.out.println(type);
-        System.out.println(content);
         if (content != null || type != null || workerLimit != null) {
             if (content != null) {
                 Page<Job> jobs = jobService.findByTitleLike(content, pageNumber, pageSize);
@@ -203,9 +200,11 @@ public class JobController {
             job.setCheckCollection(2);
             job.setCheckDeliver(2);
         }
+        Page<Job> jobs = jobService.finDescByViews(1, 5);
         Manager manager = managerService.findById(job.getManagerId());
         model.addAttribute("manager", manager);
         model.addAttribute("job", job);
+        model.addAttribute("jobs", jobs.getContent());
         return "/worker/job";
     }
 

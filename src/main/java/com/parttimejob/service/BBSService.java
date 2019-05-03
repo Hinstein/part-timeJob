@@ -23,6 +23,9 @@ public class BBSService {
     @Autowired
     BBSRepository bbsRepository;
 
+    @Autowired
+    DiscussService discussService;
+
     public void BBSSave(BBS bbs) {
         bbsRepository.save(bbs);
     }
@@ -55,6 +58,7 @@ public class BBSService {
     }
 
     public void deleteById(int id) {
+        discussService.deleteByBbsId(id);
         bbsRepository.deleteById(id);
     }
 

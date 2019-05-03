@@ -44,4 +44,8 @@ public class DiscussService {
         Discuss d = discussRepository.findById(id);
         return  d.getGood();
     }
+
+    public void deleteByBbsId(int id){
+        discussRepository.deleteByBbsId(id);
+    }
 }

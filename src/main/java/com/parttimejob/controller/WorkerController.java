@@ -591,7 +591,7 @@ public class WorkerController {
                 map.put("relativePath", relativePath);
                 map.put("data", pathName);
             } else {
-                System.out.println("文件为空");
+                map.put("msg", "文件为空！");
             }
         } catch (IOException e) {
             e.printStackTrace();

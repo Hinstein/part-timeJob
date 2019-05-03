@@ -550,7 +550,8 @@ public class ManagerController {
             }
             //返回json数据
             else {
-                System.out.println("文件为空");
+                map.put("msg", "文件为空！");
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -845,11 +846,10 @@ public class ManagerController {
                 session.setAttribute("manager", manager1);
                 //返回json数据
                 map.put("code", 0);
-                map.put("msg", "上传成功！");
                 map.put("relativePath", relativePath);
                 map.put("data", pathName);
             } else {
-                System.out.println("文件为空");
+                map.put("msg", "文件为空！");
             }
         } catch (IOException e) {
             e.printStackTrace();
