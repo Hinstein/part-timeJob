@@ -185,10 +185,12 @@
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                {field: 'title', title: '信息', width: '40%'}
+                {field: 'title', title: '信息', width: '25%'}
+                , {field: 'type', title: '工作类型'}
+                , {field: 'workerLimit', title: '工作类型'}
                 , {field: 'lowPay', title: '最低工资'}
                 , {field: 'hightPay', title: '最高工资'}
-                , {field: 'date', title: '发布时间', sort: true, width: '20%'}
+                , {field: 'date', title: '发布时间', sort: true}
                 , {fixed: 'right', title: '操作', toolbar: '#action', width: '10%'}
             ]]
         });

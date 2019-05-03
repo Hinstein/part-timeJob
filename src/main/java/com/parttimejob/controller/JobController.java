@@ -254,15 +254,22 @@ public class JobController {
      */
     @ResponseBody
     @PostMapping(value = "/worker/job/deliver")
-    public String deliver(@RequestParam HashMap<String, String> map, HttpSession session) {
-        Deliver deliver = new Deliver();
+    public Map<String ,String> deliver(@RequestParam HashMap<String, String> map, HttpSession session) {
+        HashMap<String, String> map1 = new HashMap<>();
         int jobId = Integer.parseInt(map.get("id"));
-        Worker worker = (Worker) session.getAttribute("worker");
-        deliver.setJobId(jobId);
-        deliver.setWorkerId(worker.getId());
-        deliverService.save(deliver);
-        jobService.deliverSave(jobId);
-        return "投递成功";
+        WorkerData worker = (WorkerData) session.getAttribute("workerData");
+        Job job = jobService.findById(jobId);
+        if(job.getWorkerLimit().equals(worker.getEducationBackground())||job.getWorkerLimit().equals("无限制")) {
+            Deliver deliver = new Deliver();
+            deliver.setJobId(jobId);
+            deliver.setWorkerId(worker.getWorkerId());
+            deliverService.save(deliver);
+            jobService.deliverSave(jobId);
+            map.put("success","投递成功");
+        }else {
+            map.put("error","投递失败，不符合条件");
+        }
+        return map;
     }
 
     /**

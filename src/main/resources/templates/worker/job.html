@@ -282,9 +282,16 @@
                 url: 'deliver',
                 method: "post",
                 data: params,
-                dataType: "text",
+                dataType: "json",
                 success: function (msg) {
-                    location.href = "/worker/job/" + id;
+                    if(msg.success)
+                    {
+                        location.href = "/worker/job/" + id;
+                    }
+                    else {
+                        layer.msg(msg.error)
+                    }
+
                 },
                 error: function () {
                     layer.msg("网络错误，登录失败");

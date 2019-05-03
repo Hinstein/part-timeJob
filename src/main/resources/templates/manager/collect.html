@@ -186,14 +186,8 @@
                                 <text th:if="${worker.sex}==0">男</text>
                                 <text th:if="${worker.sex}==1">女</text>
                                 <br>
-                                教育背景：
-                                <text th:if="${worker.educationBackground}==1">小学</text>
-                                <text th:if="${worker.educationBackground}==2">初中</text>
-                                <text th:if="${worker.educationBackground}==3">高中</text>
-                                <text th:if="${worker.educationBackground}==4">中专</text>
-                                <text th:if="${worker.educationBackground}==5">大专</text>
-                                <text th:if="${worker.educationBackground}==6">本科</text>
-                                <text th:if="${worker.educationBackground}==7">研究生</text>
+                                年级：
+                                <text >[[${worker.educationBackground}]]</text>
                                 <br>
                                 期望薪资：[[${worker.expectation}]]<br>
                                 自我介绍：[[${worker.introduce}]]<br>

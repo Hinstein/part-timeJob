@@ -211,25 +211,14 @@
 
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">学历</label>
+                                <label class="layui-form-label">年级</label>
                                 <div class="layui-input-inline">
                                     <select name="educationBackground" lay-verify="required" lay-search="">
-                                        <option value="0" th:selected="${worker.educationBackground==0}">请选择你的学历
-                                        </option>
-                                        <option value="1" th:selected="${worker.educationBackground==1}">小学
-                                        </option>
-                                        <option value="2" th:selected="${worker.educationBackground==2}">初中
-                                        </option>
-                                        <option value="3" th:selected="${worker.educationBackground==3}">高中
-                                        </option>
-                                        <option value="4" th:selected="${worker.educationBackground==4}">中专
-                                        </option>
-                                        <option value="5" th:selected="${worker.educationBackground==5}">大专
-                                        </option>
-                                        <option value="6" th:selected="${worker.educationBackground==6}">本科
-                                        </option>
-                                        <option value="7" th:selected="${worker.educationBackground==7}">研究生
-                                        </option>
+                                        <option value="">请选择你的年级</option>
+                                        <option value="大一" th:selected="${worker.educationBackground eq '大一'} ">大一</option>
+                                        <option value="大二" th:selected="${worker.educationBackground eq '大二'} ">大二</option>
+                                        <option value="大三" th:selected="${worker.educationBackground eq '大三'} ">大三</option>
+                                        <option value="大四" th:selected="${worker.educationBackground eq '大四'} ">大四</option>
                                     </select>
                                 </div>
                             </div>

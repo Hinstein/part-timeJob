@@ -45,9 +45,9 @@ public class WorkerData {
     @Column
     private String workerExperience;
 
-    //学历
+    //年级
     @Column
-    private int educationBackground;
+    private String educationBackground;
 
     @Column
     private int sex;
@@ -151,11 +151,11 @@ public class WorkerData {
         this.workerExperience = workerExperience;
     }
 
-    public int getEducationBackground() {
+    public String getEducationBackground() {
         return educationBackground;
     }
 
-    public void setEducationBackground(int educationBackground) {
+    public void setEducationBackground(String educationBackground) {
         this.educationBackground = educationBackground;
     }
 

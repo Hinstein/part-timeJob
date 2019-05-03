@@ -204,20 +204,15 @@
                         <br><br>
 
                         <p style="line-height:14.55pt; margin:0pt"><span
-                                style="font-family:微软雅黑; font-size:14pt; font-weight:bold">学历</span></p>
+                                style="font-family:微软雅黑; font-size:14pt; font-weight:bold">年级</span></p>
                         <hr>
                         <p style="line-height:11.9pt; margin:0pt">
                             <div th:switch="${worker.educationBackground}">
-                        <p th:case="1">小学</p>
+                        <p th:case="大一">大二</p>
                         <!-- *: case的默认的选项 -->
-                        <p th:case="2">初中</p>
-                        <p th:case="3">高中</p>
-                        <p th:case="4">中专</p>
-                        <p th:case="5">大专</p>
-                        <p th:case="6">本科</p>
-                        <p th:case="7">研究生</p>
-
-
+                        <p th:case="大二">大二</p>
+                        <p th:case="大三">大三</p>
+                        <p th:case="大四">大四</p>
                         </p>
                         <br><br>
 
