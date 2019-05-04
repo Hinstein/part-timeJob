@@ -73,6 +73,18 @@ public class AdminController {
                     session.setAttribute("managers", managers.size());
                     session.setAttribute("bbs", bbs.size());
                     session.setAttribute("jobs", jobs.size());
+
+                    session.setAttribute("gradeOne",jobService.gradeOne());
+                    session.setAttribute("gradeTwo",jobService.gradeTwo());
+                    session.setAttribute("gradeThree",jobService.gradeThree());
+                    session.setAttribute("gradeFour",jobService.gradeFour());
+                    session.setAttribute("noLimit",jobService.noLimit());
+
+                    session.setAttribute("workerGradeOne",workerDataService.workerGradeOne());
+                    session.setAttribute("workerGradeTwo",workerDataService.workerGradeTwo());
+                    session.setAttribute("workerGradeThree",workerDataService.workerGradeThree());
+                    session.setAttribute("workerGradeFour",workerDataService.workerGradeFour());
+
                     map.put("success", "登录成功");
                 }
                 map.put("error", "密码错误");

@@ -115,4 +115,6 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     @Modifying
     @Query(value = "update Job a SET a.employNumber = a.employNumber+1 where a.id =?1")
     void employ(int id);
+
+    int countByWorkerLimit(String workerLimit);
 }

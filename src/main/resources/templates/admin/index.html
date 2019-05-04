@@ -241,9 +241,19 @@
                         </div>
 
                         <div class="layui-card">
-                            <div class="layui-card-header">招聘种类</div>
-                            <div class="layui-card-body ">
-                                <div id="type" style="width: 410px;height:400px;"></div>
+                            <div class="layui-tab layui-tab-brief layadmin-latestData">
+                                <ul class="layui-tab-title">
+                                    <li class="layui-this">招聘种类</li>
+                                    <li>兼职者分布</li>
+                                </ul>
+                                <div class="layui-tab-content">
+                                    <div class="layui-tab-item layui-show">
+                                        <div id="type" style="width: 410px;height:400px;"></div>
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div id="workerLimit" style="width: 410px;height:400px;"></div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -328,7 +338,6 @@
 </script>
 <script>
     var myChart = echarts.init(document.getElementById('type'));
-    var myChart1 = echarts.init(document.getElementById('number'));
     var type = {
         title: {
             text: '招聘种类分布',
@@ -351,23 +360,23 @@
             center: ['50%', '60%'],
             data: [
                 {
-                    value: 2,
+                    value: [[${session.noLimit}]],
                     name: '无限制'
                 },
                 {
-                    value: 1,
+                    value: [[${session.gradeOne}]],
                     name: '大一'
                 },
                 {
-                    value: 3,
+                    value: [[${session.gradeTwo}]],
                     name: '大二'
                 },
                 {
-                    value: 4,
+                    value: [[${session.gradeThree}]],
                     name: '大三'
                 },
                 {
-                    value: 4,
+                    value: [[${session.gradeFour}]],
                     name: '大四'
                 }
             ],
@@ -380,6 +389,9 @@
             }
         }]
     };
+    myChart.setOption(type);
+
+    var myChart1 = echarts.init(document.getElementById('number'));
     var number = {
         color: ['#3398DB'],
         tooltip: {
@@ -417,8 +429,57 @@
             }
         ]
     };
-    myChart.setOption(type);
     myChart1.setOption(number);
+
+    var myChart2 = echarts.init(document.getElementById('workerLimit'));
+    var workerLimit = {
+        title: {
+            text: '兼职者年级分布',
+            subtext: '',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: [ '大一', '大二', '大三', '大四']
+        },
+        series: [{
+            name: '种类数目',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [
+                {
+                    value: [[${session.workerGradeOne}]],
+                    name: '大一'
+                },
+                {
+                    value: [[${session.workerGradeTwo}]],
+                    name: '大二'
+                },
+                {
+                    value: [[${session.workerGradeThree}]],
+                    name: '大三'
+                },
+                {
+                    value: [[${session.workerGradeFour}]],
+                    name: '大四'
+                }
+            ],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    };
+    myChart2.setOption(workerLimit);
 </script>
 </body>
 </html>

@@ -196,4 +196,24 @@ public class JobService {
         jobRepository.employ(id);
     }
 
+    public int gradeOne(){
+        return jobRepository.countByWorkerLimit("大一");
+    }
+
+    public int gradeTwo (){
+        return jobRepository.countByWorkerLimit("大二");
+    }
+
+    public int gradeThree(){
+        return jobRepository.countByWorkerLimit("大三");
+    }
+
+    public int gradeFour(){
+        return jobRepository.countByWorkerLimit("大四");
+    }
+
+    public int noLimit(){
+        return jobRepository.countByWorkerLimit("无限制");
+    }
+
 }

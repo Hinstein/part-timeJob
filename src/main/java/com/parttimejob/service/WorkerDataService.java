@@ -107,4 +107,21 @@ public class WorkerDataService {
     public void headPhotoEditor(String src, String pathName,int id) {
         workerDataRepository.headPhotoEditor(src, pathName,id);
     }
+
+
+    public int workerGradeOne(){
+        return workerDataRepository.countByEducationBackground("大一");
+    }
+
+    public int workerGradeTwo (){
+        return workerDataRepository.countByEducationBackground("大二");
+    }
+
+    public int workerGradeThree(){
+        return workerDataRepository.countByEducationBackground("大三");
+    }
+
+    public int workerGradeFour(){
+        return workerDataRepository.countByEducationBackground("大四");
+    }
 }
