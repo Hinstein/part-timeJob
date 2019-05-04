@@ -23,29 +23,28 @@ public class DiscussService {
     @Autowired
     BBSService bbsService;
 
-    public void save(Discuss discuss)
-    {
+    public void save(Discuss discuss) {
         bbsService.discuss(discuss.getBbsId());
         discussRepository.save(discuss);
     }
 
-    public List<Discuss> findByBbsId (int id){
+    public List<Discuss> findByBbsId(int id) {
         return discussRepository.findByBbsId(id);
     }
 
-    public int good(int id){
+    public int good(int id) {
         discussRepository.good(id);
         Discuss d = discussRepository.findById(id);
-        return  d.getGood();
+        return d.getGood();
     }
 
-    public int cancelGood(int id){
+    public int cancelGood(int id) {
         discussRepository.cancelGood(id);
         Discuss d = discussRepository.findById(id);
-        return  d.getGood();
+        return d.getGood();
     }
 
-    public void deleteByBbsId(int id){
+    public void deleteByBbsId(int id) {
         discussRepository.deleteByBbsId(id);
     }
 }

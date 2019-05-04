@@ -104,24 +104,24 @@ public class WorkerDataService {
         return workerDataRepository.findAll(pageable);
     }
 
-    public void headPhotoEditor(String src, String pathName,int id) {
-        workerDataRepository.headPhotoEditor(src, pathName,id);
+    public void headPhotoEditor(String src, String pathName, int id) {
+        workerDataRepository.headPhotoEditor(src, pathName, id);
     }
 
 
-    public int workerGradeOne(){
+    public int workerGradeOne() {
         return workerDataRepository.countByEducationBackground("大一");
     }
 
-    public int workerGradeTwo (){
+    public int workerGradeTwo() {
         return workerDataRepository.countByEducationBackground("大二");
     }
 
-    public int workerGradeThree(){
+    public int workerGradeThree() {
         return workerDataRepository.countByEducationBackground("大三");
     }
 
-    public int workerGradeFour(){
+    public int workerGradeFour() {
         return workerDataRepository.countByEducationBackground("大四");
     }
 }

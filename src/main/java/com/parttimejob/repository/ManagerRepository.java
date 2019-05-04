@@ -120,5 +120,5 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     @Transactional
     @Modifying
     @Query(value = "update Manager a SET a.headPhoto =?1 ,a.pathName=?2 where  a.id =?3")
-    void headPhotoEditor(String src, String pathName,int id);
+    void headPhotoEditor(String src, String pathName, int id);
 }

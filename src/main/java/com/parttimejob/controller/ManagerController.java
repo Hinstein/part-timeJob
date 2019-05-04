@@ -667,9 +667,9 @@ public class ManagerController {
         bbsService.views(id);
         List<Discuss> discussList = discussService.findByBbsId(id);
         model.addAttribute("bbs", bbs);
-        model.addAttribute("discussList",discussList);
-        model.addAttribute("view",view.getContent());
-        model.addAttribute("hot",hot.getContent());
+        model.addAttribute("discussList", discussList);
+        model.addAttribute("view", view.getContent());
+        model.addAttribute("hot", hot.getContent());
         return "manager/BBS/look";
     }
 
@@ -837,11 +837,11 @@ public class ManagerController {
                 file.transferTo(new File(pathName));
 
                 //设置photo实体类的数据
-                if(manager.getPathName()!=null){
+                if (manager.getPathName() != null) {
                     File file1 = new File(manager.getPathName());
                     file1.delete();
                 }
-                managerService.headPhotoEditor(relativePath, pathName,manager.getId());
+                managerService.headPhotoEditor(relativePath, pathName, manager.getId());
                 Manager manager1 = managerService.findById(manager.getId());
                 session.setAttribute("manager", manager1);
                 //返回json数据
@@ -859,9 +859,9 @@ public class ManagerController {
 
     @ResponseBody
     @PostMapping("/manager/BBS/discuss/{id}")
-    public Map<String,String> discuss(@PathVariable("id") int bbsId,HttpServletRequest request,HttpSession session){
+    public Map<String, String> discuss(@PathVariable("id") int bbsId, HttpServletRequest request, HttpSession session) {
         Manager manager = (Manager) session.getAttribute("manager");
-        String content=request.getParameter("content");
+        String content = request.getParameter("content");
         Discuss discuss = new Discuss();
         discuss.setBbsId(bbsId);
         discuss.setContent(content);
@@ -871,26 +871,26 @@ public class ManagerController {
         discuss.setTime(df.format(new Date()));
         discussService.save(discuss);
         HashMap<String, String> map = new HashMap<>();
-        map.put("success","评论成功！");
-        return  map;
+        map.put("success", "评论成功！");
+        return map;
     }
 
     @ResponseBody
     @PostMapping("/manager/BBS/good/{id}")
-    public Map<String,String> good(@PathVariable("id") int discussId){
+    public Map<String, String> good(@PathVariable("id") int discussId) {
         int good = discussService.good(discussId);
         HashMap<String, String> map = new HashMap<>();
-        map.put("good",good+"");
-        return  map;
+        map.put("good", good + "");
+        return map;
     }
 
     @ResponseBody
     @PostMapping("/manager/BBS/cancelGood/{id}")
-    public Map<String,String> cancelGood(@PathVariable("id") int discussId){
+    public Map<String, String> cancelGood(@PathVariable("id") int discussId) {
         int good = discussService.cancelGood(discussId);
         HashMap<String, String> map = new HashMap<>();
-        map.put("good",good+"");
-        return  map;
+        map.put("good", good + "");
+        return map;
     }
 
 }

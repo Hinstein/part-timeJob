@@ -79,7 +79,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
     @Transactional
     @Modifying
     @Query(value = "update WorkerData a SET a.headPhoto =?1 ,a.pathName=?2 where a.id =?3")
-    void headPhotoEditor(String src, String pathName,int id);
+    void headPhotoEditor(String src, String pathName, int id);
 
     int countByEducationBackground(String limit);
 }

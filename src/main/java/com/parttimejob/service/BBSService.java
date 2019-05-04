@@ -87,7 +87,7 @@ public class BBSService {
         return bbsRepository.findAll();
     }
 
-    public void discuss(int id){
+    public void discuss(int id) {
         bbsRepository.discuss(id);
     }
 
@@ -97,7 +97,7 @@ public class BBSService {
             pageNo = 1;
         }
         Sort sort = new Sort(Sort.Direction.DESC, "discuss");
-        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return bbsRepository.findAll(pageable);
     }
 
@@ -107,7 +107,7 @@ public class BBSService {
             pageNo = 1;
         }
         Sort sort = new Sort(Sort.Direction.DESC, "views");
-        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize,sort);
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return bbsRepository.findAll(pageable);
     }
 

@@ -15,7 +15,7 @@ import java.util.List;
  * @CreateTime: 2019-05-02 19:39
  * @Description:
  */
-public interface DiscussRepository extends JpaRepository< Discuss,Integer> {
+public interface DiscussRepository extends JpaRepository<Discuss, Integer> {
 
     List<Discuss> findByBbsId(int id);
 
