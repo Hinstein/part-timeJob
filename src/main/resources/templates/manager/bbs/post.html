@@ -12,6 +12,14 @@
 
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/ico.1539594650.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/index.1555395693.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/jzcglobal.1542282856.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/jzpop.1555579771.css}">
 </head>
 <body>
 
@@ -131,6 +139,95 @@
         </div>
     </div>
 </div>
+<div class="footer-seo">
+    <div class="w">
+        <div class="item friend-link">
+            <div class="links">
+                <h3>热门城市：</h3>
+                <a>北京招聘</a>
+                <a>上海招聘</a>
+                <a>广州招聘</a>
+                <a>深圳招聘</a>
+                <a>石家庄招聘</a>
+                <a>郑州招聘</a>
+                <a>济南招聘</a>
+                <a>青岛招聘</a>
+                <a>合肥招聘</a>
+                <a>太原招聘</a>
+                <a>西安招聘</a>
+                <a>武汉招聘</a>
+            </div>
+            <a class="btn_arrow" href="#"></a>
+        </div>
+        <div class="item friend-link">
+            <div class="links">
+                <h3>热门职位：</h3>
+                <a> 搬运工招聘</a>
+                <a> 仓库管理员招聘</a>
+                <a> 客服经理招聘</a>
+                <a> 在线客服招聘</a>
+                <a> 销售支持招聘</a>
+                <a> 销售经理招聘</a>
+                <a> 网络销售招聘</a>
+                <a> 电话销售招聘</a>
+            </div>
+            <a class="btn_arrow" href="#"></a>
+        </div>
+        <div class="item friend-link">
+            <div class="links">
+                <h3>手机版：</h3>
+                <a> 找工作</a>
+            </div>
+        </div>
+        <div class="item friend-link">
+            <div class="links">
+                <h3>友情链接：</h3>
+                <a href="https://www.gliet.edu.cn/">桂林电子科技大学</a>
+                <a href="http://www.doumi.com/">斗米网</a>
+                <a href="https://gl.58.com/">58同城</a>
+            </div>
+            <a class="btn_arrow" href="#"></a>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="content">
+        <div class="w">
+            <div class="hotline">
+                <span class="title">传真</span>
+                <span class="phone">0773-2290083</span>
+                <span class="title">邮编</span>
+                <span class="email">541004</span>
+            </div>
+            <ul class="nav">
+                <li>
+                    关于我们
+                    <ul class="sub-nav">
+                        <li><a>公司简介</a></li>
+                        <li><a>公司历程</a></li>
+                        <li><a>加入我们</a></li>
+                        <li><a>联系我们</a></li>
+                        <li><a>渠道招商</a></li>
+                    </ul>
+                </li>
+                <li>招聘资讯
+                    <ul class="sub-nav">
+                        <li><a>招聘新闻</a></li>
+                        <li><a>工作技巧</a></li>
+                    </ul>
+                </li>
+                <li>帮助中心
+                    <ul class="sub-nav">
+                        <li><a>有偿服务</a></li>
+                    </ul>
+                </li>
+                <li><a>网站地图</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="copyright">&copy;2018-2019 桂电兼职招聘网 地址：中国广西桂林金鸡路1号 邮编：541004　传真：0773-2290083 </p>
+    <p class="copyright">桂ICP备05000961号 桂公网安备45030502000232号</p>
+</div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script th:inline="none">
@@ -178,6 +275,32 @@
             }
         });
     });
+</script><script>
+    layui.use('carousel', function () {
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+            elem: '#test1'
+            , width: '1140px' //设置容器宽度
+            , height: '460px'
+            , arrow: 'always' //始终显示箭头
+        });
+        var util = layui.util;
+        //执行
+        util.fixbar({
+            bar1: true
+            , click: function (type) {
+                if (type === 'bar1') {
+                    layer.msg("欢迎来到桂电兼职网！")
+                }
+            }
+        });
+    });
+    $(function () {
+        $("#headPhoto").click(function () {
+            location.href = "/manager/editor/headPhoto";
+        })
+    })
 </script>
 </body>
 </html>
