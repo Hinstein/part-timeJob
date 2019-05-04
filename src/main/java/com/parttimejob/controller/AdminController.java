@@ -97,6 +97,11 @@ public class AdminController {
         return map;
     }
 
+    /**
+     * 用户退出
+     * @param session
+     * @return
+     */
     @GetMapping("/admin/exit")
     public String adminExit(HttpSession session) {
         session.removeAttribute("username");
