@@ -26,7 +26,7 @@
     <div class="layui-header">
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item layadmin-flexible" lay-unselect>
-                <a th:href="@{/index}" title="logo" >
+                <a th:href="@{/index}" title="logo">
                     兼职网
                 </a>
             </li>
@@ -174,7 +174,7 @@
         </div>
         <div class="layui-col-md4">
             <dl class="fly-panel fly-list-one">
-                <dt class="fly-panel-title" >评论最多</dt>
+                <dt class="fly-panel-title">评论最多</dt>
                 <dd th:each="e:${hot}">
                     <a th:href="@{/worker/BBS/look/}+${e.id}">[[${e.title}]]</a>
                     <span><i class="iconfont icon-pinglun1"></i>[[${e.discuss}]]</span>

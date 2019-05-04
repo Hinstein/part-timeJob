@@ -34,12 +34,12 @@
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker!=null}">
-                <a th:href="@{/worker/index}"  title="首页">
+                <a th:href="@{/worker/index}" title="首页">
                     首页
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
-                <a th:href="@{/manager/index}"  title="首页">
+                <a th:href="@{/manager/index}" title="首页">
                     首页
                 </a>
             </li>
@@ -512,13 +512,13 @@
             , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
             , limit: 10 //每页默认显示的数量
             , cols: [[ //表头
-                 {field: 'title', title: '标题'}
-                , {field: 'type', title: '工作类别',width:'11%'}
-                , {field: 'workerLimit', title: '员工限制',width:'8%'}
-                , {field: 'workerNumber', title: '招聘人数',width:'8%'}
-                , {field: 'employNumber', title: '已招聘人数',width:'10%'}
-                , {field: 'date', title: '发布时间', sort: true,width:'15%'}
-                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action',width:'7%'}
+                {field: 'title', title: '标题'}
+                , {field: 'type', title: '工作类别', width: '11%'}
+                , {field: 'workerLimit', title: '员工限制', width: '8%'}
+                , {field: 'workerNumber', title: '招聘人数', width: '8%'}
+                , {field: 'employNumber', title: '已招聘人数', width: '10%'}
+                , {field: 'date', title: '发布时间', sort: true, width: '15%'}
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action', width: '7%'}
             ]]
         });
         //监听事件

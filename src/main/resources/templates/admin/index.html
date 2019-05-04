@@ -258,7 +258,7 @@
                         </div>
 
                         <div class="layui-card">
-                            <div class="layui-card-header">实时监控</div>
+                            <div class="layui-card-header">数据统计</div>
                             <div class="layui-card-body ">
                                 <div id="number" style="width: 410px;height:400px;"></div>
                             </div>
@@ -337,6 +337,10 @@
     })
 </script>
 <script>
+    var workersNumber = [[${session.workers}]];
+    var managersNumber = [[${session.managers}]];
+    var jobsNumber = [[${session.jobs}]];
+    var bbsNumber = [[${session.bbs}]];
     var myChart = echarts.init(document.getElementById('type'));
     var type = {
         title: {
@@ -409,7 +413,7 @@
         xAxis: [
             {
                 type: 'category',
-                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+                data: ['招聘者数量', '兼职者数量', '兼职数量', '帖子数'],
                 axisTick: {
                     alignWithLabel: true
                 }
@@ -422,10 +426,10 @@
         ],
         series: [
             {
-                name: '直接访问',
+                name: '数量',
                 type: 'bar',
                 barWidth: '60%',
-                data: [10, 52, 200, 334, 390]
+                data: [workersNumber, managersNumber, jobsNumber, bbsNumber]
             }
         ]
     };
@@ -445,7 +449,7 @@
         legend: {
             orient: 'vertical',
             left: 'left',
-            data: [ '大一', '大二', '大三', '大四']
+            data: ['大一', '大二', '大三', '大四']
         },
         series: [{
             name: '种类数目',

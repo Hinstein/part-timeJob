@@ -32,7 +32,7 @@
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                <a th:href="@{/worker/index}"  title="首页">
+                <a th:href="@{/worker/index}" title="首页">
                     首页
                 </a>
             </li>
@@ -324,7 +324,8 @@
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
-    }); $(function () {
+    });
+    $(function () {
         $("#headPhoto").click(function () {
             location.href = "/worker/editor/headPhoto";
         })

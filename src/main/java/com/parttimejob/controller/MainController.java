@@ -87,15 +87,15 @@ public class MainController {
      */
     @GetMapping("/index")
     public String index(Model model) {
-        Page<Job> jobs = jobService.recommend("普通工作",1, 27);
-        Page<Job> jobs1 = jobService.finDescByViewsIndex("普通工作",1, 27);
-        Page<Job> jobs2 = jobService.finDescByTimeIndex("普通工作",1, 27);
+        Page<Job> jobs = jobService.recommend("普通工作", 1, 27);
+        Page<Job> jobs1 = jobService.finDescByViewsIndex("普通工作", 1, 27);
+        Page<Job> jobs2 = jobService.finDescByTimeIndex("普通工作", 1, 27);
         model.addAttribute("jobs", jobs);
         model.addAttribute("jobs1", jobs1);
         model.addAttribute("jobs2", jobs2);
-        Page<Job> jobs3 = jobService.recommend("教辅机构兼职",1, 27);
-        Page<Job> jobs4 = jobService.finDescByViewsIndex("教辅机构兼职",1, 27);
-        Page<Job> jobs5 = jobService.finDescByTimeIndex("教辅机构兼职",1, 27);
+        Page<Job> jobs3 = jobService.recommend("教辅机构兼职", 1, 27);
+        Page<Job> jobs4 = jobService.finDescByViewsIndex("教辅机构兼职", 1, 27);
+        Page<Job> jobs5 = jobService.finDescByTimeIndex("教辅机构兼职", 1, 27);
         model.addAttribute("jobs3", jobs3);
         model.addAttribute("jobs4", jobs4);
         model.addAttribute("jobs5", jobs5);
@@ -214,8 +214,8 @@ public class MainController {
     }
 
     @GetMapping("/search/{content}")
-    public String search(@PathVariable("content") String content,Model model) {
-        model.addAttribute("content",content);
+    public String search(@PathVariable("content") String content, Model model) {
+        model.addAttribute("content", content);
         System.out.println(content);
         return "/homePage/search";
     }
