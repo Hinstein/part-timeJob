@@ -9,10 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.ClassUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,12 +87,18 @@ public class MainController {
      */
     @GetMapping("/index")
     public String index(Model model) {
-        Page<Job> jobs = jobService.getJobs(1, 27);
-        Page<Job> jobs1 = jobService.finDescByTime(1, 27);
-        Page<Job> jobs2 = jobService.finDescByViews(1, 27);
+        Page<Job> jobs = jobService.recommend("普通工作",1, 27);
+        Page<Job> jobs1 = jobService.finDescByViewsIndex("普通工作",1, 27);
+        Page<Job> jobs2 = jobService.finDescByTimeIndex("普通工作",1, 27);
         model.addAttribute("jobs", jobs);
         model.addAttribute("jobs1", jobs1);
         model.addAttribute("jobs2", jobs2);
+        Page<Job> jobs3 = jobService.recommend("教辅机构兼职",1, 27);
+        Page<Job> jobs4 = jobService.finDescByViewsIndex("教辅机构兼职",1, 27);
+        Page<Job> jobs5 = jobService.finDescByTimeIndex("教辅机构兼职",1, 27);
+        model.addAttribute("jobs3", jobs3);
+        model.addAttribute("jobs4", jobs4);
+        model.addAttribute("jobs5", jobs5);
         return "/homePage/index";
     }
 
@@ -195,5 +198,25 @@ public class MainController {
             map.put("error", "您以注册，请等待管理员审批");
         }
         return map;
+    }
+
+    @GetMapping("/job/{id}")
+    public String job(@PathVariable("id") int jobId, Model model) {
+        Job job = jobService.findById(jobId);
+        job.setViews(job.getViews() + 1);
+        jobService.jobSave(job);
+        Page<Job> jobs = jobService.finDescByViews(1, 5);
+        Manager manager = managerService.findById(job.getManagerId());
+        model.addAttribute("manager", manager);
+        model.addAttribute("job", job);
+        model.addAttribute("jobs", jobs.getContent());
+        return "/homePage/job";
+    }
+
+    @GetMapping("/search/{content}")
+    public String search(@PathVariable("content") String content,Model model) {
+        model.addAttribute("content",content);
+        System.out.println(content);
+        return "/homePage/search";
     }
 }

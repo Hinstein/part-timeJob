@@ -24,6 +24,7 @@
                     </a>
                 </li>
             </ul>
+
             <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
                 <li class="layui-nav-item" lay-unselect>
                     <a href="javascript:;">
@@ -118,7 +119,6 @@
             </div>
         </div>
 
-
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <a>主页</a>
             <span>/</span>
@@ -127,12 +127,11 @@
             <a>查看所有职位</a>
         </div>
 
-
         <div class="layui-body" style="background-color: #F2F2F2;">
             <div class="layui-fluid" style=" padding: 15px;">
                 <div class="layui-col-md12">
                     <div class="layui-card">
-                        <div class="layui-card-header">&nbsp;兼职账号管理</div>
+                        <div class="layui-card-header">&nbsp;查找工作</div>
                         <div class="layui-card-body">
                             <div class="demoTable">
                                 <div class="layui-inline">
@@ -191,7 +190,6 @@
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
-
 <script th:inline="none">
     layui.use(['table'], function () {
         var table = layui.table;

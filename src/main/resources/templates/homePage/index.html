@@ -15,8 +15,6 @@
 
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
 
-    <!--    <link rel="stylesheet" th:href="@{/assets/index/css/global.1512563581.css}">-->
-
     <link rel="stylesheet" th:href="@{/assets/index/css/ico.1539594650.css}">
 
     <link rel="stylesheet" th:href="@{/assets/index/css/index.1555395693.css}">
@@ -36,22 +34,22 @@
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker!=null}">
-                <a th:href="@{/worker/index}" target="_blank" title="首页">
+                <a th:href="@{/worker/index}"  title="首页">
                     首页
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
-                <a th:href="@{/manager/index}" target="_blank" title="首页">
+                <a th:href="@{/manager/index}"  title="首页">
                     首页
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker!=null}">
-                <a th:href="@{/worker/BBS/index}" title="首页">
+                <a th:href="@{/worker/BBS/index}" target="_blank" title="首页">
                     BBS论坛
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
-                <a th:href="@{/manager/BBS/index}" title="首页">
+                <a th:href="@{/manager/BBS/index}" target="_blank" title="首页">
                     BBS论坛
                 </a>
             </li>
@@ -73,7 +71,7 @@
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
-                    <dd><a th:href="@{/manager/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/manager/search}" target="_blank">搜索职位</a></dd>
                     <dd><a th:href="@{/manager/allJobs}">发布的职位</a></dd>
                     <dd><a th:href="@{/manager/employ}">录用的员工</a></dd>
                     <dd><a th:href="@{/manager/evaluate}">给予的评价</a></dd>
@@ -93,7 +91,7 @@
                 <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
-                    <dd><a th:href="@{/manager/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/manager/search} " target="_blank">搜索职位</a></dd>
                     <dd><a th:href="@{/manager/search/worker}">搜索简历</a></dd>
                     <dd><a th:href="@{/manager/allJobs}">发布的职位</a></dd>
                     <dd><a th:href="@{/manager/employ}">录用的员工</a></dd>
@@ -103,10 +101,19 @@
         </ul>
         <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.worker}">
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/index}">职位管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{/worker/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/worker/search}" target="_blank">搜索职位</a></dd>
                     <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
                     <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <a th:href="@{/worker/BBS/index}">论坛管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/BBS/publish}">发布帖子</a></dd>
+                    <dd><a th:href="@{/worker/BBS/editor}">管理帖子</a></dd>
+                    <dd><a th:href="@{/worker/BBS/search}">搜索帖子</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item" lay-unselect>
@@ -115,16 +122,13 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/resume/index}">查看简历</a></dd>
                     <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
                     <dd><a th:href="@{/worker/exit}">退出</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
                 <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
-                <dl class="layui-nav-child">
-                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
-                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
-                </dl>
             </li>
         </ul>
     </div>
@@ -144,15 +148,56 @@
 </div>
 <br>
 <div class="layui-container">
-    <div class="layui-inline">
-        <input class="layui-input" id="content" autocomplete="off" placeholder="输入你想要的职位">
+
+    <div class="layui-card">
+        <div class="layui-card-header">&nbsp;查找工作</div>
+        <div class="layui-card-body">
+            <div class="demoTable">
+                <div class="layui-inline">
+                    <input class="layui-input" id="content" autocomplete="off" placeholder="搜索工作">
+                </div>
+                <button class="layui-btn" id="search" type="button">搜索</button>
+                <div class="layui-inline">
+                    <form class="layui-form">
+                        <div class="layui-input-block">
+                            <select name="workerLimit" id="workerLimit" lay-verify="required">
+                                <option value="" selected="">按员工限制查找</option>
+                                <option value="无限制">无限制</option>
+                                <option value="大一">大一</option>
+                                <option value="大二">大二</option>
+                                <option value="大三">大三</option>
+                                <option value="大四">大四</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <button class="layui-btn" id="workerLimitBtn" type="button">分类</button>
+                <div class="layui-inline">
+                    <form class="layui-form">
+                        <div class="layui-input-block">
+                            <select name="type" lay-verify="required" id="type">
+                                <option value="" selected="">按工作类型查找</option>
+                                <option value="普通工作">普通工作</option>
+                                <option value="教辅机构兼职">教辅机构兼职</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <button class="layui-btn" id="typeBtn" type="button">分类</button>
+            </div>
+            <br>
+            <table class="layui-hide" id="demo" lay-filter="test"></table>
+            <script type="text/html" id="action">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                </div>
+            </script>
+        </div>
     </div>
-    <button class="layui-btn" id="search" type="button">搜索</button>
-    <br>
-    <br>
+
     <div class="layui-card ">
         <div class="layui-card-header ">
-            test1
+            普通兼职
         </div>
         <div class="layui-card-body">
             <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
@@ -167,7 +212,7 @@
                             <div class="layui-row">
                                 <div class="layui-card layui-col-md4" th:each="job:${jobs}">
                                     <div class="layui-card-header">
-                                        <a th:href="@{/worker/job/}+${job.id}">
+                                        <a th:href="@{/job/}+${job.id}">
                                             <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
@@ -188,7 +233,7 @@
                             <div class="layui-row">
                                 <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
                                     <div class="layui-card-header">
-                                        <a th:href="@{/worker/job/}+${job.id}">
+                                        <a th:href="@{/job/}+${job.id}">
                                             <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
@@ -209,7 +254,7 @@
                             <div class="layui-row">
                                 <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
                                     <div class="layui-card-header">
-                                        <a th:href="@{/worker/job/}+${job.id}">
+                                        <a th:href="@{/job/}+${job.id}">
                                             <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
@@ -236,7 +281,7 @@
 
     <div class="layui-card ">
         <div class="layui-card-header ">
-            test2
+            教育机构兼职
         </div>
         <div class="layui-card-body">
             <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
@@ -249,9 +294,9 @@
                     <div class="layui-tab-item layui-show">
                         <div class="container">
                             <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs}">
+                                <div class="layui-card layui-col-md4" th:each="job:${jobs3}">
                                     <div class="layui-card-header">
-                                        <a th:href="@{/worker/job/}+${job.id}">
+                                        <a th:href="@{/job/}+${job.id}">
                                             <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
@@ -270,9 +315,9 @@
                     <div class="layui-tab-item">
                         <div class="container">
                             <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
+                                <div class="layui-card layui-col-md4" th:each="job:${jobs4}">
                                     <div class="layui-card-header">
-                                        <a th:href="@{/worker/job/}+${job.id}">
+                                        <a th:href="@{/job/}+${job.id}">
                                             <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
@@ -291,9 +336,9 @@
                     <div class="layui-tab-item">
                         <div class="container">
                             <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
+                                <div class="layui-card layui-col-md4" th:each="job:${jobs5}">
                                     <div class="layui-card-header">
-                                        <a th:href="@{/worker/job/}+${job.id}">
+                                        <a th:href="@{/job/}+${job.id}">
                                             <strong th:text="${job.title}">title</strong>
                                         </a>
                                     </div>
@@ -317,10 +362,7 @@
             </div>
         </div>
     </div>
-
 </div>
-<br>
-<br>
 
 <div class="footer-seo">
     <div class="w">
@@ -437,7 +479,7 @@
     $(function () {
         $('#more').click(function () {
             var worker = $('#check').val();
-            console.log(worker);
+
             if (worker === '') {
                 layer.msg("请先登录!");
                 setTimeout(function () {
@@ -448,6 +490,76 @@
             }
         });
     })
+</script>
+<script th:inline="none">
+    layui.use(['table'], function () {
+        var table = layui.table;
+        //第一个实例
+        var tableIns = table.render({
+            elem: '#demo'
+            , url: '/worker/search/allJobs' //数据接口
+            , toolbar: false
+            , page: true //开启分页
+            , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
+            , limit: 10 //每页默认显示的数量
+            , cols: [[ //表头
+                 {field: 'title', title: '标题'}
+                , {field: 'type', title: '工作类别',width:'11%'}
+                , {field: 'workerLimit', title: '员工限制',width:'8%'}
+                , {field: 'workerNumber', title: '招聘人数',width:'8%'}
+                , {field: 'employNumber', title: '已招聘人数',width:'10%'}
+                , {field: 'date', title: '发布时间', sort: true,width:'15%'}
+                , {fixed: 'right', title: '操作', align: 'center', toolbar: '#action',width:'7%'}
+            ]]
+        });
+        //监听事件
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'pass') { //通过
+                location.href = "/job/" + data.id;
+            }
+        });
+
+        $(function () {
+            $("#search").click(function () {
+                var content = $('#content').val();
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        content: content
+                        //…
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            });
+            $("#typeBtn").click(function () {
+                var type = $('#type').val();
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        type: type
+                        //…
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            });
+            $("#workerLimitBtn").click(function () {
+                var workerLimit = $('#workerLimit').val();
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        workerLimit: workerLimit
+                    }
+                    , page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            })
+        });
+    });
 </script>
 </body>
 </html>

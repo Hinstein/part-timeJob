@@ -149,18 +149,23 @@ public class JobController {
         int pageNumber = Integer.parseInt(request.getParameter("page"));
         Map<String, Object> result = new HashMap<String, Object>();
         if (content != null || type != null || workerLimit != null) {
-            if (content != null) {
+            if (content != null && !content.equals("")) {
                 Page<Job> jobs = jobService.findByTitleLike(content, pageNumber, pageSize);
                 result.put("count", jobs.getTotalElements());
                 JSONArray json = JSONArray.fromObject(jobs.getContent());
                 result.put("data", json);
-            } else if (type != null) {
+            } else if (type != null && !type.equals("")) {
                 Page<Job> jobs = jobService.findByType(type, pageNumber, pageSize);
                 result.put("count", jobs.getTotalElements());
                 JSONArray json = JSONArray.fromObject(jobs.getContent());
                 result.put("data", json);
-            } else {
+            } else if (workerLimit != null && !workerLimit.equals("")) {
                 Page<Job> jobs = jobService.findByWorkerLimit(workerLimit, pageNumber, pageSize);
+                result.put("count", jobs.getTotalElements());
+                JSONArray json = JSONArray.fromObject(jobs.getContent());
+                result.put("data", json);
+            } else {
+                Page<Job> jobs = jobService.getJobs(pageNumber, pageSize);
                 result.put("count", jobs.getTotalElements());
                 JSONArray json = JSONArray.fromObject(jobs.getContent());
                 result.put("data", json);

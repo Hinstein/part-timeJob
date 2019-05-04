@@ -13,6 +13,10 @@
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
 
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+
+
+
+
 </head>
 <body>
 <div class="layui-layout layui-layout-admin">
@@ -24,7 +28,7 @@
                 </a>
             </li>
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
-                <a th:href="@{/worker/index}" target="_blank" title="首页">
+                <a th:href="@{/worker/index}"  title="首页">
                     首页
                 </a>
             </li>
@@ -39,7 +43,7 @@
             <li class="layui-nav-item layui-hide-xs" lay-unselect>
                 <a th:href="@{/worker/index}">职位管理</a>
                 <dl class="layui-nav-child">
-                    <dd><a th:href="@{/worker/search}">搜索职位</a></dd>
+                    <dd><a th:href="@{/worker/search}" target="_blank">搜索职位</a></dd>
                     <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
                     <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
                 </dl>
@@ -113,7 +117,7 @@
                     </div>
                     <hr>
                     <div style="padding-top: 5px;text-align: center">
-                        <a th:href="@{/worker/search}">
+                        <a th:href="@{/worker/search}" target="_blank">
                             搜索职位
                         </a>
                     </div>
@@ -256,8 +260,10 @@
         </div>
     </div>
 </div>
+
 <script th:src="@{/assets/js/jquery.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
+
 <script>
     var username = $("#name").val() + '的个人简历';
     var saveAs = saveAs || (function (view) {

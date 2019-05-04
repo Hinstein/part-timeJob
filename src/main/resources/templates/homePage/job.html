@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>兼职网</title>
+
+
+    <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/bbs/global.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/ico.1539594650.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/index.1555395693.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/jzcglobal.1542282856.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/index/css/jzpop.1555579771.css}">
+
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item layadmin-flexible" lay-unselect>
+                <a th:href="@{/index}" layadmin-event="flexible" title="logo">
+                    兼职网
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker!=null}">
+                <a th:href="@{/worker/index}"  title="首页">
+                    首页
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
+                <a th:href="@{/manager/index}"  title="首页">
+                    首页
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.worker!=null}">
+                <a th:href="@{/worker/BBS/index}" target="_blank" title="首页">
+                    BBS论坛
+                </a>
+            </li>
+            <li class="layui-nav-item layui-hide-xs" lay-unselect th:if="${session.manager!=null}">
+                <a th:href="@{/manager/BBS/index}" target="_blank" title="首页">
+                    BBS论坛
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.username}==null">
+            <li class="layui-nav-item" lay-unselect>
+                <a th:href="@{/workerLogin}" layadmin-event="about">
+                    登录</a>
+            </li>
+            <li class="layui-nav-item " lay-unselect>
+                <a th:href="@{/workerRegister}" layadmin-event="about">
+                    注册</a>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block layui-hide-sm" lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.manager}">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
+                    <dd><a th:href="@{/manager/search}" target="_blank">搜索职位</a></dd>
+                    <dd><a th:href="@{/manager/allJobs}">发布的职位</a></dd>
+                    <dd><a th:href="@{/manager/employ}">录用的员工</a></dd>
+                    <dd><a th:href="@{/manager/evaluate}">给予的评价</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    [[${session.manager.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/informationEditor}">资料管理</a></dd>
+                    <dd><a th:href="@{/manager/editor}">修改密码</a></dd>
+                    <dd><a th:href="@{/manager/exit}">退出</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/manager/publish}">发布职位</a></dd>
+                    <dd><a th:href="@{/manager/search} " target="_blank">搜索职位</a></dd>
+                    <dd><a th:href="@{/manager/search/worker}">搜索简历</a></dd>
+                    <dd><a th:href="@{/manager/allJobs}">发布的职位</a></dd>
+                    <dd><a th:href="@{/manager/employ}">录用的员工</a></dd>
+                    <dd><a th:href="@{/manager/evaluate}">给予的评价</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right" th:if="${session.worker}">
+            <li class="layui-nav-item layui-hide-xs" lay-unselect>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/search}" target="_blank">搜索职位</a></dd>
+                    <dd><a th:href="@{/worker/collect}">收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">投递的职位</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    [[${session.worker.userName}]]
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/resume}">填写简历</a></dd>
+                    <dd><a th:href="@{/worker/editor}">安全设置</a></dd>
+                    <dd><a th:href="@{/worker/exit}">退出</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item layui-show-xs-inline-block " lay-unselect>
+                <a href="javascript:;" layadmin-event="more"><i class="layui-icon layui-icon-more-vertical"></i></a>
+                <dl class="layui-nav-child">
+                    <dd><a th:href="@{/worker/collect}">我收藏的职位</a></dd>
+                    <dd><a th:href="@{/worker/deliver}">我投递的职位</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="layui-container">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md8">
+            <div class="layui-card">
+                <div class="layui-card-header"><h2>[[${job.title}]]</h2></div>
+                <div class="layui-card-body">
+                    <text th:utext="${job.content}"></text>
+                    <hr>
+                    职位种类：[[${job.type}]] &nbsp; 职位要求：[[${job.workerLimit}]] &nbsp;
+                    <hr>
+                    浏览量：[[${job.views}]] &nbsp; 收藏量：[[${job.collection}]] &nbsp; 投递量：[[${job.deliver}]] &nbsp;
+                    招聘数：[[${job.workerNumber}]] &nbsp; 已招聘：[[${job.employNumber}]] &nbsp;
+                    剩余量：[[${job.workerNumber}-${job.employNumber}]]
+                    <hr>
+                    <span th:if="${job.checkEmploy!=1&&job.checkEmploy!=2}">
+                        <button th:if="${job.checkCollection}==0" class="layui-btn  layui-btn-radius layui-btn-sm"
+                                id="save"
+                                style="margin-left: 10px; ">收藏
+                        </button>
+                        <button th:if="${job.checkCollection}==1"
+                                class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm"
+                                id="cancelSave" style="margin-left: 10px; ">已收藏
+                        </button>
+                        <button th:if="${job.checkDeliver}==0" class="layui-btn  layui-btn-radius layui-btn-sm"
+                                id="deliver"
+                                style="margin-left: 10px; ">投递简历
+                        </button>
+                        <button th:if="${job.checkDeliver}==1"
+                                class="layui-btn layui-btn-warm layui-btn-radius layui-btn-sm"
+                                id="cancelDeliver" style="margin-left: 10px; ">已投递
+                        </button>
+                    </span>
+                    <button th:if="${job.checkEmploy}==1" class="layui-btn  layui-btn-radius layui-btn-sm"
+                            id="evaluation" style="margin-left: 10px; ">评价招聘者
+                    </button>
+                    <button th:if="${job.checkEmploy}==2"
+                            class="layui-btn  layui-btn-radius layui-btn-warm layui-btn-sm"
+                            id="evaluated" style="margin-left: 10px; ">您已评价过该招聘者
+                    </button>
+
+                    <input hidden="hidden" th:value="${job.id}" id="jobId" name="id">
+                    <input hidden="hidden" th:value="${manager.id}" id="managerId" name="managerId">
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md4">
+            <div class="layui-card">
+                <div class="layui-card-header">其他人还查看了</div>
+                <div class="layui-card-body">
+                    <ul class="fly-list">
+                        <li style="padding: 15px 15px 15px 15px;" th:each="job:${jobs}">
+                            <h2>
+                                <a th:href="@{/worker/job/}+${job.id}">[[${job.title}]]</a>
+                            </h2>
+                            <div class="fly-list-info">
+                                <a link>
+                                    <cite>[[${job.type}]]</cite>
+                                    <i class="iconfont icon-renzheng" title="认证信息：XXX"></i>
+                                    <i class="layui-badge fly-badge-vip">[[${job.workerLimit}]]</i>
+                                </a>
+                                <span>[[${job.date}]]</span>
+                                <span class="fly-list-nums">
+                                <i class="iconfont" title="人气">&#xe60b;</i> [[${job.views}]]
+                                </span>
+                            </div>
+                            <div class="fly-list-badge">
+
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-seo">
+    <div class="w">
+        <div class="item friend-link">
+            <div class="links">
+                <h3>热门城市：</h3>
+                <a>北京招聘</a>
+                <a>上海招聘</a>
+                <a>广州招聘</a>
+                <a>深圳招聘</a>
+                <a>石家庄招聘</a>
+                <a>郑州招聘</a>
+                <a>济南招聘</a>
+                <a>青岛招聘</a>
+                <a>合肥招聘</a>
+                <a>太原招聘</a>
+                <a>西安招聘</a>
+                <a>武汉招聘</a>
+            </div>
+            <a class="btn_arrow" href="#"></a>
+        </div>
+        <div class="item friend-link">
+            <div class="links">
+                <h3>热门职位：</h3>
+                <a> 搬运工招聘</a>
+                <a> 仓库管理员招聘</a>
+                <a> 客服经理招聘</a>
+                <a> 在线客服招聘</a>
+                <a> 销售支持招聘</a>
+                <a> 销售经理招聘</a>
+                <a> 网络销售招聘</a>
+                <a> 电话销售招聘</a>
+            </div>
+            <a class="btn_arrow" href="#"></a>
+        </div>
+        <div class="item friend-link">
+            <div class="links">
+                <h3>手机版：</h3>
+                <a> 找工作</a>
+            </div>
+        </div>
+        <div class="item friend-link">
+            <div class="links">
+                <h3>友情链接：</h3>
+                <a href="https://www.gliet.edu.cn/">桂林电子科技大学</a>
+                <a href="http://www.doumi.com/">斗米网</a>
+                <a href="https://gl.58.com/">58同城</a>
+            </div>
+            <a class="btn_arrow" href="#"></a>
+        </div>
+    </div>
+</div>
+<div class="footer">
+    <div class="content">
+        <div class="w">
+            <div class="hotline">
+                <span class="title">传真</span>
+                <span class="phone">0773-2290083</span>
+                <span class="title">邮编</span>
+                <span class="email">541004</span>
+            </div>
+            <ul class="nav">
+                <li>
+                    关于我们
+                    <ul class="sub-nav">
+                        <li><a>公司简介</a></li>
+                        <li><a>公司历程</a></li>
+                        <li><a>加入我们</a></li>
+                        <li><a>联系我们</a></li>
+                        <li><a>渠道招商</a></li>
+                    </ul>
+                </li>
+                <li>招聘资讯
+                    <ul class="sub-nav">
+                        <li><a>招聘新闻</a></li>
+                        <li><a>工作技巧</a></li>
+                    </ul>
+                </li>
+                <li>帮助中心
+                    <ul class="sub-nav">
+                        <li><a>有偿服务</a></li>
+                    </ul>
+                </li>
+                <li><a>网站地图</a></li>
+            </ul>
+        </div>
+    </div>
+    <p class="copyright">&copy;2018-2019 桂电兼职招聘网 地址：中国广西桂林金鸡路1号 邮编：541004　传真：0773-2290083 </p>
+    <p class="copyright">桂ICP备05000961号 桂公网安备45030502000232号</p>
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    $(function () {
+        $(":button").click(function () {
+            layer.msg("请登录后再试");
+            setTimeout(function () {
+                location.href = "/workerLogin";
+            }, 1000)
+        })
+    })
+</script>
+</body>
+</html>

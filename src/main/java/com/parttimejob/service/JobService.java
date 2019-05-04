@@ -216,4 +216,32 @@ public class JobService {
         return jobRepository.countByWorkerLimit("无限制");
     }
 
+    @Transactional
+    public Page<Job> recommend(String type,int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize);
+        return jobRepository.findByType(type,pageable);
+    }
+
+    @Transactional
+    public Page<Job> finDescByViewsIndex(String type,int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "views");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return jobRepository.findByType( type,pageable);
+    }
+
+    @Transactional
+    public Page<Job> finDescByTimeIndex(String type,int pageNo, int pageSize) {
+        if (pageNo == 0) {
+            pageNo = 1;
+        }
+        Sort sort = new Sort(Sort.Direction.DESC, "date");
+        PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
+        return jobRepository.findByType(type,pageable);
+    }
 }
