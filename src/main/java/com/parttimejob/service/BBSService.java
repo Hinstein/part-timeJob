@@ -31,7 +31,7 @@ public class BBSService {
     }
 
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<BBS> findByManagerId(int managerId, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -48,7 +48,7 @@ public class BBSService {
         bbsRepository.editorSave(bbs);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<BBS> findAll(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -62,7 +62,7 @@ public class BBSService {
         bbsRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<BBS> findByWorkerId(int managerId, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -91,7 +91,7 @@ public class BBSService {
         bbsRepository.discuss(id);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<BBS> hot(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -101,7 +101,7 @@ public class BBSService {
         return bbsRepository.findAll(pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<BBS> view(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;

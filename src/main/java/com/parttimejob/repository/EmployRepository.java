@@ -55,7 +55,7 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Employ a where a.workerId =?1")
     void deleteEmployByWorkerId(int id);
@@ -65,7 +65,7 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Employ a where a.managerId =?1")
     void deleteEmployByManagerId(int id);
@@ -75,12 +75,12 @@ public interface EmployRepository extends JpaRepository<Employ, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Employ a where a.jobId =?1")
     void deleteEmployByJobId(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Employ a SET a.evaluate = 1 where a.workerId =?1 and a.managerId =?2")
     void evaluated(int workerId, int managerId);

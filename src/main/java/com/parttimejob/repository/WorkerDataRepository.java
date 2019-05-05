@@ -25,7 +25,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
      * @return
      */
     @Modifying
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Query(value = "UPDATE WorkerData workerData  SET workerData.age= :#{#workerData.age}," +
             "workerData.educationBackground= :#{#workerData.educationBackground}," +
             "workerData.email= :#{#workerData.email}," +
@@ -62,7 +62,7 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from WorkerData a where a.workerId =?1")
     void deleteWorkerDataByWorkerId(int id);
@@ -71,12 +71,12 @@ public interface WorkerDataRepository extends JpaRepository<WorkerData, Integer>
     @Query(value = "select w from WorkerData w where w.jobIntension like CONCAT('%',?1,'%')")
     Page<WorkerData> findByJobIntensionLike(String content, Pageable pageable);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update WorkerData a SET a.active = a.active+1 where a.workerId =?1")
     void active(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update WorkerData a SET a.headPhoto =?1 ,a.pathName=?2 where a.id =?3")
     void headPhotoEditor(String src, String pathName, int id);

@@ -50,7 +50,7 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Worker a where a.id =?1")
     void deleteWorkerById(int id);

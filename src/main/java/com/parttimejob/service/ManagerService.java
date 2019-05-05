@@ -46,7 +46,7 @@ public class ManagerService {
      * @param pageSize
      * @return
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Manager> findByAudit(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -125,7 +125,7 @@ public class ManagerService {
      * @param pageSize
      * @return
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Manager> findAll(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -150,7 +150,7 @@ public class ManagerService {
         managerRepository.active(id);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Manager> findManagers(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;

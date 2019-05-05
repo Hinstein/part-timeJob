@@ -71,7 +71,7 @@ public class WorkerService {
      * @param pageSize
      * @return
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Worker> getWorkers(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;

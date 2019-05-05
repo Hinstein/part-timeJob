@@ -43,7 +43,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Manager a where a.id =?1")
     void deleteManagerById(int id);
@@ -53,7 +53,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Manager a SET a.audit = 1 where id =?1")
     void passManager(int id);
@@ -72,7 +72,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
      *
      * @param manager
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Manager m SET m.password= :#{#manager.password} where m.id = :#{#manager.id}")
     void saveEditor(Manager manager);
@@ -87,7 +87,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     Page<Manager> findAll(Pageable pageable);
 
     @Modifying
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Query(value = "UPDATE Manager m  SET m.userName= :#{#manager.userName}," +
             "m.name= :#{#manager.name}," +
             "m.email= :#{#manager.email}," +
@@ -101,7 +101,7 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     void informationSave(Manager manager);
 
     @Modifying
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Query(value = "UPDATE Manager m  SET m.userName= :#{#manager.userName}," +
             "m.name= :#{#manager.name}," +
             "m.email= :#{#manager.email}," +
@@ -112,12 +112,12 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
             "WHERE m.id = :#{#manager.id}")
     void adminSave(Manager manager);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Manager a SET a.active = a.active+1 where a.id =?1")
     void active(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Manager a SET a.headPhoto =?1 ,a.pathName=?2 where  a.id =?3")
     void headPhotoEditor(String src, String pathName, int id);

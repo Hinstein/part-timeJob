@@ -19,7 +19,7 @@ public interface CollectWorkerRepository extends JpaRepository<CollectWorker, In
 
     CollectWorker findByWorkerIdAndManagerId(int workerId, int managerId);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from CollectWorker a where a.workerId = ?1 and a.managerId=?2 ")
     void deleteByWorkerIdAndManagerId(int workerId, int managerId);

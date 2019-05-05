@@ -32,7 +32,7 @@ public interface BBSRepository extends JpaRepository<BBS, Integer> {
     BBS findById(int id);
 
     @Modifying
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Query(value = "UPDATE BBS b  SET b.title= :#{#bbs.title}," +
             "b.content= :#{#bbs.content} " +
             "WHERE b.id = :#{#bbs.id}")
@@ -43,12 +43,12 @@ public interface BBSRepository extends JpaRepository<BBS, Integer> {
 
     void deleteById(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update BBS a SET a.views = a.views+1 where a.id =?1")
     void views(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update BBS a SET a.discuss = a.discuss+1 where a.id =?1")
     void discuss(int id);

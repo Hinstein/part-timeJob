@@ -31,7 +31,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
      * @param workerId
      * @param jobId
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Deliver a where a.workerId = ?1 and a.jobId=?2 ")
     void deleteByWorkerIdAndJobId(int workerId, int jobId);
@@ -57,7 +57,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Deliver a where a.workerId =?1")
     void deleteDeliverByWorkerId(int id);
@@ -67,7 +67,7 @@ public interface DeliverRepository extends JpaRepository<Deliver, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Deliver a where a.jobId =?1")
     void deleteDeliverByJobId(int id);

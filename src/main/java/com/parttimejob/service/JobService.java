@@ -93,7 +93,7 @@ public class JobService {
      * @param pageSize
      * @return
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> findByTitleLike(String content, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -102,7 +102,7 @@ public class JobService {
         return jobRepository.findByTitleLike(content, pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> findByType(String type, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -111,7 +111,7 @@ public class JobService {
         return jobRepository.findByType(type, pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> findByWorkerLimit(String limit, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -128,7 +128,7 @@ public class JobService {
      * @param pageSize
      * @return
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> getJobs(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -152,7 +152,7 @@ public class JobService {
         return jobRepository.findByManagerId(id, pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> finDescByTime(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -162,7 +162,7 @@ public class JobService {
         return jobRepository.findAll(pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> finDescByViews(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -216,7 +216,7 @@ public class JobService {
         return jobRepository.countByWorkerLimit("无限制");
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> recommend(String type, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -225,7 +225,7 @@ public class JobService {
         return jobRepository.findByType(type, pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> finDescByViewsIndex(String type, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -235,7 +235,7 @@ public class JobService {
         return jobRepository.findByType(type, pageable);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<Job> finDescByTimeIndex(String type, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;

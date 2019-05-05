@@ -21,17 +21,17 @@ public interface DiscussRepository extends JpaRepository<Discuss, Integer> {
 
     Discuss findById(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Discuss a SET a.good = a.good+1 where a.id =?1")
     void good(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Discuss a SET a.good = a.good-1 where a.id =?1")
     void cancelGood(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Discuss a where a.bbsId = ?1 ")
     void deleteByBbsId(int id);

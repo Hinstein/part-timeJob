@@ -45,7 +45,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      * @return
      */
     @Modifying
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Query(value = "UPDATE Job job  SET job.content= :#{#job.content}," +
             "job.title= :#{#job.title}," +
             "job.lowPay= :#{#job.lowPay}," +
@@ -84,34 +84,34 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
      *
      * @param id
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "delete from Job a where a.managerId =?1")
     void deleteJobByManagerId(int id);
 
     Page<Job> findByManagerId(int id, Pageable pageable);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Job a SET a.collection = a.collection+1 where a.id =?1")
     void collectionSave(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Job a SET a.deliver = a.deliver+1 where a.id =?1")
     void deliverSave(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Job a SET a.collection = a.collection-1 where a.id =?1")
     void collectionCancel(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Job a SET a.deliver = a.deliver-1 where a.id =?1")
     void deliverCancel(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Job a SET a.employNumber = a.employNumber+1 where a.id =?1")
     void employ(int id);

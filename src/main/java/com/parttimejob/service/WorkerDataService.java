@@ -63,7 +63,7 @@ public class WorkerDataService {
      * @param pageSize
      * @return
      */
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<WorkerData> findAll(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -81,7 +81,7 @@ public class WorkerDataService {
         workerDataRepository.deleteWorkerDataByWorkerId(workerId);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<WorkerData> findByJobIntensionLike(String content, int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;
@@ -94,7 +94,7 @@ public class WorkerDataService {
         workerDataRepository.active(id);
     }
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     public Page<WorkerData> workerActive(int pageNo, int pageSize) {
         if (pageNo == 0) {
             pageNo = 1;

@@ -24,12 +24,12 @@ public interface EvaluationToWorkerRepository extends JpaRepository<EvaluationTo
 
     EvaluationToWorker findById(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update EvaluationToWorker a SET a.used = 1 where id =?1")
     void usedEvaluation(int id);
 
-    @Transactional
+    @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update EvaluationToWorker a SET a.used = 0 where id =?1")
     void cancelUsedEvaluation(int id);
