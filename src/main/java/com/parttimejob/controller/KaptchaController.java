@@ -22,6 +22,7 @@ import java.io.ByteArrayOutputStream;
 
 @Controller
 public class KaptchaController {
+
     /**
      * 1、验证码工具
      */

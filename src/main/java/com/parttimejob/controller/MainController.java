@@ -219,4 +219,15 @@ public class MainController {
         System.out.println(content);
         return "/homePage/search";
     }
+
+
+    @GetMapping("/worker/findPassword")
+    public String workerFindPassword(){
+        return "/homePage/workerFindPassword";
+    }
+
+    @GetMapping("/manager/findPassword")
+    public String managerFindPassword(){
+        return "/homePage/managerFindPassword";
+    }
 }
