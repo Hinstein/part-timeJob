@@ -634,6 +634,41 @@ public class WorkerController {
         map.put("good", good + "");
         return map;
     }
+
+    @GetMapping("/worker/findPassword")
+    public String workerFindPassword(){
+        return "/homePage/worker/workerFindPassword";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/findPassword/submit")
+    public Map<String,String> workerFindPasswordSubmit(HttpSession session,HttpServletRequest request){
+        String code = session.getAttribute("code").toString();
+        String tryCode =request.getParameter("vercode");
+        HashMap<String, String> map = new HashMap<>();
+        if(code.equals(tryCode)){
+            map.put("success","验证成功！");
+        }else {
+            map.put("error","短信验证码错误！");
+        }
+        return map;
+    }
+
+    @GetMapping("/worker/changePassword")
+    public String workerChangePassword(){
+        return "/homePage/worker/changePassword";
+    }
+
+    @ResponseBody
+    @PostMapping("/worker/changePassword/submit")
+    public Map<String,String> workerChangePasswordSubmit(HttpSession session,HttpServletRequest request){
+        HashMap<String, String> map = new HashMap<>();
+        int userId = Integer.parseInt(session.getAttribute("changeId").toString());
+        String password = request.getParameter("password");
+        workerService.changePassword(password,userId);
+        map.put("success","密码更改成功！");
+        return map;
+    }
 }
 
 

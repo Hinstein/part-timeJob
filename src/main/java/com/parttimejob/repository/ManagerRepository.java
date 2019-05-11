@@ -121,4 +121,9 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     @Modifying
     @Query(value = "update Manager a SET a.headPhoto =?1 ,a.pathName=?2 where  a.id =?3")
     void headPhotoEditor(String src, String pathName, int id);
+
+    @Transactional(rollbackOn = Exception.class)
+    @Modifying
+    @Query(value = "update Manager a SET a.password = ?1 where a.id =?2")
+    void changePassword(String password,int id);
 }

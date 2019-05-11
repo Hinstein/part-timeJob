@@ -164,4 +164,8 @@ public class ManagerService {
     public void headPhotoEditor(String src, String pathName, int id) {
         managerRepository.headPhotoEditor(src, pathName, id);
     }
+
+    public void changePassword(String password,int id) {
+        managerRepository.changePassword(password,id);
+    }
 }

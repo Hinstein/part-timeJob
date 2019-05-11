@@ -29,7 +29,10 @@ public class MyMvcConfig implements WebMvcConfigurer {
                 "/admin/login", "/manager/register", "/manager/login", "/worker/register",
                 "/worker/login", "/webjars/**", "/defaultKaptcha", "/manager/information",
                 "/addPhoto", "/manager/register/vendor", "/photo", "/css/**", "/job/**",
-                "/search/**", "/worker/search/allJobs","/put","/manager/findPassword","/worker/findPassword"};
+                "/search/**", "/worker/search/allJobs","/worker/sms/put","/manager/sms/put",
+                "/manager/findPassword","/worker/findPassword","/worker/changePassword",
+                "/manager/changePassword","/worker/findPassword/submit",
+                "/worker/changePassword/submit","/manager/findPassword/submit","/manager/changePassword/submit"};
         registry.addInterceptor(new LoginHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excludeUrl);
     }
 }

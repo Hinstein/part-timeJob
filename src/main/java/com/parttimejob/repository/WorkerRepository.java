@@ -58,5 +58,8 @@ public interface WorkerRepository extends JpaRepository<Worker, Integer> {
     @Override
     List<Worker> findAll();
 
-
+    @Transactional(rollbackOn = Exception.class)
+    @Modifying
+    @Query(value = "update Worker a SET a.password = ?1 where a.id =?2")
+    void changePassword(String password,int id);
 }

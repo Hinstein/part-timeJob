@@ -47,7 +47,7 @@ public class MainController {
      */
     @GetMapping("/workerLogin")
     public String workerLogin() {
-        return "/homePage/workerLogin";
+        return "/homePage/worker/workerLogin";
     }
 
     /**
@@ -57,7 +57,7 @@ public class MainController {
      */
     @GetMapping("/managerLogin")
     public String managerLogin() {
-        return "/homePage/managerLogin";
+        return "/homePage/manager/managerLogin";
     }
 
     /**
@@ -67,7 +67,7 @@ public class MainController {
      */
     @GetMapping("/workerRegister")
     public String workerRegister() {
-        return "/homePage/workerRegister";
+        return "/homePage/worker/workerRegister";
     }
 
     /**
@@ -77,7 +77,7 @@ public class MainController {
      */
     @GetMapping("/managerRegister")
     public String managerRegister() {
-        return "/homePage/managerRegister";
+        return "/homePage/manager/managerRegister";
     }
 
     /**
@@ -115,7 +115,7 @@ public class MainController {
 
     @GetMapping("/manager/information")
     public String managerInformation() {
-        return "/homePage/managerInformation";
+        return "/homePage/manager/managerInformation";
     }
 
     @ResponseBody
@@ -221,13 +221,4 @@ public class MainController {
     }
 
 
-    @GetMapping("/worker/findPassword")
-    public String workerFindPassword(){
-        return "/homePage/workerFindPassword";
-    }
-
-    @GetMapping("/manager/findPassword")
-    public String managerFindPassword(){
-        return "/homePage/managerFindPassword";
-    }
 }

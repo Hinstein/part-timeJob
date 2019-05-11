@@ -97,5 +97,7 @@ public class WorkerService {
         return workerRepository.findAll();
     }
 
-
+    public void changePassword(String password,int id) {
+        workerRepository.changePassword(password,id);
+    }
 }

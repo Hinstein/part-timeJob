@@ -9,13 +9,23 @@ import com.aliyuncs.dysmsapi.model.v20170525.SendSmsResponse;
 import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
+import com.parttimejob.entity.*;
+import com.parttimejob.service.ManagerService;
+import com.parttimejob.service.WorkerDataService;
+import com.parttimejob.service.WorkerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @BelongsProject: part-timeJob
@@ -26,6 +36,15 @@ import java.util.Date;
  */
 @Controller
 public class SmsController {
+
+    @Autowired
+    WorkerService workerService;
+
+    @Autowired
+    WorkerDataService workerDataService;
+
+    @Autowired
+    ManagerService managerService;
 
     /**
      * Created on 17/6/7.
@@ -133,43 +152,89 @@ public class SmsController {
 
     @ResponseBody
     @PostMapping("/worker/sms/put")
-    public void put() throws ClientException, InterruptedException {
+    public Map<String, String> workerPut(HttpServletRequest request, HttpSession session) throws ClientException, InterruptedException {
 
-        //发短信
-        setNewcode();
-        String code = Integer.toString(getNewcode());
-        SendSmsResponse response = sendSms("18677310383", code);
-        System.out.println("短信接口返回的数据----------------");
-        System.out.println("Code=" + response.getCode());
-        System.out.println("Message=" + response.getMessage());
-        System.out.println("RequestId=" + response.getRequestId());
-        System.out.println("BizId=" + response.getBizId());
-
-        Thread.sleep(3000L);
-
-        //查明细
-        if (response.getCode() != null && response.getCode().equals("OK")) {
-            QuerySendDetailsResponse querySendDetailsResponse = querySendDetails(response.getBizId());
-            System.out.println("短信明细查询接口返回数据----------------");
-            System.out.println("Code=" + querySendDetailsResponse.getCode());
-            System.out.println("Message=" + querySendDetailsResponse.getMessage());
-            int i = 0;
-            for (QuerySendDetailsResponse.SmsSendDetailDTO smsSendDetailDTO : querySendDetailsResponse.getSmsSendDetailDTOs()) {
-                System.out.println("SmsSendDetailDTO[" + i + "]:");
-                System.out.println("Content=" + smsSendDetailDTO.getContent());
-                System.out.println("ErrCode=" + smsSendDetailDTO.getErrCode());
-                System.out.println("OutId=" + smsSendDetailDTO.getOutId());
-                System.out.println("PhoneNum=" + smsSendDetailDTO.getPhoneNum());
-                System.out.println("ReceiveDate=" + smsSendDetailDTO.getReceiveDate());
-                System.out.println("SendDate=" + smsSendDetailDTO.getSendDate());
-                System.out.println("SendStatus=" + smsSendDetailDTO.getSendStatus());
-                System.out.println("Template=" + smsSendDetailDTO.getTemplateCode());
+        HashMap<String, String> map = new HashMap<>();
+        String rightCode = (String) request.getSession().getAttribute("rightCode");
+        String tryCode = request.getParameter("tryCode");
+        System.out.println(rightCode + "" + tryCode);
+        if (tryCode.equals(rightCode)) {
+            String username = request.getParameter("username");
+            String phoneNumber = request.getParameter("phoneNumber");
+            Worker worker = workerService.findByUserName(username);
+            if (worker != null) {
+                WorkerData workerData = workerDataService.findByWorkerId(worker.getId());
+                if (workerData.getPhoneNumber().equals(phoneNumber)) {
+                    //发短信
+                    setNewcode();
+                    String code = Integer.toString(getNewcode());
+                    SendSmsResponse response = sendSms(phoneNumber, code);
+                    System.out.println("短信接口返回的数据----------------");
+                    System.out.println("验证码为：" + code);
+                    System.out.println("Code=" + response.getCode());
+                    System.out.println("Message=" + response.getMessage());
+                    System.out.println("RequestId=" + response.getRequestId());
+                    System.out.println("BizId=" + response.getBizId());
+                    session.setAttribute("changeId", workerData.getWorkerId());
+                    session.setAttribute("code", code);
+                    map.put("success", "验证码发送成功！");
+                    Thread.sleep(3000L);
+                    return map;
+                } else {
+                    map.put("error", "用户名与手机号不匹配");
+                    return map;
+                }
+            } else {
+                map.put("error", "用户名不存在");
+                return map;
             }
-            System.out.println("TotalCount=" + querySendDetailsResponse.getTotalCount());
-            System.out.println("RequestId=" + querySendDetailsResponse.getRequestId());
+        } else {
+            map.put("error", "验证码错误");
+            return map;
         }
     }
 
+    @ResponseBody
+    @PostMapping("/manager/sms/put")
+    public Map<String, String> managerPut(HttpServletRequest request,HttpSession session) throws ClientException, InterruptedException {
 
+        HashMap<String, String> map = new HashMap<>();
+        String rightCode = (String) request.getSession().getAttribute("rightCode");
+        String tryCode = request.getParameter("tryCode");
+
+        if (tryCode.equals(rightCode)) {
+            String username = request.getParameter("username");
+            String phoneNumber = request.getParameter("phoneNumber");
+            Manager manager = managerService.findByUserName(username);
+            if (manager != null) {
+                if (manager.getPhoneNumber().equals(phoneNumber)) {
+                    //发短信
+                    setNewcode();
+                    String code = Integer.toString(getNewcode());
+                    SendSmsResponse response = sendSms(phoneNumber, code);
+                    System.out.println("短信接口返回的数据----------------");
+                    System.out.println("验证码为：" + code);
+                    System.out.println("Code=" + response.getCode());
+                    System.out.println("Message=" + response.getMessage());
+                    System.out.println("RequestId=" + response.getRequestId());
+                    System.out.println("BizId=" + response.getBizId());
+                    session.setAttribute("changeId", manager.getId());
+                    session.setAttribute("code", code);
+                    map.put("success", "验证码发送成功！");
+                    Thread.sleep(3000L);
+                    return map;
+                } else {
+                    map.put("error", "用户名与手机号不匹配");
+                    return map;
+                }
+            } else {
+                map.put("error", "用户名不存在");
+                return map;
+            }
+        } else {
+            map.put("error", "验证码错误");
+            return map;
+        }
+    }
 }
 
