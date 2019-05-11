@@ -125,5 +125,5 @@ public interface ManagerRepository extends JpaRepository<Manager, Integer> {
     @Transactional(rollbackOn = Exception.class)
     @Modifying
     @Query(value = "update Manager a SET a.password = ?1 where a.id =?2")
-    void changePassword(String password,int id);
+    void changePassword(String password, int id);
 }

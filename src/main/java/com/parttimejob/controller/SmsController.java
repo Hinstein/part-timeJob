@@ -196,7 +196,7 @@ public class SmsController {
 
     @ResponseBody
     @PostMapping("/manager/sms/put")
-    public Map<String, String> managerPut(HttpServletRequest request,HttpSession session) throws ClientException, InterruptedException {
+    public Map<String, String> managerPut(HttpServletRequest request, HttpSession session) throws ClientException, InterruptedException {
 
         HashMap<String, String> map = new HashMap<>();
         String rightCode = (String) request.getSession().getAttribute("rightCode");

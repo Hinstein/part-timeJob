@@ -56,7 +56,8 @@
 
                             <div class="layui-form-item" style="margin-bottom: 20px;">
                                 <input type="checkbox" lay-skin="primary" title="记住密码">
-                                <a href="javascript:void(0);" onclick="f()" class="layadmin-user-jump-change layadmin-link" id="forget" style="margin-top: 7px;">忘记密码？</a>
+                                <a href="javascript:void(0);" onclick="f()"
+                                   class="layadmin-user-jump-change layadmin-link" id="forget" style="margin-top: 7px;">忘记密码？</a>
                             </div>
                             <div class="layui-form-item">
                                 <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="worker">
@@ -132,7 +133,7 @@
         });
     });
 
-    var f=(function () {
+    var f = (function () {
         layer.open({
             type: 2
             , title: '兼职者找回密码'
