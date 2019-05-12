@@ -115,6 +115,9 @@ public class JobController {
     @ResponseBody
     @PostMapping("/manager/job/editor/save")
     public String jobSave(Job job) {
+        if("普通工作".equals(job.getType())){
+            job.setSubject("");
+        }
         jobService.updateEditor(job);
         return "保存成功";
     }

@@ -52,6 +52,7 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
             "job.type= :#{#job.type}," +
             "job.workerLimit= :#{#job.workerLimit}," +
             "job.workerNumber= :#{#job.workerNumber}," +
+            "job.subject= :#{#job.subject}," +
             "job.hightPay= :#{#job.hightPay} " +
             "WHERE job.id = :#{#job.id}")
     int updateEditor(Job job);

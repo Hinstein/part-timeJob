@@ -208,16 +208,6 @@
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">招聘种类</label>
-                                <div class="layui-input-inline">
-                                    <select name="type" lay-verify="required">
-                                        <option value="" selected="">请选择</option>
-                                        <option value="普通工作" th:selected="${job.type}eq'普通工作'">普通工作</option>
-                                        <option value="教辅机构兼职" th:selected="${job.type}eq'教辅机构兼职'">教辅机构兼职</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
                                 <label class="layui-form-label">招聘条件</label>
                                 <div class="layui-input-inline">
                                     <select name="workerLimit" lay-verify="required">
@@ -229,6 +219,29 @@
                                         <option value="大四" th:selected="${job.workerLimit}eq'大四'">大四</option>
                                     </select>
                                 </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">招聘种类</label>
+                                <div class="layui-input-inline">
+                                    <select name="type" lay-verify="required" id="type" lay-filter="province">
+                                        <option value="" selected="">请选择</option>
+                                        <option value="普通工作" th:selected="${job.type}eq'普通工作'">普通工作</option>
+                                        <option value="教辅机构兼职" th:selected="${job.type}eq'教辅机构兼职'">教辅机构兼职</option>
+                                    </select>
+                                </div>
+                                <span th:hidden="${job.subject}eq''" id="ss">
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <select name="subject" id="subject">
+                                            <option value="" selected="">请选择</option>
+                                            <option value="计算机类" th:selected="${job.subject}eq'计算机类'">计算机类</option>
+                                            <option value="通信类" th:selected="${job.subject}eq'通信类'">通信类</option>
+                                            <option value="机械类" th:selected="${job.subject}eq'机械类'">机械类</option>
+                                            <option value="外语类" th:selected="${job.subject}eq'外语类'">外语类</option>
+                                        </select>
+                                    </div>
+                                </span>
+
                             </div>
                         </div>
                         <div class="layui-form-item layui-form-text">
@@ -348,29 +361,56 @@
                 layedit.sync(index);
             }
         });
+        form.on('select(province)', function (data) {
+            var type = $("#type").val();
+            if (type === "教辅机构兼职") {
+                layer.msg("请选择专业");
+                $('#ss').show();
+            } else {
+                $('#ss').hide();
+            }
+        });
         form.on('submit(go)', function (data) {
-            // console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
-            // console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
-            // console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
-            $.ajax({
-                url: '/manager/job/editor/save',
-                method: "post",
-                data: data.field,
-                dataType: "text",
-                success: function (msg) {
-                    layer.msg(msg);
-                },
-                error: function () {
-                    layer.msg("网络错误，登录失败");
+            var subject = $("#subject").val();
+            var type = $("#type").val();
+            if (type === "教辅机构兼职") {
+                if (subject === '') {
+                    layer.msg('请选择专业信息', {time: 2000, icon: 5, shift: 6});
+                } else {
+                    $.ajax({
+                        url: '/manager/job/editor/save',
+                        method: "post",
+                        data: data.field,
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                        },
+                        error: function () {
+                            layer.msg("网络错误，登录失败");
+                        }
+                    });
                 }
-            });
+            } else {
+                $.ajax({
+                    url: '/manager/job/editor/save',
+                    method: "post",
+                    data: data.field,
+                    dataType: "text",
+                    success: function (msg) {
+                        layer.msg(msg);
+                    },
+                    error: function () {
+                        layer.msg("网络错误，登录失败");
+                    }
+                });
+            }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
     });
     $(function () {
         $("#headPhoto").click(function () {
             location.href = "/manager/editor/headPhoto";
-        })
+        });
     })
 </script>
 <script>
@@ -395,5 +435,6 @@
         });
     });
 </script>
+
 </body>
 </html>
