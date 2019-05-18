@@ -179,8 +179,11 @@
                     <hr>
                     <text th:utext="${job.content}"></text>
                     <hr>
-                    职位种类：[[${job.type}]] &nbsp; <span
-                        th:hidden="${job.subject}==''">专业要求：[[${job.subject}]] &nbsp;</span>职位要求：[[${job.workerLimit}]]
+                    职位种类：[[${job.type}]] &nbsp;
+                    <span th:hidden="${job.type}eq'普通工作'">专业要求：[[${job.subject}]] &nbsp;</span>
+                    <span th:hidden="${job.type}eq'教辅机构兼职'">工作类型：[[${job.subject}]] &nbsp;</span>
+
+                    职位要求：[[${job.workerLimit}]]
                     &nbsp;
                     <hr>
                     浏览量：[[${job.views}]] &nbsp; 收藏量：[[${job.collection}]] &nbsp; 投递量：[[${job.deliver}]] &nbsp;

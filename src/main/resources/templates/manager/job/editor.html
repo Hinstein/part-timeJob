@@ -187,7 +187,7 @@
                                 <label class="layui-form-label">招聘人数</label>
                                 <div class="layui-input-inline">
                                     <input type="text" name="workerNumber" placeholder="招聘人数" autocomplete="off"
-                                           class="layui-input" lay-verify="required|number"
+                                           class="layui-input" lay-verify="required|people"
                                            th:value="${job.workerNumber}">
                                 </div>
                             </div>
@@ -229,7 +229,7 @@
                                         <option value="教辅机构兼职" th:selected="${job.type}eq'教辅机构兼职'">教辅机构兼职</option>
                                     </select>
                                 </div>
-                                <span th:hidden="${job.subject}eq''" id="ss">
+                                <span th:hidden="${job.type}eq'普通工作'" id="s1">
                                     <div class="layui-form-mid">-</div>
                                     <div class="layui-input-inline" style="width: 100px;">
                                         <select name="subject" id="subject">
@@ -238,6 +238,17 @@
                                             <option value="通信类" th:selected="${job.subject}eq'通信类'">通信类</option>
                                             <option value="机械类" th:selected="${job.subject}eq'机械类'">机械类</option>
                                             <option value="外语类" th:selected="${job.subject}eq'外语类'">外语类</option>
+                                        </select>
+                                    </div>
+                                </span>
+                                <span th:hidden="${job.type}eq'教辅机构兼职'" id="s2">
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <select  id="comment">
+                                            <option value="" selected="">请选择</option>
+                                            <option value="服务类" th:selected="${job.subject}eq'服务类'">服务类</option>
+                                            <option value="促销类" th:selected="${job.subject}eq'促销类'">促销类</option>
+                                            <option value="宣传推广类" th:selected="${job.subject}eq'宣传推广类'">宣传推广类</option>
                                         </select>
                                     </div>
                                 </span>
@@ -359,21 +370,27 @@
         form.verify({
             content: function (value) {
                 layedit.sync(index);
-            }
+            } ,people: [
+                /^[1-9]\d*$/
+                ,'招聘人数必须大于0'
+            ]
         });
         form.on('select(province)', function (data) {
             var type = $("#type").val();
             if (type === "教辅机构兼职") {
                 layer.msg("请选择专业");
-                $('#ss').show();
+                $('#s1').show();
+                $('#s2').hide();
             } else {
-                $('#ss').hide();
+                layer.msg("请选择工作类型");
+                $('#s1').hide();
+                $('#s2').show();
             }
         });
         form.on('submit(go)', function (data) {
-            var subject = $("#subject").val();
             var type = $("#type").val();
             if (type === "教辅机构兼职") {
+                var subject = $("#subject").val();
                 if (subject === '') {
                     layer.msg('请选择专业信息', {time: 2000, icon: 5, shift: 6});
                 } else {
@@ -390,19 +407,25 @@
                         }
                     });
                 }
-            } else {
-                $.ajax({
-                    url: '/manager/job/editor/save',
-                    method: "post",
-                    data: data.field,
-                    dataType: "text",
-                    success: function (msg) {
-                        layer.msg(msg);
-                    },
-                    error: function () {
-                        layer.msg("网络错误，登录失败");
-                    }
-                });
+            } else if (type === "普通工作") {
+                var comment = $("#comment").val();
+                if (comment === '') {
+                    layer.msg('请选择工作类型', {time: 2000, icon: 5, shift: 6});
+                } else {
+                    data.field.subject = comment;
+                    $.ajax({
+                        url: '/manager/job/editor/save',
+                        method: "post",
+                        data: data.field,
+                        dataType: "text",
+                        success: function (msg) {
+                            layer.msg(msg);
+                        },
+                        error: function () {
+                            layer.msg("网络错误，登录失败");
+                        }
+                    });
+                }
             }
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
@@ -435,6 +458,5 @@
         });
     });
 </script>
-
 </body>
 </html>
