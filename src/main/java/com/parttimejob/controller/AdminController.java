@@ -2,6 +2,7 @@ package com.parttimejob.controller;
 
 import com.parttimejob.entity.*;
 import com.parttimejob.service.*;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -43,6 +44,9 @@ public class AdminController {
 
     @Autowired
     BBSService bbsService;
+
+    @Autowired
+    AdminDataTypeService adminDataTypeService;
 
     /**
      * 管理员登录
@@ -120,7 +124,9 @@ public class AdminController {
      * @return
      */
     @GetMapping("/admin/index")
-    public String adminIndex() {
+    public String adminIndex(Model model) {
+        AdminDataType adminDataType = adminDataTypeService.findById();
+        model.addAttribute("adminDataType", adminDataType);
         return "/admin/index";
     }
 
@@ -477,5 +483,40 @@ public class AdminController {
         Manager manager = managerService.findById(id);
         model.addAttribute("src", manager.getRelativePath());
         return "/manager/photo";
+    }
+
+    @GetMapping("/admin/editor")
+    public String indexEditor(Model model) {
+        AdminDataType adminDataType = adminDataTypeService.findById();
+        model.addAttribute("adminDataType", adminDataType);
+        return "/admin/editor";
+    }
+
+    @ResponseBody
+    @PostMapping("/admin/editor/save")
+    public Map<String, String> eidtorSave(HttpServletRequest request) {
+        AdminDataType adminDataType = new AdminDataType();
+        HashMap<String, String> map = new HashMap<>();
+        String data = request.getParameter("data");
+        String jobType = request.getParameter("jobType");
+        String managerType = request.getParameter("managerType");
+        if (data != null) {
+            adminDataType.setData(1);
+        } else {
+            adminDataType.setData(0);
+        }
+        if (jobType != null) {
+            adminDataType.setJobType(1);
+        } else {
+            adminDataType.setJobType(0);
+        }
+        if (managerType != null) {
+            adminDataType.setManagerType(1);
+        } else {
+            adminDataType.setManagerType(0);
+        }
+        adminDataTypeService.updata(adminDataType);
+        map.put("success", "保存成功！");
+        return map;
     }
 }

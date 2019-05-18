@@ -86,7 +86,7 @@
 
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu"
                     lay-filter="layadmin-system-side-menu">
-                    <li class="layui-nav-item">
+                    <li class="layui-nav-item layui-this">
                         <a th:href="@{/admin/editor}">数据展示</a>
                     </li>
                     <li class="layui-nav-item">
@@ -103,16 +103,16 @@
                             <dd><a th:href="@{/admin/manager/editor}">招聘者资料管理</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item ">
+                    <li class="layui-nav-item">
                         <a href="javascript:;">职位管理</a>
                         <dl class="layui-nav-child">
                             <dd><a th:href="@{/admin/jobs}">查看职位</a></dd>
                         </dl>
                     </li>
-                    <li class="layui-nav-item layui-nav-itemed">
+                    <li class="layui-nav-item">
                         <a href="javascript:;">BBS论坛管理</a>
                         <dl class="layui-nav-child">
-                            <dd class="layui-this"><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
+                            <dd><a th:href="@{/admin/BBS/index}">查看帖子</a></dd>
                         </dl>
                     </li>
 
@@ -124,120 +124,61 @@
         <div class="layadmin-pagetabs" id="LAY_app_tabs">
             <a>主页</a>
             <span>/</span>
-            <a>BBS论坛管理</a>
-            <span>/</span>
-            <a>查看所有帖子</a>
+            <a>主页管理</a>
         </div>
-
 
         <div class="layui-body" style="background-color: #F2F2F2;">
             <div class="layui-fluid" style=" padding: 15px;">
                 <div class="layui-col-md12">
                     <div class="layui-card">
-                        <div class="layui-card-header">&nbsp;BBS论坛管理</div>
+                        <div class="layui-card-header">&nbsp;需要查看的数据</div>
                         <div class="layui-card-body">
-                            <table class="layui-hide" id="demo" lay-filter="test"></table>
-                            <script type="text/html" id="toolbarDemo">
-                                <div class="layui-btn-container">
-                                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="batchDelete">批量删除
-                                    </button>
+                            <form class="layui-form" action="">
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <input type="checkbox" name="jobType" title="招聘种类" th:checked="${adminDataType.jobType==1}">
+                                        <input type="checkbox" name="managerType" title="兼职者分布" th:checked="${adminDataType.managerType==1}">
+                                        <input type="checkbox" name="data" title="数据统计" th:checked="${adminDataType.data==1}">
+                                    </div>
                                 </div>
-                            </script>
-                            <script type="text/html" id="action">
-                                <div class="layui-btn-container">
-                                    <button class="layui-btn layui-btn-sm" lay-event="pass">编辑</button>
-                                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delete">删除
-                                    </button>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
+                                    </div>
                                 </div>
-                            </script>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script th:src="@{/assets/js/jquery.js}"></script>
-    <script th:src="@{/assets/layui/layui.all.js}"></script>
-    <script th:inline="none">
-        layui.use(['table'], function () {
-            var table = layui.table;
-            //第一个实例
-            var tableIns = table.render({
-                elem: '#demo'
-                , url: '/admin/BBS/data' //数据接口
-                , toolbar: '#toolbarDemo'
-                , page: true //开启分页
-                , limits: [10, 20, 50, 100]  //每页条数的选择项，默认：[10,20,30,40,50,60,70,80,90]。
-                , limit: 10 //每页默认显示的数量
-                , cols: [[ //表头
-                    {type: 'checkbox', fixed: 'left'}
-                    , {field: 'title', title: '标题'}
-                    , {field: 'date', title: '发布时间', sort: true}
-                    , {field: 'views', title: '点击量', sort: true}
-                    , {field: 'discuss', title: '评论量', sort: true}
-                    , {fixed: 'right', title: '操作', toolbar: '#action'}
-                ]]
+</div>
+<script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/layui/layui.all.js}"></script>
+<script>
+    layui.use('form', function () {
+            var form = layui.form;
+            form.on('submit(save)', function (data) {
+                console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+                console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+                console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+                $.ajax({
+                    url: "/admin/editor/save",
+                    method: "post",
+                    data: data.field,
+                    dataType: "json",
+                    success: function (msg) {
+                        // //清除表单内容
+                        layer.msg(msg.success);
+                    },
+                    error: function () {
+                        layer.msg("网络错误，注册失败");
+                    }
+                });
+                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
             });
-            //监听事件
-            table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
-                var data = obj.data; //获得当前行数据
-                var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-                var tr = obj.tr; //获得当前行 tr 的DOM对象
-                if (layEvent === 'delete') { //删除
-                    layer.confirm('删除id为' + data.id + '账号么', function (index) {
-                        $.ajax({
-                            url: '/admin/BBS/delete/' + data.id,
-                            method: "post",
-                            dataType: "text",
-                            success: function (msg) {
-                                layer.msg(msg);
-                                // //清除表单内容
-                                tableIns.reload();
-                            },
-                            error: function () {
-                                layer.msg("网络错误，通过失败");
-                            }
-                        });
-                    });
-                } else if (layEvent === 'pass') {
-                    location.href = "/admin/BBS/editor/" + data.id;
-                }
-            });
-            //头工具栏事件
-            table.on('toolbar(test)', function (obj) {
-                var checkStatus = table.checkStatus(obj.config.id);
-                switch (obj.event) {
-                    case 'batchDelete':
-                        var data = checkStatus.data;
-                        // layer.alert(JSON.stringify(data));
-                        var ids = '';
-                        for (var i = 0; i < data.length; i++) {
-                            if (i !== (data.length - 1)) {
-                                ids += data[i].id + ",";
-                            } else {
-                                ids += data[i].id;
-                            }
-                        }
-                        layer.confirm('删除id为' + ids + '账号么', function (index) {
-                            for (var i = 0; i < data.length; i++) {
-                                $.ajax({
-                                    url: '/admin/BBS/delete/' + data.id,
-                                    method: "post",
-                                    dataType: "text",
-                                    success: function (msg) {
-                                        layer.msg(msg);
-                                        // //清除表单内容
-                                        tableIns.reload();
-                                    },
-                                    error: function () {
-                                        layer.msg("网络错误，通过失败");
-                                    }
-                                });
-                            }
-                        });
-                }
-            });
-        });
-    </script>
+    })
+</script>
 </body>
 </html>

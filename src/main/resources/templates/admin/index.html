@@ -86,7 +86,9 @@
 
                 <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY--side-menu"
                     lay-filter="layadmin-system-side-menu">
-
+                    <li class="layui-nav-item">
+                        <a th:href="@{/admin/editor}">数据展示</a>
+                    </li>
                     <li class="layui-nav-item">
                         <a class="" href="javascript:;">兼职者管理</a>
                         <dl class="layui-nav-child">
@@ -240,24 +242,27 @@
                             </div>
                         </div>
 
-                        <div class="layui-card">
+                        <div class="layui-card" th:if="${adminDataType.jobType==1||adminDataType.managerType==1}">
                             <div class="layui-tab layui-tab-brief layadmin-latestData">
                                 <ul class="layui-tab-title">
-                                    <li class="layui-this">招聘种类</li>
-                                    <li>兼职者分布</li>
+                                    <li class="layui-this" th:if="${adminDataType.jobType}==1">招聘种类</li>
+                                    <li th:if="${adminDataType.managerType}==1"
+                                        th:class="${adminDataType.jobType!=1} ? 'layui-this':''">兼职者分布
+                                    </li>
                                 </ul>
                                 <div class="layui-tab-content">
-                                    <div class="layui-tab-item layui-show">
+                                    <div class="layui-tab-item layui-show" th:if="${adminDataType.jobType}==1">
                                         <div id="type" style="width: 410px;height:400px;"></div>
                                     </div>
-                                    <div class="layui-tab-item">
+                                    <div class="layui-tab-item" th:if="${adminDataType.managerType}==1"
+                                         th:class="${adminDataType.jobType!=1} ? 'layui-tab-item layui-show':'layui-tab-item'">
                                         <div id="workerLimit" style="width: 410px;height:400px;"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="layui-card">
+                        <div class="layui-card" th:if="${adminDataType.data}==1">
                             <div class="layui-card-header">数据统计</div>
                             <div class="layui-card-body ">
                                 <div id="number" style="width: 410px;height:400px;"></div>
@@ -394,7 +399,8 @@
         }]
     };
     myChart.setOption(type);
-
+</script>
+<script>
     var myChart1 = echarts.init(document.getElementById('number'));
     var number = {
         color: ['#3398DB'],
@@ -434,7 +440,8 @@
         ]
     };
     myChart1.setOption(number);
-
+</script>
+<script>
     var myChart2 = echarts.init(document.getElementById('workerLimit'));
     var workerLimit = {
         title: {
