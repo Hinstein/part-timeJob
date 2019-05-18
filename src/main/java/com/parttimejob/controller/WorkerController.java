@@ -643,13 +643,17 @@ public class WorkerController {
     @ResponseBody
     @PostMapping("/worker/findPassword/submit")
     public Map<String, String> workerFindPasswordSubmit(HttpSession session, HttpServletRequest request) {
-        String code = session.getAttribute("code").toString();
-        String tryCode = request.getParameter("vercode");
         HashMap<String, String> map = new HashMap<>();
-        if (code.equals(tryCode)) {
-            map.put("success", "验证成功！");
+        Object code = session.getAttribute("code");
+        if (code == null) {
+            map.put("error", "请获取短信验证码！");
         } else {
-            map.put("error", "短信验证码错误！");
+            String tryCode = request.getParameter("vercode");
+            if (code.equals(tryCode)) {
+                map.put("success", "验证成功！");
+            } else {
+                map.put("error", "短信验证码错误！");
+            }
         }
         return map;
     }
