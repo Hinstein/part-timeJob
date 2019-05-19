@@ -420,6 +420,7 @@
         console.log(sherchkey);
         getPeopleList(1, 5, sherchkey);
     });
+
     //自己封装获取数据方法
     function getPeopleList(crr, lmt, searchKey) {
         //获取人才列表
@@ -476,11 +477,11 @@
             //完整功能
             laypage.render({
                 elem: 'page',
-                count: count ,
-                limit: limit ,
+                count: count,
+                limit: limit,
                 limits: [5, 10, 20, 30, 40],
-                curr: curr ,
-                layout: ['count', 'prev', 'page', 'next', 'refresh', 'limit','skip'],
+                curr: curr,
+                layout: ['count', 'prev', 'page', 'next', 'refresh', 'limit', 'skip'],
                 jump: function (obj, first) {
                     if (!first) {
                         $("#result").empty();
