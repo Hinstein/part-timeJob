@@ -10,7 +10,6 @@
 
     <title>兼职网</title>
 
-
     <link rel="stylesheet" th:href="@{/assets/layui/css/layui.css}">
 
     <link rel="stylesheet" th:href="@{/assets/css/adminLogin/admin.css}">
@@ -22,6 +21,8 @@
     <link rel="stylesheet" th:href="@{/assets/index/css/jzcglobal.1542282856.css}">
 
     <link rel="stylesheet" th:href="@{/assets/index/css/jzpop.1555579771.css}">
+
+    <link rel="stylesheet" th:href="@{/assets/css/bbs/global.css}">
 
 </head>
 <body>
@@ -142,237 +143,241 @@
         </ul>
     </div>
 </div>
-<br>
-<br>
-<br>
-<br>
-<div class="layui-container  layui-hide-xs">
-    <div class="layui-carousel" id="test1">
-        <div carousel-item>
-            <div><img th:src="@{/assets/picture/index1.jpg}" th:width="1140px"></div>
-            <div><img th:src="@{/assets/picture/index2.jpg}" th:width="1140px"></div>
-        </div>
-    </div>
-
-</div>
-<br>
 <div class="layui-container ">
-
-    <div class="layui-card layui-hide-xs">
-        <div class="layui-card-header">&nbsp;查找工作</div>
-        <div class="layui-card-body">
-            <div class="demoTable">
-                <div class="layui-inline">
-                    <input class="layui-input" id="content" autocomplete="off" placeholder="搜索工作">
-                </div>
-                <button class="layui-btn" id="search" type="button">搜索</button>
-                <div class="layui-inline">
-                    <form class="layui-form">
-                        <div class="layui-input-block">
-                            <select name="workerLimit" id="workerLimit" lay-verify="required">
-                                <option value="" selected="">按员工限制查找</option>
-                                <option value="无限制">无限制</option>
-                                <option value="大一">大一</option>
-                                <option value="大二">大二</option>
-                                <option value="大三">大三</option>
-                                <option value="大四">大四</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <button class="layui-btn" id="workerLimitBtn" type="button">分类</button>
-                <div class="layui-inline">
-                    <form class="layui-form">
-                        <div class="layui-input-block">
-                            <select name="type" lay-verify="required" id="type">
-                                <option value="" selected="">按工作类型查找</option>
-                                <option value="普通工作">普通工作</option>
-                                <option value="教辅机构兼职">教辅机构兼职</option>
-                            </select>
-                        </div>
-                    </form>
-                </div>
-                <button class="layui-btn" id="typeBtn" type="button">分类</button>
+    <div class="layui-row layui-col-space15">
+        <div class="layui-carousel layui-hide-xs" id="test1">
+            <div carousel-item>
+                <div><img th:src="@{/assets/picture/s1.png}" th:high="400px"></div>
+                <div><img th:src="@{/assets/picture/s2.png}" th:high="400px"></div>
+                <div><img th:src="@{/assets/picture/s3.png}" th:high="400px"></div>
             </div>
-            <br>
-            <table class="layui-hide" id="demo" lay-filter="test"></table>
-            <script type="text/html" id="action">
-                <div class="layui-btn-container">
-                    <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+        </div>
+        <div class="layui-card ">
+            <div class="layui-card-header">&nbsp;查找工作</div>
+            <div class="layui-card-body layui-hide-xs">
+                <div class="demoTable">
+                    <div class="layui-inline">
+                        <input class="layui-input" id="content" autocomplete="off" placeholder="搜索工作">
+                    </div>
+                    <button class="layui-btn" id="search" type="button">搜索</button>
+                    <div class="layui-inline">
+                        <form class="layui-form">
+                            <div class="layui-input-block">
+                                <select name="workerLimit" id="workerLimit" lay-verify="required">
+                                    <option value="" selected="">按员工限制查找</option>
+                                    <option value="无限制">无限制</option>
+                                    <option value="大一">大一</option>
+                                    <option value="大二">大二</option>
+                                    <option value="大三">大三</option>
+                                    <option value="大四">大四</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <button class="layui-btn" id="workerLimitBtn" type="button">分类</button>
+                    <div class="layui-inline">
+                        <form class="layui-form">
+                            <div class="layui-input-block">
+                                <select name="type" lay-verify="required" id="type">
+                                    <option value="" selected="">按工作类型查找</option>
+                                    <option value="普通工作">普通工作</option>
+                                    <option value="教辅机构兼职">教辅机构兼职</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <button class="layui-btn" id="typeBtn" type="button">分类</button>
                 </div>
-            </script>
-        </div>
-    </div>
+                <br>
+                <table class="layui-hide" id="demo" lay-filter="test"></table>
+                <script type="text/html" id="action">
+                    <div class="layui-btn-container">
+                        <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                    </div>
+                </script>
+            </div>
 
-    <div class="layui-card ">
-        <div class="layui-card-header ">
-            普通兼职
-        </div>
-        <div class="layui-card-body">
-            <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">推荐</li>
-                    <li>最新</li>
-                    <li>最热</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <div class="container">
-                            <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs}">
-                                    <div class="layui-card-header">
-                                        <a th:href="@{/job/}+${job.id}">
-                                            <strong th:text="${job.title}">title</strong>
-                                        </a>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <p><span>薪资:</span>
-                                            <span th:text="${job.lowPay}"></span>
-                                            <span class="layui-red">-</span>
-                                            <span th:text="${job.hightPay}"></span></p>
-                                        发布时间:
-                                        <text th:text="${job.date}"></text>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <div class="layui-card-body layui-hide-sm">
+                <div class="demoTable">
+                    <div class="layui-inline">
+                        <input class="layui-input" id="phoneContent" autocomplete="off" placeholder="搜索工作">
                     </div>
-                    <div class="layui-tab-item">
-                        <div class="container">
-                            <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
-                                    <div class="layui-card-header">
-                                        <a th:href="@{/job/}+${job.id}">
-                                            <strong th:text="${job.title}">title</strong>
-                                        </a>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <p><span>薪资:</span>
-                                            <span th:text="${job.lowPay}"></span>
-                                            <span class="layui-red">-</span>
-                                            <span th:text="${job.hightPay}"></span></p>
-                                        发布时间:
-                                        <text th:text="${job.date}"></text>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div class="container">
-                            <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
-                                    <div class="layui-card-header">
-                                        <a th:href="@{/job/}+${job.id}">
-                                            <strong th:text="${job.title}">title</strong>
-                                        </a>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <p><span>薪资:</span>
-                                            <span th:text="${job.lowPay}"></span>
-                                            <span class="layui-red">-</span>
-                                            <span th:text="${job.hightPay}"></span></p>
-                                        发布时间:
-                                        <text th:text="${job.date}"></text>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="text-align: center;">
-                        <button class="layui-btn" type="button" id="more">查看更多</button>
-                    </div>
-                    <input th:value="${session.username}" hidden="hidden" id="check">
+                    <button class="layui-btn" id="phoneSearch" type="button">搜索</button>
+                    <hr>
+                    <ul class="fly-list" id="result">
+
+                    </ul>
                 </div>
             </div>
         </div>
-    </div>
-
-    <div class="layui-card ">
-        <div class="layui-card-header ">
-            教育机构兼职
+        <div class="layui-card ">
+            <div class="layui-card-header ">
+                普通兼职
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">推荐</li>
+                        <li>最新</li>
+                        <li>最热</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="container">
+                                <div class="layui-row">
+                                    <div class="layui-card layui-col-md4" th:each="job:${jobs}">
+                                        <div class="layui-card-header">
+                                            <a th:href="@{/job/}+${job.id}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                        </div>
+                                        <div class="layui-card-body">
+                                            <p><span>薪资:</span>
+                                                <span th:text="${job.lowPay}"></span>
+                                                <span class="layui-red">-</span>
+                                                <span th:text="${job.hightPay}"></span></p>
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="container">
+                                <div class="layui-row">
+                                    <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
+                                        <div class="layui-card-header">
+                                            <a th:href="@{/job/}+${job.id}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                        </div>
+                                        <div class="layui-card-body">
+                                            <p><span>薪资:</span>
+                                                <span th:text="${job.lowPay}"></span>
+                                                <span class="layui-red">-</span>
+                                                <span th:text="${job.hightPay}"></span></p>
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="container">
+                                <div class="layui-row">
+                                    <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
+                                        <div class="layui-card-header">
+                                            <a th:href="@{/job/}+${job.id}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                        </div>
+                                        <div class="layui-card-body">
+                                            <p><span>薪资:</span>
+                                                <span th:text="${job.lowPay}"></span>
+                                                <span class="layui-red">-</span>
+                                                <span th:text="${job.hightPay}"></span></p>
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <button class="layui-btn" type="button" id="more">查看更多</button>
+                        </div>
+                        <input th:value="${session.username}" hidden="hidden" id="check">
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="layui-card-body">
-            <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">推荐</li>
-                    <li>最新</li>
-                    <li>最热</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <div class="container">
-                            <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs3}">
-                                    <div class="layui-card-header">
-                                        <a th:href="@{/job/}+${job.id}">
-                                            <strong th:text="${job.title}">title</strong>
-                                        </a>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <p><span>薪资:</span>
-                                            <span th:text="${job.lowPay}"></span>
-                                            <span class="layui-red">-</span>
-                                            <span th:text="${job.hightPay}"></span></p>
-                                        发布时间:
-                                        <text th:text="${job.date}"></text>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div class="container">
-                            <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs4}">
-                                    <div class="layui-card-header">
-                                        <a th:href="@{/job/}+${job.id}">
-                                            <strong th:text="${job.title}">title</strong>
-                                        </a>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <p><span>薪资:</span>
-                                            <span th:text="${job.lowPay}"></span>
-                                            <span class="layui-red">-</span>
-                                            <span th:text="${job.hightPay}"></span></p>
-                                        发布时间:
-                                        <text th:text="${job.date}"></text>
+        <div class="layui-card ">
+            <div class="layui-card-header ">
+                教育机构兼职
+            </div>
+            <div class="layui-card-body">
+                <div class="layui-tab layui-tab-brief" lay-filter="component-tabs-brief">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this">推荐</li>
+                        <li>最新</li>
+                        <li>最热</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="container">
+                                <div class="layui-row">
+                                    <div class="layui-card layui-col-md4" th:each="job:${jobs3}">
+                                        <div class="layui-card-header">
+                                            <a th:href="@{/job/}+${job.id}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                        </div>
+                                        <div class="layui-card-body">
+                                            <p><span>薪资:</span>
+                                                <span th:text="${job.lowPay}"></span>
+                                                <span class="layui-red">-</span>
+                                                <span th:text="${job.hightPay}"></span></p>
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div class="container">
-                            <div class="layui-row">
-                                <div class="layui-card layui-col-md4" th:each="job:${jobs5}">
-                                    <div class="layui-card-header">
-                                        <a th:href="@{/job/}+${job.id}">
-                                            <strong th:text="${job.title}">title</strong>
-                                        </a>
-                                    </div>
-                                    <div class="layui-card-body">
-                                        <p><span>薪资:</span>
-                                            <span th:text="${job.lowPay}"></span>
-                                            <span class="layui-red">-</span>
-                                            <span th:text="${job.hightPay}"></span></p>
-                                        发布时间:
-                                        <text th:text="${job.date}"></text>
+                        <div class="layui-tab-item">
+                            <div class="container">
+                                <div class="layui-row">
+                                    <div class="layui-card layui-col-md4" th:each="job:${jobs4}">
+                                        <div class="layui-card-header">
+                                            <a th:href="@{/job/}+${job.id}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                        </div>
+                                        <div class="layui-card-body">
+                                            <p><span>薪资:</span>
+                                                <span th:text="${job.lowPay}"></span>
+                                                <span class="layui-red">-</span>
+                                                <span th:text="${job.hightPay}"></span></p>
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="layui-tab-item">
+                            <div class="container">
+                                <div class="layui-row">
+                                    <div class="layui-card layui-col-md4" th:each="job:${jobs5}">
+                                        <div class="layui-card-header">
+                                            <a th:href="@{/job/}+${job.id}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                        </div>
+                                        <div class="layui-card-body">
+                                            <p><span>薪资:</span>
+                                                <span th:text="${job.lowPay}"></span>
+                                                <span class="layui-red">-</span>
+                                                <span th:text="${job.hightPay}"></span></p>
+                                            发布时间:
+                                            <text th:text="${job.date}"></text>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: center;">
+                            <button class="layui-btn" type="button" id="more">查看更多</button>
+                        </div>
+                        <input th:value="${session.username}" hidden="hidden" id="check">
                     </div>
-                    <div style="text-align: center;">
-                        <button class="layui-btn" type="button" id="more">查看更多</button>
-                    </div>
-                    <input th:value="${session.username}" hidden="hidden" id="check">
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 <div class="footer-seo layui-hide-xs">
     <div class="w">
         <div class="item friend-link">
@@ -423,7 +428,7 @@
             <a class="btn_arrow" href="#"></a>
         </div>
     </div>
-</div >
+</div>
 <div class="footer layui-hide-xs">
     <div class="content">
         <div class="w">
@@ -471,7 +476,7 @@
         carousel.render({
             elem: '#test1'
             , width: '1140px' //设置容器宽度
-            , height: '460px'
+            , height: '400px'
             , arrow: 'always' //始终显示箭头
         });
         var util = layui.util;
@@ -568,6 +573,70 @@
                 });
             })
         });
+    });
+</script>
+<script>
+    $(function () {
+        $.ajax({
+            type: "get",
+            dataType: "json",
+            url: "/worker/search/allJobs",
+            data: {limit: 100, page: 1},
+            success: function (msg) {
+                if (msg.code === 0) {
+                    var str = "";
+                    var data = msg.data;
+                    for (i in data) {
+                        var s = data[i].workerNumber - data[i].employNumber;
+                        var jobid = "/worker/job/" + data[i].id;
+                        str +=
+                            "<li style='padding: 15px 15px 15px 15px;'><h2><a href=" + jobid + ">" + data[i].title +
+                            "</a></h2><div class='fly-list-info'><a><cite>" + data[i].type +
+                            "</cite><i class='iconfont icon-renzheng'></i><i class='layui-badge fly-badge-vip'>" + data[i].workerLimit +
+                            "</i></a><span>" + data[i].date +
+                            "</span><span class='fly-list-kiss layui-hide-xs' >剩余量：" + s +
+                            "</span><span class='fly-list-nums'><i class='iconfont' title='人气'>&#xe60b;</i>" + data[i].views +
+                            "</span></div><div class='fly-list-badge'></div></li>";
+                    }
+                    $("#result").append(str);
+                }
+            },
+            error: function () {
+                alert("查询失败")
+            }
+        });
+        $("#phoneSearch").click(function () {
+            var phoneContent = $("#phoneContent").val();
+            $("#result").empty();
+            $.ajax({
+                type: "get",
+                dataType: "json",
+                url: "/worker/search/allJobs",
+                data: {limit: 100, page: 1, content: phoneContent},
+                success: function (msg) {
+                    if (msg.code === 0) {
+                        var str = "";
+                        var data = msg.data;
+                        for (i in data) {
+                            var s = data[i].workerNumber - data[i].employNumber;
+                            var jobid = "/worker/job/" + data[i].id;
+                            str +=
+                                "<li style='padding: 15px 15px 15px 15px;'><h2><a href=" + jobid + ">" + data[i].title +
+                                "</a></h2><div class='fly-list-info'><a><cite>" + data[i].type +
+                                "</cite><i class='iconfont icon-renzheng'></i><i class='layui-badge fly-badge-vip'>" + data[i].workerLimit +
+                                "</i></a><span>" + data[i].date +
+                                "</span><span class='fly-list-kiss layui-hide-xs' >剩余量：" + s +
+                                "</span><span class='fly-list-nums'><i class='iconfont' title='人气'>&#xe60b;</i>" + data[i].views +
+                                "</span></div><div class='fly-list-badge'></div></li>";
+                        }
+                        $("#result").append(str);
+                    }
+                },
+                error: function () {
+                    alert("查询失败")
+                }
+            });
+        })
     });
 </script>
 </body>
