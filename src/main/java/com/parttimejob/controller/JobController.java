@@ -178,6 +178,8 @@ public class JobController {
         }
         result.put("code", 0);
         result.put("msg", "");
+        result.put("limit",pageSize);
+        result.put("page",pageNumber);
         return result;
     }
 

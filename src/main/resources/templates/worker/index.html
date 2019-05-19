@@ -222,8 +222,8 @@
                         <button class="layui-btn" id="phoneSearch" type="button">搜索</button>
                         <hr>
                         <ul class="fly-list" id="result">
-
                         </ul>
+                        <div id="page"></div>
                     </div>
                 </div>
             </div>
@@ -408,13 +408,38 @@
     });
 </script>
 <script>
+    //加载完成
     $(function () {
+        var sherchkey = $("#phoneContent").val();
+        console.log(sherchkey);
+        getPeopleList(1, 5, sherchkey);//获取人才列表
+    });
+    $("#phoneSearch").click(function () {
+        var sherchkey = $("#phoneContent").val();
+        $("#result").empty();
+        console.log(sherchkey);
+        getPeopleList(1, 5, sherchkey);
+    });
+    //自己封装获取数据方法
+    function getPeopleList(crr, lmt, searchKey) {
+        //获取人才列表
         $.ajax({
-            type: "get",
-            dataType: "json",
-            url: "/worker/search/allJobs",
-            data: {limit: 100, page: 1},
+            url: '/worker/search/allJobs',
+            type: 'get',
+            data: {
+                limit: lmt, page: crr, content: searchKey
+            },
+            dataType: 'json',
+
             success: function (msg) {
+                console.log(msg);
+                count = msg.count;//总记录
+                curr = msg.page; //当前页
+                limit = msg.limit; //每页几个
+                console.log(count);
+                console.log(curr);
+                console.log(limit);
+
                 if (msg.code === 0) {
                     var str = "";
                     var data = msg.data;
@@ -431,45 +456,40 @@
                             "</span></div><div class='fly-list-badge'></div></li>";
                     }
                     $("#result").append(str);
+                    //调用分页方法
+                    getPageList(count, curr, limit, searchKey);
                 }
             },
             error: function () {
-                alert("查询失败")
+                layer.msg("网络故障");
             }
-        });
-        $("#phoneSearch").click(function () {
-            var phoneContent = $("#phoneContent").val();
-            $("#result").empty();
-            $.ajax({
-                type: "get",
-                dataType: "json",
-                url: "/worker/search/allJobs",
-                data: {limit: 100, page: 1, content: phoneContent},
-                success: function (msg) {
-                    if (msg.code === 0) {
-                        var str = "";
-                        var data = msg.data;
-                        for (i in data) {
-                            var s = data[i].workerNumber - data[i].employNumber;
-                            var jobid = "/worker/job/" + data[i].id;
-                            str +=
-                                "<li style='padding: 15px 15px 15px 15px;'><h2><a href=" + jobid + ">" + data[i].title +
-                                "</a></h2><div class='fly-list-info'><a><cite>" + data[i].type +
-                                "</cite><i class='iconfont icon-renzheng'></i><i class='layui-badge fly-badge-vip'>" + data[i].workerLimit +
-                                "</i></a><span>" + data[i].date +
-                                "</span><span class='fly-list-kiss layui-hide-xs' >剩余量：" + s +
-                                "</span><span class='fly-list-nums'><i class='iconfont' title='人气'>&#xe60b;</i>" + data[i].views +
-                                "</span></div><div class='fly-list-badge'></div></li>";
-                        }
-                        $("#result").append(str);
+        })
+    }
+
+
+    //自己封装分页方法
+    function getPageList(count, curr, limit, searchKey) {
+        //分页方法
+        layui.use(['laypage', 'layer'], function () {
+            var laypage = layui.laypage
+                , layer = layui.layer;
+            //完整功能
+            laypage.render({
+                elem: 'page',
+                count: count ,
+                limit: limit ,
+                limits: [5, 10, 20, 30, 40],
+                curr: curr ,
+                layout: ['count', 'prev', 'page', 'next', 'refresh', 'limit','skip'],
+                jump: function (obj, first) {
+                    if (!first) {
+                        $("#result").empty();
+                        getPeopleList(obj.curr, obj.limit, searchKey);
                     }
-                },
-                error: function () {
-                    alert("查询失败")
                 }
             });
-        })
-    });
+        });
+    }
 </script>
 </body>
 </html>
