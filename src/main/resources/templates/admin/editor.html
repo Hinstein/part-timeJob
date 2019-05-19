@@ -136,9 +136,12 @@
                             <form class="layui-form" action="">
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">
-                                        <input type="checkbox" name="jobType" title="招聘种类" th:checked="${adminDataType.jobType==1}">
-                                        <input type="checkbox" name="managerType" title="兼职者分布" th:checked="${adminDataType.managerType==1}">
-                                        <input type="checkbox" name="data" title="数据统计" th:checked="${adminDataType.data==1}">
+                                        <input type="checkbox" name="jobType" title="招聘种类"
+                                               th:checked="${adminDataType.jobType==1}">
+                                        <input type="checkbox" name="managerType" title="兼职者分布"
+                                               th:checked="${adminDataType.managerType==1}">
+                                        <input type="checkbox" name="data" title="数据统计"
+                                               th:checked="${adminDataType.data==1}">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -158,26 +161,26 @@
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
     layui.use('form', function () {
-            var form = layui.form;
-            form.on('submit(save)', function (data) {
-                console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
-                console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
-                console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
-                $.ajax({
-                    url: "/admin/editor/save",
-                    method: "post",
-                    data: data.field,
-                    dataType: "json",
-                    success: function (msg) {
-                        // //清除表单内容
-                        layer.msg(msg.success);
-                    },
-                    error: function () {
-                        layer.msg("网络错误，注册失败");
-                    }
-                });
-                return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        var form = layui.form;
+        form.on('submit(save)', function (data) {
+            console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
+            console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
+            console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
+            $.ajax({
+                url: "/admin/editor/save",
+                method: "post",
+                data: data.field,
+                dataType: "json",
+                success: function (msg) {
+                    // //清除表单内容
+                    layer.msg(msg.success);
+                },
+                error: function () {
+                    layer.msg("网络错误，注册失败");
+                }
             });
+            return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
+        });
     })
 </script>
 </body>

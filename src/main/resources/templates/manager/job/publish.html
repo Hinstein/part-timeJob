@@ -369,9 +369,9 @@
         form.verify({
             content: function (value) {
                 layedit.sync(index);
-            },people: [
+            }, people: [
                 /^[1-9]\d*$/
-                ,'招聘人数必须大于0'
+                , '招聘人数必须大于0'
             ]
         });
         form.on('select(province)', function (data) {
@@ -416,7 +416,7 @@
                 if (comment === '') {
                     layer.msg('请选择工作类型', {time: 2000, icon: 5, shift: 6});
                 } else {
-                    data.field.subject=comment;
+                    data.field.subject = comment;
                     $.ajax({
                         url: '/manager/publish/save',
                         method: "post",

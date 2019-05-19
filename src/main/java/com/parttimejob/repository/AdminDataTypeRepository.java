@@ -15,7 +15,7 @@ import javax.transaction.Transactional;
  * @CreateTime: 2019-05-18 10:51
  * @Description:
  */
-public interface AdminDataTypeRepository extends JpaRepository<AdminDataType,Integer> {
+public interface AdminDataTypeRepository extends JpaRepository<AdminDataType, Integer> {
     AdminDataType findById(int id);
 
     @Modifying

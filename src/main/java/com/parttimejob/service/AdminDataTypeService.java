@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class AdminDataTypeService {
     @Autowired
     AdminDataTypeRepository adminDataTypeRepository;
+
     public AdminDataType findById() {
         return adminDataTypeRepository.findById(1);
     }

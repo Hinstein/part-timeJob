@@ -17,7 +17,7 @@ import javax.persistence.Table;
 public class AdminDataType {
     @Id
     @Column
-    private  Integer id;
+    private Integer id;
 
     @Column
     private int jobType;

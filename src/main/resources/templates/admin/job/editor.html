@@ -189,7 +189,8 @@
                                             <select name="type" lay-verify="required" id="type" lay-filter="province">
                                                 <option value="" selected="">请选择</option>
                                                 <option value="普通工作" th:selected="${job.type}eq'普通工作'">普通工作</option>
-                                                <option value="教辅机构兼职" th:selected="${job.type}eq'教辅机构兼职'">教辅机构兼职</option>
+                                                <option value="教辅机构兼职" th:selected="${job.type}eq'教辅机构兼职'">教辅机构兼职
+                                                </option>
                                             </select>
                                         </div>
                                         <span th:hidden="${job.type}eq'普通工作'" id="s1">
@@ -207,7 +208,7 @@
                                         <span th:hidden="${job.type}eq'教辅机构兼职'" id="s2">
                                     <div class="layui-form-mid">-</div>
                                     <div class="layui-input-inline" style="width: 100px;">
-                                        <select  id="comment">
+                                        <select id="comment">
                                             <option value="" selected="">请选择</option>
                                             <option value="服务类" th:selected="${job.subject}eq'服务类'">服务类</option>
                                             <option value="促销类" th:selected="${job.subject}eq'促销类'">促销类</option>
@@ -246,9 +247,9 @@
         form.verify({
             content: function (value) {
                 layedit.sync(index);
-            },people: [
+            }, people: [
                 /^[1-9]\d*$/
-                ,'招聘人数必须大于0'
+                , '招聘人数必须大于0'
             ]
         });
         form.on('select(province)', function (data) {
