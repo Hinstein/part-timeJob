@@ -35,4 +35,9 @@ public interface DiscussRepository extends JpaRepository<Discuss, Integer> {
     @Modifying
     @Query(value = "delete from Discuss a where a.bbsId = ?1 ")
     void deleteByBbsId(int id);
+
+    @Transactional(rollbackOn = Exception.class)
+    @Modifying
+    @Query(value = "update Discuss a SET a.headPhoto = ?2 where a.headPhoto =?1")
+    void changeHeadPhoto(String old,String newPhoto);
 }

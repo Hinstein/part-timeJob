@@ -838,6 +838,7 @@ public class ManagerController {
 
                 //设置photo实体类的数据
                 if (manager.getPathName() != null) {
+                    discussService.changeHeadPhoto(manager.getHeadPhoto(),relativePath);
                     File file1 = new File(manager.getPathName());
                     file1.delete();
                 }

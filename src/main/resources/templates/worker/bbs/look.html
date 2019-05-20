@@ -81,7 +81,7 @@
 </div>
 <div class="layui-container">
     <div class="layui-row layui-col-space15">
-        <div class="layui-col-md8 content detail">
+        <div class="layui-col-md8">
             <div class="fly-panel detail-box">
                 <h1>[[${bbs.title}]]</h1>
                 <div class="fly-detail-info">
@@ -116,10 +116,7 @@
                 <fieldset class="layui-elem-field layui-field-title" style="text-align: center;">
                     <legend>回帖</legend>
                 </fieldset>
-
                 <ul class="jieda" id="jieda">
-
-
                     <li data-id="111" th:each="discuss:${discussList}">
                         <a name="item-1111111111"></a>
                         <div class="detail-about detail-about-reply">
@@ -147,11 +144,8 @@
                    <i class="iconfont icon-svgmoban53"></i>
                    回复
                  </span>
-
                         </div>
                     </li>
-
-
                     <li class="fly-none" th:if="${discussList.size()} eq 0">消灭零回复</li>
                 </ul>
 

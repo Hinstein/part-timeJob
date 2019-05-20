@@ -579,6 +579,7 @@ public class WorkerController {
 
                 //设置photo实体类的数据
                 if (workerData.getPathName() != null) {
+                    discussService.changeHeadPhoto(workerData.getHeadPhoto(),relativePath);
                     File file1 = new File(workerData.getPathName());
                     file1.delete();
                 }

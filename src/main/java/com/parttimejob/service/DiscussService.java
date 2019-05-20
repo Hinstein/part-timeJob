@@ -47,4 +47,11 @@ public class DiscussService {
     public void deleteByBbsId(int id) {
         discussRepository.deleteByBbsId(id);
     }
+
+    public void changeHeadPhoto(String old,String newPhoto){
+        System.out.println("更换成功！");
+        System.out.println("旧头像路径："+old);
+        System.out.println("新头像路径："+newPhoto);
+        discussRepository.changeHeadPhoto(old,newPhoto);
+    }
 }
