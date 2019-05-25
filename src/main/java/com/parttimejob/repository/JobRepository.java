@@ -118,4 +118,6 @@ public interface JobRepository extends JpaRepository<Job, Integer> {
     void employ(int id);
 
     int countByWorkerLimit(String workerLimit);
+
+    List<Job> findBySubjectAndTypeAndWorkerLimit(String subject ,String type,String workerLimit);
 }

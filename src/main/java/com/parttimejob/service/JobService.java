@@ -244,4 +244,9 @@ public class JobService {
         PageRequest pageable = PageRequest.of(pageNo - 1, pageSize, sort);
         return jobRepository.findByType(type, pageable);
     }
+
+    public List<Job> jobData(String subject , String type, String workerLimit){
+        System.out.println(subject+type+workerLimit);
+        return jobRepository.findBySubjectAndTypeAndWorkerLimit(subject,type,workerLimit);
+    }
 }

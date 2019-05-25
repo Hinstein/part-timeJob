@@ -4,6 +4,7 @@ import com.parttimejob.entity.*;
 import com.parttimejob.service.*;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -489,7 +490,7 @@ public class AdminController {
     public String indexEditor(Model model) {
         AdminDataType adminDataType = adminDataTypeService.findById();
         model.addAttribute("adminDataType", adminDataType);
-        return "/admin/editor";
+        return "/admin/data/editor";
     }
 
     @ResponseBody
@@ -518,5 +519,63 @@ public class AdminController {
         adminDataTypeService.updata(adminDataType);
         map.put("success", "保存成功！");
         return map;
+    }
+
+    @GetMapping("/admin/data/selfDefine")
+    public String selfDefine() {
+        return "/admin/data/selfDefine";
+    }
+
+    @ResponseBody
+    @PostMapping("/admin/data/selfDefine/put")
+    public Map<String, Object> selfDefinePut(HttpServletRequest request) {
+
+        Map<String, Object> result = new HashMap<String, Object>();
+
+        String collection = request.getParameter("collect");
+        String deliver = request.getParameter("deliver");
+        String employ = request.getParameter("employ");
+        String subject = request.getParameter("subject");
+        String type = request.getParameter("type");
+        String workerLimit = request.getParameter("workerLimit");
+
+        List<Job> jobs=jobService.jobData( subject, type, workerLimit);
+        JSONArray json = new JSONArray();
+        if (collection != null) {
+
+            JSONObject json1 = new JSONObject();
+            json1.accumulate("name", "收藏量");
+            int collectNum=0;
+            for(Job job: jobs){
+                collectNum =job.getCollection()+collectNum;
+            }
+            json1.accumulate("value", collectNum);
+            json.add(json1);
+        }
+        if (deliver != null) {
+
+            JSONObject json2 = new JSONObject();
+            json2.accumulate("name", "投递量");
+            int deliverNum=0;
+            for(Job job: jobs){
+                deliverNum =job.getDeliver()+deliverNum;
+            }
+
+            json2.accumulate("value", deliverNum);
+            json.add(json2);
+        }
+        if (employ != null) {
+
+            JSONObject json3 = new JSONObject();
+            json3.accumulate("name", "录用量");
+            int employNum=0;
+            for(Job job: jobs){
+                employNum =job.getEmployNumber()+employNum;
+            }
+            json3.accumulate("value", employNum);
+            json.add(json3);
+        }
+        result.put("data", json);
+        return result;
     }
 }
