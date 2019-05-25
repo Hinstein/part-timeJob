@@ -521,10 +521,6 @@ public class AdminController {
         return map;
     }
 
-    @GetMapping("/admin/data/selfDefine")
-    public String selfDefine() {
-        return "/admin/data/selfDefine";
-    }
 
     @ResponseBody
     @PostMapping("/admin/data/selfDefine/put")

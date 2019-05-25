@@ -128,28 +128,99 @@
         </div>
 
         <div class="layui-body" style="background-color: #F2F2F2;">
-            <div class="layui-fluid" style=" padding: 15px;">
-                <div class="layui-col-md12">
-                    <div class="layui-card">
-                        <div class="layui-card-header">&nbsp;需要查看的数据</div>
-                        <div class="layui-card-body">
-                            <form class="layui-form" action="">
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <input type="checkbox" name="jobType" title="招聘种类"
-                                               th:checked="${adminDataType.jobType==1}">
-                                        <input type="checkbox" name="managerType" title="兼职者分布"
-                                               th:checked="${adminDataType.managerType==1}">
-                                        <input type="checkbox" name="data" title="数据统计"
-                                               th:checked="${adminDataType.data==1}">
+            <div class="layui-fluid">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md9">
+                        <div class="layui-card">
+                            <div class="layui-card-header">&nbsp;自定义数据</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form" action="">
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">年级选择</label>
+                                        <div class="layui-input-block">
+                                            <input type="radio" name="workerLimit" value="大一" title="大一" checked="">
+                                            <input type="radio" name="workerLimit" value="大二" title="大二">
+                                            <input type="radio" name="workerLimit" value="大三" title="大三">
+                                            <input type="radio" name="workerLimit" value="大四" title="大四">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-form-item">
-                                    <div class="layui-input-block">
-                                        <button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">招聘种类</label>
+                                        <div class="layui-input-inline">
+                                            <select name="type" lay-verify="required" id="type" lay-filter="province">
+                                                <option value="" selected="">请选择</option>
+                                                <option value="普通工作">普通工作</option>
+                                                <option value="教辅机构兼职">教辅机构兼职</option>
+                                            </select>
+                                        </div>
+                                        <span hidden="hidden" id="s1">
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <select name="subject" id="subject">
+                                            <option value="计算机类">计算机类</option>
+                                            <option value="通信类">通信类</option>
+                                            <option value="机械类">机械类</option>
+                                            <option value="外语类">外语类</option>
+                                        </select>
                                     </div>
-                                </div>
-                            </form>
+                                    </span>
+
+                                        <span hidden="hidden" id="s2">
+                                    <div class="layui-form-mid">-</div>
+                                    <div class="layui-input-inline" style="width: 100px;">
+                                        <select id="comment">
+                                            <option value="服务类">服务类</option>
+                                            <option value="促销类">促销类</option>
+                                            <option value="宣传推广类">宣传推广类</option>
+                                        </select>
+                                    </div>
+                                </span>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <label class="layui-form-label">限制条件</label>
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="deliver" id="deliver" title="投递">
+                                            <input type="checkbox" name="collect" id="collect" title="收藏">
+                                            <input type="checkbox" name="employ" id="employ" title="录用">
+                                        </div>
+                                    </div>
+
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="go">保存</button>
+                                            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                                        </div>
+                                    </div>
+                                    <div id="main" style="width: 600px;height:400px;"></div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md3">
+                        <div class="layui-card">
+                            <div class="layui-card-header">&nbsp;主页需要显示的数据</div>
+                            <div class="layui-card-body">
+                                <form class="layui-form" action="">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="checkbox" name="jobType" title="招聘种类"
+                                                   th:checked="${adminDataType.jobType==1}">
+
+                                            <input type="checkbox" name="data" title="数据统计"
+                                                   th:checked="${adminDataType.data==1}">
+                                            <input type="checkbox" name="managerType" title="兼职者分布"
+                                                   th:checked="${adminDataType.managerType==1}">
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <button class="layui-btn" lay-submit="" lay-filter="save">保存</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -158,14 +229,12 @@
     </div>
 </div>
 <script th:src="@{/assets/js/jquery.js}"></script>
+<script th:src="@{/assets/js/echarts.js}"></script>
 <script th:src="@{/assets/layui/layui.all.js}"></script>
 <script>
     layui.use('form', function () {
         var form = layui.form;
         form.on('submit(save)', function (data) {
-            console.log(data.elem);//被执行事件的元素DOM对象，一般为button对象
-            console.log(data.form);//被执行提交的form对象，一般在存在form标签时才会返回
-            console.log(data.field);//当前容器的全部表单字段，名值对形式：{name: value}
             $.ajax({
                 url: "/admin/editor/save",
                 method: "post",
@@ -181,6 +250,118 @@
             });
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
+    })
+</script>
+<script>
+
+    var myChart = echarts.init(document.getElementById('main'));
+    // 显示标题，图例和空的坐标轴
+    myChart.setOption({
+        title: {
+            text: '数据分布',
+            subtext: '',
+            x: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: "{a} <br/>{b} : {c} ({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+            data: []
+        },
+        series: [{
+            name: '种类数目',
+            type: 'pie',
+            radius: '55%',
+            center: ['50%', '60%'],
+            data: [],
+            itemStyle: {
+                emphasis: {
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+            }
+        }]
+    });
+
+    myChart.showLoading();    //数据加载完之前先显示一段简单的loading动画
+
+    var names = [];    //类别数组（实际用来盛放X轴坐标值）
+
+    layui.use('form', function () {
+        var form = layui.form;
+        form.on('select(province)', function (data) {
+            var type = $("#type").val();
+            if (type === "教辅机构兼职") {
+                $('#s1').show();
+                $('#s2').hide();
+            } else {
+                $('#s1').hide();
+                $('#s2').show();
+            }
+        });
+        form.on('submit(go)', function (data) {
+            if (data.field.employ != 'on' && data.field.deliver != 'on' && data.field.collect != 'on') {
+                layer.msg('请选择至少一样限制条件', {time: 2000, icon: 5, shift: 6});
+            } else {
+                var type = $("#type").val();
+                if (type === "普通工作") {
+                    var comment = $("#comment").val();
+                    data.field.subject = comment;
+                    console.log(data);
+                    $.ajax({
+                        type: "post",
+                        async: true,            //异步请求（同步请求将会锁住浏览器，用户其他操作必须等待请求完成才可以执行）
+                        url: "/admin/data/selfDefine/put",    //请求发送到TestServlet处
+                        data: data.field,
+                        dataType: "json",        //返回数据形式为json
+                        success: function (result) {
+                            //请求成功时执行该函数内容，result即为服务器返回的json对象
+                            console.log(result.data);
+                            names = [];
+                            if (result.data) {
+                                for (var i = 0; i < result.data.length; i++) {
+                                    names.push(result.data[i].name);    //挨个取出类别并填入类别数组
+                                }
+                                myChart.hideLoading();    //隐藏加载动画
+                                myChart.setOption({        //加载数据图表
+                                    legend: {
+                                        orient: 'vertical',
+                                        left: 'left',
+                                        data: names
+                                    },
+                                    series: [{
+                                        name: '种类数目',
+                                        type: 'pie',
+                                        radius: '55%',
+                                        center: ['50%', '60%'],
+                                        data: result.data,
+                                        itemStyle: {
+                                            emphasis: {
+                                                shadowBlur: 10,
+                                                shadowOffsetX: 0,
+                                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                            }
+                                        }
+                                    }]
+                                });
+
+                            }
+
+                        },
+                        error: function (errorMsg) {
+                            //请求失败时执行该函数
+                            alert("图表请求数据失败!");
+                            myChart.hideLoading();
+                        }
+                    })
+                }
+            }
+            return false;
+        })
     })
 </script>
 </body>
