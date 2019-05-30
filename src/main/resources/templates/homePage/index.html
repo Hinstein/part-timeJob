@@ -227,7 +227,13 @@
                                 <div class="layui-row">
                                     <div class="layui-card layui-col-md4" th:each="job:${jobs}">
                                         <div class="layui-card-header">
-                                            <a th:href="@{/job/}+${job.id}">
+                                            <a th:href="@{/job/}+${job.id}" th:if="${session.worker==null && session.manager==null}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/worker/job/}+${job.id}" th:if="${session.worker}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/manager/job/}+${job.id}" th:if="${session.manager}">
                                                 <strong th:text="${job.title}">title</strong>
                                             </a>
                                         </div>
@@ -248,7 +254,13 @@
                                 <div class="layui-row">
                                     <div class="layui-card layui-col-md4" th:each="job:${jobs1}">
                                         <div class="layui-card-header">
-                                            <a th:href="@{/job/}+${job.id}">
+                                            <a th:href="@{/job/}+${job.id}" th:if="${session.worker==null && session.manager==null}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/worker/job/}+${job.id}" th:if="${session.worker}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/manager/job/}+${job.id}" th:if="${session.manager}">
                                                 <strong th:text="${job.title}">title</strong>
                                             </a>
                                         </div>
@@ -269,7 +281,13 @@
                                 <div class="layui-row">
                                     <div class="layui-card layui-col-md4" th:each="job:${jobs2}">
                                         <div class="layui-card-header">
-                                            <a th:href="@{/job/}+${job.id}">
+                                            <a th:href="@{/job/}+${job.id}" th:if="${session.worker==null && session.manager==null}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/worker/job/}+${job.id}" th:if="${session.worker}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/manager/job/}+${job.id}" th:if="${session.manager}">
                                                 <strong th:text="${job.title}">title</strong>
                                             </a>
                                         </div>
@@ -310,7 +328,13 @@
                                 <div class="layui-row">
                                     <div class="layui-card layui-col-md4" th:each="job:${jobs3}">
                                         <div class="layui-card-header">
-                                            <a th:href="@{/job/}+${job.id}">
+                                            <a th:href="@{/job/}+${job.id}" th:if="${session.worker==null && session.manager==null}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/worker/job/}+${job.id}" th:if="${session.worker}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/manager/job/}+${job.id}" th:if="${session.manager}">
                                                 <strong th:text="${job.title}">title</strong>
                                             </a>
                                         </div>
@@ -331,7 +355,13 @@
                                 <div class="layui-row">
                                     <div class="layui-card layui-col-md4" th:each="job:${jobs4}">
                                         <div class="layui-card-header">
-                                            <a th:href="@{/job/}+${job.id}">
+                                            <a th:href="@{/job/}+${job.id}" th:if="${session.worker==null && session.manager==null}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/worker/job/}+${job.id}" th:if="${session.worker}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/manager/job/}+${job.id}" th:if="${session.manager}">
                                                 <strong th:text="${job.title}">title</strong>
                                             </a>
                                         </div>
@@ -352,7 +382,13 @@
                                 <div class="layui-row">
                                     <div class="layui-card layui-col-md4" th:each="job:${jobs5}">
                                         <div class="layui-card-header">
-                                            <a th:href="@{/job/}+${job.id}">
+                                            <a th:href="@{/job/}+${job.id}" th:if="${session.worker==null && session.manager==null}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/worker/job/}+${job.id}" th:if="${session.worker}">
+                                                <strong th:text="${job.title}">title</strong>
+                                            </a>
+                                            <a th:href="@{/manager/job/}+${job.id}" th:if="${session.manager}">
                                                 <strong th:text="${job.title}">title</strong>
                                             </a>
                                         </div>
