@@ -192,7 +192,9 @@
                 <table class="layui-hide" id="demo" lay-filter="test"></table>
                 <script type="text/html" id="action">
                     <div class="layui-btn-container">
-                        <button class="layui-btn layui-btn-sm" lay-event="pass">查看</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="pass" th:if="${session.worker==null && session.manager==null}">查看</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="manager" th:if="${session.manager}">查看</button>
+                        <button class="layui-btn layui-btn-sm" lay-event="worker" th:if="${session.worker}">查看</button>
                     </div>
                 </script>
             </div>
@@ -569,6 +571,12 @@
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'pass') { //通过
                 location.href = "/job/" + data.id;
+            }else if(layEvent==='manager')
+            {
+                location.href = "/manager/job/" + data.id;
+            }else if(layEvent==='worker')
+            {
+                location.href = "/worker/job/" + data.id;
             }
         });
 

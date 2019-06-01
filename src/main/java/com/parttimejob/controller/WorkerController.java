@@ -220,7 +220,7 @@ public class WorkerController {
      */
     @GetMapping("/worker/search")
     public String workerSearch() {
-        return "worker/search";
+        return "/worker/search";
     }
 
     /**
@@ -322,7 +322,7 @@ public class WorkerController {
 
     @GetMapping("/worker/BBS/search")
     public String managerBBSSearch() {
-        return "worker/BBS/search";
+        return "/worker/BBS/search";
     }
 
     @ResponseBody
